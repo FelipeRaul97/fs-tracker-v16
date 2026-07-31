@@ -265,6 +265,11 @@
       <div class="card-title">Win Rate por liga y tipo de apuesta</div>
       <div class="chart-wrap" id="chart-liga-tipo"></div>
     </div>
+    <div class="card card-full" style="margin-bottom:16px">
+      <div class="card-title">ROI% rolling por liga — ventana 8 apuestas</div>
+      <div class="chart-wrap" id="chart-liga-rolling-roi"></div>
+      <div class="chart-note">Cada línea = ROI% rolling de 8 apuestas confirmadas en esa liga. Por debajo de 0% = modelo sin edge en esa ventana.</div>
+    </div>
     <div class="grid2" id="liga-cards"></div>
   </div>
 
@@ -309,7 +314,7 @@
       </div>
     </div>
     <!-- Fila 3: sesgo por tipo + umbral EV% rentable -->
-    <div class="grid2">
+    <div class="grid2" style="margin-bottom:16px">
       <div class="card">
         <div class="card-title">Sesgo por tipo de apuesta</div>
         <div id="calib-tipo"></div>
@@ -319,6 +324,12 @@
         <div class="chart-wrap" id="chart-ev-roi"></div>
         <div class="chart-note">La banda donde ROI cruza a positivo es el umbral mínimo de EV% a exigir.</div>
       </div>
+    </div>
+    <!-- Fila 4: sesgo por mercado individual -->
+    <div class="card card-full">
+      <div class="card-title">Sesgo por mercado — Prob modelo vs WR real</div>
+      <div style="overflow-x:auto" id="calib-by-market"></div>
+      <div class="chart-note">Sesgo = WR real - Prob modelo. Verde = modelo subestima (oportunidad). Rojo = modelo sobreestima (peligro). Minimo 3 apuestas por mercado.</div>
     </div>
   </div>
 
@@ -1314,6 +1325,121 @@ function renderMercadoFreq(){
     }).join('');
 }
 
+// ── Calib by market ───────────────────────────────────────
+function renderCalibByMarket(){
+  const bets=flatBets().filter(a=>(a.estado==='GANADA'||a.estado==='PERDIDA')&&a.prob!=null);
+  const el=document.getElementById('calib-by-market');
+  if(bets.length<3){el.innerHTML='<p class="empty">Minimo 3 apuestas confirmadas con prob</p>';return;}
+
+  const mktMap={};
+  bets.forEach(a=>{const k=a.mercado.split('+')[0].trim();if(!mktMap[k])mktMap[k]=[];mktMap[k].push(a);});
+
+  const MIN_N=3;
+  const rows=Object.entries(mktMap)
+    .filter(([,arr])=>arr.length>=MIN_N)
+    .map(([mkt,arr])=>{
+      const wr=arr.filter(a=>a.estado==='GANADA').length/arr.length*100;
+      const probMed=arr.reduce((s,a)=>s+a.prob,0)/arr.length;
+      const sesgo=wr-probMed;
+      const roi=arr.reduce((s,a)=>s+(a.pl||0),0)/arr.length*100;
+      return{mkt,n:arr.length,wr,probMed,sesgo,roi};
+    })
+    .sort((a,b)=>b.sesgo-a.sesgo);
+
+  if(!rows.length){el.innerHTML='<p class="empty">Ningun mercado con 3+ apuestas</p>';return;}
+
+  el.innerHTML=`<table class="hm-table">
+    <thead><tr><th style="text-align:left">Mercado</th><th>N</th><th>Prob modelo</th><th>WR real</th><th>Sesgo</th><th>ROI%</th><th>Diagnostico</th></tr></thead>
+    <tbody>${rows.map(r=>{
+      const sc=r.sesgo>5?'color:var(--green);font-weight:600':r.sesgo<-5?'color:var(--red);font-weight:600':'color:var(--text3)';
+      const roiC=r.roi>=0?'color:var(--green)':'color:var(--red)';
+      const diag=r.sesgo>5?'Subestima (oportunidad)':r.sesgo<-5?'Sobreestima (peligro)':'Calibrado';
+      const diagC=r.sesgo>5?'var(--green-mid)':r.sesgo<-5?'var(--red-mid)':'var(--text3)';
+      const barW=Math.min(Math.abs(r.sesgo)*3,100);
+      const barDir=r.sesgo>=0?'var(--green-mid)':'var(--red-mid)';
+      return`<tr>
+        <td style="text-align:left;font-weight:500">${r.mkt}</td>
+        <td style="color:var(--text3)">${r.n}</td>
+        <td>${r.probMed.toFixed(1)}%</td>
+        <td>${r.wr.toFixed(1)}%</td>
+        <td style="${sc}">${r.sesgo>=0?'+':''}${r.sesgo.toFixed(1)}%
+          <div class="bar-bg" style="width:60px;display:inline-block;vertical-align:middle;margin-left:4px"><div class="bar-fill" style="width:${barW}%;background:${barDir}"></div></div>
+        </td>
+        <td style="${roiC};font-weight:500">${r.roi>=0?'+':''}${r.roi.toFixed(1)}%</td>
+        <td style="color:${diagC};font-size:11px">${diag}</td>
+      </tr>`;
+    }).join('')}</tbody></table>`;
+}
+
+// ── Liga rolling ROI ─────────────────────────────────────
+function renderLigaRollingROI(){
+  const el=document.getElementById('chart-liga-rolling-roi');
+  const ligas=[...new Set(_DATA.map(p=>p.liga))];
+  const WINDOW=8;
+  const ligaCols={D1:'var(--red-mid)',E0:'var(--blue-mid)',F1:'var(--green-mid)',I1:'var(--amber-mid)',SP1:'#9b59b6'};
+
+  const seriesData={};
+  let maxLen=0;
+  ligas.forEach(liga=>{
+    const bets=flatBets({liga}).filter(a=>a.estado==='GANADA'||a.estado==='PERDIDA')
+      .sort((a,b)=>new Date(a.partido.fecha)-new Date(b.partido.fecha));
+    if(bets.length<WINDOW) return;
+    const pts=[];
+    for(let i=WINDOW;i<=bets.length;i++){
+      const win=bets.slice(i-WINDOW,i);
+      const roi=win.reduce((s,a)=>s+(a.pl||0),0)/WINDOW*100;
+      pts.push(roi);
+    }
+    seriesData[liga]=pts;
+    if(pts.length>maxLen) maxLen=pts.length;
+  });
+
+  const activeLigas=Object.keys(seriesData);
+  if(!activeLigas.length){el.innerHTML=`<p class="empty">Minimo ${WINDOW} apuestas confirmadas en alguna liga</p>`;return;}
+
+  const W=700,H=220,PL=45,PR=90,PT=20,PB=30;
+  const iW=W-PL-PR,iH=H-PT-PB;
+  const allVals=Object.values(seriesData).flat();
+  const minY=Math.min(0,...allVals)-5;
+  const maxY=Math.max(0,...allVals)+5;
+  const sy=v=>PT+iH*(1-(v-minY)/(maxY-minY));
+  const svg=makeSVG(W,H);
+
+  // Zero line
+  svg.appendChild(svgEl('line',{x1:PL,y1:sy(0),x2:W-PR,y2:sy(0),stroke:'var(--border2)','stroke-width':'1'}));
+  // Grid
+  const step=Math.max(10,Math.round((maxY-minY)/4/10)*10);
+  for(let v=Math.ceil(minY/step)*step;v<=maxY;v+=step){
+    if(v===0) continue;
+    svg.appendChild(svgEl('line',{x1:PL,y1:sy(v),x2:W-PR,y2:sy(v),stroke:'var(--border)','stroke-width':'1','stroke-dasharray':'3,3'}));
+    const t=svgEl('text',{x:PL-4,y:sy(v)+4,fill:'var(--text3)','font-size':'10','text-anchor':'end'});
+    t.textContent=v+'%';svg.appendChild(t);
+  }
+
+  // Lines per liga
+  activeLigas.forEach((liga,li)=>{
+    const pts=seriesData[liga];
+    const col=ligaCols[liga]||'var(--text2)';
+    const sx=i=>PL+(i/(maxLen-1||1))*iW;
+    const d=pts.map((v,i)=>`${i===0?'M':'L'}${sx(i)},${sy(v)}`).join(' ');
+    svg.appendChild(svgEl('path',{d,fill:'none',stroke:col,'stroke-width':'2',opacity:'0.85'}));
+    // End dot
+    const lastY=sy(pts[pts.length-1]);
+    const lastX=sx(pts.length-1);
+    svg.appendChild(svgEl('circle',{cx:lastX,cy:lastY,r:'4',fill:col}));
+  });
+
+  // Legend
+  activeLigas.forEach((liga,i)=>{
+    const lx=W-PR+8,ly=PT+i*18;
+    svg.appendChild(svgEl('line',{x1:lx,y1:ly+6,x2:lx+16,y2:ly+6,stroke:ligaCols[liga]||'var(--text2)','stroke-width':'2.5'}));
+    const lt=svgEl('text',{x:lx+20,y:ly+10,fill:'var(--text2)','font-size':'11'});
+    lt.textContent=LIGA_NAMES[liga]||liga;svg.appendChild(lt);
+  });
+
+  el.innerHTML='';el.appendChild(svg);
+}
+
 // ── Watchlist tab ─────────────────────────────────────────
 function renderWatchlist(){
   const allWL=_DATA.flatMap(p=>(p.watchlist||[]).map(w=>({...w,partido:p})));
@@ -1412,9 +1538,9 @@ function renderAll(){
   // Re-render active tab
   const active=document.querySelector('.tab.active')?.dataset.tab;
   if(active==='tendencias'){renderPLChart();renderHighEVLost();renderRacha();}
-  if(active==='calibracion'){renderEVScatter();renderCalibBands();}
+  if(active==='calibracion'){renderEVScatter();renderCalibBands();renderCalibByMarket();}
   if(active==='mercados'){renderCuotaROI();renderMercadoCuotaHeatmap();renderTipoStats();renderMercadoFreq();}
-  if(active==='ligas'){renderLigaTipo();renderLigaCards();}
+  if(active==='ligas'){renderLigaTipo();renderLigaRollingROI();renderLigaCards();}
   if(active==='variables'){renderVariablesHeatmap();}
   if(active==='watchlist'){renderWatchlist();}
   if(active==='confianza'){renderConfianza();}
