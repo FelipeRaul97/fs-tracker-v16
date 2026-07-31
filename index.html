@@ -679,8 +679,10 @@ function renderBets(){
       </tr>
       <tr class="detail-row" id="${rid}"><td colspan="12">
         <div class="detail-grid">
+          <div class="detail-item"><span class="detail-key">λ base</span><span>L=${p.lambda_base_l||'—'} · V=${p.lambda_base_v||'—'}</span></div>
           <div class="detail-item"><span class="detail-key">λ final</span><span>L=${p.lambda_final_l} · V=${p.lambda_final_v}</span></div>
           <div class="detail-item"><span class="detail-key">λ shadow</span><span>L=${p.lambda_shadow_l||'—'} · V=${p.lambda_shadow_v||'—'}</span></div>
+          <div class="detail-item"><span class="detail-key">Goles esperados</span><span>${p.goles_esperados!=null?Number(p.goles_esperados).toFixed(2):'—'}</span></div>
           <div class="detail-item"><span class="detail-key">Ratio${p.visit_dominante?' · Visit dom.':''}</span><span>${p.ratio}${p.visit_dominante?' ⚠':''}
 </span></div>
           <div class="detail-item"><span class="detail-key">λ corners</span><span>${p.lambda_corners||'—'}</span></div>
