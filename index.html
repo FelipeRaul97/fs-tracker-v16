@@ -149,6 +149,10 @@
   .hm-table td:first-child{text-align:left;font-weight:500;color:var(--text)}
   .alert-box{background:var(--red-bg);border:1px solid var(--red-mid);border-radius:var(--r);
     padding:10px 14px;font-size:13px;color:var(--red);margin-bottom:12px}
+  .wl-item{display:flex;justify-content:space-between;align-items:center;padding:3px 0;font-size:12px}
+  .wl-tag{display:inline-block;font-size:10px;padding:1px 6px;border-radius:3px;
+    background:var(--amber-bg);color:var(--amber);font-weight:500}
+  .badge-watchlist{background:var(--amber-bg);color:var(--amber)}
 
   /* Toast */
   .toast{position:fixed;bottom:24px;right:24px;background:var(--text);color:var(--bg);
@@ -185,6 +189,7 @@
     <div class="tab" data-tab="mercados">Mercados</div>
     <div class="tab" data-tab="ligas">Por liga</div>
     <div class="tab" data-tab="calibracion">Calibración</div>
+    <div class="tab" data-tab="watchlist">Watchlist</div>
     <div class="tab" data-tab="confianza">Confianza</div>
   </div>
 
@@ -309,6 +314,27 @@
         <div class="chart-wrap" id="chart-ev-roi"></div>
         <div class="chart-note">La banda donde ROI cruza a positivo es el umbral mínimo de EV% a exigir.</div>
       </div>
+    </div>
+  </div>
+
+  <!-- Watchlist -->
+  <div class="tab-panel" id="tab-watchlist">
+    <div id="wl-summary" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:16px"></div>
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
+        <div class="card-title">Watchlist por partido</div>
+        <div class="table-wrap">
+          <table><thead><tr>
+            <th>#</th><th>Partido</th><th>Liga</th><th>Mercado</th>
+            <th class="num">Cuota</th><th class="num">Prob%</th><th class="num">EV%</th>
+            <th>Resultado</th>
+          </tr></thead><tbody id="wl-tbody"></tbody></table>
+        </div>
+      </div>
+    </div>
+    <div class="grid2">
+      <div class="card"><div class="card-title">Watchlist por mercado</div><div id="wl-by-market"></div></div>
+      <div class="card"><div class="card-title">Distribución EV% watchlist</div><div id="wl-ev-dist"></div></div>
     </div>
   </div>
 
@@ -575,6 +601,7 @@ function renderMetrics(){
     <div class="metric"><div class="metric-label">P&amp;L acum</div><div class="metric-val ${plC}">${fmtL(s.pl)}</div></div>
     <div class="metric"><div class="metric-label">ROI%</div><div class="metric-val ${plC}">${s.roi!=null?s.roi.toFixed(1)+'%':'—'}</div></div>
     <div class="metric"><div class="metric-label">EV% prom</div><div class="metric-val ${s.evProm>=0?'green':'red'}">${s.evProm!=null?(s.evProm>=0?'+':'')+s.evProm.toFixed(1)+'%':'—'}</div></div>
+    <div class="metric"><div class="metric-label">Watchlist</div><div class="metric-val" style="color:var(--amber-mid)">${_DATA.reduce((s,p)=>s+(p.watchlist||[]).length,0)}</div></div>
     <div class="metric"><div class="metric-label">Partidos</div><div class="metric-val">${_DATA.length}</div></div>`;
   const last=_DATA[_DATA.length-1];
   document.querySelector('.topbar h1').nextElementSibling||0;
@@ -645,6 +672,13 @@ function renderBets(){
           <div class="detail-item"><span class="detail-key">Confianza</span><span>${p.confianza}</span></div>
           <div class="detail-item"><span class="detail-key">Resultado</span><span>${p.resultado_partido||'Pendiente'}</span></div>
           <div class="detail-item"><span class="detail-key">Notas</span><span>${p.notas||'—'}</span></div>
+          ${(p.watchlist&&p.watchlist.length)?`<div class="detail-item" style="grid-column:1/-1;margin-top:6px">
+            <span class="detail-key">Watchlist (${p.watchlist.length})</span>
+            <div>${p.watchlist.map(w=>`<div class="wl-item"><span>${w.mercado} <span class="wl-tag">EV ${w.ev_pct>=0?'+':''}${fmt(w.ev_pct,1)}%</span></span><span style="color:var(--text3)">cuota ${fmt(w.cuota)} · prob ${fmtP(w.prob)}</span></div>`).join('')}</div>
+          </div>`:''}
+          ${(p.mercados_snapshot)?`<div class="detail-item" style="grid-column:1/-1;margin-top:4px">
+            <span class="detail-key">Snapshot (${Object.keys(p.mercados_snapshot).length} mercados)</span>
+          </div>`:''}
         </div>
       </td></tr>`;
   }).join('');
@@ -984,6 +1018,7 @@ function renderCalibBands(){
   renderRollingLogLoss();
   renderCalibTipo(settled);
   renderEVROI();
+  renderSnapshotCalib();
 }
 
 function renderCalibTipo(settled){
@@ -1219,6 +1254,82 @@ function renderMercadoFreq(){
     }).join('');
 }
 
+// ── Watchlist tab ─────────────────────────────────────────
+function renderWatchlist(){
+  const allWL=_DATA.flatMap(p=>(p.watchlist||[]).map(w=>({...w,partido:p})));
+  const el=document.getElementById('wl-summary');
+
+  const totalWL=allWL.length;
+  const partidos=_DATA.filter(p=>(p.watchlist||[]).length>0).length;
+  const avgEV=totalWL?allWL.reduce((s,w)=>s+(w.ev_pct||0),0)/totalWL:null;
+  const avgProb=totalWL?allWL.reduce((s,w)=>s+(w.prob||0),0)/totalWL:null;
+
+  el.innerHTML=`
+    <div class="metric"><div class="metric-label">Items watchlist</div><div class="metric-val amber">${totalWL}</div></div>
+    <div class="metric"><div class="metric-label">Partidos con WL</div><div class="metric-val">${partidos}</div></div>
+    <div class="metric"><div class="metric-label">EV% prom</div><div class="metric-val" style="color:var(--amber-mid)">${avgEV!=null?fmt(avgEV,1)+'%':'--'}</div></div>
+    <div class="metric"><div class="metric-label">Prob prom</div><div class="metric-val">${avgProb!=null?fmt(avgProb,1)+'%':'--'}</div></div>`;
+
+  // Table
+  const tbody=document.getElementById('wl-tbody');
+  if(!allWL.length){tbody.innerHTML='<tr><td colspan="8" class="empty">Sin items en watchlist</td></tr>';
+  }else{
+    tbody.innerHTML=allWL.map((w,i)=>{
+      const evC=w.ev_pct>=0?'pl-pos':'pl-neg';
+      return`<tr>
+        <td style="color:var(--text3);font-size:12px">${i+1}</td>
+        <td><div class="partido-cell">${w.partido.partido}</div><div class="partido-sub">J${w.partido.jornada} · ${w.partido.fecha}</div></td>
+        <td>${badge(LIGA_NAMES[w.partido.liga]||w.partido.liga,'liga')}</td>
+        <td>${w.mercado}</td>
+        <td class="num">${fmt(w.cuota)}</td>
+        <td class="num">${fmtP(w.prob)}</td>
+        <td class="num ${evC}">${w.ev_pct!=null?(w.ev_pct>=0?'+':'')+fmt(w.ev_pct,1)+'%':'--'}</td>
+        <td>${w.partido.resultado_partido||'<span style="color:var(--text3)">Pendiente</span>'}</td>
+      </tr>`;
+    }).join('');
+  }
+
+  // By market
+  const mktMap={};
+  allWL.forEach(w=>{const k=w.mercado;if(!mktMap[k])mktMap[k]=[];mktMap[k].push(w);});
+  document.getElementById('wl-by-market').innerHTML=
+    Object.entries(mktMap).sort((a,b)=>b[1].length-a[1].length).slice(0,10).map(([m,items])=>{
+      const avgEv=items.reduce((s,w)=>s+(w.ev_pct||0),0)/items.length;
+      return`<div class="stat-row"><span class="stat-label" style="font-size:12px">${m}</span>
+        <span style="display:flex;gap:10px;font-size:12px">
+          <span style="color:var(--text3)">${items.length}x</span>
+          <span style="color:var(--amber-mid)">EV ${avgEv>=0?'+':''}${avgEv.toFixed(1)}%</span>
+        </span></div>`;
+    }).join('')||'<p class="empty">Sin datos</p>';
+
+  // EV distribution
+  const evBands=[{l:'-5 a -4%',min:-5,max:-4},{l:'-4 a -3%',min:-4,max:-3},{l:'-3 a -2%',min:-3,max:-2},{l:'-2 a -1%',min:-2,max:-1},{l:'-1 a 0%',min:-1,max:0.01}];
+  document.getElementById('wl-ev-dist').innerHTML=evBands.map(b=>{
+    const en=allWL.filter(w=>w.ev_pct>=b.min&&w.ev_pct<b.max);
+    const pct=totalWL?en.length/totalWL*100:0;
+    return`<div class="stat-row"><span class="stat-label" style="font-size:12px">${b.l}</span>
+      <span style="display:flex;align-items:center;gap:8px;font-size:12px">
+        <span style="color:var(--text3)">${en.length}</span>
+        <div class="bar-bg" style="width:80px"><div class="bar-fill" style="width:${pct}%;background:var(--amber-mid)"></div></div>
+      </span></div>`;
+  }).join('')||'<p class="empty">Sin datos</p>';
+}
+
+// ── Snapshot calibration helpers ─────────────────────────
+function renderSnapshotCalib(){
+  const snaps=_DATA.filter(p=>p.mercados_snapshot&&Object.keys(p.mercados_snapshot).length>0);
+  if(!snaps.length) return;
+  const allProbs=[];
+  snaps.forEach(p=>{
+    Object.entries(p.mercados_snapshot).forEach(([k,prob])=>{allProbs.push(prob);});
+  });
+  const note=document.getElementById('calib-sample-note');
+  if(note){
+    const existing=note.textContent||'';
+    note.textContent=existing+` | Snapshot: ${allProbs.length} predicciones en ${snaps.length} partidos.`;
+  }
+}
+
 function renderConfianza(){
   document.getElementById('conf-cards').innerHTML=['ALTA','MEDIA'].map(conf=>{
     const s=calcStats(flatBets({conf}).filter(a=>a.estado==='GANADA'||a.estado==='PERDIDA'));
@@ -1245,6 +1356,7 @@ function renderAll(){
   if(active==='mercados'){renderCuotaROI();renderTipoStats();renderMercadoFreq();}
   if(active==='ligas'){renderLigaTipo();renderLigaCards();}
   if(active==='variables'){renderVariablesHeatmap();}
+  if(active==='watchlist'){renderWatchlist();}
   if(active==='confianza'){renderConfianza();}
 }
 
@@ -1261,6 +1373,7 @@ document.querySelectorAll('.tab').forEach(tab=>{
     if(t==='mercados'){renderCuotaROI();renderTipoStats();renderMercadoFreq();}
     if(t==='ligas'){renderLigaTipo();renderLigaCards();}
     if(t==='variables'){renderVariablesHeatmap();}
+    if(t==='watchlist'){renderWatchlist();}
     if(t==='confianza'){renderConfianza();}
   });
 });
