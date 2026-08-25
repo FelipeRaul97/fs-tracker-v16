@@ -191,6 +191,7 @@
     <div class="tab" data-tab="calibracion">Calibración</div>
     <div class="tab" data-tab="watchlist">Watchlist</div>
     <div class="tab" data-tab="confianza">Confianza</div>
+    <div class="tab" data-tab="diagnostico">Diagnóstico</div>
   </div>
 
   <!-- Apuestas -->
@@ -396,6 +397,36 @@
   <!-- Confianza -->
   <div class="tab-panel" id="tab-confianza">
     <div class="grid2" id="conf-cards"></div>
+  </div>
+
+  <!-- Diagnostico: donde acierta el modelo y donde no -->
+  <div class="tab-panel" id="tab-diagnostico">
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
+        <div class="card-title">Ranking por equipo — ¿con quién acierta el modelo?</div>
+        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">
+          Sobre las 59 predicciones de cada partido, no solo las apostadas.
+          Sesgo = lo que dijo el modelo − lo que pasó.</p>
+        <div id="diag-equipos"></div>
+      </div>
+    </div>
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card"><div class="card-title">Por liga</div><div id="diag-ligas"></div></div>
+      <div class="card"><div class="card-title">Por nivel de confianza</div><div id="diag-conf"></div></div>
+    </div>
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
+        <div class="card-title">λ shadow vs λ final — ¿deberían aplicarse las variables?</div>
+        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">
+          Error absoluto medio contra los goles reales. Si shadow gana de forma
+          consistente, las V# merecen volver a tocar λ.</p>
+        <div id="diag-shadow"></div>
+      </div>
+    </div>
+    <div class="grid2">
+      <div class="card"><div class="card-title">Por variable activa</div><div id="diag-vars"></div></div>
+      <div class="card"><div class="card-title">Cobertura del mercado</div><div id="diag-cobertura"></div></div>
+    </div>
   </div>
 
 </div>
@@ -1639,6 +1670,106 @@ function renderCrucesValidados(){
       "Necesita" es el acierto medio que exigirían esas cuotas para no perder. ${veredicto}</p>`;
 }
 
+// -- Diagnostico: donde acierta el modelo y donde no --------------------------
+// Usa mercados_snapshot + snapshot_resultados (59 predicciones por partido), no
+// solo las apostadas: la muestra es 10x mayor y no esta sesgada por lo que uno
+// eligio cotizar.
+function _diagObs(){
+  const o=[];
+  _DATA.forEach(p=>{
+    const s=p.mercados_snapshot, r=p.snapshot_resultados;
+    if(!s||!r) return;
+    const [loc,vis]=(p.partido||' vs ').split(' vs ').map(x=>x.trim());
+    Object.entries(r).forEach(([k,ac])=>{
+      if(s[k]==null) return;
+      o.push({prob:s[k], acerto:!!ac, liga:p.liga, conf:p.confianza,
+              loc, vis, vars:p.variables||{}, entry:p});
+    });
+  });
+  return o;
+}
+
+function _tablaSesgo(filas, etqCol){
+  if(!filas.length) return '<p class="empty">Sin partidos cerrados todavía.</p>';
+  return '<table class="hm-table"><thead><tr>'
+    +'<th style="text-align:left">'+etqCol+'</th><th>N</th><th>Predicho</th>'
+    +'<th>Real</th><th>Sesgo</th></tr></thead><tbody>'
+    +filas.map(f=>{
+      const c=Math.abs(f.sesgo)<2?'var(--text3)':(f.sesgo>0?'var(--red)':'var(--green)');
+      return '<tr><td style="text-align:left">'+f.k+'</td>'
+        +'<td style="color:var(--text3)">'+f.n+'</td>'
+        +'<td>'+f.pred.toFixed(1)+'%</td><td>'+f.real.toFixed(1)+'%</td>'
+        +'<td style="color:'+c+';font-weight:600">'+(f.sesgo>=0?'+':'')+f.sesgo.toFixed(1)+'%</td></tr>';
+    }).join('')+'</tbody></table>';
+}
+
+function _agrupar(obs, fn, minN){
+  const m={};
+  obs.forEach(o=>{ const ks=fn(o); (Array.isArray(ks)?ks:[ks]).forEach(k=>{
+    if(k==null) return; (m[k]=m[k]||[]).push(o); }); });
+  return Object.entries(m).filter(([,a])=>a.length>=(minN||30)).map(([k,a])=>{
+    const pred=a.reduce((s,o)=>s+o.prob,0)/a.length;
+    const real=a.filter(o=>o.acerto).length/a.length*100;
+    return {k,n:a.length,pred,real,sesgo:pred-real};
+  }).sort((x,y)=>Math.abs(y.sesgo)-Math.abs(x.sesgo));
+}
+
+function renderDiagnostico(){
+  const eq=document.getElementById('diag-equipos');
+  if(!eq) return;
+  const obs=_diagObs();
+
+  // un partido aporta a los DOS equipos: el modelo predijo sobre ambos
+  eq.innerHTML=_tablaSesgo(_agrupar(obs,o=>[o.loc,o.vis],59),'Equipo');
+  document.getElementById('diag-ligas').innerHTML=
+    _tablaSesgo(_agrupar(obs,o=>LIGA_NAMES[o.liga]||o.liga,59),'Liga');
+  document.getElementById('diag-conf').innerHTML=
+    _tablaSesgo(_agrupar(obs,o=>o.conf,59),'Confianza');
+  document.getElementById('diag-vars').innerHTML=
+    _tablaSesgo(_agrupar(obs,o=>Object.entries(o.vars)
+      .filter(([,v])=>v&&(v.activa||v.activa_local||v.activa_visit))
+      .map(([k])=>k.toUpperCase().replace('V','V#')),59),'Variable');
+
+  // lambda shadow vs final: error absoluto contra los goles reales
+  const sh=document.getElementById('diag-shadow');
+  const cer=_DATA.filter(p=>p.resultado_partido&&p.lambda_shadow_l!=null);
+  if(cer.length<5){
+    sh.innerHTML='<p class="empty">Hacen falta 5+ partidos cerrados ('+cer.length+' por ahora).</p>';
+  }else{
+    let ef=0,es=0;
+    cer.forEach(p=>{
+      const [gh,ga]=p.resultado_partido.split('-').map(Number);
+      ef+=Math.abs(p.lambda_final_l-gh)+Math.abs(p.lambda_final_v-ga);
+      es+=Math.abs(p.lambda_shadow_l-gh)+Math.abs(p.lambda_shadow_v-ga);
+    });
+    ef/=cer.length*2; es/=cer.length*2;
+    const gana=es<ef;
+    sh.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px">'
+      +'<div class="metric"><div class="metric-label">Partidos</div><div class="metric-val">'+cer.length+'</div></div>'
+      +'<div class="metric"><div class="metric-label">Error λ final</div><div class="metric-val">'+ef.toFixed(3)+'</div></div>'
+      +'<div class="metric"><div class="metric-label">Error λ shadow</div><div class="metric-val">'+es.toFixed(3)+'</div></div>'
+      +'</div><p style="font-size:12px;margin-top:10px;color:var(--text3)">'
+      +(gana?'<span class="pl-pos">Shadow gana por '+(ef-es).toFixed(3)+' goles.</span> Con muestra suficiente, revisar si las V# deben volver a λ.'
+            :'<span>λ final gana por '+(es-ef).toFixed(3)+' goles.</span> Las V# siguen sin justificar tocar λ.')
+      +'</p>';
+  }
+
+  // cobertura: de las validadas que encuentra el engine, cuantas se cotizan
+  const cob=document.getElementById('diag-cobertura');
+  const todas=_DATA.flatMap(p=>p.validadas||[]);
+  if(!todas.length){
+    cob.innerHTML='<p class="empty">Sin selecciones validadas registradas.</p>';
+  }else{
+    const cot=todas.filter(v=>v.cotizada).length;
+    cob.innerHTML='<div class="stat-row"><span class="stat-label">Validadas encontradas</span>'
+      +'<span>'+todas.length+'</span></div>'
+      +'<div class="stat-row"><span class="stat-label">Con cuota registrada</span>'
+      +'<span>'+cot+' ('+(cot/todas.length*100).toFixed(0)+'%)</span></div>'
+      +'<p style="font-size:12px;color:var(--text3);margin-top:8px">Cuanto más alto, menos '
+      +'sesgada la muestra para saber con qué frecuencia el mercado paga sobre la línea.</p>';
+  }
+}
+
 function renderSnapshotCalib(){
   const obs=[];
   _DATA.forEach(p=>{
@@ -1787,6 +1918,7 @@ function renderAll(){
   if(active==='ligas'){renderLigaTipo();renderLigaRollingROI();renderLigaCards();}
   if(active==='variables'){renderVariablesHeatmap();}
   if(active==='watchlist'){renderWatchlist();renderCrucesValidados();}
+    if(active==='diagnostico'){renderDiagnostico();}
   if(active==='confianza'){renderConfianza();}
 }
 
@@ -1804,6 +1936,7 @@ document.querySelectorAll('.tab').forEach(tab=>{
     if(t==='ligas'){renderLigaTipo();renderLigaCards();}
     if(t==='variables'){renderVariablesHeatmap();}
     if(t==='watchlist'){renderWatchlist();renderCrucesValidados();}
+    if(t==='diagnostico'){renderDiagnostico();}
     if(t==='confianza'){renderConfianza();}
   });
 });
