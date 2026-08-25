@@ -370,11 +370,21 @@
         <div class="card-title">Watchlist por partido</div>
         <div class="table-wrap">
           <table><thead><tr>
-            <th>#</th><th>Partido</th><th>Liga</th><th>Mercado</th>
-            <th class="num">Cuota</th><th class="num">Prob%</th><th class="num">EV%</th>
-            <th>Resultado</th>
+            <th>#</th><th>Partido</th><th>Liga</th><th>Tipo</th><th>Mercado</th>
+            <th class="num">Cuota</th><th class="num">Justa</th><th class="num">Prob%</th>
+            <th class="num">EV%</th><th>Línea</th><th>Salió</th>
           </tr></thead><tbody id="wl-tbody"></tbody></table>
         </div>
+      </div>
+    </div>
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
+        <div class="card-title">Cruce de línea validada — ¿sirve el criterio?</div>
+        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">
+          "Cruza" = la cuota ofrecida supera la que justifica el acierto histórico de su banda.
+          Si el criterio vale, las que cruzaban deben salir más que las que no.</p>
+        <div id="cruces-resumen"></div>
+        <div id="cruces-detalle" style="margin-top:14px"></div>
       </div>
     </div>
     <div class="grid2">
@@ -1489,38 +1499,61 @@ function renderWatchlist(){
 
   // Table
   const tbody=document.getElementById('wl-tbody');
-  if(!allWL.length){tbody.innerHTML='<tr><td colspan="8" class="empty">Sin items en watchlist</td></tr>';
+  if(!allWL.length){tbody.innerHTML='<tr><td colspan="11" class="empty">Sin items en watchlist</td></tr>';
   }else{
     tbody.innerHTML=allWL.map((w,i)=>{
       const evC=w.ev_pct>=0?'pl-pos':'pl-neg';
+      // cruza = la cuota ofrecida supera la que justifica el historial de su banda.
+      // Es distinto de EV>0: aquel usa la p cruda del modelo, esta el acierto real.
+      const cruza=(w.cuota!=null&&w.cuota_justa!=null)?w.cuota>=w.cuota_justa:null;
+      const salio=w.acerto==null?'<span style="color:var(--text3)">—</span>'
+        :(w.acerto?'<span class="pl-pos">ACERTÓ</span>':'<span class="pl-neg">falló</span>');
       return`<tr>
         <td style="color:var(--text3);font-size:12px">${i+1}</td>
         <td><div class="partido-cell">${w.partido.partido}</div><div class="partido-sub">J${w.partido.jornada} · ${w.partido.fecha}</div></td>
         <td>${badge(LIGA_NAMES[w.partido.liga]||w.partido.liga,'liga')}</td>
+        <td>${_wlTipo(w)}</td>
         <td>${w.etiqueta||w.mercado}</td>
         <td class="num">${fmt(w.cuota)}</td>
+        <td class="num" style="color:var(--text3)">${w.cuota_justa!=null?fmt(w.cuota_justa):'—'}</td>
         <td class="num">${fmtP(w.prob)}</td>
         <td class="num ${evC}">${w.ev_pct!=null?(w.ev_pct>=0?'+':'')+fmt(w.ev_pct,1)+'%':'--'}</td>
-        <td>${w.partido.resultado_partido||'<span style="color:var(--text3)">Pendiente</span>'}</td>
+        <td>${cruza==null?'<span style="color:var(--text3)">—</span>'
+             :(cruza?'<span class="pl-pos">cruza</span>':'<span style="color:var(--text3)">no</span>')}</td>
+        <td>${salio}</td>
       </tr>`;
     }).join('');
   }
 
   // By market
   const mktMap={};
-  allWL.forEach(w=>{const k=w.mercado;if(!mktMap[k])mktMap[k]=[];mktMap[k].push(w);});
+  allWL.forEach(w=>{const k=_wlGrupo(w);if(!mktMap[k])mktMap[k]=[];mktMap[k].push(w);});
   document.getElementById('wl-by-market').innerHTML=
     Object.entries(mktMap).sort((a,b)=>b[1].length-a[1].length).slice(0,10).map(([m,items])=>{
       const avgEv=items.reduce((s,w)=>s+(w.ev_pct||0),0)/items.length;
+      const cerr=items.filter(w=>w.acerto!=null);
+      const wr=cerr.length?(cerr.filter(w=>w.acerto).length/cerr.length*100):null;
       return`<div class="stat-row"><span class="stat-label" style="font-size:12px">${m}</span>
         <span style="display:flex;gap:10px;font-size:12px">
           <span style="color:var(--text3)">${items.length}x</span>
+          ${wr!=null?`<span style="color:var(--text2)">${wr.toFixed(0)}% ac.</span>`:''}
           <span style="color:var(--amber-mid)">EV ${avgEv>=0?'+':''}${avgEv.toFixed(1)}%</span>
         </span></div>`;
     }).join('')||'<p class="empty">Sin datos</p>';
 
   // EV distribution
-  const evBands=[{l:'-5 a -4%',min:-5,max:-4},{l:'-4 a -3%',min:-4,max:-3},{l:'-3 a -2%',min:-3,max:-2},{l:'-2 a -1%',min:-2,max:-1},{l:'-1 a 0%',min:-1,max:0.01}];
+  // Las bandas estaban cableadas de -5% a 0%, de cuando el watchlist solo tenia
+  // mercados con EV negativo. Los mercados POR EQUIPO y las COMBINADAS entran
+  // aunque el EV sea positivo (+12% en casos reales): caian fuera de toda banda y
+  // desaparecian del grafico sin avisar. Ahora las bandas cubren lo que haya.
+  const evVals=allWL.map(w=>w.ev_pct).filter(v=>v!=null);
+  const evMin=Math.floor(Math.min(-5,...evVals)), evMax=Math.ceil(Math.max(1,...evVals));
+  const paso=Math.max(1,Math.ceil((evMax-evMin)/8));
+  const evBands=[];
+  for(let a=evMin;a<evMax;a+=paso){
+    const b=Math.min(a+paso,evMax);
+    evBands.push({l:`${a>0?'+':''}${a} a ${b>0?'+':''}${b}%`,min:a,max:(b>=evMax?b+0.01:b)});
+  }
   document.getElementById('wl-ev-dist').innerHTML=evBands.map(b=>{
     const en=allWL.filter(w=>w.ev_pct>=b.min&&w.ev_pct<b.max);
     const pct=totalWL?en.length/totalWL*100:0;
@@ -1533,6 +1566,79 @@ function renderWatchlist(){
 }
 
 // ── Snapshot calibration helpers ─────────────────────────
+// La pregunta que justifica todo el mecanismo de selecciones validadas: de las que
+// CRUZABAN su linea, ¿salieron mas que las que no? Es el unico experimento que no se
+// puede hacer con datos descargados -- necesita las cuotas que se vieron en su momento.
+function renderCrucesValidados(){
+  const rEl=document.getElementById('cruces-resumen');
+  const dEl=document.getElementById('cruces-detalle');
+  if(!rEl) return;
+
+  const todos=_DATA.flatMap(p=>(p.cruces_validados||[]).map(c=>({...c,partido:p})));
+  const cerr=todos.filter(c=>c.acerto!=null);
+
+  if(!todos.length){
+    rEl.innerHTML='<p class="empty">Sin selecciones validadas registradas todavía.</p>';
+    dEl.innerHTML=''; return;
+  }
+
+  const grupo=(arr)=>{
+    if(!arr.length) return null;
+    const ac=arr.filter(c=>c.acerto).length;
+    return {n:arr.length, ac, wr:ac/arr.length*100,
+            // acierto que HARIA FALTA de media para que esas cuotas sean rentables
+            be:arr.reduce((s,c)=>s+1/c.cuota,0)/arr.length*100,
+            roi:arr.reduce((s,c)=>s+(c.acerto?c.cuota-1:-1),0)/arr.length*100};
+  };
+  const cruzan=grupo(cerr.filter(c=>c.cruza));
+  const noCruzan=grupo(cerr.filter(c=>!c.cruza));
+  const seguras=grupo(cerr.filter(c=>c.cruza_segura));
+
+  rEl.innerHTML=`
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px">
+      <div class="metric"><div class="metric-label">Registradas</div><div class="metric-val">${todos.length}</div></div>
+      <div class="metric"><div class="metric-label">Cerradas</div><div class="metric-val">${cerr.length}</div></div>
+      <div class="metric"><div class="metric-label">Cruzaban</div><div class="metric-val amber">${todos.filter(c=>c.cruza).length}</div></div>
+      <div class="metric"><div class="metric-label">Cruce seguro</div><div class="metric-val">${todos.filter(c=>c.cruza_segura).length}</div></div>
+    </div>`;
+
+  if(cerr.length<10){
+    dEl.innerHTML=`<p class="empty">Solo ${cerr.length} cerradas. Hacen falta ~200 para que la
+      comparación signifique algo — con ~6 por partido, unos 33 partidos.</p>`;
+    return;
+  }
+
+  const fila=(lbl,g,destacar)=>{
+    if(!g) return `<tr><td>${lbl}</td><td colspan="5" class="empty">sin datos</td></tr>`;
+    const cls=g.roi>=0?'pl-pos':'pl-neg';
+    return`<tr${destacar?' style="background:var(--amber-bg)"':''}>
+      <td><strong>${lbl}</strong></td>
+      <td class="num">${g.n}</td>
+      <td class="num">${g.wr.toFixed(1)}%</td>
+      <td class="num" style="color:var(--text3)">${g.be.toFixed(1)}%</td>
+      <td class="num ${g.wr>=g.be?'pl-pos':'pl-neg'}">${(g.wr-g.be>=0?'+':'')}${(g.wr-g.be).toFixed(1)}</td>
+      <td class="num ${cls}">${(g.roi>=0?'+':'')}${g.roi.toFixed(2)}%</td></tr>`;
+  };
+
+  const veredicto=(cruzan&&noCruzan)
+    ? (cruzan.roi>noCruzan.roi
+        ? `<span class="pl-pos">Las que cruzaban rinden ${(cruzan.roi-noCruzan.roi).toFixed(1)} puntos más.</span>`
+        : `<span class="pl-neg">Las que cruzaban rinden ${(noCruzan.roi-cruzan.roi).toFixed(1)} puntos MENOS — el criterio no está funcionando.</span>`)
+    : '';
+
+  dEl.innerHTML=`
+    <div class="table-wrap"><table><thead><tr>
+      <th>Grupo</th><th class="num">n</th><th class="num">Acertó</th>
+      <th class="num">Necesita</th><th class="num">Margen</th><th class="num">ROI</th>
+    </tr></thead><tbody>
+      ${fila('Cruzaban',cruzan,true)}
+      ${fila('No cruzaban',noCruzan,false)}
+      ${fila('Cruce seguro (IC95)',seguras,false)}
+    </tbody></table></div>
+    <p style="font-size:12px;color:var(--text3);margin-top:10px">
+      "Necesita" es el acierto medio que exigirían esas cuotas para no perder. ${veredicto}</p>`;
+}
+
 function renderSnapshotCalib(){
   const obs=[];
   _DATA.forEach(p=>{
@@ -1612,6 +1718,27 @@ function _claveMercado(k){
   return m?m[1]:k;
 }
 
+// El watchlist mezcla tres cosas desde v16: mercados de goles con EV entre -5% y 0%,
+// mercados POR EQUIPO (siempre, aunque el EV sea positivo) y COMBINADAS correlacionadas.
+// Sin distinguirlos, la tabla y el ranking por mercado los promedian juntos.
+function _wlTipo(w){
+  const t=w.tipo||(String(w.mercado||'').includes('+')?'COMBINADA':'GOLES');
+  if(t==='COMBINADA') return badge('Combi','watchlist');
+  if(t==='POR_EQUIPO') return badge('Equipo','liga');
+  return badge('Goles','tipo');
+}
+
+// Agrupa las combinadas por el PAR de mercados, sin las lineas concretas:
+// 'local_corners_equipo_over3.5+local_remates_over8.5' -> 'corners_equipo + remates'.
+// Con 49 pares x varias bandas, agrupar por la clave completa da una fila por
+// observacion y el ranking deja de significar nada.
+function _wlGrupo(w){
+  const k=String(w.mercado||'');
+  if(!k.includes('+')) return _claveMercado(k);
+  return k.split('+').map(p=>_claveMercado(p.trim())
+    .replace(/^local_/,'L ').replace(/^visit_/,'V ')).join(' + ');
+}
+
 function _tablaBandas(obs){
   const B=[[0,20],[20,30],[30,40],[40,50],[50,60],[60,70],[70,80],[80,90],[90,101]];
   return '<table class="hm-table"><thead><tr><th>Banda</th><th>N</th><th>Predicho</th>'
@@ -1659,7 +1786,7 @@ function renderAll(){
   if(active==='mercados'){renderCuotaROI();renderMercadoCuotaHeatmap();renderTipoStats();renderMercadoFreq();}
   if(active==='ligas'){renderLigaTipo();renderLigaRollingROI();renderLigaCards();}
   if(active==='variables'){renderVariablesHeatmap();}
-  if(active==='watchlist'){renderWatchlist();}
+  if(active==='watchlist'){renderWatchlist();renderCrucesValidados();}
   if(active==='confianza'){renderConfianza();}
 }
 
@@ -1676,7 +1803,7 @@ document.querySelectorAll('.tab').forEach(tab=>{
     if(t==='mercados'){renderCuotaROI();renderTipoStats();renderMercadoFreq();}
     if(t==='ligas'){renderLigaTipo();renderLigaCards();}
     if(t==='variables'){renderVariablesHeatmap();}
-    if(t==='watchlist'){renderWatchlist();}
+    if(t==='watchlist'){renderWatchlist();renderCrucesValidados();}
     if(t==='confianza'){renderConfianza();}
   });
 });
