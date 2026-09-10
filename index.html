@@ -1628,6 +1628,17 @@ function renderLigaRollingROI(){
 }
 
 // ── Watchlist tab ─────────────────────────────────────────
+// Despliega/colapsa los items de un partido en el acordeon del watchlist. Global
+// (via onclick inline) para sobrevivir los re-render de renderWatchlist.
+function toggleWLGroup(gid){
+  const rows=document.querySelectorAll('#wl-tbody tr.wl-detail[data-gid="'+gid+'"]');
+  let abierto=false;
+  rows.forEach(r=>{ r.hidden=!r.hidden; abierto=!r.hidden; });
+  const caret=document.querySelector('#wl-tbody tr.wl-group[data-gid="'+gid+'"] .wl-caret');
+  if(caret) caret.textContent=abierto?'▼':'▶';
+}
+window.toggleWLGroup=toggleWLGroup;
+
 function renderWatchlist(){
   const allWL=_dataLiga().flatMap(p=>(p.watchlist||[]).map(w=>({...w,partido:p})));
   const el=document.getElementById('wl-summary');
@@ -1643,32 +1654,59 @@ function renderWatchlist(){
     <div class="metric"><div class="metric-label">EV% prom</div><div class="metric-val" style="color:var(--amber-mid)">${avgEV!=null?fmt(avgEV,1)+'%':'--'}</div></div>
     <div class="metric"><div class="metric-label">Prob prom</div><div class="metric-val">${avgProb!=null?fmt(avgProb,1)+'%':'--'}</div></div>`;
 
-  // Table
+  // Table — ACORDEON por partido. Con 18 items/partido una lista plana se vuelve
+  // ingobernable; se muestra un renglon-resumen por partido (colapsado) y se
+  // despliega solo el que se selecciona.
   const tbody=document.getElementById('wl-tbody');
   if(!allWL.length){tbody.innerHTML='<tr><td colspan="11" class="empty">Sin items en watchlist</td></tr>';
   }else{
-    tbody.innerHTML=allWL.map((w,i)=>{
-      const evC=w.ev_pct>=0?'pl-pos':'pl-neg';
-      // cruza = la cuota ofrecida supera la que justifica el historial de su banda.
-      // Es distinto de EV>0: aquel usa la p cruda del modelo, esta el acierto real.
-      const cruza=(w.cuota!=null&&w.cuota_justa!=null)?w.cuota>=w.cuota_justa:null;
-      const salio=w.acerto==null?'<span style="color:var(--text3)">—</span>'
-        :(w.acerto?'<span class="pl-pos">ACERTÓ</span>':'<span class="pl-neg">falló</span>');
-      return`<tr>
-        <td style="color:var(--text3);font-size:12px">${i+1}</td>
-        <td><div class="partido-cell">${w.partido.partido}</div><div class="partido-sub">J${w.partido.jornada} · ${w.partido.fecha}</div></td>
-        <td>${badge(LIGA_NAMES[w.partido.liga]||w.partido.liga,'liga')}</td>
-        <td>${_wlTipo(w)}</td>
-        <td>${w.etiqueta||w.mercado}</td>
-        <td class="num">${fmt(w.cuota)}</td>
-        <td class="num" style="color:var(--text3)">${w.cuota_justa!=null?fmt(w.cuota_justa):'—'}</td>
-        <td class="num">${fmtP(w.prob)}</td>
-        <td class="num ${evC}">${w.ev_pct!=null?(w.ev_pct>=0?'+':'')+fmt(w.ev_pct,1)+'%':'--'}</td>
-        <td>${cruza==null?'<span style="color:var(--text3)">—</span>'
-             :(cruza?'<span class="pl-pos">cruza</span>':'<span style="color:var(--text3)">no</span>')}</td>
-        <td>${salio}</td>
-      </tr>`;
-    }).join('');
+    const groups=new Map();
+    allWL.forEach(w=>{ const g=w.partido.id||w.partido.partido;
+      if(!groups.has(g)) groups.set(g,{p:w.partido, items:[]});
+      groups.get(g).items.push(w); });
+    const arr=[...groups.values()].sort((a,b)=>new Date(b.p.fecha)-new Date(a.p.fecha));
+    let html='';
+    arr.forEach(({p,items})=>{
+      const gid=String(p.id||p.partido).replace(/[^\w-]/g,'');
+      const nEq=items.filter(w=>w.tipo==='POR_EQUIPO').length;
+      const nComb=items.filter(w=>w.tipo==='COMBINADA').length;
+      const nEdge=items.filter(w=>w.filtro_edge).length;
+      const n1x2=items.filter(w=>w.regla_1x2_no_pick).length;
+      const cerr=items.filter(w=>w.acerto!=null);
+      const hits=cerr.filter(w=>w.acerto).length;
+      const res=[items.length+' ítems'];
+      if(nComb) res.push(nComb+' comb.');
+      if(nEq) res.push(nEq+' x equipo');
+      if(nEdge) res.push('<span style="color:var(--amber-mid)">'+nEdge+' filtro edge</span>');
+      if(n1x2) res.push(n1x2+' capa 1X2');
+      if(cerr.length) res.push('<b>'+hits+'/'+cerr.length+' acertaron</b>');
+      // renglon-resumen del partido (clickable)
+      html+='<tr class="wl-group" data-gid="'+gid+'" onclick="toggleWLGroup(\''+gid+'\')" style="cursor:pointer;background:var(--surface2)">'
+        +'<td class="wl-caret" style="color:var(--text3);font-weight:700">▶</td>'
+        +'<td colspan="2"><div class="partido-cell">'+p.partido+'</div>'
+          +'<div class="partido-sub">J'+p.jornada+' · '+p.fecha+'</div></td>'
+        +'<td>'+badge(LIGA_NAMES[p.liga]||p.liga,'liga')+'</td>'
+        +'<td colspan="7" style="color:var(--text3);font-size:12px">'+res.join(' · ')+'</td></tr>';
+      // detalle (oculto hasta desplegar); Partido/Liga en blanco -> ya estan en el header
+      items.forEach(w=>{
+        const evC=w.ev_pct>=0?'pl-pos':'pl-neg';
+        const cruza=(w.cuota!=null&&w.cuota_justa!=null)?w.cuota>=w.cuota_justa:null;
+        const salio=w.acerto==null?'<span style="color:var(--text3)">—</span>'
+          :(w.acerto?'<span class="pl-pos">ACERTÓ</span>':'<span class="pl-neg">falló</span>');
+        html+='<tr class="wl-detail" data-gid="'+gid+'" hidden>'
+          +'<td></td><td></td><td></td>'
+          +'<td style="padding-left:14px">'+_wlTipo(w)+'</td>'
+          +'<td>'+(w.etiqueta||w.mercado)+'</td>'
+          +'<td class="num">'+fmt(w.cuota)+'</td>'
+          +'<td class="num" style="color:var(--text3)">'+(w.cuota_justa!=null?fmt(w.cuota_justa):'—')+'</td>'
+          +'<td class="num">'+fmtP(w.prob)+'</td>'
+          +'<td class="num '+evC+'">'+(w.ev_pct!=null?(w.ev_pct>=0?'+':'')+fmt(w.ev_pct,1)+'%':'--')+'</td>'
+          +'<td>'+(cruza==null?'<span style="color:var(--text3)">—</span>'
+               :(cruza?'<span class="pl-pos">cruza</span>':'<span style="color:var(--text3)">no</span>'))+'</td>'
+          +'<td>'+salio+'</td></tr>';
+      });
+    });
+    tbody.innerHTML=html;
   }
 
   // By market
