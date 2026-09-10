@@ -209,6 +209,7 @@
         <option value="PICK">PICK</option><option value="COMBO">COMBO</option></select>
       <select id="f-conf"><option value="">Toda confianza</option>
         <option value="ALTA">Alta</option><option value="MEDIA">Media</option></select>
+      <span id="f-liga-eco" class="filter-label" style="margin-left:auto;font-style:italic"></span>
     </div>
     <div class="table-wrap">
       <table><thead><tr>
@@ -612,6 +613,18 @@ function calcStats(apuestas){
   const evArr=settled.filter(a=>a.ev_pct!=null);
   const evProm=evArr.length?evArr.reduce((s,a)=>s+a.ev_pct,0)/evArr.length:null;
   return{total:apuestas.length,settled:settled.length,ganadas,pl,wr,evProm,roi:settled.length?pl/settled.length*100:null};
+}
+
+// Liga seleccionada en el filtro global (vacio = todas). Las vistas que ACUMULAN
+// datos (Diagnostico, calibracion del snapshot, watchlist) leen _dataLiga() en vez
+// de _DATA para respetar el filtro. La pestaña "Ligas" NO lo usa: es el desglose
+// comparativo y debe mostrar siempre todas.
+function _ligaSel(){ const el=document.getElementById('f-liga'); return el?el.value:''; }
+function _dataLiga(){ const L=_ligaSel(); return L?_DATA.filter(p=>p.liga===L):_DATA; }
+const LIGA_NOMBRE={D1:'Bundesliga',E0:'Premier',F1:'Ligue 1',I1:'Serie A',SP1:'La Liga'};
+function _ecoLiga(){ const L=_ligaSel();
+  const el=document.getElementById('f-liga-eco'); if(!el)return;
+  el.textContent = L ? 'mostrando: '+(LIGA_NOMBRE[L]||L) : 'mostrando: todas las ligas';
 }
 
 function flatBets(filter={}){
@@ -1595,11 +1608,11 @@ function renderLigaRollingROI(){
 
 // ── Watchlist tab ─────────────────────────────────────────
 function renderWatchlist(){
-  const allWL=_DATA.flatMap(p=>(p.watchlist||[]).map(w=>({...w,partido:p})));
+  const allWL=_dataLiga().flatMap(p=>(p.watchlist||[]).map(w=>({...w,partido:p})));
   const el=document.getElementById('wl-summary');
 
   const totalWL=allWL.length;
-  const partidos=_DATA.filter(p=>(p.watchlist||[]).length>0).length;
+  const partidos=_dataLiga().filter(p=>(p.watchlist||[]).length>0).length;
   const avgEV=totalWL?allWL.reduce((s,w)=>s+(w.ev_pct||0),0)/totalWL:null;
   const avgProb=totalWL?allWL.reduce((s,w)=>s+(w.prob||0),0)/totalWL:null;
 
@@ -1686,7 +1699,7 @@ function renderCrucesValidados(){
   const dEl=document.getElementById('cruces-detalle');
   if(!rEl) return;
 
-  const todos=_DATA.flatMap(p=>(p.cruces_validados||[]).map(c=>({...c,partido:p})));
+  const todos=_dataLiga().flatMap(p=>(p.cruces_validados||[]).map(c=>({...c,partido:p})));
   const cerr=todos.filter(c=>c.acerto!=null);
 
   if(!todos.length){
@@ -1757,7 +1770,7 @@ function renderCrucesValidados(){
 // eligio cotizar.
 function _diagObs(){
   const o=[];
-  _DATA.forEach(p=>{
+  _dataLiga().forEach(p=>{
     const s=p.mercados_snapshot, r=p.snapshot_resultados;
     if(!s||!r) return;
     const [loc,vis]=(p.partido||' vs ').split(' vs ').map(x=>x.trim());
@@ -1813,7 +1826,7 @@ function renderDiagnostico(){
 
   // lambda shadow vs final: error absoluto contra los goles reales
   const sh=document.getElementById('diag-shadow');
-  const cer=_DATA.filter(p=>p.resultado_partido&&p.lambda_shadow_l!=null);
+  const cer=_dataLiga().filter(p=>p.resultado_partido&&p.lambda_shadow_l!=null);
   if(cer.length<5){
     sh.innerHTML='<p class="empty">Hacen falta 5+ partidos cerrados ('+cer.length+' por ahora).</p>';
   }else{
@@ -1840,7 +1853,7 @@ function renderDiagnostico(){
 
   // cobertura: de las validadas que encuentra el engine, cuantas se cotizan
   const cob=document.getElementById('diag-cobertura');
-  const todas=_DATA.flatMap(p=>p.validadas||[]);
+  const todas=_dataLiga().flatMap(p=>p.validadas||[]);
   if(!todas.length){
     cob.innerHTML='<p class="empty">Sin selecciones validadas registradas.</p>';
   }else{
@@ -1915,7 +1928,7 @@ function renderLambdaBandas(){
     .sort((a,b)=>_LAM_ORDER.indexOf(a.k)-_LAM_ORDER.indexOf(b.k));
   c1.innerHTML=_tablaSesgo(f1,'Banda λ_total');
 
-  const cer=_DATA.filter(p=>p.resultado_partido&&p.lambda_final_l!=null
+  const cer=_dataLiga().filter(p=>p.resultado_partido&&p.lambda_final_l!=null
     &&p.lambda_final_v!=null&&p.mercados_snapshot);
   const ou=document.getElementById('diag-lam-ou25');
   const gl=document.getElementById('diag-lam-goles');
@@ -2082,7 +2095,7 @@ function _bajasBanda(n){ if(n==null)return null; if(n<=0)return '0'; if(n<=2)ret
 function renderLambdaEquipoBajas(){
   const el=document.getElementById('diag-eqlado');
   if(!el) return;
-  const cer=_DATA.filter(p=>p.resultado_partido&&p.lambda_final_l!=null&&p.lambda_final_v!=null);
+  const cer=_dataLiga().filter(p=>p.resultado_partido&&p.lambda_final_l!=null&&p.lambda_final_v!=null);
 
   // (9) lambda por equipo vs goles, SEPARANDO local y visita.
   const gLoc={}, gVis={};
@@ -2122,7 +2135,7 @@ function renderLambdaEquipoBajas(){
 
 function renderSnapshotCalib(){
   const obs=[];
-  _DATA.forEach(p=>{
+  _dataLiga().forEach(p=>{
     const snap=p.mercados_snapshot, res=p.snapshot_resultados;
     if(!snap||!res) return;
     Object.entries(res).forEach(([k,acerto])=>{
@@ -2291,9 +2304,13 @@ document.querySelectorAll('.tab').forEach(tab=>{
   });
 });
 
+// El filtro ahora re-renderiza la pestaña activa (via renderAll), no solo Apuestas:
+// asi el selector de liga corta TOTAL/por-liga tambien en Diagnostico, calibracion
+// y watchlist. _ecoLiga() actualiza el rotulo "mostrando: ..." de la barra.
 ['f-liga','f-estado','f-tipo','f-conf'].forEach(id=>{
-  document.getElementById(id).addEventListener('change',renderBets);
+  document.getElementById(id).addEventListener('change',()=>{ _ecoLiga(); renderAll(); });
 });
+_ecoLiga();
 
 // Close modals on overlay click
 document.getElementById('edit-modal').addEventListener('click',e=>{if(e.target===e.currentTarget)closeEditModal();});
