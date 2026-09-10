@@ -97,26 +97,6 @@ const TRACKER_DATA = [
         "ev_pct": 1.6,
         "estado": "PENDIENTE",
         "pl": null
-      },
-      {
-        "tipo": "COMBO",
-        "mercado": "over15+hcp3_local",
-        "etiqueta": "Over 1.5 + HCP +3 L",
-        "cuota": 1.62,
-        "prob": 63.3,
-        "ev_pct": 2.5,
-        "estado": "PENDIENTE",
-        "pl": null,
-        "patas": [
-          "over15",
-          "hcp3_local"
-        ],
-        "promovida_combinada": true,
-        "nivel_cruce": "justa",
-        "cuota_justa": 1.56,
-        "cuota_segura": 1.71,
-        "acierto_hist": 64.1,
-        "n_hist": 284
       }
     ],
     "watchlist": [
@@ -460,17 +440,6 @@ const TRACKER_DATA = [
         "cruza_segura": false
       },
       {
-        "mercado": "over15+hcp3_local",
-        "etiqueta": "Over 1.5 + HCP +3 L",
-        "cuota": 1.62,
-        "justa": 1.56,
-        "segura": 1.71,
-        "hist": 64.1,
-        "n": 284,
-        "cruza": true,
-        "cruza_segura": false
-      },
-      {
         "mercado": "under35+hcp2_visit",
         "etiqueta": "Under 3.5 + HCP +2 V",
         "cuota": 1.47,
@@ -536,7 +505,7 @@ const TRACKER_DATA = [
         "cuota_segura": 1.71,
         "acierto_hist": 64.1,
         "n_hist": 284,
-        "cotizada": true
+        "cotizada": false
       },
       {
         "mercado": "under35+hcp2_visit",
