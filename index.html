@@ -484,6 +484,26 @@
         <div id="diag-lam-indep"></div>
       </div>
     </div>
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
+        <div class="card-title">λ por equipo y por bajas — raíz del modelo, no un mercado</div>
+        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">
+          Dos estudios que miran la λ continua (no un umbral) contra los goles que de
+          verdad marcó cada equipo. Cada partido cerrado aporta dos observaciones.</p>
+        <div style="font-size:12px;color:var(--text3);margin:6px 0 4px;font-weight:600">
+          ⑨ λ por equipo vs goles reales — ¿calibra igual de local que de visita?</div>
+        <p style="font-size:11px;color:var(--text3);margin:0 0 6px">
+          Si λ_visit tiene sesgo sistemático que λ_local no tiene, contamina todo lo del
+          visitante. Sesgo = λ media − goles medios del equipo en ese tramo.</p>
+        <div id="diag-eqlado"></div>
+        <div style="font-size:12px;color:var(--text3);margin:18px 0 4px;font-weight:600">
+          ⑩ Error de λ según magnitud de bajas (V#4) — ¿rinde de menos un equipo diezmado?</div>
+        <p style="font-size:11px;color:var(--text3);margin:0 0 6px">
+          No "hubo bajas sí/no" sino la dosis: 8 fuera vs 2. Sesgo &gt; 0 con muchas bajas
+          = el equipo marcó menos que su λ → argumento para que V#4 vuelva a tocar λ.</p>
+        <div id="diag-bajas"></div>
+      </div>
+    </div>
     <div class="grid2">
       <div class="card"><div class="card-title">Por variable activa</div><div id="diag-vars"></div></div>
       <div class="card"><div class="card-title">Cobertura del mercado</div><div id="diag-cobertura"></div></div>
@@ -1816,6 +1836,7 @@ function renderDiagnostico(){
   }
 
   renderLambdaBandas();
+  renderLambdaEquipoBajas();
 
   // cobertura: de las validadas que encuentra el engine, cuantas se cotizan
   const cob=document.getElementById('diag-cobertura');
@@ -2033,6 +2054,70 @@ function renderLambdaBandas(){
     +'<p style="font-size:11px;color:var(--text3);margin-top:6px">Global: '
     +(corrGlobal==null?'—':'<b>'+(corrGlobal>=0?'+':'')+corrGlobal.toFixed(2)+'</b>')
     +' sobre '+cer.length+' partidos. Poisson asume 0; una desviación estable justificaría un término de corrección.</p>';
+}
+
+// -- lambda por equipo (local vs visita) y por magnitud de bajas V#4 --------------
+// Renderiza una tabla de sesgo lambda-goles a partir de observaciones {lam,goles} ya
+// agrupadas por clave, en el orden dado. sesgo = lam medio - goles medios.
+function _tablaLamGoles(grupos, orden, etqCol){
+  const rows=orden.filter(k=>grupos[k]&&grupos[k].length);
+  if(!rows.length) return '<p class="empty">Sin datos todavía.</p>';
+  return '<table class="hm-table"><thead><tr><th style="text-align:left">'+etqCol+'</th>'
+    +'<th>N</th><th>λ media</th><th>Goles media</th><th>Sesgo</th></tr></thead><tbody>'
+    +rows.map(k=>{const a=grupos[k];
+      const lm=a.reduce((s,o)=>s+o.lam,0)/a.length;
+      const gm=a.reduce((s,o)=>s+o.goles,0)/a.length;
+      const sg=lm-gm, poco=a.length<15;
+      const cs=Math.abs(sg)<0.15?'var(--text3)':(sg>0?'var(--red)':'var(--green)');
+      return '<tr style="opacity:'+(poco?0.5:1)+'"><td style="text-align:left">'+k+'</td>'
+        +'<td style="color:var(--text3)">'+a.length+'</td>'
+        +'<td>'+lm.toFixed(2)+'</td><td>'+gm.toFixed(2)+'</td>'
+        +'<td style="color:'+cs+';font-weight:600">'+(sg>=0?'+':'')+sg.toFixed(2)+'</td></tr>';
+    }).join('')+'</tbody></table>';
+}
+const _BAJAS_ORDER=['0','1 – 2','3 – 4','5+'];
+function _bajasBanda(n){ if(n==null)return null; if(n<=0)return '0'; if(n<=2)return '1 – 2';
+  if(n<=4)return '3 – 4'; return '5+'; }
+
+function renderLambdaEquipoBajas(){
+  const el=document.getElementById('diag-eqlado');
+  if(!el) return;
+  const cer=_DATA.filter(p=>p.resultado_partido&&p.lambda_final_l!=null&&p.lambda_final_v!=null);
+
+  // (9) lambda por equipo vs goles, SEPARANDO local y visita.
+  const gLoc={}, gVis={};
+  cer.forEach(p=>{ const g=_golesReales(p);
+    const bl=_lamBandaEq(p.lambda_final_l); (gLoc[bl]=gLoc[bl]||[]).push({lam:p.lambda_final_l,goles:g.h});
+    const bv=_lamBandaEq(p.lambda_final_v); (gVis[bv]=gVis[bv]||[]).push({lam:p.lambda_final_v,goles:g.a});
+  });
+  // sesgo global de cada lado (error medio con signo) para la lectura de una linea
+  const glob=arr=>arr.length?arr.reduce((s,o)=>s+(o.lam-o.goles),0)/arr.length:null;
+  const allLoc=Object.values(gLoc).flat(), allVis=Object.values(gVis).flat();
+  const sgL=glob(allLoc), sgV=glob(allVis);
+  const resumen = (sgL==null||sgV==null) ? ''
+    : '<p style="font-size:12px;margin:8px 0 12px;color:var(--text3)">Sesgo global — '
+      +'<b>local '+(sgL>=0?'+':'')+sgL.toFixed(2)+'</b> · '
+      +'<b>visita '+(sgV>=0?'+':'')+sgV.toFixed(2)+'</b>. '
+      +(Math.abs(sgV)-Math.abs(sgL)>0.1?'λ_visit está peor calibrada — revisar el lado visitante.'
+        :Math.abs(sgL)-Math.abs(sgV)>0.1?'λ_local está peor calibrada.'
+        :'Ambos lados calibran parecido.')+'</p>';
+  el.innerHTML=resumen
+    +'<div style="font-size:11px;color:var(--text3);margin:4px 0 2px;font-weight:600">Local (con λ local)</div>'
+    +_tablaLamGoles(gLoc,_LAM_EQ_ORDER,'Banda λ equipo')
+    +'<div style="font-size:11px;color:var(--text3);margin:12px 0 2px;font-weight:600">Visita (con λ visita)</div>'
+    +_tablaLamGoles(gVis,_LAM_EQ_ORDER,'Banda λ equipo');
+
+  // (10) error de lambda por magnitud de bajas V#4.
+  const bEl=document.getElementById('diag-bajas');
+  const gB={};
+  cer.forEach(p=>{ const g=_golesReales(p); const v4=(p.variables||{}).v4||{};
+    const bl=_bajasBanda(v4.bajas_local); if(bl!=null)(gB[bl]=gB[bl]||[]).push({lam:p.lambda_final_l,goles:g.h});
+    const bv=_bajasBanda(v4.bajas_visit); if(bv!=null)(gB[bv]=gB[bv]||[]).push({lam:p.lambda_final_v,goles:g.a});
+  });
+  const anyB=Object.keys(gB).length;
+  bEl.innerHTML=(!anyB?'<p class="empty">Sin nº de bajas registrado en los cierres todavía.</p>'
+    :_tablaLamGoles(gB,_BAJAS_ORDER,'Bajas del XI (V#4)'))
+    +(anyB?'<p style="font-size:11px;color:var(--text3);margin-top:6px">Sesgo creciente con las bajas: el modelo no descuenta a los equipos diezmados y V#4 tendría motivo para aplicarse.</p>':'');
 }
 
 function renderSnapshotCalib(){
