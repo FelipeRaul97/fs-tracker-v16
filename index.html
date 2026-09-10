@@ -423,6 +423,67 @@
         <div id="diag-shadow"></div>
       </div>
     </div>
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
+        <div class="card-title">Bandas de λ_total — ¿escora el modelo a cierto ritmo de partido?</div>
+        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">
+          λ_total = λ final local + visita: el total de goles que proyecta el modelo.
+          Estas tres vistas preguntan si la calidad de la predicción cambia según ese ritmo.
+          Poisson ya traduce λ a probabilidad; lo que aquí se mide es si esa traducción
+          <em>acierta</em> en cada tramo. Nada significa nada hasta varias decenas de partidos.</p>
+        <div style="font-size:12px;color:var(--text3);margin:14px 0 4px;font-weight:600">
+          ① Sesgo de calibración por banda — sobre las 59 predicciones de cada partido</div>
+        <div id="diag-lam-calib"></div>
+        <div style="font-size:12px;color:var(--text3);margin:18px 0 4px;font-weight:600">
+          ② Over/Under 2.5: modelo vs realidad por banda — dónde cruza de verdad el 50%</div>
+        <p style="font-size:11px;color:var(--text3);margin:0 0 6px">
+          El punto teórico donde Over 2.5 supera a Under es λ_total ≈ 2.75. Esta tabla
+          contrasta ese cruce contra los partidos reales.</p>
+        <div id="diag-lam-ou25"></div>
+        <div style="font-size:12px;color:var(--text3);margin:18px 0 4px;font-weight:600">
+          ③ Estimación de goles por banda — ¿la λ misma sub/sobreestima en algún tramo?</div>
+        <p style="font-size:11px;color:var(--text3);margin:0 0 6px">
+          Compara λ_total proyectada contra los goles que de verdad se marcaron. Un sesgo
+          consistente aquí es lo único que justificaría un ajuste manual de λ por tramo.</p>
+        <div id="diag-lam-goles"></div>
+        <div style="font-size:12px;color:var(--text3);margin:18px 0 4px;font-weight:600">
+          ④ Over 0.5 por equipo vs λ del equipo — cada partido aporta 2 observaciones</div>
+        <p style="font-size:11px;color:var(--text3);margin:0 0 6px">
+          Que un equipo marque depende de <em>su</em> λ, no de la del rival. Se bandea por
+          la λ individual (local con λ local, visita con λ visita).</p>
+        <div id="diag-lam-eq05"></div>
+        <div style="font-size:12px;color:var(--text3);margin:18px 0 4px;font-weight:600">
+          ⑤ BTTS por banda de λ_total (acumulada) — modelo vs realidad</div>
+        <p style="font-size:11px;color:var(--text3);margin:0 0 6px">
+          Nota: BTTS lo limita la λ <em>más baja</em> de las dos (si un equipo casi no
+          crea, no hay ambos-marcan por mucho total que haya). La λ acumulada es una
+          aproximación; con volumen conviene mirar también el reparto.</p>
+        <div id="diag-lam-btts"></div>
+
+        <div style="border-top:1px solid var(--border);margin:22px 0 4px"></div>
+        <div style="font-size:12px;color:var(--text2);margin:6px 0 4px;font-weight:700">
+          Estructura de las dos λ — lo que Poisson <em>asume</em> y aquí se pone a prueba</div>
+        <div style="font-size:12px;color:var(--text3);margin:14px 0 4px;font-weight:600">
+          ⑥ Reparto / dominancia — ¿calibra igual un partido parejo que uno de favorito claro?</div>
+        <p style="font-size:11px;color:var(--text3);margin:0 0 6px">
+          Bandea por el ratio λ_alta / λ_baja (no por la suma). Mismo total, reparto distinto:
+          1.5+0.3 y 0.9+0.9 suman 1.8 pero son partidos distintos. Sesgo sobre las 59 predicciones.</p>
+        <div id="diag-lam-domin"></div>
+        <div style="font-size:12px;color:var(--text3);margin:18px 0 4px;font-weight:600">
+          ⑦ Forma de la distribución de goles — dispersión por banda de λ_total</div>
+        <p style="font-size:11px;color:var(--text3);margin:0 0 6px">
+          Poisson asume Var = Media. Compara la distribución teórica Poisson(λ_total) contra
+          la real (0/1/2/3/4+ goles). Si el tramo está sobredispersado (VMR &gt; 1), los Over/Under
+          de línea alta y el 0-0 están mal cotizados aunque la media acierte.</p>
+        <div id="diag-lam-disp"></div>
+        <div style="font-size:12px;color:var(--text3);margin:18px 0 4px;font-weight:600">
+          ⑧ Independencia de los dos equipos — el supuesto que mató a Dixon-Coles, sobre tus datos</div>
+        <p style="font-size:11px;color:var(--text3);margin:0 0 6px">
+          Poisson multiplica λL × λV como si los goles de los dos equipos fueran independientes.
+          Correlación real &gt; 0: marcan juntos más de lo previsto → BTTS infravalorado. &lt; 0: lo contrario.</p>
+        <div id="diag-lam-indep"></div>
+      </div>
+    </div>
     <div class="grid2">
       <div class="card"><div class="card-title">Por variable activa</div><div id="diag-vars"></div></div>
       <div class="card"><div class="card-title">Cobertura del mercado</div><div id="diag-cobertura"></div></div>
@@ -1754,6 +1815,8 @@ function renderDiagnostico(){
       +'</p>';
   }
 
+  renderLambdaBandas();
+
   // cobertura: de las validadas que encuentra el engine, cuantas se cotizan
   const cob=document.getElementById('diag-cobertura');
   const todas=_DATA.flatMap(p=>p.validadas||[]);
@@ -1768,6 +1831,208 @@ function renderDiagnostico(){
       +'<p style="font-size:12px;color:var(--text3);margin-top:8px">Cuanto más alto, menos '
       +'sesgada la muestra para saber con qué frecuencia el mercado paga sobre la línea.</p>';
   }
+}
+
+// -- Bandas de lambda_total: calibracion, cruce O/U 2.5 y sesgo de la estimacion --
+// Centradas en el cruce teorico de Over 2.5 (lambda_total ~ 2.75, donde P pasa de 50%).
+const _LAM_ORDER=['< 2.0','2.0 – 2.4','2.4 – 2.8','2.8 – 3.2','≥ 3.2'];
+function _lamBanda(lt){
+  if(lt<2.0) return _LAM_ORDER[0];
+  if(lt<2.4) return _LAM_ORDER[1];
+  if(lt<2.8) return _LAM_ORDER[2];
+  if(lt<3.2) return _LAM_ORDER[3];
+  return _LAM_ORDER[4];
+}
+// Agrupa partidos CERRADOS con lambda por banda de lambda_total, en el orden fijo.
+function _porBandaLam(cer){
+  const g={};
+  cer.forEach(p=>{ const b=_lamBanda(p.lambda_final_l+p.lambda_final_v);
+    (g[b]=g[b]||[]).push(p); });
+  return _LAM_ORDER.filter(b=>g[b]).map(b=>({b,arr:g[b]}));
+}
+function _golesReales(p){ const [h,a]=String(p.resultado_partido).split('-').map(Number);
+  return {h,a,tot:h+a}; }
+// Escala por-equipo: una sola λ de equipo (no la acumulada). Rangos tipicos de un
+// equipo en un partido, centrados en ~1.0-1.4 donde vive Over 0.5.
+const _LAM_EQ_ORDER=['< 0.8','0.8 – 1.1','1.1 – 1.4','1.4 – 1.8','≥ 1.8'];
+function _lamBandaEq(l){
+  if(l<0.8) return _LAM_EQ_ORDER[0];
+  if(l<1.1) return _LAM_EQ_ORDER[1];
+  if(l<1.4) return _LAM_EQ_ORDER[2];
+  if(l<1.8) return _LAM_EQ_ORDER[3];
+  return _LAM_EQ_ORDER[4];
+}
+// Dominancia = cuanto mas fuerte es un lado que el otro (ratio, siempre >= 1).
+const _DOM_ORDER=['1.0 – 1.2 (parejo)','1.2 – 1.5','1.5 – 2.0','≥ 2.0 (favorito claro)'];
+function _domBanda(ll,lv){
+  const hi=Math.max(ll,lv), lo=Math.min(ll,lv)||0.01, r=hi/lo;
+  if(r<1.2) return _DOM_ORDER[0];
+  if(r<1.5) return _DOM_ORDER[1];
+  if(r<2.0) return _DOM_ORDER[2];
+  return _DOM_ORDER[3];
+}
+function _pois(l,k){ let e=Math.exp(-l),f=1; for(let i=2;i<=k;i++)f*=i; return e*Math.pow(l,k)/f; }
+// Coef. de correlacion de Pearson entre dos arrays.
+function _pearson(xs,ys){
+  const n=xs.length; if(n<2) return null;
+  const mx=xs.reduce((a,b)=>a+b,0)/n, my=ys.reduce((a,b)=>a+b,0)/n;
+  let sxy=0,sxx=0,syy=0;
+  for(let i=0;i<n;i++){const dx=xs[i]-mx,dy=ys[i]-my;sxy+=dx*dy;sxx+=dx*dx;syy+=dy*dy;}
+  if(sxx===0||syy===0) return null;
+  return sxy/Math.sqrt(sxx*syy);
+}
+
+function renderLambdaBandas(){
+  const c1=document.getElementById('diag-lam-calib');
+  if(!c1) return;
+
+  // (1) sesgo de calibracion por banda, sobre las 59 predicciones de cada partido.
+  // Reutiliza _agrupar/_tablaSesgo; solo cambia la clave. minN bajo (40, ~2/3 de un
+  // partido) porque cada banda ve un subconjunto de los partidos.
+  const obs=_diagObs().filter(o=>o.entry.lambda_final_l!=null&&o.entry.lambda_final_v!=null);
+  const f1=_agrupar(obs,o=>_lamBanda(o.entry.lambda_final_l+o.entry.lambda_final_v),40)
+    .sort((a,b)=>_LAM_ORDER.indexOf(a.k)-_LAM_ORDER.indexOf(b.k));
+  c1.innerHTML=_tablaSesgo(f1,'Banda λ_total');
+
+  const cer=_DATA.filter(p=>p.resultado_partido&&p.lambda_final_l!=null
+    &&p.lambda_final_v!=null&&p.mercados_snapshot);
+  const ou=document.getElementById('diag-lam-ou25');
+  const gl=document.getElementById('diag-lam-goles');
+  if(!cer.length){
+    const v='<p class="empty">Sin partidos cerrados con λ todavía.</p>';
+    ou.innerHTML=v; gl.innerHTML=v; return;
+  }
+
+  // (2) Over/Under 2.5: P(O2.5) del modelo vs acierto real, por banda. "Cruza 50%"
+  // marca si en ese tramo el Over gano de verdad mas de la mitad de las veces.
+  const bandas=_porBandaLam(cer);
+  ou.innerHTML='<table class="hm-table"><thead><tr><th style="text-align:left">Banda λ_total</th>'
+    +'<th>N</th><th>P(O2.5) modelo</th><th>O2.5 real</th><th>Sesgo</th><th>Cruza 50%</th></tr></thead><tbody>'
+    +bandas.map(({b,arr})=>{
+      const pred=arr.reduce((s,p)=>s+(p.mercados_snapshot.over25||0),0)/arr.length;
+      const real=arr.filter(p=>_golesReales(p).tot>=3).length/arr.length*100;
+      const sg=pred-real, poco=arr.length<15;
+      const cs=Math.abs(sg)<3?'var(--text3)':(sg>0?'var(--red)':'var(--green)');
+      return '<tr style="opacity:'+(poco?0.5:1)+'"><td style="text-align:left">'+b+'</td>'
+        +'<td style="color:var(--text3)">'+arr.length+'</td>'
+        +'<td>'+pred.toFixed(1)+'%</td><td>'+real.toFixed(1)+'%</td>'
+        +'<td style="color:'+cs+';font-weight:600">'+(sg>=0?'+':'')+sg.toFixed(1)+'%</td>'
+        +'<td>'+(real>50?'Over ✓':'Under')+'</td></tr>';
+    }).join('')+'</tbody></table>'
+    +'<p style="font-size:11px;color:var(--text3);margin-top:6px">Filas atenuadas: menos de 15 partidos, todavía ruido.</p>';
+
+  // (3) sesgo de la estimacion de goles: lambda_total proyectada vs goles reales.
+  gl.innerHTML='<table class="hm-table"><thead><tr><th style="text-align:left">Banda λ_total</th>'
+    +'<th>N</th><th>λ_total media</th><th>Goles reales media</th><th>Sesgo</th><th>Error abs medio</th></tr></thead><tbody>'
+    +bandas.map(({b,arr})=>{
+      let sl=0,sr=0,se=0;
+      arr.forEach(p=>{const lt=p.lambda_final_l+p.lambda_final_v;const tot=_golesReales(p).tot;
+        sl+=lt;sr+=tot;se+=Math.abs(lt-tot);});
+      const lt=sl/arr.length, gr=sr/arr.length, err=se/arr.length, sg=lt-gr, poco=arr.length<15;
+      const cs=Math.abs(sg)<0.15?'var(--text3)':(sg>0?'var(--red)':'var(--green)');
+      return '<tr style="opacity:'+(poco?0.5:1)+'"><td style="text-align:left">'+b+'</td>'
+        +'<td style="color:var(--text3)">'+arr.length+'</td>'
+        +'<td>'+lt.toFixed(2)+'</td><td>'+gr.toFixed(2)+'</td>'
+        +'<td style="color:'+cs+';font-weight:600">'+(sg>=0?'+':'')+sg.toFixed(2)+'</td>'
+        +'<td style="color:var(--text3)">'+err.toFixed(2)+'</td></tr>';
+    }).join('')+'</tbody></table>'
+    +'<p style="font-size:11px;color:var(--text3);margin-top:6px">Sesgo &gt; 0: el modelo proyectó más goles de los que cayeron en ese tramo.</p>';
+
+  // (4) Over 0.5 por equipo vs la λ de ESE equipo. Cada partido cerrado aporta dos
+  // observaciones: el local con su λ y el visitante con la suya.
+  const eqObs=[];
+  cer.forEach(p=>{ const g=_golesReales(p); const s=p.mercados_snapshot;
+    if(s.over05_local!=null) eqObs.push({l:p.lambda_final_l,pred:s.over05_local,real:g.h>=1});
+    if(s.over05_visit!=null) eqObs.push({l:p.lambda_final_v,pred:s.over05_visit,real:g.a>=1});
+  });
+  const eqEl=document.getElementById('diag-lam-eq05');
+  const gEq={}; eqObs.forEach(o=>{const b=_lamBandaEq(o.l);(gEq[b]=gEq[b]||[]).push(o);});
+  const eqRows=_LAM_EQ_ORDER.filter(b=>gEq[b]);
+  eqEl.innerHTML=!eqRows.length?'<p class="empty">Sin datos de Over 0.5 por equipo todavía.</p>'
+    :'<table class="hm-table"><thead><tr><th style="text-align:left">Banda λ equipo</th>'
+    +'<th>N equipos</th><th>P(O0.5) modelo</th><th>Marcó real</th><th>Sesgo</th></tr></thead><tbody>'
+    +eqRows.map(b=>{const a=gEq[b];
+      const pred=a.reduce((s,o)=>s+o.pred,0)/a.length;
+      const real=a.filter(o=>o.real).length/a.length*100;
+      const sg=pred-real, poco=a.length<15;
+      const cs=Math.abs(sg)<3?'var(--text3)':(sg>0?'var(--red)':'var(--green)');
+      return '<tr style="opacity:'+(poco?0.5:1)+'"><td style="text-align:left">'+b+'</td>'
+        +'<td style="color:var(--text3)">'+a.length+'</td>'
+        +'<td>'+pred.toFixed(1)+'%</td><td>'+real.toFixed(1)+'%</td>'
+        +'<td style="color:'+cs+';font-weight:600">'+(sg>=0?'+':'')+sg.toFixed(1)+'%</td></tr>';
+    }).join('')+'</tbody></table>';
+
+  // (5) BTTS por banda de lambda_total (acumulada). Real = ambos marcaron.
+  const bEl=document.getElementById('diag-lam-btts');
+  bEl.innerHTML='<table class="hm-table"><thead><tr><th style="text-align:left">Banda λ_total</th>'
+    +'<th>N</th><th>P(BTTS) modelo</th><th>BTTS real</th><th>Sesgo</th></tr></thead><tbody>'
+    +bandas.map(({b,arr})=>{
+      const a=arr.filter(p=>p.mercados_snapshot.btts!=null);
+      if(!a.length) return '';
+      const pred=a.reduce((s,p)=>s+p.mercados_snapshot.btts,0)/a.length;
+      const real=a.filter(p=>{const g=_golesReales(p);return g.h>=1&&g.a>=1;}).length/a.length*100;
+      const sg=pred-real, poco=a.length<15;
+      const cs=Math.abs(sg)<3?'var(--text3)':(sg>0?'var(--red)':'var(--green)');
+      return '<tr style="opacity:'+(poco?0.5:1)+'"><td style="text-align:left">'+b+'</td>'
+        +'<td style="color:var(--text3)">'+a.length+'</td>'
+        +'<td>'+pred.toFixed(1)+'%</td><td>'+real.toFixed(1)+'%</td>'
+        +'<td style="color:'+cs+';font-weight:600">'+(sg>=0?'+':'')+sg.toFixed(1)+'%</td></tr>';
+    }).join('')+'</tbody></table>';
+
+  // (6) Dominancia: sesgo de calibracion (las 59 preds) por banda de reparto de las
+  // dos lambdas, a total agnostico. Reutiliza _agrupar/_tablaSesgo con clave de ratio.
+  const dEl=document.getElementById('diag-lam-domin');
+  const fD=_agrupar(obs,o=>_domBanda(o.entry.lambda_final_l,o.entry.lambda_final_v),40)
+    .sort((a,b)=>_DOM_ORDER.indexOf(a.k)-_DOM_ORDER.indexOf(b.k));
+  dEl.innerHTML=_tablaSesgo(fD,'Banda de dominancia (ratio λ)');
+
+  // (7) Dispersion: distribucion real de goles totales vs Poisson(lambda_total), por
+  // banda. VMR real = varianza/media de los goles totales; Poisson asume 1.0.
+  const dispEl=document.getElementById('diag-lam-disp');
+  dispEl.innerHTML='<table class="hm-table"><thead><tr><th style="text-align:left">Banda λ_total</th>'
+    +'<th>N</th><th>fuente</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4+</th><th>VMR real</th></tr></thead><tbody>'
+    +bandas.map(({b,arr})=>{
+      const tot=arr.map(p=>_golesReales(p).tot);
+      const n=tot.length, mean=tot.reduce((a,c)=>a+c,0)/n;
+      const varr=tot.reduce((a,c)=>a+(c-mean)*(c-mean),0)/n, vmr=mean?varr/mean:0;
+      const realPct=k=> (k<4? tot.filter(t=>t===k).length : tot.filter(t=>t>=4).length)/n*100;
+      // Poisson teorico con la lambda_total MEDIA del tramo
+      const lm=arr.reduce((s,p)=>s+p.lambda_final_l+p.lambda_final_v,0)/n;
+      const poiPct=k=> (k<4? _pois(lm,k) : (1-[0,1,2,3].reduce((s,j)=>s+_pois(lm,j),0)))*100;
+      const poco=n<15;
+      const rowReal='<tr style="opacity:'+(poco?0.5:1)+'"><td style="text-align:left" rowspan="2">'+b+'</td>'
+        +'<td style="color:var(--text3)" rowspan="2">'+n+'</td>'
+        +'<td style="color:var(--text3);font-size:11px">real</td>'
+        +[0,1,2,3,4].map(k=>'<td>'+realPct(k).toFixed(0)+'%</td>').join('')
+        +'<td style="font-weight:600;color:'+(vmr>1.25||vmr<0.8?'var(--red)':'var(--text3)')+'">'+vmr.toFixed(2)+'</td></tr>';
+      const rowPoi='<tr style="opacity:'+(poco?0.5:1)+'"><td style="color:var(--text3);font-size:11px">Poisson</td>'
+        +[0,1,2,3,4].map(k=>'<td style="color:var(--text3)">'+poiPct(k).toFixed(0)+'%</td>').join('')
+        +'<td style="color:var(--text3)">1.00</td></tr>';
+      return rowReal+rowPoi;
+    }).join('')+'</tbody></table>'
+    +'<p style="font-size:11px;color:var(--text3);margin-top:6px">VMR &gt; 1: más partidos extremos (0-0 y goleadas) de lo que Poisson prevé → Over/Under de línea alta mal cotizados.</p>';
+
+  // (8) Independencia: correlacion de Pearson entre goles del local y del visitante,
+  // por banda de lambda_total. Poisson asume 0.
+  const iEl=document.getElementById('diag-lam-indep');
+  const corrGlobal=_pearson(cer.map(p=>_golesReales(p).h),cer.map(p=>_golesReales(p).a));
+  iEl.innerHTML='<table class="hm-table"><thead><tr><th style="text-align:left">Banda λ_total</th>'
+    +'<th>N</th><th>corr(goles L, goles V)</th><th>lectura</th></tr></thead><tbody>'
+    +bandas.map(({b,arr})=>{
+      const r=_pearson(arr.map(p=>_golesReales(p).h),arr.map(p=>_golesReales(p).a));
+      const poco=arr.length<15;
+      if(r==null) return '<tr style="opacity:0.5"><td style="text-align:left">'+b+'</td>'
+        +'<td style="color:var(--text3)">'+arr.length+'</td><td colspan="2" style="color:var(--text3)">—</td></tr>';
+      const cs=Math.abs(r)<0.1?'var(--text3)':(r>0?'var(--green)':'var(--red)');
+      const lec=Math.abs(r)<0.1?'≈ independiente':(r>0?'marcan juntos (BTTS infravalorado)':'se anulan (BTTS sobrevalorado)');
+      return '<tr style="opacity:'+(poco?0.5:1)+'"><td style="text-align:left">'+b+'</td>'
+        +'<td style="color:var(--text3)">'+arr.length+'</td>'
+        +'<td style="color:'+cs+';font-weight:600">'+(r>=0?'+':'')+r.toFixed(2)+'</td>'
+        +'<td style="font-size:11px;color:var(--text3)">'+lec+'</td></tr>';
+    }).join('')+'</tbody></table>'
+    +'<p style="font-size:11px;color:var(--text3);margin-top:6px">Global: '
+    +(corrGlobal==null?'—':'<b>'+(corrGlobal>=0?'+':'')+corrGlobal.toFixed(2)+'</b>')
+    +' sobre '+cer.length+' partidos. Poisson asume 0; una desviación estable justificaría un término de corrección.</p>';
 }
 
 function renderSnapshotCalib(){
