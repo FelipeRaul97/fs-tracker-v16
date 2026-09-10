@@ -399,6 +399,17 @@
         <div id="wl-capa1x2"></div>
       </div>
     </div>
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
+        <div class="card-title">Filtro de calidad del edge — rendimiento de lo que bloqueó</div>
+        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">
+          Mercados con EV+ que <em>habrían sido PICK</em> pero el filtro mandó a observación:
+          por no cruzar su línea validada, por edge prestado por Platt (Δ alto), o por ser
+          un mercado que Platt no discrimina (a bajo). Mide qué habría pasado si se hubieran
+          apostado. ROI &lt; 0 = el filtro acierta; ROI &gt; 0 = está dejando pasar plata.</p>
+        <div id="wl-filtroedge"></div>
+      </div>
+    </div>
     <div class="grid2">
       <div class="card"><div class="card-title">Watchlist por mercado</div><div id="wl-by-market"></div></div>
       <div class="card"><div class="card-title">Distribución EV% watchlist</div><div id="wl-ev-dist"></div></div>
@@ -1700,6 +1711,46 @@ function renderWatchlist(){
   }).join('')||'<p class="empty">Sin datos</p>';
 
   renderCapa1x2();
+  renderFiltroEdge();
+}
+
+// Filtro de calidad del edge: rendimiento de los PICK candidatos (EV+) que el filtro
+// mando a watchlist. Mismo patron que renderCapa1x2, con columna de motivo.
+function renderFiltroEdge(){
+  const el=document.getElementById('wl-filtroedge'); if(!el) return;
+  const items=_dataLiga().flatMap(p=>(p.watchlist||[])
+    .filter(w=>w.filtro_edge)
+    .map(w=>({...w,partido:p})));
+  if(!items.length){ el.innerHTML='<p class="empty">El filtro aún no bloqueó ningún PICK candidato.</p>'; return; }
+  const cerr=items.filter(w=>w.acerto!=null);
+  const filas=items.map(w=>{
+    const salio=w.acerto==null?'<span style="color:var(--text3)">pendiente</span>'
+      :(w.acerto?'<span class="pl-pos">habría ganado</span>':'<span class="pl-neg">habría perdido</span>');
+    const pl=w.acerto==null?'—':((w.acerto?w.cuota-1:-1)>=0?'+':'')+(w.acerto?w.cuota-1:-1).toFixed(2);
+    return '<tr><td style="text-align:left">'+w.partido.partido+'</td>'
+      +'<td style="text-align:left">'+(w.etiqueta||w.mercado)+'</td>'
+      +'<td style="text-align:left;font-size:11px;color:var(--text3)">'+w.filtro_edge+'</td>'
+      +'<td>'+w.cuota.toFixed(2)+'</td><td>'+(w.ev_pct>=0?'+':'')+w.ev_pct+'%</td>'
+      +'<td>'+salio+'</td><td>'+pl+'</td></tr>';
+  }).join('');
+  let resumen='';
+  if(cerr.length){
+    const ac=cerr.filter(w=>w.acerto).length;
+    const roi=cerr.reduce((s,w)=>s+(w.acerto?w.cuota-1:-1),0)/cerr.length*100;
+    const veredicto = cerr.length<10
+      ? '<span style="color:var(--text3)">muestra chica ('+cerr.length+'): todavía no concluyente.</span>'
+      : (roi<0?'<span class="pl-pos">ROI negativo → el filtro acierta en frenarlas.</span>'
+             :'<span class="pl-neg">ROI positivo → el filtro estaría dejando pasar plata; revisar umbrales.</span>');
+    resumen='<div style="display:flex;gap:20px;flex-wrap:wrap;font-size:13px;margin-bottom:10px">'
+      +'<span><b>'+cerr.length+'</b> cerradas</span>'
+      +'<span>acierto <b>'+(ac/cerr.length*100).toFixed(0)+'%</b></span>'
+      +'<span>ROI si apostadas <b class="'+(roi>=0?'pl-neg':'pl-pos')+'">'+(roi>=0?'+':'')+roi.toFixed(1)+'%</b></span>'
+      +'<span>'+veredicto+'</span></div>';
+  }
+  el.innerHTML=resumen
+    +'<table class="hm-table"><thead><tr><th style="text-align:left">Partido</th>'
+    +'<th style="text-align:left">Selección</th><th style="text-align:left">Motivo</th>'
+    +'<th>Cuota</th><th>EV%</th><th>Resultado</th><th>P&L teórico</th></tr></thead><tbody>'+filas+'</tbody></table>';
 }
 
 // Capa 1X2 (en observacion): mide como habrian rendido los empates y victorias del
