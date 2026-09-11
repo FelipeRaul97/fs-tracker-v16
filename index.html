@@ -336,8 +336,19 @@
 
     <!-- Fila 5: calibración sobre TODAS las predicciones (snapshot) -->
     <div class="card card-full" style="margin-bottom:16px">
-      <div class="card-title">① Calibración global — TODAS las predicciones</div>
-      <div id="snap-resumen" style="margin-bottom:10px"></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+        <div class="card-title" style="margin:0">① Calibración global — TODAS las predicciones</div>
+        <div class="filters" style="margin:0">
+          <span class="filter-label">Origen:</span>
+          <select id="f-snap-origen"><option value="">Todos</option>
+            <option value="REAL">Apostado (real)</option>
+            <option value="WATCHLIST">Watchlist</option></select>
+        </div>
+      </div>
+      <p style="font-size:12px;color:var(--text3);margin:8px 0 0">
+        "Apostado" = mercados que fueron PICK/COMBO alguna vez. "Watchlist" = los que se registraron
+        sin apostar. Compara si el modelo calibra distinto en lo que el filtro de selección deja pasar.</p>
+      <div id="snap-resumen" style="margin:10px 0"></div>
       <div style="overflow-x:auto" id="snap-global"></div>
       <div class="chart-note">
         Usa las 59 probabilidades de cada partido, no solo lo apostado. No necesita cuotas:
@@ -2336,14 +2347,31 @@ function renderLambdaEquipoBajas(){
     +(anyB?'<p style="font-size:11px;color:var(--text3);margin-top:6px">Sesgo creciente con las bajas: el modelo no descuenta a los equipos diezmados y V#4 tendría motivo para aplicarse.</p>':'');
 }
 
+// De donde vino un mercado del snapshot para ESE partido: 'REAL' si en algun
+// momento fue PICK/COMBO, 'WATCHLIST' si quedo registrado sin apostar, null si el
+// engine lo calculo pero nunca se cotizo (ni se peleo por el, ni se miro). Las
+// claves de snapshot llevan la linea pegada en los mercados por equipo
+// ('local_remates_puerta_over2.5'); ahi hay que reconstruirla desde 'linea', que
+// las apuestas/watchlist guardan aparte (ver _clave_canonica en add_bet.py).
+function _snapOrigen(p,k){
+  const matchKey=w=>(w.linea!=null?`${w.mercado}_over${w.linea}`:w.mercado)===k;
+  if((p.apuestas||[]).some(matchKey)) return 'REAL';
+  if((p.watchlist||[]).some(matchKey)) return 'WATCHLIST';
+  return null;
+}
+
 function renderSnapshotCalib(){
+  const origenSel=document.getElementById('f-snap-origen');
+  const fOrigen=origenSel?origenSel.value:'';
   const obs=[];
   _dataLiga().forEach(p=>{
     const snap=p.mercados_snapshot, res=p.snapshot_resultados;
     if(!snap||!res) return;
     Object.entries(res).forEach(([k,acerto])=>{
       if(snap[k]==null) return;
-      obs.push({prob:snap[k], acerto:!!acerto, mercado:_claveMercado(k), partido:p.id});
+      const origen=_snapOrigen(p,k);
+      if(fOrigen && origen!==fOrigen) return;
+      obs.push({prob:snap[k], acerto:!!acerto, mercado:_claveMercado(k), partido:p.id, origen});
     });
   });
 
@@ -2354,7 +2382,9 @@ function renderSnapshotCalib(){
   if(!gEl) return;
 
   if(!obs.length){
-    const vacio='<p class="empty">Sin partidos cerrados todavia. Se llena solo al cerrar (no requiere cuotas).</p>';
+    const vacio=fOrigen
+      ?`<p class="empty">Ningún mercado ${fOrigen==='REAL'?'apostado':'de watchlist'} entre las predicciones cerradas todavía.</p>`
+      :'<p class="empty">Sin partidos cerrados todavia. Se llena solo al cerrar (no requiere cuotas).</p>';
     gEl.innerHTML=vacio; if(mEl)mEl.innerHTML=vacio; if(xEl)xEl.innerHTML=vacio;
     if(rEl)rEl.innerHTML=''; return;
   }
@@ -2521,6 +2551,10 @@ _ecoLiga();
 ['f-wl-tipo','f-wl-mercado'].forEach(id=>{
   document.getElementById(id).addEventListener('change',renderWatchlist);
 });
+
+// Filtro Origen (Real/Watchlist/Todos) de la calibracion sobre TODAS las
+// predicciones -- solo repinta esa seccion, es un recorte interno del tab.
+document.getElementById('f-snap-origen').addEventListener('change',renderSnapshotCalib);
 
 // Close modals on overlay click
 document.getElementById('edit-modal').addEventListener('click',e=>{if(e.target===e.currentTarget)closeEditModal();});
