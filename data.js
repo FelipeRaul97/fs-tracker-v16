@@ -1,7 +1,7 @@
 const TRACKER_DATA = [
   {
     "id": "001",
-    "fecha": "2026-09-13",
+    "fecha": "2026-09-11",
     "jornada": 5,
     "liga": "SP1",
     "partido": "Sevilla vs Valencia",
@@ -750,7 +750,7 @@ const TRACKER_DATA = [
   },
   {
     "id": "002",
-    "fecha": "2026-09-13",
+    "fecha": "2026-09-12",
     "jornada": 5,
     "liga": "SP1",
     "partido": "Athletic Club vs Elche",
@@ -1567,7 +1567,7 @@ const TRACKER_DATA = [
   },
   {
     "id": "003",
-    "fecha": "2026-09-13",
+    "fecha": "2026-09-12",
     "jornada": 5,
     "liga": "SP1",
     "partido": "Racing Santander vs Alaves",
@@ -2334,7 +2334,7 @@ const TRACKER_DATA = [
   },
   {
     "id": "004",
-    "fecha": "2026-09-20",
+    "fecha": "2026-09-12",
     "jornada": 5,
     "liga": "SP1",
     "partido": "Real Madrid vs Rayo Vallecano",
