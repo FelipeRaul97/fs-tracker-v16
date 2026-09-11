@@ -2331,5 +2331,421 @@ const TRACKER_DATA = [
         "cotizada": false
       }
     ]
+  },
+  {
+    "id": "004",
+    "fecha": "2026-09-20",
+    "jornada": 5,
+    "liga": "SP1",
+    "partido": "Real Madrid vs Rayo Vallecano",
+    "lambda_forma_l": 2.6183,
+    "lambda_forma_v": 0.9232,
+    "lambda_reg_l": 2.1914,
+    "lambda_reg_v": 0.9781,
+    "lambda_base_l": 2.3195,
+    "lambda_base_v": 0.9616,
+    "lambda_final_l": 2.4553,
+    "lambda_final_v": 0.8258,
+    "lambda_shadow_l": 2.4113,
+    "lambda_shadow_v": 0.7061,
+    "lambda_corners": 8.743,
+    "ratio": 2.9732380721724385,
+    "visit_dominante": "False",
+    "variables_activas": "V#2(V:0.95) - V#3(L:1.10) - V#4(L:0.96) - V#4(V:0.90) - V#5(L:0.93)",
+    "variables": {
+      "v1": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa": false,
+        "activa_local": false,
+        "activa_visit": false,
+        "detalle_local": "--",
+        "detalle_visit": "--",
+        "detalle": "Ambos necesitan >=20 PJ (local:4, visit:4)"
+      },
+      "v2": {
+        "factor_local": 1.0,
+        "factor_visit": 0.95,
+        "activa_local": false,
+        "activa_visit": true,
+        "detalle_local": "Rank 3, margen 7pts -- fuera de riesgo",
+        "detalle_visit": "Rank 14, margen 2pts sobre zona desc"
+      },
+      "v3": {
+        "factor_local": 1.1,
+        "activa": true,
+        "n_partidos": 20,
+        "GpG_casa": 2.6,
+        "GpG_liga": 1.5,
+        "hs": 1.1,
+        "muestra_completa": true,
+        "detalle": "hs=+1.10 (20 ptdos)"
+      },
+      "v4": {
+        "factor_local": 0.96,
+        "factor_visit": 0.9,
+        "activa_local": true,
+        "activa_visit": true,
+        "bajas_local": 3,
+        "bajas_visit": 8
+      },
+      "v5": {
+        "factor_local": 0.93,
+        "factor_visit": 1.0,
+        "activa_local": true,
+        "activa_visit": false
+      },
+      "v6": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa": false
+      },
+      "v7": {
+        "skip": false,
+        "activa_local": false,
+        "activa_visit": false,
+        "detalle": "Sin DT nuevo"
+      },
+      "v8": {
+        "activa": true,
+        "anulado_derby": false,
+        "detalle": "ACTIVA -- copa <=5 dias"
+      }
+    },
+    "confianza": "ALTA",
+    "notas": "",
+    "resultado_partido": null,
+    "goles_esperados": "3.28",
+    "apuestas": [
+      {
+        "tipo": "PICK",
+        "mercado": "under35",
+        "linea": null,
+        "etiqueta": "Under 3.5",
+        "cuota": 2.15,
+        "prob": 58.5,
+        "ev_pct": 25.8,
+        "estado": "PENDIENTE",
+        "pl": null
+      },
+      {
+        "tipo": "PICK",
+        "mercado": "btts",
+        "linea": null,
+        "etiqueta": "BTTS",
+        "cuota": 1.98,
+        "prob": 55.4,
+        "ev_pct": 9.7,
+        "estado": "PENDIENTE",
+        "pl": null,
+        "cuota_justa": 1.7,
+        "cuota_segura": 1.83,
+        "acierto_hist": 58.7,
+        "n_hist": 606
+      },
+      {
+        "tipo": "PICK",
+        "mercado": "over05_visit",
+        "linea": null,
+        "etiqueta": "Over 0.5 Rayo Vallecano",
+        "cuota": 1.93,
+        "prob": 56.2,
+        "ev_pct": 8.5,
+        "estado": "PENDIENTE",
+        "pl": null
+      },
+      {
+        "tipo": "COMBO",
+        "mercado": "over15+visit_remates_puerta_over2.5",
+        "etiqueta": "Over 1.5 + V Remates a puerta Over 2.5",
+        "cuota": 2.18,
+        "prob": 50.7,
+        "ev_pct": 10.4,
+        "estado": "PENDIENTE",
+        "pl": null,
+        "patas": [
+          "over15",
+          "visit_remates_puerta_over2.5"
+        ],
+        "promovida_combinada": true,
+        "nivel_cruce": "segura",
+        "cuota_justa": 1.91,
+        "cuota_segura": 2.18,
+        "acierto_hist": 52.5,
+        "n_hist": 223
+      }
+    ],
+    "watchlist": [
+      {
+        "mercado": "empate",
+        "linea": null,
+        "etiqueta": "Empate",
+        "cuota": 8.5,
+        "prob": 17.4,
+        "ev_pct": 47.9,
+        "regla_1x2_no_pick": true
+      },
+      {
+        "mercado": "corners65",
+        "linea": null,
+        "etiqueta": "Over 6.5 corners",
+        "cuota": 1.16,
+        "prob": 82.3,
+        "ev_pct": -4.5
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 2.5,
+        "etiqueta": "Rayo Vallecano Corners equipo Over 2.5",
+        "cuota": 1.35,
+        "prob": 69.5,
+        "ev_pct": -6.2,
+        "tipo": "POR_EQUIPO",
+        "cuota_justa": 1.47,
+        "cuota_segura": 1.59,
+        "acierto_hist": 68.0,
+        "n_hist": 319
+      },
+      {
+        "mercado": "local_corners_equipo",
+        "linea": 5.5,
+        "etiqueta": "Real Madrid Corners equipo Over 5.5",
+        "cuota": 1.78,
+        "prob": 81.3,
+        "ev_pct": 44.7,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates_puerta",
+        "linea": 2.5,
+        "etiqueta": "Rayo Vallecano Remates a puerta Over 2.5",
+        "cuota": 2.12,
+        "prob": 54.6,
+        "ev_pct": 15.8,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "do1x+under35",
+        "linea": null,
+        "etiqueta": "DO L o Empate + Under 3.5",
+        "cuota": 2.25,
+        "prob": 50.6,
+        "ev_pct": 13.8,
+        "tipo": "COMBINADA",
+        "patas": [
+          "do1x",
+          "under35"
+        ],
+        "lift": 1.009,
+        "cuota_justa": 1.98,
+        "cuota_segura": 2.24,
+        "acierto_hist": 50.5,
+        "n_hist": 277
+      },
+      {
+        "mercado": "under25",
+        "linea": null,
+        "etiqueta": "Under 2.5",
+        "cuota": 3.65,
+        "prob": 36.6,
+        "ev_pct": 33.6,
+        "regla_unicidad_totales": "cede ante under35 (score EV/prob 15.1)"
+      },
+      {
+        "mercado": "under45",
+        "linea": null,
+        "etiqueta": "Under 4.5",
+        "cuota": 1.52,
+        "prob": 76.6,
+        "ev_pct": 16.4,
+        "regla_unicidad_totales": "cede ante under35 (score EV/prob 15.1)"
+      }
+    ],
+    "mercados_snapshot": {
+      "victoria_local": 73.1,
+      "empate": 17.4,
+      "victoria_visit": 8.2,
+      "do1x": 91.8,
+      "dox2": 26.9,
+      "over15": 84.2,
+      "over25": 63.3,
+      "under25": 36.6,
+      "over35": 41.5,
+      "under35": 58.5,
+      "under45": 76.6,
+      "btts": 55.4,
+      "over05_local": 93.0,
+      "over05_visit": 56.2,
+      "hcp2_des": 49.2,
+      "hcp3_des": 70.4,
+      "corners65": 82.3,
+      "local_remates_over7.5": 99.8,
+      "local_remates_over8.5": 99.6,
+      "local_remates_over9.5": 99.2,
+      "local_remates_over10.5": 98.7,
+      "local_remates_over11.5": 97.9,
+      "local_remates_over12.5": 96.7,
+      "local_remates_over13.5": 95.0,
+      "local_remates_over14.5": 92.9,
+      "local_remates_over15.5": 90.3,
+      "local_remates_puerta_over1.5": 99.9,
+      "local_remates_puerta_over2.5": 99.4,
+      "local_remates_puerta_over3.5": 98.1,
+      "local_remates_puerta_over4.5": 95.3,
+      "local_remates_puerta_over5.5": 90.5,
+      "local_remates_puerta_over6.5": 83.3,
+      "local_corners_equipo_over2.5": 97.5,
+      "local_corners_equipo_over3.5": 94.0,
+      "local_corners_equipo_over4.5": 88.6,
+      "local_corners_equipo_over5.5": 81.3,
+      "local_corners_equipo_over6.5": 72.4,
+      "local_corners_equipo_over7.5": 62.7,
+      "visit_remates_over7.5": 57.4,
+      "visit_remates_over8.5": 45.7,
+      "visit_remates_over9.5": 34.9,
+      "visit_remates_over10.5": 25.6,
+      "visit_remates_over11.5": 18.1,
+      "visit_remates_over12.5": 12.4,
+      "visit_remates_over13.5": 8.2,
+      "visit_remates_over14.5": 5.2,
+      "visit_remates_over15.5": 3.2,
+      "visit_remates_puerta_over1.5": 77.4,
+      "visit_remates_puerta_over2.5": 54.6,
+      "visit_remates_puerta_over3.5": 33.1,
+      "visit_remates_puerta_over4.5": 17.4,
+      "visit_remates_puerta_over5.5": 8.1,
+      "visit_remates_puerta_over6.5": 3.4,
+      "visit_corners_equipo_over2.5": 69.5,
+      "visit_corners_equipo_over3.5": 51.2,
+      "visit_corners_equipo_over4.5": 34.6,
+      "visit_corners_equipo_over5.5": 21.7,
+      "visit_corners_equipo_over6.5": 12.8,
+      "visit_corners_equipo_over7.5": 7.1
+    },
+    "cruces_validados": [
+      {
+        "mercado": "over25",
+        "etiqueta": "Over 2.5",
+        "cuota": 1.29,
+        "justa": 1.56,
+        "segura": 1.74,
+        "hist": 64.1,
+        "n": 206,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "btts",
+        "etiqueta": "BTTS",
+        "cuota": 1.98,
+        "justa": 1.7,
+        "segura": 1.83,
+        "hist": 58.7,
+        "n": 606,
+        "cruza": true,
+        "cruza_segura": true
+      },
+      {
+        "mercado": "visit_corners_equipo_over2.5",
+        "etiqueta": "Rayo Vallecano Corners Over 2.5",
+        "cuota": 1.35,
+        "justa": 1.47,
+        "segura": 1.59,
+        "hist": 68.0,
+        "n": 319,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "do1x+under35",
+        "etiqueta": "DO L o Empate + Under 3.5",
+        "cuota": 2.25,
+        "justa": 1.98,
+        "segura": 2.24,
+        "hist": 50.5,
+        "n": 277,
+        "cruza": true,
+        "cruza_segura": true
+      },
+      {
+        "mercado": "over15+visit_remates_puerta_over2.5",
+        "etiqueta": "Over 1.5 + V Remates a puerta Over 2.5",
+        "cuota": 2.18,
+        "justa": 1.91,
+        "segura": 2.18,
+        "hist": 52.5,
+        "n": 223,
+        "cruza": true,
+        "cruza_segura": true
+      }
+    ],
+    "validadas": [
+      {
+        "mercado": "btts",
+        "etiqueta": "BTTS",
+        "tipo": "simple",
+        "p": 0.5537,
+        "cuota_justa": 1.7,
+        "cuota_segura": 1.83,
+        "acierto_hist": 58.7,
+        "n_hist": 606,
+        "cotizada": true
+      },
+      {
+        "mercado": "btts+local_remates_puerta_over2.5",
+        "etiqueta": "BTTS + L Remates a puerta Over 2.5",
+        "tipo": "COMBINADA",
+        "p": 0.5902,
+        "cuota_justa": 1.77,
+        "cuota_segura": 1.94,
+        "acierto_hist": 56.6,
+        "n_hist": 362,
+        "cotizada": false
+      },
+      {
+        "mercado": "visit_corners_equipo_over2.5",
+        "etiqueta": "Rayo Vallecano Corners Over 2.5",
+        "tipo": "por equipo",
+        "p": 0.6946,
+        "cuota_justa": 1.47,
+        "cuota_segura": 1.59,
+        "acierto_hist": 68.0,
+        "n_hist": 319,
+        "cotizada": true
+      },
+      {
+        "mercado": "do1x+under35",
+        "etiqueta": "DO L o Empate + Under 3.5",
+        "tipo": "COMBINADA",
+        "p": 0.5057,
+        "cuota_justa": 1.98,
+        "cuota_segura": 2.24,
+        "acierto_hist": 50.5,
+        "n_hist": 277,
+        "cotizada": true
+      },
+      {
+        "mercado": "over15+visit_remates_puerta_over2.5",
+        "etiqueta": "Over 1.5 + V Remates a puerta Over 2.5",
+        "tipo": "COMBINADA",
+        "p": 0.5066,
+        "cuota_justa": 1.91,
+        "cuota_segura": 2.18,
+        "acierto_hist": 52.5,
+        "n_hist": 223,
+        "cotizada": true
+      },
+      {
+        "mercado": "over25",
+        "etiqueta": "Over 2.5",
+        "tipo": "simple",
+        "p": 0.6335,
+        "cuota_justa": 1.56,
+        "cuota_segura": 1.74,
+        "acierto_hist": 64.1,
+        "n_hist": 206,
+        "cotizada": true
+      }
+    ]
   }
 ];
