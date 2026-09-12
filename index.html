@@ -848,26 +848,52 @@ function renderBets(){
   const tbody=document.getElementById('bets-tbody');
   if(!rows.length){tbody.innerHTML=`<tr><td colspan="12" class="empty">Sin resultados</td></tr>`;return;}
 
+  // Agrupar por partido — las filas ya vienen contiguas por partido (mismo
+  // orden que _DATA), asi que solo hace falta detectar el cambio de grupo.
+  const groups=[];
+  rows.forEach(r=>{
+    const gid=String(r.p.id||r.p.partido);
+    const last=groups[groups.length-1];
+    if(!last||last.gid!==gid) groups.push({gid,p:r.p,items:[]});
+    groups[groups.length-1].items.push(r);
+  });
+
   // Contador global de apuestas por liga
   const ligaCount={};
-  tbody.innerHTML=rows.map(({p,a,pi,ai},i)=>{
-    const plC=a.pl>0?'pl-pos':a.pl<0?'pl-neg':'';
-    const evC=a.ev_pct>0?'pl-pos':a.ev_pct<0?'pl-neg':'';
-    const rid=`dr-${i}`;
-    if(!ligaCount[p.liga]) ligaCount[p.liga]={};
-    const apKey=`${p.id}-${ai}`;
-    if(!ligaCount[p.liga][apKey]) ligaCount[p.liga][apKey]=Object.keys(ligaCount[p.liga]).length+1;
-    const numLiga=ligaCount[p.liga][apKey];
-    return`
-      <tr class="expandable" onclick="toggleDetail('${rid}')">
+  let gi=0;
+  tbody.innerHTML=groups.map(({gid,p,items})=>{
+    const safeGid=gid.replace(/[^\w-]/g,'')||('g'+(gi++));
+    const nPick=items.filter(r=>r.a.tipo==='PICK').length;
+    const nCombo=items.filter(r=>r.a.tipo==='COMBO').length;
+    const cerr=items.filter(r=>r.a.estado==='GANADA'||r.a.estado==='PERDIDA');
+    const plGrupo=cerr.length?cerr.reduce((s,r)=>s+(r.a.pl||0),0):null;
+    const resumen=[items.length+' apuesta'+(items.length>1?'s':'')];
+    if(nPick) resumen.push(nPick+' PICK');
+    if(nCombo) resumen.push(nCombo+' COMBO');
+    if(plGrupo!=null) resumen.push('<b class="'+(plGrupo>=0?'pl-pos':'pl-neg')+'">'+(plGrupo>=0?'+':'')+plGrupo.toFixed(2)+'u</b>');
+    let html='<tr class="bets-group" data-bgid="'+safeGid+'" onclick="toggleBetsGroup(\''+safeGid+'\')" style="cursor:pointer;background:var(--surface2)">'
+      +'<td class="bets-caret" style="color:var(--text3);font-weight:700">▶</td>'
+      +'<td colspan="2"><div class="partido-cell">'+p.partido+'</div>'
+        +'<div class="partido-sub">'+(LIGA_NAMES[p.liga]||p.liga)+' · J'+p.jornada+' · '+p.fecha+(p.resultado_partido?' · <strong>'+p.resultado_partido+'</strong>':'')+'</div></td>'
+      +'<td>'+badge(LIGA_NAMES[p.liga]||p.liga,'liga')+'</td>'
+      +'<td colspan="7" style="color:var(--text3);font-size:12px">'+resumen.join(' · ')+'</td></tr>';
+
+    html+=items.map(({p,a,pi,ai})=>{
+      const i=gi++; // indice global unico para el detalle expandible
+      const plC=a.pl>0?'pl-pos':a.pl<0?'pl-neg':'';
+      const evC=a.ev_pct>0?'pl-pos':a.ev_pct<0?'pl-neg':'';
+      const rid=`dr-${i}`;
+      if(!ligaCount[p.liga]) ligaCount[p.liga]={};
+      const apKey=`${p.id}-${ai}`;
+      if(!ligaCount[p.liga][apKey]) ligaCount[p.liga][apKey]=Object.keys(ligaCount[p.liga]).length+1;
+      const numLiga=ligaCount[p.liga][apKey];
+      return`
+      <tr class="expandable bets-item" data-bgid="${safeGid}" hidden onclick="toggleDetail('${rid}')">
         <td style="color:var(--text3);font-size:12px;white-space:nowrap">
-          <div>${i+1}</div>
           <div style="font-size:10px">${p.liga}·${numLiga}</div>
         </td>
-        <td><div class="partido-cell">${p.partido}</div>
-            <div class="partido-sub">${LIGA_NAMES[p.liga]||p.liga} · J${p.jornada} · ${p.fecha}${p.resultado_partido?' · <strong>'+p.resultado_partido+'</strong>':''}</div></td>
-        <td>${badge(LIGA_NAMES[p.liga]||p.liga,'liga')}</td>
-        <td style="max-width:180px">${a.etiqueta||a.mercado}</td>
+        <td colspan="2" style="padding-left:22px">${a.etiqueta||a.mercado}</td>
+        <td></td>
         <td>${tipoBadge(a.tipo)}</td>
         <td class="num">${fmt(a.cuota)}</td>
         <td class="num">${fmtP(a.prob)}</td>
@@ -882,7 +908,7 @@ function renderBets(){
         <td class="num ${plC}">${fmtL(a.pl)}</td>
         <td><button class="btn btn-sm" onclick="event.stopPropagation();openEditModal(${pi},${ai})" title="Editar">✏</button></td>
       </tr>
-      <tr class="detail-row" id="${rid}"><td colspan="12">
+      <tr class="detail-row bets-item" data-bgid="${safeGid}" hidden id="${rid}"><td colspan="12">
         <div class="detail-grid">
           <div class="detail-item"><span class="detail-key">λ base</span><span>L=${p.lambda_base_l||'—'} · V=${p.lambda_base_v||'—'}</span></div>
           <div class="detail-item"><span class="detail-key">λ final</span><span>L=${p.lambda_final_l} · V=${p.lambda_final_v}</span></div>
@@ -904,9 +930,19 @@ function renderBets(){
           </div>`:''}
         </div>
       </td></tr>`;
+    }).join('');
+    return html;
   }).join('');
 }
 function toggleDetail(id){document.getElementById(id).classList.toggle('open')}
+function toggleBetsGroup(gid){
+  const rows=document.querySelectorAll('#bets-tbody tr.bets-item[data-bgid="'+gid+'"]');
+  let abierto=false;
+  rows.forEach(r=>{ r.hidden=!r.hidden; if(!r.hidden) abierto=true; });
+  const caret=document.querySelector('#bets-tbody tr.bets-group[data-bgid="'+gid+'"] .bets-caret');
+  if(caret) caret.textContent=abierto?'▼':'▶';
+}
+window.toggleBetsGroup=toggleBetsGroup;
 
 // ── Charts (mismo código que antes) ──────────────────────
 function renderPLChart(){
