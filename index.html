@@ -982,6 +982,18 @@ function renderPLChart(){
     const wrD=wrPts.map((p,i)=>`${i===0?'M':'L'}${p[0]},${p[1]}`).join(' ');
     svg.appendChild(svgEl('path',{d:wrD,fill:'none',stroke:'var(--amber-mid)','stroke-width':'1.5','stroke-dasharray':'5,3'}));
   }
+  // Eje X: fecha del partido de cada apuesta confirmada, orden cronológico
+  const maxTicks=Math.min(settled.length,7);
+  const tickIdx=[...new Set(Array.from({length:maxTicks},(_,k)=>
+    Math.round(k*(settled.length-1)/Math.max(maxTicks-1,1))))];
+  tickIdx.forEach(i=>{
+    const x=sx(i);
+    svg.appendChild(svgEl('line',{x1:x,y1:H-PB,x2:x,y2:H-PB+4,stroke:'var(--text3)','stroke-width':'1'}));
+    const t=svgEl('text',{x,y:H-PB+15,fill:'var(--text3)','font-size':'9','text-anchor':'middle'});
+    t.textContent=(settled[i].partido.fecha||'').slice(5); svg.appendChild(t);
+  });
+  const xAxisLabel=svgEl('text',{x:PL+iW/2,y:H-2,fill:'var(--text3)','font-size':'10','text-anchor':'middle'});
+  xAxisLabel.textContent='Fecha del partido (orden cronológico)'; svg.appendChild(xAxisLabel);
   [{c:'var(--green-mid)',l:'P&L acum',dash:false},{c:'var(--amber-mid)',l:`WR rolling ${WINDOW}`,dash:true}]
     .forEach((it,i)=>{
       const lx=PL+8+i*120;
