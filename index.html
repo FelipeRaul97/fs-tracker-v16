@@ -125,7 +125,8 @@
   .detail-key{font-size:11px;color:var(--text3)}
 
   /* Cards */
-  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .grid2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}
+  .grid2>.card{min-width:0}
   @media(max-width:700px){.grid2{grid-template-columns:1fr}}
   .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--rlg);padding:16px 18px;}
   .card-title{font-size:12px;font-weight:500;color:var(--text3);text-transform:uppercase;
@@ -144,6 +145,7 @@
   .bar-bg{background:var(--surface2);border-radius:3px;height:6px;overflow:hidden}
   .bar-fill{height:100%;border-radius:3px}
   .hm-table{width:100%;border-collapse:collapse;font-size:12px}
+  #diag-equipos,#diag-ligas,#diag-conf{overflow-x:auto}
   #diag-equipos table,#diag-ligas table,#diag-conf table{width:auto;max-width:560px}
   .hm-table th,.hm-table td{padding:6px 10px;text-align:center;border:1px solid var(--border)}
   .hm-table th{background:var(--surface2);font-weight:500;color:var(--text3)}
