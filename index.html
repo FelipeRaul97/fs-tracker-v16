@@ -144,6 +144,7 @@
   .bar-bg{background:var(--surface2);border-radius:3px;height:6px;overflow:hidden}
   .bar-fill{height:100%;border-radius:3px}
   .hm-table{width:100%;border-collapse:collapse;font-size:12px}
+  #diag-equipos table,#diag-ligas table,#diag-conf table{width:auto;max-width:560px}
   .hm-table th,.hm-table td{padding:6px 10px;text-align:center;border:1px solid var(--border)}
   .hm-table th{background:var(--surface2);font-weight:500;color:var(--text3)}
   .hm-table td:first-child{text-align:left;font-weight:500;color:var(--text)}
@@ -448,13 +449,19 @@
         <div class="card-title">Ranking por equipo — ¿con quién acierta el modelo?</div>
         <p style="font-size:12px;color:var(--text3);margin:0 0 10px">
           Sobre las 59 predicciones de cada partido, no solo las apostadas.
-          Sesgo = lo que dijo el modelo − lo que pasó.</p>
+          Sesgo = lo que dijo el modelo − lo que pasó.
+          <b>N</b> = cantidad de predicciones de mercado acumuladas (no partidos) —
+          cada partido cerrado aporta hasta 59.</p>
         <div id="diag-equipos"></div>
       </div>
     </div>
     <div class="grid2" style="margin-bottom:16px">
-      <div class="card"><div class="card-title">Por liga</div><div id="diag-ligas"></div></div>
-      <div class="card"><div class="card-title">Por nivel de confianza</div><div id="diag-conf"></div></div>
+      <div class="card"><div class="card-title">Por liga</div>
+        <p style="font-size:11px;color:var(--text3);margin:0 0 8px">N = predicciones de mercado acumuladas en esa liga.</p>
+        <div id="diag-ligas"></div></div>
+      <div class="card"><div class="card-title">Por nivel de confianza</div>
+        <p style="font-size:11px;color:var(--text3);margin:0 0 8px">N = predicciones de mercado acumuladas en ese nivel.</p>
+        <div id="diag-conf"></div></div>
     </div>
     <div class="grid2" style="margin-bottom:16px">
       <div class="card card-full">
