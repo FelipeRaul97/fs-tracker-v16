@@ -2049,7 +2049,18 @@ function renderCrucesValidados(){
       ${fila('Cruce seguro (IC95)',seguras,false)}
     </tbody></table></div>
     <p style="font-size:12px;color:var(--text3);margin-top:10px">
-      "Necesita" es el acierto medio que exigirían esas cuotas para no perder. ${veredicto}</p>`;
+      <strong>Acertó</strong> = % de veces que ganó esa selección, de las cerradas.
+      <strong>Necesita</strong> = el acierto que exigirían esas cuotas en promedio
+      para no perder (break-even, = promedio de 1/cuota). <strong>Margen</strong> =
+      Acertó − Necesita, en puntos (positivo = rentable). <strong>ROI</strong> =
+      rentabilidad real de haber apostado 1u en cada una. ${veredicto}</p>
+    <p style="font-size:12px;color:var(--text3);margin-top:6px">
+      Para qué sirve: es la prueba del criterio de selección "Vía A" del proyecto
+      (ver CLAUDE.md → Discriminación de PICK). Si <strong>Cruzaban</strong> rinde
+      más que <strong>No cruzaban</strong> de forma sostenida, confirma que cruzar
+      la línea validada aporta algo real y no es ruido — y <strong>Cruce seguro
+      (IC95)</strong> es la versión más exigente (aguanta aunque el historial haya
+      sido optimista), para ver si vale la pena ser más estricto todavía.</p>`;
 }
 
 // -- Diagnostico: donde acierta el modelo y donde no --------------------------
