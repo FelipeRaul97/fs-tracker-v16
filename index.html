@@ -1603,9 +1603,11 @@ function renderMercadoFreq(){
     Object.entries(map).sort((a,b)=>b[1].length-a[1].length).slice(0,8).map(([m,bets])=>{
       const s=calcStats(bets.filter(a=>a.estado==='GANADA'||a.estado==='PERDIDA'));
       const plC=s.pl>=0?'pl-pos':'pl-neg';
+      const pend=bets.length-s.settled;
+      const countLabel=s.settled+(pend?` (+${pend} pend.)`:'')+'x';
       return`<div class="stat-row"><span class="stat-label" style="font-size:12px">${m}</span>
         <span style="display:flex;gap:10px;font-size:12px">
-          <span style="color:var(--text3)">${bets.length}x</span>
+          <span style="color:var(--text3)">${countLabel}</span>
           <span>${s.wr!=null?s.wr.toFixed(0)+'%WR':'—'}</span>
           <span class="${plC}">${fmtL(s.pl)}</span>
         </span></div>`;
