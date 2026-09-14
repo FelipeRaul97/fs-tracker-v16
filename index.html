@@ -559,8 +559,23 @@
       </div>
     </div>
     <div class="grid2">
-      <div class="card"><div class="card-title">Por variable activa</div><div id="diag-vars"></div></div>
-      <div class="card"><div class="card-title">Cobertura del mercado</div><div id="diag-cobertura"></div></div>
+      <div class="card">
+        <div class="card-title">Por variable activa — ¿derbis, lesiones o copa descalibran algo?</div>
+        <p style="font-size:11px;color:var(--text3);margin:0 0 8px">
+          Mismo formato que las tablas de arriba (Predicho/Real/Sesgo, N = predicciones
+          de mercado acumuladas). Agrupa por qué V# estaba activa en ese partido — un
+          partido puede aportar a varias filas a la vez si tuvo más de una variable activa.</p>
+        <div id="diag-vars"></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Cobertura del mercado — ¿cuánto de lo validado llegás a cotizar?</div>
+        <p style="font-size:11px;color:var(--text3);margin:0 0 8px">
+          De todas las selecciones que el engine encuentra en banda validada por partido
+          (columna "validadas" del análisis), cuántas terminaron con una cuota real pegada
+          por vos. Más cobertura = menos sesgo de "solo miro las que me interesan" en el
+          resto de las mediciones de este tab.</p>
+        <div id="diag-cobertura"></div>
+      </div>
     </div>
   </div>
 
@@ -2104,7 +2119,7 @@ function _diagObs(){
 function _tablaSesgo(filas, etqCol){
   if(!filas.length) return '<p class="empty">Sin partidos cerrados todavía.</p>';
   return '<table class="hm-table"><thead><tr>'
-    +'<th style="text-align:left">'+etqCol+'</th><th>N</th><th>Predicho</th>'
+    +'<th style="text-align:left">'+etqCol+'</th><th title="Predicciones de mercado acumuladas (no partidos) -- cada partido cerrado aporta hasta 59">N</th><th>Predicho</th>'
     +'<th>Real</th><th>Sesgo</th></tr></thead><tbody>'
     +filas.map(f=>{
       const c=Math.abs(f.sesgo)<2?'var(--text3)':(f.sesgo>0?'var(--red)':'var(--green)');
@@ -2259,7 +2274,7 @@ function renderLambdaBandas(){
   // marca si en ese tramo el Over gano de verdad mas de la mitad de las veces.
   const bandas=_porBandaLam(cer);
   ou.innerHTML='<table class="hm-table"><thead><tr><th style="text-align:left">Banda λ_total</th>'
-    +'<th>N</th><th>P(O2.5) modelo</th><th>O2.5 real</th><th>Sesgo</th><th>Cruza 50%</th></tr></thead><tbody>'
+    +'<th title="Cantidad de partidos cerrados en esa banda de λ_total">N</th><th>P(O2.5) modelo</th><th>O2.5 real</th><th>Sesgo</th><th>Cruza 50%</th></tr></thead><tbody>'
     +bandas.map(({b,arr})=>{
       const pred=arr.reduce((s,p)=>s+(p.mercados_snapshot.over25||0),0)/arr.length;
       const real=arr.filter(p=>_golesReales(p).tot>=3).length/arr.length*100;
@@ -2275,7 +2290,7 @@ function renderLambdaBandas(){
 
   // (3) sesgo de la estimacion de goles: lambda_total proyectada vs goles reales.
   gl.innerHTML='<table class="hm-table"><thead><tr><th style="text-align:left">Banda λ_total</th>'
-    +'<th>N</th><th>λ_total media</th><th>Goles reales media</th><th>Sesgo</th><th>Error abs medio</th></tr></thead><tbody>'
+    +'<th title="Cantidad de partidos cerrados en esa banda de λ_total">N</th><th>λ_total media</th><th>Goles reales media</th><th>Sesgo</th><th>Error abs medio</th></tr></thead><tbody>'
     +bandas.map(({b,arr})=>{
       let sl=0,sr=0,se=0;
       arr.forEach(p=>{const lt=p.lambda_final_l+p.lambda_final_v;const tot=_golesReales(p).tot;
@@ -2317,7 +2332,7 @@ function renderLambdaBandas(){
   // (5) BTTS por banda de lambda_total (acumulada). Real = ambos marcaron.
   const bEl=document.getElementById('diag-lam-btts');
   bEl.innerHTML='<table class="hm-table"><thead><tr><th style="text-align:left">Banda λ_total</th>'
-    +'<th>N</th><th>P(BTTS) modelo</th><th>BTTS real</th><th>Sesgo</th></tr></thead><tbody>'
+    +'<th title="Cantidad de partidos cerrados en esa banda de λ_total">N</th><th>P(BTTS) modelo</th><th>BTTS real</th><th>Sesgo</th></tr></thead><tbody>'
     +bandas.map(({b,arr})=>{
       const a=arr.filter(p=>p.mercados_snapshot.btts!=null);
       if(!a.length) return '';
@@ -2342,7 +2357,7 @@ function renderLambdaBandas(){
   // banda. VMR real = varianza/media de los goles totales; Poisson asume 1.0.
   const dispEl=document.getElementById('diag-lam-disp');
   dispEl.innerHTML='<table class="hm-table"><thead><tr><th style="text-align:left">Banda λ_total</th>'
-    +'<th>N</th><th>fuente</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4+</th><th>VMR real</th></tr></thead><tbody>'
+    +'<th title="Cantidad de partidos cerrados en esa banda de λ_total">N</th><th>fuente</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4+</th><th>VMR real</th></tr></thead><tbody>'
     +bandas.map(({b,arr})=>{
       const tot=arr.map(p=>_golesReales(p).tot);
       const n=tot.length, mean=tot.reduce((a,c)=>a+c,0)/n;
@@ -2369,7 +2384,7 @@ function renderLambdaBandas(){
   const iEl=document.getElementById('diag-lam-indep');
   const corrGlobal=_pearson(cer.map(p=>_golesReales(p).h),cer.map(p=>_golesReales(p).a));
   iEl.innerHTML='<table class="hm-table"><thead><tr><th style="text-align:left">Banda λ_total</th>'
-    +'<th>N</th><th>corr(goles L, goles V)</th><th>lectura</th></tr></thead><tbody>'
+    +'<th title="Cantidad de partidos cerrados en esa banda de λ_total">N</th><th>corr(goles L, goles V)</th><th>lectura</th></tr></thead><tbody>'
     +bandas.map(({b,arr})=>{
       const r=_pearson(arr.map(p=>_golesReales(p).h),arr.map(p=>_golesReales(p).a));
       const poco=arr.length<15;
@@ -2394,7 +2409,7 @@ function _tablaLamGoles(grupos, orden, etqCol){
   const rows=orden.filter(k=>grupos[k]&&grupos[k].length);
   if(!rows.length) return '<p class="empty">Sin datos todavía.</p>';
   return '<table class="hm-table"><thead><tr><th style="text-align:left">'+etqCol+'</th>'
-    +'<th>N</th><th>λ media</th><th>Goles media</th><th>Sesgo</th></tr></thead><tbody>'
+    +'<th title="Cantidad de apariciones equipo-partido (un equipo, un partido) en esa banda">N</th><th>λ media</th><th>Goles media</th><th>Sesgo</th></tr></thead><tbody>'
     +rows.map(k=>{const a=grupos[k];
       const lm=a.reduce((s,o)=>s+o.lam,0)/a.length;
       const gm=a.reduce((s,o)=>s+o.goles,0)/a.length;
