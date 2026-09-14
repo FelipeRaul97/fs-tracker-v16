@@ -1998,9 +1998,13 @@ function renderCrucesValidados(){
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px">
       <div class="metric"><div class="metric-label">Registradas</div><div class="metric-val">${todos.length}</div></div>
       <div class="metric"><div class="metric-label">Cerradas</div><div class="metric-val">${cerr.length}</div></div>
-      <div class="metric"><div class="metric-label">Cruzaban</div><div class="metric-val amber">${todos.filter(c=>c.cruza).length}</div></div>
-      <div class="metric"><div class="metric-label">Cruce seguro</div><div class="metric-val">${todos.filter(c=>c.cruza_segura).length}</div></div>
-    </div>`;
+      <div class="metric"><div class="metric-label">Cruzaban (total)</div><div class="metric-val amber">${todos.filter(c=>c.cruza).length}</div></div>
+      <div class="metric"><div class="metric-label">Cruce seguro (total)</div><div class="metric-val">${todos.filter(c=>c.cruza_segura).length}</div></div>
+    </div>
+    <p style="font-size:11px;color:var(--text3);margin:8px 0 0">
+      Las tarjetas cuentan TODO lo registrado (incluye partidos aún sin cerrar).
+      La tabla de abajo usa solo las ${cerr.length} ya cerradas — por eso sus
+      "Cruzaban"/"Cruce seguro" son más bajos que los de arriba.</p>`;
 
   if(cerr.length<10){
     dEl.innerHTML=`<p class="empty">Solo ${cerr.length} cerradas. Hacen falta ~200 para que la
