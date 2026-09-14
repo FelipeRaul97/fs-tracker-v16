@@ -1340,13 +1340,13 @@ function _roiLabelPos(roi,by,barH){
   // Siempre afuera de la barra (arriba si es positiva, abajo si es negativa).
   // El headroom para que esto nunca se corte lo reserva quien llama, inflando
   // maxAbs (ver _roiHeadroom) para que ninguna barra llegue al borde del chart.
-  return roi>=0 ? {y:by-6,inside:false} : {y:by+barH+13,inside:false};
+  return roi>=0 ? {y:by-9,inside:false} : {y:by+barH+16,inside:false};
 }
-// Infla el rango vertical un 20% para dejarle aire al rotulo por afuera de
-// la barra mas alta -- sin esto, la barra del bucket con mayor |ROI| toca el
-// borde del chart y el label no entra arriba/abajo (se veia "adentro" solo
-// en esa barra, inconsistente con el resto).
-function _roiHeadroom(maxAbs){ return maxAbs*1.22; }
+// Infla el rango vertical para dejarle aire al rotulo por afuera de la barra
+// mas alta -- sin esto, la barra del bucket con mayor |ROI| toca el borde del
+// chart y el label no entra arriba/abajo (se veia "adentro" solo en esa
+// barra, inconsistente con el resto).
+function _roiHeadroom(maxAbs){ return maxAbs*1.35; }
 
 function renderEVROI(){
   const evBuckets=[{l:'<0%',min:-99,max:0},{l:'0–5%',min:0,max:5},{l:'5–10%',min:5,max:10},{l:'10–15%',min:10,max:15},{l:'15%+',min:15,max:99}];
