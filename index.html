@@ -1983,7 +1983,13 @@ function renderCrucesValidados(){
   const dEl=document.getElementById('cruces-detalle');
   if(!rEl) return;
 
-  const todos=_dataLiga().flatMap(p=>(p.cruces_validados||[]).map(c=>({...c,partido:p})));
+  // apostado: hubo una entrada en p.apuestas (PICK/COMBO) para ese mismo mercado.
+  // cruces_validados guarda TODA cuota pegada que cae en banda validada, apostada
+  // o no -- este flag es lo que permite separar las dos poblaciones despues.
+  const todos=_dataLiga().flatMap(p=>{
+    const apostados=new Set((p.apuestas||[]).map(a=>a.mercado));
+    return (p.cruces_validados||[]).map(c=>({...c,partido:p,apostado:apostados.has(c.mercado)}));
+  });
   const cerr=todos.filter(c=>c.acerto!=null);
 
   if(!todos.length){
@@ -2002,6 +2008,13 @@ function renderCrucesValidados(){
   const cruzan=grupo(cerr.filter(c=>c.cruza));
   const noCruzan=grupo(cerr.filter(c=>!c.cruza));
   const seguras=grupo(cerr.filter(c=>c.cruza_segura));
+  // Mismo corte, pero separando lo que se jugo de verdad (PICK/COMBO) de lo que
+  // quedo solo registrado en watchlist -- pregunta del usuario: "esto de aca es
+  // todo watchlist o hay apostado mezclado". Es mezcla; esto lo desglosa.
+  const cruzanApostado=grupo(cerr.filter(c=>c.cruza&&c.apostado));
+  const cruzanWL=grupo(cerr.filter(c=>c.cruza&&!c.apostado));
+  const noCruzanApostado=grupo(cerr.filter(c=>!c.cruza&&c.apostado));
+  const noCruzanWL=grupo(cerr.filter(c=>!c.cruza&&!c.apostado));
 
   rEl.innerHTML=`
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px">
@@ -2021,11 +2034,11 @@ function renderCrucesValidados(){
     return;
   }
 
-  const fila=(lbl,g,destacar)=>{
-    if(!g) return `<tr><td>${lbl}</td><td colspan="5" class="empty">sin datos</td></tr>`;
+  const fila=(lbl,g,destacar,sub)=>{
+    if(!g) return sub?'':`<tr><td>${lbl}</td><td colspan="5" class="empty">sin datos</td></tr>`;
     const cls=g.roi>=0?'pl-pos':'pl-neg';
     return`<tr${destacar?' style="background:var(--amber-bg)"':''}>
-      <td><strong>${lbl}</strong></td>
+      <td${sub?' style="padding-left:22px;color:var(--text2);font-size:12px"':''}>${sub?lbl:'<strong>'+lbl+'</strong>'}</td>
       <td class="num">${g.n}</td>
       <td class="num">${g.wr.toFixed(1)}%</td>
       <td class="num" style="color:var(--text3)">${g.be.toFixed(1)}%</td>
@@ -2045,7 +2058,11 @@ function renderCrucesValidados(){
       <th class="num">Necesita</th><th class="num">Margen</th><th class="num">ROI</th>
     </tr></thead><tbody>
       ${fila('Cruzaban',cruzan,true)}
+      ${fila('↳ apostado (PICK/COMBO)',cruzanApostado,false,true)}
+      ${fila('↳ solo watchlist',cruzanWL,false,true)}
       ${fila('No cruzaban',noCruzan,false)}
+      ${fila('↳ apostado (PICK/COMBO)',noCruzanApostado,false,true)}
+      ${fila('↳ solo watchlist',noCruzanWL,false,true)}
       ${fila('Cruce seguro (IC95)',seguras,false)}
     </tbody></table></div>
     <p style="font-size:12px;color:var(--text3);margin-top:10px">
@@ -2053,7 +2070,9 @@ function renderCrucesValidados(){
       <strong>Necesita</strong> = el acierto que exigirían esas cuotas en promedio
       para no perder (break-even, = promedio de 1/cuota). <strong>Margen</strong> =
       Acertó − Necesita, en puntos (positivo = rentable). <strong>ROI</strong> =
-      rentabilidad real de haber apostado 1u en cada una. ${veredicto}</p>
+      rentabilidad real de haber apostado 1u en cada una. Las filas "↳" separan
+      lo que se jugó de verdad (PICK/COMBO) de lo que quedó solo registrado en
+      watchlist dentro de ese mismo grupo. ${veredicto}</p>
     <p style="font-size:12px;color:var(--text3);margin-top:6px">
       Para qué sirve: es la prueba del criterio de selección "Vía A" del proyecto
       (ver CLAUDE.md → Discriminación de PICK). Si <strong>Cruzaban</strong> rinde
