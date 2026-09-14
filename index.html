@@ -2304,12 +2304,22 @@ function renderDiagnostico(){
     cob.innerHTML='<p class="empty">Sin selecciones validadas registradas.</p>';
   }else{
     const cot=todas.filter(v=>v.cotizada).length;
+    const cerr=todas.filter(v=>v.acerto!=null);
+    const ac=cerr.filter(v=>v.acerto).length;
+    const filaSalieron = cerr.length
+      ? '<div class="stat-row"><span class="stat-label">Salieron bien (de las cerradas)</span>'
+        +'<span>'+ac+' / '+cerr.length+' ('+(ac/cerr.length*100).toFixed(0)+'%)</span></div>'
+      : '<div class="stat-row"><span class="stat-label">Salieron bien</span>'
+        +'<span style="color:var(--text3)">sin partidos cerrados todavía</span></div>';
     cob.innerHTML='<div class="stat-row"><span class="stat-label">Validadas encontradas</span>'
       +'<span>'+todas.length+'</span></div>'
       +'<div class="stat-row"><span class="stat-label">Con cuota registrada</span>'
       +'<span>'+cot+' ('+(cot/todas.length*100).toFixed(0)+'%)</span></div>'
-      +'<p style="font-size:12px;color:var(--text3);margin-top:8px">Cuanto más alto, menos '
-      +'sesgada la muestra para saber con qué frecuencia el mercado paga sobre la línea.</p>';
+      +filaSalieron
+      +'<p style="font-size:12px;color:var(--text3);margin-top:8px">"Con cuota registrada" mide '
+      +'sesgo de selección (cuánto de lo validado llegás a cotizar). "Salieron bien" es el acierto '
+      +'real de las 209 validadas -- cotizadas o no -- sobre las que ya cerraron, la muestra completa '
+      +'del estudio de selección, no solo lo que jugaste.</p>';
   }
 }
 
