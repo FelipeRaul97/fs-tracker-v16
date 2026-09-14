@@ -126,7 +126,7 @@
 
   /* Cards */
   .grid2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}
-  .grid2>.card{min-width:0}
+  .grid2>.card{min-width:0;overflow-x:auto}
   @media(max-width:700px){.grid2{grid-template-columns:1fr}}
   .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--rlg);padding:16px 18px;}
   .card-title{font-size:12px;font-weight:500;color:var(--text3);text-transform:uppercase;
@@ -300,7 +300,8 @@
     <div class="grid2" style="margin-bottom:16px">
       <div class="card">
         <div class="card-title">Prob modelo vs WR real por banda</div>
-        <table style="width:100%;font-size:12px;border-collapse:collapse">
+        <div style="overflow-x:auto">
+        <table style="width:100%;min-width:420px;font-size:12px;border-collapse:collapse">
           <thead><tr style="border-bottom:1px solid var(--border)">
             <th style="padding:4px 6px;text-align:left;color:var(--text3)">Banda prob</th>
             <th style="padding:4px 6px;text-align:right;color:var(--text3)">N</th>
@@ -311,6 +312,7 @@
           </tr></thead>
           <tbody id="calib-bands"></tbody>
         </table>
+        </div>
         <div class="chart-note" id="calib-sample-note" style="margin-top:8px"></div>
       </div>
       <div class="card">
@@ -1334,14 +1336,17 @@ function renderCalibTipo(settled){
 // entra afuera, se mete DENTRO de la barra (pegado al borde lejano del cero) y pasa
 // a blanco -- mismo contraste que .btn-green/.btn-red -- porque el color normal
 // (mismo que la barra) se volveria ilegible sobre ella.
-function _roiLabelPos(roi,by,barH,PT,PB,H){
-  if(roi>=0){
-    const outside=by-3;
-    return outside>=PT+9 ? {y:outside,inside:false} : {y:Math.max(PT+9,by+barH-6),inside:true};
-  }
-  const outside=by+barH+11, limit=H-PB-4;
-  return outside<=limit ? {y:outside,inside:false} : {y:Math.min(limit,by+barH-6),inside:true};
+function _roiLabelPos(roi,by,barH){
+  // Siempre afuera de la barra (arriba si es positiva, abajo si es negativa).
+  // El headroom para que esto nunca se corte lo reserva quien llama, inflando
+  // maxAbs (ver _roiHeadroom) para que ninguna barra llegue al borde del chart.
+  return roi>=0 ? {y:by-6,inside:false} : {y:by+barH+13,inside:false};
 }
+// Infla el rango vertical un 20% para dejarle aire al rotulo por afuera de
+// la barra mas alta -- sin esto, la barra del bucket con mayor |ROI| toca el
+// borde del chart y el label no entra arriba/abajo (se veia "adentro" solo
+// en esa barra, inconsistente con el resto).
+function _roiHeadroom(maxAbs){ return maxAbs*1.22; }
 
 function renderEVROI(){
   const evBuckets=[{l:'<0%',min:-99,max:0},{l:'0–5%',min:0,max:5},{l:'5–10%',min:5,max:10},{l:'10–15%',min:10,max:15},{l:'15%+',min:15,max:99}];
@@ -1356,7 +1361,7 @@ function renderEVROI(){
   const W=560,H=160,PL=45,PR=10,PT=15,PB=42;
   const iW=W-PL-PR,iH=H-PT-PB;
   const roiVals=data.filter(d=>d.roi!=null).map(d=>d.roi);
-  const maxAbs=Math.max(Math.abs(Math.min(...roiVals,0)),Math.abs(Math.max(...roiVals,0)),5);
+  const maxAbs=_roiHeadroom(Math.max(Math.abs(Math.min(...roiVals,0)),Math.abs(Math.max(...roiVals,0)),5));
   const bw=iW/data.length-8;
   const sy=v=>PT+iH*(1-(v+maxAbs)/(2*maxAbs));
   const zy=sy(0);
@@ -1369,8 +1374,8 @@ function renderEVROI(){
       const by=d.roi>=0?sy(d.roi):zy;
       const col=d.roi>=0?'var(--green-mid)':'var(--red-mid)';
       svg.appendChild(svgEl('rect',{x:bx,y:by,width:bw,height:barH||1,fill:col,rx:'3',opacity:'0.8'}));
-      const lp=_roiLabelPos(d.roi,by,barH,PT,PB,H);
-      const vt=svgEl('text',{x:bx+bw/2,y:lp.y,fill:lp.inside?'#fff':col,'font-size':'11','text-anchor':'middle'});
+      const lp=_roiLabelPos(d.roi,by,barH);
+      const vt=svgEl('text',{x:bx+bw/2,y:lp.y,fill:col,'font-size':'11','text-anchor':'middle'});
       vt.textContent=(d.roi>=0?'+':'')+d.roi.toFixed(1)+'%'; svg.appendChild(vt);
     }
     const xt=svgEl('text',{x:bx+bw/2,y:H-PB+14,fill:'var(--text2)','font-size':'10','text-anchor':'middle'});
@@ -1390,7 +1395,7 @@ function renderCuotaROI(){
   const W=700,H=200,PL=45,PR=10,PT=20,PB=42;
   const iW=W-PL-PR,iH=H-PT-PB;
   const roiVals=data.map(d=>d.roi);
-  const maxAbs=Math.max(Math.abs(Math.min(...roiVals)),Math.abs(Math.max(...roiVals)),5);
+  const maxAbs=_roiHeadroom(Math.max(Math.abs(Math.min(...roiVals)),Math.abs(Math.max(...roiVals)),5));
   const bw=iW/data.length-8;
   const sy=v=>PT+iH*(1-(v+maxAbs)/(2*maxAbs));
   const zy=sy(0);
@@ -1403,8 +1408,8 @@ function renderCuotaROI(){
     const col=d.roi>=0?'var(--green-mid)':'var(--red-mid)';
     if(d.n>0){
       svg.appendChild(svgEl('rect',{x:bx,y:by,width:bw,height:barH||1,fill:col,rx:'3',opacity:'0.8'}));
-      const lp=_roiLabelPos(d.roi,by,barH,PT,PB,H);
-      const vt=svgEl('text',{x:bx+bw/2,y:lp.y,fill:lp.inside?'#fff':col,'font-size':'11','text-anchor':'middle'});
+      const lp=_roiLabelPos(d.roi,by,barH);
+      const vt=svgEl('text',{x:bx+bw/2,y:lp.y,fill:col,'font-size':'11','text-anchor':'middle'});
       vt.textContent=(d.roi>=0?'+':'')+d.roi.toFixed(1)+'%';svg.appendChild(vt);
     }
     const xt=svgEl('text',{x:bx+bw/2,y:H-PB+14,fill:'var(--text2)','font-size':'10','text-anchor':'middle'});
