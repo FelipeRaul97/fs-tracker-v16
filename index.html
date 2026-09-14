@@ -212,6 +212,7 @@
         <option value="PICK">PICK</option><option value="COMBO">COMBO</option></select>
       <select id="f-conf"><option value="">Toda confianza</option>
         <option value="ALTA">Alta</option><option value="MEDIA">Media</option></select>
+      <button type="button" class="btn btn-sm" onclick="limpiarFiltrosApuestas()">Limpiar filtros</button>
       <span id="f-liga-eco" class="filter-label" style="margin-left:auto;font-style:italic"></span>
     </div>
     <div class="table-wrap">
@@ -2609,6 +2610,12 @@ document.querySelectorAll('.tab').forEach(tab=>{
   document.getElementById(id).addEventListener('change',()=>{ _ecoLiga(); renderAll(); });
 });
 _ecoLiga();
+
+function limpiarFiltrosApuestas(){
+  ['f-liga','f-estado','f-tipo','f-conf'].forEach(id=>{ document.getElementById(id).value=''; });
+  _ecoLiga(); renderAll();
+}
+window.limpiarFiltrosApuestas=limpiarFiltrosApuestas;
 
 // Filtros propios del tab Watchlist (tipo de mercado + mercado agrupado): solo
 // repintan ese tab, no afectan a Apuestas ni al resto -- son un recorte interno
