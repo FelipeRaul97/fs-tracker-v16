@@ -448,6 +448,20 @@
         <div id="wl-unicidad"></div>
       </div>
     </div>
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
+        <div class="card-title">Por equipo y combinadas — ¿las que pasan el filtro rinden mejor?</div>
+        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">
+          Estas nunca son PICK por política (no por un filtro de calidad puntual —
+          ver <em>Mercados por equipo — NUNCA son PICK</em> en CLAUDE.md), así que
+          quedan todas mezcladas en watchlist: las de buena pinta junto a las que
+          solo se registran para acumular muestra. Acá se separan en dos grupos —
+          <strong>pasan el filtro</strong> (EV≥0, o si tienen línea validada, la
+          cruzan) vs <strong>no pasan</strong> — para ver si de verdad hay una
+          señal en el EV/cruce de estos mercados o es ruido igual en los dos lados.</p>
+        <div id="wl-porequipo-ev"></div>
+      </div>
+    </div>
     <div class="grid2">
       <div class="card"><div class="card-title">Watchlist por mercado</div><div id="wl-by-market"></div></div>
       <div class="card"><div class="card-title">Distribución EV% watchlist</div><div id="wl-ev-dist"></div></div>
@@ -1923,6 +1937,50 @@ function renderWatchlist(){
   renderCapa1x2();
   renderFiltroEdge();
   renderUnicidadTotales();
+  renderPorEquipoEV();
+}
+
+// Por equipo / combinadas: nunca son PICK por politica (no por filtro de calidad),
+// asi que watchlist las mezcla todas. Separa "pasan el filtro" (EV>=0, o si tienen
+// linea validada, la cruzan -- usa cuota_justa que ya viaja en el propio item) de
+// "no pasan", para ver si el EV/cruce de estos mercados predice algo o es ruido.
+function renderPorEquipoEV(){
+  const el=document.getElementById('wl-porequipo-ev'); if(!el) return;
+  const items=_dataLiga().flatMap(p=>(p.watchlist||[])
+    .filter(w=>w.tipo==='POR_EQUIPO'||w.tipo==='COMBINADA')
+    .map(w=>({...w,partido:p})));
+  if(!items.length){ el.innerHTML='<p class="empty">Sin mercados por equipo/combinadas registrados todavía.</p>'; return; }
+
+  const pasa=w=> w.cuota_justa!=null ? w.cuota>=w.cuota_justa : (w.ev_pct!=null&&w.ev_pct>=0);
+  const pasan=items.filter(pasa), noPasan=items.filter(w=>!pasa(w));
+
+  const grupo=(arr)=>{
+    const cerr=arr.filter(w=>w.acerto!=null);
+    if(!cerr.length) return null;
+    const ac=cerr.filter(w=>w.acerto).length;
+    return {n:cerr.length, wr:ac/cerr.length*100,
+            roi:cerr.reduce((s,w)=>s+(w.acerto?w.cuota-1:-1),0)/cerr.length*100};
+  };
+  const gPasan=grupo(pasan), gNoPasan=grupo(noPasan);
+
+  const resumen=(lbl,tot,g)=>{
+    if(!g) return `<div class="stat-row"><span class="stat-label">${lbl} (${tot.length} registradas)</span><span style="color:var(--text3);font-size:12px">sin cerradas</span></div>`;
+    const cls=g.roi>=0?'pl-pos':'pl-neg';
+    return `<div class="stat-row"><span class="stat-label">${lbl} (${tot.length} registradas, ${g.n} cerradas)</span>
+      <span style="display:flex;gap:14px;font-size:12px">
+        <span>acierto <b>${g.wr.toFixed(0)}%</b></span>
+        <span class="${cls}">ROI teórico <b>${(g.roi>=0?'+':'')}${g.roi.toFixed(1)}%</b></span>
+      </span></div>`;
+  };
+
+  const veredicto=(gPasan&&gNoPasan&&gPasan.n>=10&&gNoPasan.n>=10)
+    ? (gPasan.roi>gNoPasan.roi
+        ? `<span class="pl-pos">Las que pasan el filtro rinden ${(gPasan.roi-gNoPasan.roi).toFixed(1)} puntos más — el EV/cruce sí distingue algo en estos mercados.</span>`
+        : `<span class="pl-neg">Las que pasan el filtro rinden ${(gNoPasan.roi-gPasan.roi).toFixed(1)} puntos MENOS — acá el EV/cruce no está prediciendo nada.</span>`)
+    : '<span style="color:var(--text3)">Hacen falta 10+ cerradas en cada grupo para que la comparación signifique algo.</span>';
+
+  el.innerHTML=resumen('Pasan el filtro',pasan,gPasan)+resumen('No pasan',noPasan,gNoPasan)
+    +`<p style="font-size:12px;color:var(--text3);margin-top:8px">${veredicto}</p>`;
 }
 
 // Unicidad de totales de goles: de los Over/Under 1.5/2.5/3.5/4.5 que compitieron
