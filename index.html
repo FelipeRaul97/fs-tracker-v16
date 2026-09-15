@@ -910,6 +910,9 @@ function renderBets(){
     if(!last||last.gid!==gid) groups.push({gid,p:r.p,items:[]});
     groups[groups.length-1].items.push(r);
   });
+  // Mas recientes primero -- _DATA viene en orden de carga (ascendente), no
+  // de fecha del partido, asi que hay que ordenar explicito.
+  groups.sort((a,b)=>new Date(b.p.fecha)-new Date(a.p.fecha));
 
   // Contador global de apuestas por liga
   const ligaCount={};
