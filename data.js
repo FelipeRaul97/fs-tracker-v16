@@ -8521,5 +8521,432 @@ const TRACKER_DATA = [
         "cotizada": false
       }
     ]
+  },
+  {
+    "id": "013",
+    "fecha": "2026-09-16",
+    "jornada": 6,
+    "liga": "SP1",
+    "partido": "Barcelona vs Racing Santander",
+    "lambda_forma_l": 2.8702,
+    "lambda_forma_v": 1.3619,
+    "lambda_reg_l": 2.8067,
+    "lambda_reg_v": 0.9322,
+    "lambda_base_l": 2.8258,
+    "lambda_base_v": 1.0611,
+    "lambda_final_l": 3.0023,
+    "lambda_final_v": 0.8846,
+    "lambda_shadow_l": 3.1704,
+    "lambda_shadow_v": 0.8492,
+    "lambda_corners": null,
+    "ratio": 3.3939633732760566,
+    "visit_dominante": "False",
+    "variables_activas": "V#3(L:1.10) - V#4(L:0.96) - V#4(V:0.96)",
+    "variables": {
+      "v1": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa": false,
+        "activa_local": false,
+        "activa_visit": false,
+        "detalle_local": "--",
+        "detalle_visit": "--",
+        "detalle": "Ambos necesitan >=20 PJ (local:5, visit:5)"
+      },
+      "v2": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa_local": false,
+        "activa_visit": false,
+        "detalle_local": "Rank 1, margen 13pts -- fuera de riesgo",
+        "detalle_visit": "Rank 10, margen 5pts -- fuera de riesgo"
+      },
+      "v3": {
+        "factor_local": 1.1,
+        "activa": true,
+        "n_partidos": 20,
+        "GpG_casa": 2.9,
+        "GpG_liga": 1.5,
+        "hs": 1.4,
+        "muestra_completa": true,
+        "detalle": "hs=+1.40 (20 ptdos)"
+      },
+      "v4": {
+        "factor_local": 0.96,
+        "factor_visit": 0.96,
+        "activa_local": true,
+        "activa_visit": true,
+        "bajas_local": 2,
+        "bajas_visit": 3
+      },
+      "v5": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa_local": false,
+        "activa_visit": false
+      },
+      "v6": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa": false
+      },
+      "v7": {
+        "skip": false,
+        "activa_local": false,
+        "activa_visit": false,
+        "detalle": "Sin DT nuevo"
+      },
+      "v8": {
+        "activa": false,
+        "anulado_derby": false,
+        "detalle": "Inactiva"
+      }
+    },
+    "confianza": "ALTA",
+    "notas": "",
+    "resultado_partido": null,
+    "goles_esperados": "3.89",
+    "apuestas": [
+      {
+        "tipo": "COMBO",
+        "mercado": "over15+visit_remates_puerta_over2.5",
+        "etiqueta": "Over 1.5 + V Remates a puerta Over 2.5",
+        "cuota": 1.87,
+        "prob": 55.1,
+        "ev_pct": 3.0,
+        "estado": "PENDIENTE",
+        "pl": null,
+        "patas": [
+          "over15",
+          "visit_remates_puerta_over2.5"
+        ],
+        "promovida_combinada": true,
+        "nivel_cruce": "justa",
+        "cuota_justa": 1.73,
+        "cuota_segura": 1.92,
+        "acierto_hist": 57.7,
+        "n_hist": 310
+      }
+    ],
+    "watchlist": [
+      {
+        "mercado": "do1x",
+        "linea": null,
+        "etiqueta": "DO Barcelona o Empate",
+        "cuota": 1.02,
+        "prob": 94.1,
+        "ev_pct": -4.0
+      },
+      {
+        "mercado": "btts",
+        "linea": null,
+        "etiqueta": "BTTS",
+        "cuota": 1.7,
+        "prob": 58.0,
+        "ev_pct": -1.4,
+        "cuota_justa": 1.7,
+        "cuota_segura": 1.83,
+        "acierto_hist": 58.7,
+        "n_hist": 606
+      },
+      {
+        "mercado": "over05_visit",
+        "linea": null,
+        "etiqueta": "Over 0.5 Racing Santander",
+        "cuota": 1.67,
+        "prob": 58.7,
+        "ev_pct": -2.0
+      },
+      {
+        "mercado": "local_corners_equipo",
+        "linea": 6.5,
+        "etiqueta": "Barcelona Corners equipo Over 6.5",
+        "cuota": 1.3,
+        "prob": 78.3,
+        "ev_pct": 1.8,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates_puerta",
+        "linea": 1.5,
+        "etiqueta": "Racing Santander Remates a puerta Over 1.5",
+        "cuota": 1.29,
+        "prob": 78.2,
+        "ev_pct": 0.9,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_corners_equipo",
+        "linea": 7.5,
+        "etiqueta": "Barcelona Corners equipo Over 7.5",
+        "cuota": 1.55,
+        "prob": 69.7,
+        "ev_pct": 8.0,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 2.5,
+        "etiqueta": "Racing Santander Corners equipo Over 2.5",
+        "cuota": 1.62,
+        "prob": 65.0,
+        "ev_pct": 5.3,
+        "tipo": "POR_EQUIPO",
+        "cuota_justa": 1.47,
+        "cuota_segura": 1.59,
+        "acierto_hist": 68.0,
+        "n_hist": 319
+      },
+      {
+        "mercado": "visit_remates_puerta",
+        "linea": 2.5,
+        "etiqueta": "Racing Santander Remates a puerta Over 2.5",
+        "cuota": 1.87,
+        "prob": 55.8,
+        "ev_pct": 4.3,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 3.5,
+        "etiqueta": "Racing Santander Corners equipo Over 3.5",
+        "cuota": 2.5,
+        "prob": 46.0,
+        "ev_pct": 15.0,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "over25+over05_visit",
+        "linea": null,
+        "etiqueta": "Over 2.5 + Over 0.5 V",
+        "cuota": 1.75,
+        "prob": 50.6,
+        "ev_pct": -11.5,
+        "tipo": "COMBINADA",
+        "patas": [
+          "over25",
+          "over05_visit"
+        ],
+        "lift": 1.262,
+        "cuota_justa": 1.82,
+        "cuota_segura": 2.05,
+        "acierto_hist": 54.9,
+        "n_hist": 253
+      },
+      {
+        "mercado": "do1x+hcp3_visit",
+        "linea": null,
+        "etiqueta": "DO L o Empate + HCP +3 V",
+        "cuota": 2.57,
+        "prob": 51.9,
+        "ev_pct": 33.5,
+        "tipo": "COMBINADA",
+        "patas": [
+          "do1x",
+          "hcp3_visit"
+        ],
+        "lift": 0.962,
+        "cuota_justa": 1.92,
+        "cuota_segura": 2.22,
+        "acierto_hist": 52.1,
+        "n_hist": 188
+      }
+    ],
+    "mercados_snapshot": {
+      "victoria_local": 79.6,
+      "empate": 12.9,
+      "victoria_visit": 5.8,
+      "do1x": 94.1,
+      "dox2": 20.3,
+      "over15": 89.2,
+      "over25": 73.0,
+      "under25": 27.0,
+      "over35": 54.3,
+      "under35": 45.6,
+      "under45": 65.1,
+      "btts": 58.0,
+      "over05_local": 96.2,
+      "over05_visit": 58.7,
+      "hcp2_des": 39.1,
+      "hcp3_des": 59.8,
+      "local_remates_over7.5": 99.7,
+      "local_remates_over8.5": 99.4,
+      "local_remates_over9.5": 98.9,
+      "local_remates_over10.5": 98.1,
+      "local_remates_over11.5": 97.0,
+      "local_remates_over12.5": 95.4,
+      "local_remates_over13.5": 93.3,
+      "local_remates_over14.5": 90.6,
+      "local_remates_over15.5": 87.4,
+      "local_remates_puerta_over1.5": 99.9,
+      "local_remates_puerta_over2.5": 99.4,
+      "local_remates_puerta_over3.5": 98.0,
+      "local_remates_puerta_over4.5": 95.0,
+      "local_remates_puerta_over5.5": 89.9,
+      "local_remates_puerta_over6.5": 82.5,
+      "local_corners_equipo_over2.5": 98.3,
+      "local_corners_equipo_over3.5": 95.8,
+      "local_corners_equipo_over4.5": 91.6,
+      "local_corners_equipo_over5.5": 85.7,
+      "local_corners_equipo_over6.5": 78.3,
+      "local_corners_equipo_over7.5": 69.7,
+      "visit_remates_over7.5": 55.9,
+      "visit_remates_over8.5": 44.1,
+      "visit_remates_over9.5": 33.4,
+      "visit_remates_over10.5": 24.3,
+      "visit_remates_over11.5": 17.0,
+      "visit_remates_over12.5": 11.5,
+      "visit_remates_over13.5": 7.5,
+      "visit_remates_over14.5": 4.8,
+      "visit_remates_over15.5": 2.9,
+      "visit_remates_puerta_over1.5": 78.2,
+      "visit_remates_puerta_over2.5": 55.8,
+      "visit_remates_puerta_over3.5": 34.2,
+      "visit_remates_puerta_over4.5": 18.2,
+      "visit_remates_puerta_over5.5": 8.6,
+      "visit_remates_puerta_over6.5": 3.6,
+      "visit_corners_equipo_over2.5": 65.0,
+      "visit_corners_equipo_over3.5": 46.0,
+      "visit_corners_equipo_over4.5": 29.7,
+      "visit_corners_equipo_over5.5": 17.7,
+      "visit_corners_equipo_over6.5": 9.9,
+      "visit_corners_equipo_over7.5": 5.2
+    },
+    "cruces_validados": [
+      {
+        "mercado": "btts",
+        "etiqueta": "BTTS",
+        "cuota": 1.7,
+        "justa": 1.7,
+        "segura": 1.83,
+        "hist": 58.7,
+        "n": 606,
+        "cruza": true,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "visit_corners_equipo_over2.5",
+        "etiqueta": "Racing Santander Corners Over 2.5",
+        "cuota": 1.62,
+        "justa": 1.47,
+        "segura": 1.59,
+        "hist": 68.0,
+        "n": 319,
+        "cruza": true,
+        "cruza_segura": true
+      },
+      {
+        "mercado": "over15+visit_remates_puerta_over2.5",
+        "etiqueta": "Over 1.5 + V Remates a puerta Over 2.5",
+        "cuota": 1.87,
+        "justa": 1.73,
+        "segura": 1.92,
+        "hist": 57.7,
+        "n": 310,
+        "cruza": true,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "over25+over05_visit",
+        "etiqueta": "Over 2.5 + Over 0.5 V",
+        "cuota": 1.75,
+        "justa": 1.82,
+        "segura": 2.05,
+        "hist": 54.9,
+        "n": 253,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "do1x+hcp3_visit",
+        "etiqueta": "DO L o Empate + HCP +3 V",
+        "cuota": 2.57,
+        "justa": 1.92,
+        "segura": 2.22,
+        "hist": 52.1,
+        "n": 188,
+        "cruza": true,
+        "cruza_segura": true
+      }
+    ],
+    "validadas": [
+      {
+        "mercado": "btts",
+        "etiqueta": "BTTS",
+        "tipo": "simple",
+        "p": 0.5801,
+        "cuota_justa": 1.7,
+        "cuota_segura": 1.83,
+        "acierto_hist": 58.7,
+        "n_hist": 606,
+        "cotizada": true
+      },
+      {
+        "mercado": "over05_visit+hcp2_local",
+        "etiqueta": "Over 0.5 V + HCP +2 L",
+        "tipo": "COMBINADA",
+        "p": 0.5631,
+        "cuota_justa": 1.68,
+        "cuota_segura": 1.8,
+        "acierto_hist": 59.6,
+        "n_hist": 582,
+        "cotizada": false
+      },
+      {
+        "mercado": "btts+hcp2_local",
+        "etiqueta": "BTTS + HCP +2 L",
+        "tipo": "COMBINADA",
+        "p": 0.5449,
+        "cuota_justa": 1.85,
+        "cuota_segura": 2.05,
+        "acierto_hist": 54.1,
+        "n_hist": 338,
+        "cotizada": false
+      },
+      {
+        "mercado": "visit_corners_equipo_over2.5",
+        "etiqueta": "Racing Santander Corners Over 2.5",
+        "tipo": "por equipo",
+        "p": 0.6502,
+        "cuota_justa": 1.47,
+        "cuota_segura": 1.59,
+        "acierto_hist": 68.0,
+        "n_hist": 319,
+        "cotizada": true
+      },
+      {
+        "mercado": "over15+visit_remates_puerta_over2.5",
+        "etiqueta": "Over 1.5 + V Remates a puerta Over 2.5",
+        "tipo": "COMBINADA",
+        "p": 0.5508,
+        "cuota_justa": 1.73,
+        "cuota_segura": 1.92,
+        "acierto_hist": 57.7,
+        "n_hist": 310,
+        "cotizada": true
+      },
+      {
+        "mercado": "over25+over05_visit",
+        "etiqueta": "Over 2.5 + Over 0.5 V",
+        "tipo": "COMBINADA",
+        "p": 0.5058,
+        "cuota_justa": 1.82,
+        "cuota_segura": 2.05,
+        "acierto_hist": 54.9,
+        "n_hist": 253,
+        "cotizada": true
+      },
+      {
+        "mercado": "do1x+hcp3_visit",
+        "etiqueta": "DO L o Empate + HCP +3 V",
+        "tipo": "COMBINADA",
+        "p": 0.5193,
+        "cuota_justa": 1.92,
+        "cuota_segura": 2.22,
+        "acierto_hist": 52.1,
+        "n_hist": 188,
+        "cotizada": true
+      }
+    ]
   }
 ];
