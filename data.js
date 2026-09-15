@@ -6984,5 +6984,534 @@ const TRACKER_DATA = [
         "cotizada": false
       }
     ]
+  },
+  {
+    "id": "010",
+    "fecha": "2026-09-15",
+    "jornada": 6,
+    "liga": "SP1",
+    "partido": "Elche vs Real Madrid",
+    "lambda_forma_l": 0.9864,
+    "lambda_forma_v": 2.9706,
+    "lambda_reg_l": 1.18,
+    "lambda_reg_v": 2.0683,
+    "lambda_base_l": 1.1219,
+    "lambda_base_v": 2.339,
+    "lambda_final_l": 1.0002,
+    "lambda_final_v": 2.4607,
+    "lambda_shadow_l": 0.9549,
+    "lambda_shadow_v": 2.3623,
+    "lambda_corners": 12.286,
+    "ratio": 0.40646970374283736,
+    "visit_dominante": "True",
+    "variables_activas": "V#2(L:0.95) - V#3(L:1.00) - V#4(V:0.96)",
+    "variables": {
+      "v1": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa": false,
+        "activa_local": false,
+        "activa_visit": false,
+        "detalle_local": "--",
+        "detalle_visit": "--",
+        "detalle": "Ambos necesitan >=20 PJ (local:5, visit:5)"
+      },
+      "v2": {
+        "factor_local": 0.95,
+        "factor_visit": 1.0,
+        "activa_local": true,
+        "activa_visit": false,
+        "detalle_local": "Rank 19, margen 0pts sobre zona desc",
+        "detalle_visit": "Rank 2, margen 10pts -- fuera de riesgo"
+      },
+      "v3": {
+        "factor_local": 1.005,
+        "activa": true,
+        "n_partidos": 20,
+        "GpG_casa": 1.55,
+        "GpG_liga": 1.5,
+        "hs": 0.05,
+        "muestra_completa": true,
+        "detalle": "hs=+0.05 (20 ptdos)"
+      },
+      "v4": {
+        "factor_local": 1.0,
+        "factor_visit": 0.96,
+        "activa_local": false,
+        "activa_visit": true,
+        "bajas_local": 1,
+        "bajas_visit": 3
+      },
+      "v5": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa_local": false,
+        "activa_visit": false
+      },
+      "v6": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa": false
+      },
+      "v7": {
+        "skip": false,
+        "activa_local": false,
+        "activa_visit": false,
+        "detalle": "Sin DT nuevo"
+      },
+      "v8": {
+        "activa": false,
+        "anulado_derby": false,
+        "detalle": "Inactiva"
+      }
+    },
+    "confianza": "ALTA",
+    "notas": "",
+    "resultado_partido": null,
+    "goles_esperados": "3.46",
+    "apuestas": [
+      {
+        "tipo": "PICK",
+        "mercado": "btts",
+        "linea": null,
+        "etiqueta": "BTTS",
+        "cuota": 1.72,
+        "prob": 59.3,
+        "ev_pct": 2.0,
+        "estado": "PENDIENTE",
+        "pl": null,
+        "cuota_justa": 1.7,
+        "cuota_segura": 1.83,
+        "acierto_hist": 58.7,
+        "n_hist": 606
+      },
+      {
+        "tipo": "PICK",
+        "mercado": "over05_local",
+        "linea": null,
+        "etiqueta": "Over 0.5 Elche",
+        "cuota": 1.65,
+        "prob": 64.3,
+        "ev_pct": 6.1,
+        "estado": "PENDIENTE",
+        "pl": null
+      },
+      {
+        "tipo": "COMBO",
+        "mercado": "dox2+hcp3_local",
+        "etiqueta": "DO Empate o V + HCP +3 L",
+        "cuota": 1.75,
+        "prob": 59.3,
+        "ev_pct": 3.8,
+        "estado": "PENDIENTE",
+        "pl": null,
+        "patas": [
+          "dox2",
+          "hcp3_local"
+        ],
+        "promovida_combinada": true,
+        "nivel_cruce": "justa",
+        "cuota_justa": 1.72,
+        "cuota_segura": 1.91,
+        "acierto_hist": 58.1,
+        "n_hist": 296
+      }
+    ],
+    "watchlist": [
+      {
+        "mercado": "empate",
+        "linea": null,
+        "etiqueta": "Empate",
+        "cuota": 6.5,
+        "prob": 18.4,
+        "ev_pct": 19.6,
+        "regla_1x2_no_pick": true
+      },
+      {
+        "mercado": "over15",
+        "linea": null,
+        "etiqueta": "Over 1.5",
+        "cuota": 1.11,
+        "prob": 85.9,
+        "ev_pct": -4.7
+      },
+      {
+        "mercado": "over05_visit",
+        "linea": null,
+        "etiqueta": "Over 0.5 Real Madrid",
+        "cuota": 1.04,
+        "prob": 91.5,
+        "ev_pct": -4.8
+      },
+      {
+        "mercado": "corners65",
+        "linea": null,
+        "etiqueta": "Over 6.5 corners",
+        "cuota": 1.17,
+        "prob": 84.5,
+        "ev_pct": -1.1
+      },
+      {
+        "mercado": "visit_remates_puerta",
+        "linea": 4.5,
+        "etiqueta": "Real Madrid Remates a puerta Over 4.5",
+        "cuota": 1.17,
+        "prob": 84.9,
+        "ev_pct": -0.7,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates",
+        "linea": 7.5,
+        "etiqueta": "Elche Remates Over 7.5",
+        "cuota": 1.26,
+        "prob": 83.1,
+        "ev_pct": 4.7,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_corners_equipo",
+        "linea": 2.5,
+        "etiqueta": "Elche Corners equipo Over 2.5",
+        "cuota": 1.32,
+        "prob": 81.3,
+        "ev_pct": 7.3,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 3.5,
+        "etiqueta": "Real Madrid Corners equipo Over 3.5",
+        "cuota": 1.21,
+        "prob": 79.8,
+        "ev_pct": -3.4,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates_puerta",
+        "linea": 2.5,
+        "etiqueta": "Elche Remates a puerta Over 2.5",
+        "cuota": 1.52,
+        "prob": 77.0,
+        "ev_pct": 17.0,
+        "tipo": "POR_EQUIPO",
+        "cuota_justa": 1.28,
+        "cuota_segura": 1.37,
+        "acierto_hist": 78.2,
+        "n_hist": 293
+      },
+      {
+        "mercado": "local_remates",
+        "linea": 8.5,
+        "etiqueta": "Elche Remates Over 8.5",
+        "cuota": 1.45,
+        "prob": 75.3,
+        "ev_pct": 9.2,
+        "tipo": "POR_EQUIPO",
+        "cuota_justa": 1.32,
+        "cuota_segura": 1.44,
+        "acierto_hist": 76.0,
+        "n_hist": 183
+      },
+      {
+        "mercado": "under45+over05_visit",
+        "linea": null,
+        "etiqueta": "Under 4.5 + Over 0.5 V",
+        "cuota": 1.55,
+        "prob": 64.8,
+        "ev_pct": 0.4,
+        "tipo": "COMBINADA",
+        "patas": [
+          "under45",
+          "over05_visit"
+        ],
+        "lift": 0.934,
+        "cuota_justa": 1.56,
+        "cuota_segura": 1.7,
+        "acierto_hist": 64.2,
+        "n_hist": 327
+      },
+      {
+        "mercado": "local_remates_puerta_over3.5+over15",
+        "linea": null,
+        "etiqueta": "L Remates a puerta Over 3.5 + Over 1.5",
+        "cuota": 2.37,
+        "prob": 54.8,
+        "ev_pct": 29.9,
+        "tipo": "COMBINADA",
+        "patas": [
+          "local_remates_puerta_over3.5",
+          "over15"
+        ],
+        "lift": 1.079,
+        "cuota_justa": 1.94,
+        "cuota_segura": 2.2,
+        "acierto_hist": 51.7,
+        "n_hist": 242
+      }
+    ],
+    "mercados_snapshot": {
+      "victoria_local": 13.5,
+      "empate": 18.4,
+      "victoria_visit": 73.2,
+      "do1x": 26.8,
+      "dox2": 86.5,
+      "over15": 85.9,
+      "over25": 66.5,
+      "under25": 33.5,
+      "over35": 45.5,
+      "under35": 54.5,
+      "under45": 73.3,
+      "btts": 59.3,
+      "over05_local": 64.3,
+      "over05_visit": 91.5,
+      "hcp2_des": 52.7,
+      "hcp3_des": 72.8,
+      "corners65": 84.5,
+      "local_remates_over7.5": 83.1,
+      "local_remates_over8.5": 75.3,
+      "local_remates_over9.5": 66.4,
+      "local_remates_over10.5": 57.0,
+      "local_remates_over11.5": 47.5,
+      "local_remates_over12.5": 38.5,
+      "local_remates_over13.5": 30.4,
+      "local_remates_over14.5": 23.4,
+      "local_remates_over15.5": 17.5,
+      "local_remates_puerta_over1.5": 90.9,
+      "local_remates_puerta_over2.5": 77.0,
+      "local_remates_puerta_over3.5": 58.6,
+      "local_remates_puerta_over4.5": 40.0,
+      "local_remates_puerta_over5.5": 24.6,
+      "local_remates_puerta_over6.5": 13.8,
+      "local_corners_equipo_over2.5": 81.3,
+      "local_corners_equipo_over3.5": 66.8,
+      "local_corners_equipo_over4.5": 51.2,
+      "local_corners_equipo_over5.5": 36.8,
+      "local_corners_equipo_over6.5": 25.0,
+      "local_corners_equipo_over7.5": 16.1,
+      "visit_remates_over7.5": 96.9,
+      "visit_remates_over8.5": 94.6,
+      "visit_remates_over9.5": 91.5,
+      "visit_remates_over10.5": 87.3,
+      "visit_remates_over11.5": 82.2,
+      "visit_remates_over12.5": 76.1,
+      "visit_remates_over13.5": 69.4,
+      "visit_remates_over14.5": 62.2,
+      "visit_remates_over15.5": 54.8,
+      "visit_remates_puerta_over1.5": 99.3,
+      "visit_remates_puerta_over2.5": 97.2,
+      "visit_remates_puerta_over3.5": 92.7,
+      "visit_remates_puerta_over4.5": 84.9,
+      "visit_remates_puerta_over5.5": 74.0,
+      "visit_remates_puerta_over6.5": 61.0,
+      "visit_corners_equipo_over2.5": 89.8,
+      "visit_corners_equipo_over3.5": 79.8,
+      "visit_corners_equipo_over4.5": 67.4,
+      "visit_corners_equipo_over5.5": 54.1,
+      "visit_corners_equipo_over6.5": 41.3,
+      "visit_corners_equipo_over7.5": 30.2
+    },
+    "cruces_validados": [
+      {
+        "mercado": "btts",
+        "etiqueta": "BTTS",
+        "cuota": 1.72,
+        "justa": 1.7,
+        "segura": 1.83,
+        "hist": 58.7,
+        "n": 606,
+        "cruza": true,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "local_remates_puerta_over2.5",
+        "etiqueta": "Elche Remates a puerta Over 2.5",
+        "cuota": 1.52,
+        "justa": 1.28,
+        "segura": 1.37,
+        "hist": 78.2,
+        "n": 293,
+        "cruza": true,
+        "cruza_segura": true
+      },
+      {
+        "mercado": "local_remates_over8.5",
+        "etiqueta": "Elche Remates Over 8.5",
+        "cuota": 1.45,
+        "justa": 1.32,
+        "segura": 1.44,
+        "hist": 76.0,
+        "n": 183,
+        "cruza": true,
+        "cruza_segura": true
+      },
+      {
+        "mercado": "under45+over05_visit",
+        "etiqueta": "Under 4.5 + Over 0.5 V",
+        "cuota": 1.55,
+        "justa": 1.56,
+        "segura": 1.7,
+        "hist": 64.2,
+        "n": 327,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "dox2+hcp3_local",
+        "etiqueta": "DO Empate o V + HCP +3 L",
+        "cuota": 1.75,
+        "justa": 1.72,
+        "segura": 1.91,
+        "hist": 58.1,
+        "n": 296,
+        "cruza": true,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "local_remates_puerta_over3.5+over15",
+        "etiqueta": "L Remates a puerta Over 3.5 + Over 1.5",
+        "cuota": 2.37,
+        "justa": 1.94,
+        "segura": 2.2,
+        "hist": 51.7,
+        "n": 242,
+        "cruza": true,
+        "cruza_segura": true
+      }
+    ],
+    "validadas": [
+      {
+        "mercado": "btts",
+        "etiqueta": "BTTS",
+        "tipo": "simple",
+        "p": 0.5928,
+        "cuota_justa": 1.7,
+        "cuota_segura": 1.83,
+        "acierto_hist": 58.7,
+        "n_hist": 606,
+        "cotizada": true
+      },
+      {
+        "mercado": "over05_local+hcp2_visit",
+        "etiqueta": "Over 0.5 L + HCP +2 V",
+        "tipo": "COMBINADA",
+        "p": 0.5868,
+        "cuota_justa": 1.75,
+        "cuota_segura": 1.89,
+        "acierto_hist": 57.2,
+        "n_hist": 512,
+        "cotizada": false
+      },
+      {
+        "mercado": "under45+over05_visit",
+        "etiqueta": "Under 4.5 + Over 0.5 V",
+        "tipo": "COMBINADA",
+        "p": 0.6477,
+        "cuota_justa": 1.56,
+        "cuota_segura": 1.7,
+        "acierto_hist": 64.2,
+        "n_hist": 327,
+        "cotizada": true
+      },
+      {
+        "mercado": "local_corners_equipo_over3.5",
+        "etiqueta": "Elche Corners Over 3.5",
+        "tipo": "por equipo",
+        "p": 0.6683,
+        "cuota_justa": 1.44,
+        "cuota_segura": 1.56,
+        "acierto_hist": 69.2,
+        "n_hist": 325,
+        "cotizada": false
+      },
+      {
+        "mercado": "dox2+hcp3_local",
+        "etiqueta": "DO Empate o V + HCP +3 L",
+        "tipo": "COMBINADA",
+        "p": 0.5933,
+        "cuota_justa": 1.72,
+        "cuota_segura": 1.91,
+        "acierto_hist": 58.1,
+        "n_hist": 296,
+        "cotizada": true
+      },
+      {
+        "mercado": "local_remates_puerta_over2.5",
+        "etiqueta": "Elche Remates a puerta Over 2.5",
+        "tipo": "por equipo",
+        "p": 0.7695,
+        "cuota_justa": 1.28,
+        "cuota_segura": 1.37,
+        "acierto_hist": 78.2,
+        "n_hist": 293,
+        "cotizada": true
+      },
+      {
+        "mercado": "under45+hcp2_visit",
+        "etiqueta": "Under 4.5 + HCP +2 V",
+        "tipo": "COMBINADA",
+        "p": 0.6977,
+        "cuota_justa": 1.49,
+        "cuota_segura": 1.64,
+        "acierto_hist": 67.1,
+        "n_hist": 246,
+        "cotizada": false
+      },
+      {
+        "mercado": "under35+hcp2_visit",
+        "etiqueta": "Under 3.5 + HCP +2 V",
+        "tipo": "COMBINADA",
+        "p": 0.5241,
+        "cuota_justa": 1.87,
+        "cuota_segura": 2.12,
+        "acierto_hist": 53.5,
+        "n_hist": 243,
+        "cotizada": false
+      },
+      {
+        "mercado": "local_remates_puerta_over3.5+over15",
+        "etiqueta": "L Remates a puerta Over 3.5 + Over 1.5",
+        "tipo": "COMBINADA",
+        "p": 0.5479,
+        "cuota_justa": 1.94,
+        "cuota_segura": 2.2,
+        "acierto_hist": 51.7,
+        "n_hist": 242,
+        "cotizada": true
+      },
+      {
+        "mercado": "local_remates_over8.5",
+        "etiqueta": "Elche Remates Over 8.5",
+        "tipo": "por equipo",
+        "p": 0.7533,
+        "cuota_justa": 1.32,
+        "cuota_segura": 1.44,
+        "acierto_hist": 76.0,
+        "n_hist": 183,
+        "cotizada": true
+      },
+      {
+        "mercado": "local_remates_puerta_over2.5+over05_local",
+        "etiqueta": "L Remates a puerta Over 2.5 + Over 0.5 L",
+        "tipo": "COMBINADA",
+        "p": 0.5553,
+        "cuota_justa": 1.82,
+        "cuota_segura": 2.1,
+        "acierto_hist": 55.1,
+        "n_hist": 167,
+        "cotizada": false
+      },
+      {
+        "mercado": "local_corners_equipo_over3.5+local_remates_over8.5",
+        "etiqueta": "L Corners Over 3.5 + L Remates Over 8.5",
+        "tipo": "COMBINADA",
+        "p": 0.5337,
+        "cuota_justa": 1.83,
+        "cuota_segura": 2.13,
+        "acierto_hist": 54.8,
+        "n_hist": 157,
+        "cotizada": false
+      }
+    ]
   }
 ];
