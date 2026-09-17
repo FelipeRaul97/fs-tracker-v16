@@ -4660,17 +4660,6 @@ const TRACKER_DATA = [
     "apuestas": [
       {
         "tipo": "PICK",
-        "mercado": "victoria_local",
-        "linea": null,
-        "etiqueta": "Victoria Villarreal",
-        "cuota": 1.93,
-        "prob": 58.0,
-        "ev_pct": 11.9,
-        "estado": "PERDIDA",
-        "pl": -1.0
-      },
-      {
-        "tipo": "PICK",
         "mercado": "do1x",
         "linea": null,
         "etiqueta": "DO Villarreal o Empate",
@@ -4704,6 +4693,16 @@ const TRACKER_DATA = [
       }
     ],
     "watchlist": [
+      {
+        "mercado": "victoria_local",
+        "linea": null,
+        "etiqueta": "Victoria Villarreal",
+        "cuota": 1.93,
+        "prob": 58.0,
+        "ev_pct": 11.9,
+        "regla_1x2_no_pick": true,
+        "acerto": false
+      },
       {
         "mercado": "btts",
         "linea": null,
@@ -5292,17 +5291,6 @@ const TRACKER_DATA = [
     "apuestas": [
       {
         "tipo": "PICK",
-        "mercado": "victoria_visit",
-        "linea": null,
-        "etiqueta": "Victoria Atletico Madrid",
-        "cuota": 2.37,
-        "prob": 45.3,
-        "ev_pct": 7.4,
-        "estado": "GANADA",
-        "pl": 1.37
-      },
-      {
-        "tipo": "PICK",
         "mercado": "under35",
         "linea": null,
         "etiqueta": "Under 3.5",
@@ -5338,6 +5326,16 @@ const TRACKER_DATA = [
       }
     ],
     "watchlist": [
+      {
+        "mercado": "victoria_visit",
+        "linea": null,
+        "etiqueta": "Victoria Atletico Madrid",
+        "cuota": 2.37,
+        "prob": 45.3,
+        "ev_pct": 7.4,
+        "regla_1x2_no_pick": true,
+        "acerto": true
+      },
       {
         "mercado": "empate",
         "linea": null,
@@ -7922,17 +7920,6 @@ const TRACKER_DATA = [
     "apuestas": [
       {
         "tipo": "PICK",
-        "mercado": "victoria_local",
-        "linea": null,
-        "etiqueta": "Victoria Deportivo La Coruna",
-        "cuota": 2.55,
-        "prob": 43.4,
-        "ev_pct": 10.7,
-        "estado": "PERDIDA",
-        "pl": -1.0
-      },
-      {
-        "tipo": "PICK",
         "mercado": "over15",
         "linea": null,
         "etiqueta": "Over 1.5",
@@ -7974,6 +7961,16 @@ const TRACKER_DATA = [
       }
     ],
     "watchlist": [
+      {
+        "mercado": "victoria_local",
+        "linea": null,
+        "etiqueta": "Victoria Deportivo La Coruna",
+        "cuota": 2.55,
+        "prob": 43.4,
+        "ev_pct": 10.7,
+        "regla_1x2_no_pick": true,
+        "acerto": false
+      },
       {
         "mercado": "do1x",
         "linea": null,
@@ -11271,17 +11268,6 @@ const TRACKER_DATA = [
     "apuestas": [
       {
         "tipo": "PICK",
-        "mercado": "victoria_local",
-        "linea": null,
-        "etiqueta": "Victoria Brentford",
-        "cuota": 2.75,
-        "prob": 41.0,
-        "ev_pct": 12.7,
-        "estado": "PENDIENTE",
-        "pl": null
-      },
-      {
-        "tipo": "PICK",
         "mercado": "do1x",
         "linea": null,
         "etiqueta": "DO Brentford o Empate",
@@ -11335,6 +11321,15 @@ const TRACKER_DATA = [
       }
     ],
     "watchlist": [
+      {
+        "mercado": "victoria_local",
+        "linea": null,
+        "etiqueta": "Victoria Brentford",
+        "cuota": 2.75,
+        "prob": 41.0,
+        "ev_pct": 12.7,
+        "regla_1x2_no_pick": true
+      },
       {
         "mercado": "over15",
         "linea": null,
