@@ -15670,17 +15670,6 @@ const TRACKER_DATA = [
         "pl": null
       },
       {
-        "tipo": "PICK",
-        "mercado": "hcp3_des",
-        "linea": null,
-        "etiqueta": "HCP +3 Hull",
-        "cuota": 1.19,
-        "prob": 88.6,
-        "ev_pct": 5.4,
-        "estado": "PENDIENTE",
-        "pl": null
-      },
-      {
         "tipo": "COMBO",
         "mercado": "over15+hcp3_visit",
         "etiqueta": "Over 1.5 + HCP +3 V",
@@ -15836,6 +15825,15 @@ const TRACKER_DATA = [
         "prob": 84.8,
         "ev_pct": 2.6,
         "regla_unicidad_totales": "cede ante under35 (score EV/prob 3.7)"
+      },
+      {
+        "mercado": "hcp3_des",
+        "linea": null,
+        "etiqueta": "HCP +3 Hull",
+        "cuota": 1.19,
+        "prob": 88.6,
+        "ev_pct": 5.4,
+        "regla_unicidad_handicap": "cede ante hcp2_des (EV 11.6%)"
       }
     ],
     "mercados_snapshot": {
