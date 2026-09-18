@@ -18371,5 +18371,583 @@ const TRACKER_DATA = [
         "cotizada": false
       }
     ]
+  },
+  {
+    "id": "025",
+    "fecha": "2026-09-19",
+    "jornada": 5,
+    "liga": "I1",
+    "partido": "Roma vs Inter",
+    "lambda_forma_l": 2.5985,
+    "lambda_forma_v": 2.3291,
+    "lambda_reg_l": 1.3217,
+    "lambda_reg_v": 1.6143,
+    "lambda_base_l": 1.7047,
+    "lambda_base_v": 1.8287,
+    "lambda_final_l": 1.6923,
+    "lambda_final_v": 1.8411,
+    "lambda_shadow_l": 1.7854,
+    "lambda_shadow_v": 1.7675,
+    "lambda_corners": 10.571,
+    "ratio": 0.9191787518331432,
+    "visit_dominante": "False",
+    "variables_activas": "V#3(L:1.05) - V#4(V:0.96)",
+    "variables": {
+      "v1": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa": false,
+        "activa_local": false,
+        "activa_visit": false,
+        "detalle_local": "--",
+        "detalle_visit": "--",
+        "detalle": "Ambos necesitan >=20 PJ (local:4, visit:4)"
+      },
+      "v2": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa_local": false,
+        "activa_visit": false,
+        "detalle_local": "Rank 1, margen 11pts -- fuera de riesgo",
+        "detalle_visit": "Rank 2, margen 11pts -- fuera de riesgo"
+      },
+      "v3": {
+        "factor_local": 1.055,
+        "activa": true,
+        "n_partidos": 20,
+        "GpG_casa": 1.9,
+        "GpG_liga": 1.35,
+        "hs": 0.55,
+        "muestra_completa": true,
+        "detalle": "hs=+0.55 (20 ptdos)"
+      },
+      "v4": {
+        "factor_local": 1.0,
+        "factor_visit": 0.96,
+        "activa_local": false,
+        "activa_visit": true,
+        "bajas_local": 1,
+        "bajas_visit": 2
+      },
+      "v5": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa_local": false,
+        "activa_visit": false
+      },
+      "v6": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa": false
+      },
+      "v7": {
+        "skip": false,
+        "activa_local": false,
+        "activa_visit": false,
+        "detalle": "Sin DT nuevo"
+      },
+      "v8": {
+        "activa": false,
+        "anulado_derby": false,
+        "detalle": "Inactiva"
+      }
+    },
+    "confianza": "ALTA",
+    "notas": "",
+    "resultado_partido": null,
+    "goles_esperados": "3.53",
+    "apuestas": [
+      {
+        "tipo": "PICK",
+        "mercado": "over35",
+        "linea": null,
+        "etiqueta": "Over 3.5",
+        "cuota": 2.47,
+        "prob": 47.0,
+        "ev_pct": 16.1,
+        "estado": "PENDIENTE",
+        "pl": null
+      },
+      {
+        "tipo": "PICK",
+        "mercado": "over05_local",
+        "linea": null,
+        "etiqueta": "Over 0.5 Roma",
+        "cuota": 1.22,
+        "prob": 83.6,
+        "ev_pct": 2.0,
+        "estado": "PENDIENTE",
+        "pl": null
+      },
+      {
+        "tipo": "PICK",
+        "mercado": "over05_visit",
+        "linea": null,
+        "etiqueta": "Over 0.5 Inter",
+        "cuota": 1.21,
+        "prob": 84.1,
+        "ev_pct": 1.8,
+        "estado": "PENDIENTE",
+        "pl": null
+      },
+      {
+        "tipo": "COMBO",
+        "mercado": "over15+over05_local",
+        "etiqueta": "Over 1.5 + Over 0.5 L",
+        "cuota": 1.32,
+        "prob": 76.6,
+        "ev_pct": 1.2,
+        "estado": "PENDIENTE",
+        "pl": null,
+        "patas": [
+          "over15",
+          "over05_local"
+        ],
+        "promovida_combinada": true,
+        "nivel_cruce": "justa",
+        "cuota_justa": 1.27,
+        "cuota_segura": 1.39,
+        "acierto_hist": 78.6,
+        "n_hist": 182
+      }
+    ],
+    "watchlist": [
+      {
+        "mercado": "victoria_visit",
+        "linea": null,
+        "etiqueta": "Victoria Inter",
+        "cuota": 2.62,
+        "prob": 42.2,
+        "ev_pct": 10.6,
+        "regla_1x2_no_pick": true
+      },
+      {
+        "mercado": "dox2",
+        "linea": null,
+        "etiqueta": "DO Empate o Inter",
+        "cuota": 1.5,
+        "prob": 64.1,
+        "ev_pct": -3.9,
+        "cuota_justa": 1.64,
+        "cuota_segura": 1.87,
+        "acierto_hist": 61.1,
+        "n_hist": 167
+      },
+      {
+        "mercado": "btts",
+        "linea": null,
+        "etiqueta": "BTTS",
+        "cuota": 1.47,
+        "prob": 66.0,
+        "ev_pct": -3.0
+      },
+      {
+        "mercado": "corners65",
+        "linea": null,
+        "etiqueta": "Over 6.5 corners",
+        "cuota": 1.2,
+        "prob": 83.5,
+        "ev_pct": 0.2,
+        "filtro_edge": "a=0.08 (Platt no discrimina)"
+      },
+      {
+        "mercado": "visit_remates",
+        "linea": 10.5,
+        "etiqueta": "Inter Remates Over 10.5",
+        "cuota": 1.22,
+        "prob": 76.3,
+        "ev_pct": -6.9,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates",
+        "linea": 13.5,
+        "etiqueta": "Roma Remates Over 13.5",
+        "cuota": 2.07,
+        "prob": 82.7,
+        "ev_pct": 71.2,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates",
+        "linea": 14.5,
+        "etiqueta": "Roma Remates Over 14.5",
+        "cuota": 2.65,
+        "prob": 77.4,
+        "ev_pct": 105.1,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 2.5,
+        "etiqueta": "Inter Corners equipo Over 2.5",
+        "cuota": 1.19,
+        "prob": 79.2,
+        "ev_pct": -5.8,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_corners_equipo",
+        "linea": 4.5,
+        "etiqueta": "Roma Corners equipo Over 4.5",
+        "cuota": 1.88,
+        "prob": 75.2,
+        "ev_pct": 41.4,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates_puerta",
+        "linea": 3.5,
+        "etiqueta": "Inter Remates a puerta Over 3.5",
+        "cuota": 1.45,
+        "prob": 79.1,
+        "ev_pct": 14.7,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates_puerta",
+        "linea": 5.5,
+        "etiqueta": "Roma Remates a puerta Over 5.5",
+        "cuota": 2.95,
+        "prob": 75.8,
+        "ev_pct": 123.6,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "under45+over05_visit",
+        "linea": null,
+        "etiqueta": "Under 4.5 + Over 0.5 V",
+        "cuota": 1.57,
+        "prob": 56.5,
+        "ev_pct": -11.3,
+        "tipo": "COMBINADA",
+        "patas": [
+          "under45",
+          "over05_visit"
+        ],
+        "lift": 0.934,
+        "cuota_justa": 1.66,
+        "cuota_segura": 1.83,
+        "acierto_hist": 60.1,
+        "n_hist": 308
+      },
+      {
+        "mercado": "do1x+over05_local",
+        "linea": null,
+        "etiqueta": "DO L o Empate + Over 0.5 L",
+        "cuota": 1.6,
+        "prob": 55.1,
+        "ev_pct": -11.9,
+        "tipo": "COMBINADA",
+        "patas": [
+          "do1x",
+          "over05_local"
+        ],
+        "lift": 1.189,
+        "cuota_justa": 1.69,
+        "cuota_segura": 1.93,
+        "acierto_hist": 59.3,
+        "n_hist": 172
+      },
+      {
+        "mercado": "under45+over05_local",
+        "linea": null,
+        "etiqueta": "Under 4.5 + Over 0.5 L",
+        "cuota": 1.57,
+        "prob": 54.2,
+        "ev_pct": -14.9,
+        "tipo": "COMBINADA",
+        "patas": [
+          "under45",
+          "over05_local"
+        ],
+        "lift": 0.952,
+        "cuota_justa": 1.84,
+        "cuota_segura": 2.13,
+        "acierto_hist": 54.4,
+        "n_hist": 171
+      },
+      {
+        "mercado": "over15",
+        "linea": null,
+        "etiqueta": "Over 1.5",
+        "cuota": 1.21,
+        "prob": 86.5,
+        "ev_pct": 4.7,
+        "regla_unicidad_totales": "cede ante over35 (score EV/prob 7.6)"
+      },
+      {
+        "mercado": "over25",
+        "linea": null,
+        "etiqueta": "Over 2.5",
+        "cuota": 1.62,
+        "prob": 67.7,
+        "ev_pct": 9.7,
+        "regla_unicidad_totales": "cede ante over35 (score EV/prob 7.6)"
+      }
+    ],
+    "mercados_snapshot": {
+      "victoria_local": 35.9,
+      "empate": 24.3,
+      "victoria_visit": 42.2,
+      "do1x": 57.8,
+      "dox2": 64.1,
+      "over15": 86.5,
+      "over25": 67.7,
+      "under25": 32.3,
+      "over35": 47.0,
+      "under35": 52.9,
+      "under45": 71.9,
+      "btts": 66.0,
+      "over05_local": 83.6,
+      "over05_visit": 84.1,
+      "hcp2_des": 77.4,
+      "hcp3_des": 90.0,
+      "corners65": 83.5,
+      "local_remates_over7.5": 98.8,
+      "local_remates_over8.5": 97.8,
+      "local_remates_over9.5": 96.2,
+      "local_remates_over10.5": 94.0,
+      "local_remates_over11.5": 91.0,
+      "local_remates_over12.5": 87.2,
+      "local_remates_over13.5": 82.7,
+      "local_remates_over14.5": 77.4,
+      "local_remates_over15.5": 71.5,
+      "local_remates_puerta_over1.5": 99.4,
+      "local_remates_puerta_over2.5": 97.5,
+      "local_remates_puerta_over3.5": 93.4,
+      "local_remates_puerta_over4.5": 86.1,
+      "local_remates_puerta_over5.5": 75.8,
+      "local_remates_puerta_over6.5": 63.2,
+      "local_corners_equipo_over2.5": 93.0,
+      "local_corners_equipo_over3.5": 85.4,
+      "local_corners_equipo_over4.5": 75.2,
+      "local_corners_equipo_over5.5": 63.4,
+      "local_corners_equipo_over6.5": 51.1,
+      "local_corners_equipo_over7.5": 39.6,
+      "visit_remates_over7.5": 92.9,
+      "visit_remates_over8.5": 88.6,
+      "visit_remates_over9.5": 83.0,
+      "visit_remates_over10.5": 76.3,
+      "visit_remates_over11.5": 68.8,
+      "visit_remates_over12.5": 60.7,
+      "visit_remates_over13.5": 52.4,
+      "visit_remates_over14.5": 44.2,
+      "visit_remates_over15.5": 36.6,
+      "visit_remates_puerta_over1.5": 96.9,
+      "visit_remates_puerta_over2.5": 90.3,
+      "visit_remates_puerta_over3.5": 79.1,
+      "visit_remates_puerta_over4.5": 64.2,
+      "visit_remates_puerta_over5.5": 48.2,
+      "visit_remates_puerta_over6.5": 33.4,
+      "visit_corners_equipo_over2.5": 79.2,
+      "visit_corners_equipo_over3.5": 63.8,
+      "visit_corners_equipo_over4.5": 47.9,
+      "visit_corners_equipo_over5.5": 33.6,
+      "visit_corners_equipo_over6.5": 22.1,
+      "visit_corners_equipo_over7.5": 13.9
+    },
+    "cruces_validados": [
+      {
+        "mercado": "dox2",
+        "etiqueta": "DO Empate o V",
+        "cuota": 1.5,
+        "justa": 1.64,
+        "segura": 1.87,
+        "hist": 61.1,
+        "n": 167,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "under45+over05_visit",
+        "etiqueta": "Under 4.5 + Over 0.5 V",
+        "cuota": 1.57,
+        "justa": 1.66,
+        "segura": 1.83,
+        "hist": 60.1,
+        "n": 308,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "over15+over05_local",
+        "etiqueta": "Over 1.5 + Over 0.5 L",
+        "cuota": 1.32,
+        "justa": 1.27,
+        "segura": 1.39,
+        "hist": 78.6,
+        "n": 182,
+        "cruza": true,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "do1x+over05_local",
+        "etiqueta": "DO L o Empate + Over 0.5 L",
+        "cuota": 1.6,
+        "justa": 1.69,
+        "segura": 1.93,
+        "hist": 59.3,
+        "n": 172,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "under45+over05_local",
+        "etiqueta": "Under 4.5 + Over 0.5 L",
+        "cuota": 1.57,
+        "justa": 1.84,
+        "segura": 2.13,
+        "hist": 54.4,
+        "n": 171,
+        "cruza": false,
+        "cruza_segura": false
+      }
+    ],
+    "validadas": [
+      {
+        "mercado": "under45+over05_visit",
+        "etiqueta": "Under 4.5 + Over 0.5 V",
+        "tipo": "COMBINADA",
+        "p": 0.5651,
+        "cuota_justa": 1.66,
+        "cuota_segura": 1.83,
+        "acierto_hist": 60.1,
+        "n_hist": 308,
+        "cotizada": true
+      },
+      {
+        "mercado": "over05_local+hcp3_visit",
+        "etiqueta": "Over 0.5 L + HCP +3 V",
+        "tipo": "COMBINADA",
+        "p": 0.7415,
+        "cuota_justa": 1.37,
+        "cuota_segura": 1.49,
+        "acierto_hist": 72.9,
+        "n_hist": 255,
+        "cotizada": false
+      },
+      {
+        "mercado": "dox2+hcp3_local",
+        "etiqueta": "DO Empate o V + HCP +3 L",
+        "tipo": "COMBINADA",
+        "p": 0.541,
+        "cuota_justa": 1.93,
+        "cuota_segura": 2.21,
+        "acierto_hist": 51.7,
+        "n_hist": 230,
+        "cotizada": false
+      },
+      {
+        "mercado": "visit_corners_equipo_over3.5",
+        "etiqueta": "Inter Corners Over 3.5",
+        "tipo": "por equipo",
+        "p": 0.6385,
+        "cuota_justa": 1.64,
+        "cuota_segura": 1.84,
+        "acierto_hist": 60.9,
+        "n_hist": 225,
+        "cotizada": false
+      },
+      {
+        "mercado": "under45+hcp2_visit",
+        "etiqueta": "Under 4.5 + HCP +2 V",
+        "tipo": "COMBINADA",
+        "p": 0.6003,
+        "cuota_justa": 1.53,
+        "cuota_segura": 1.72,
+        "acierto_hist": 65.2,
+        "n_hist": 198,
+        "cotizada": false
+      },
+      {
+        "mercado": "do1x+hcp3_visit",
+        "etiqueta": "DO L o Empate + HCP +3 V",
+        "tipo": "COMBINADA",
+        "p": 0.5058,
+        "cuota_justa": 1.92,
+        "cuota_segura": 2.22,
+        "acierto_hist": 52.1,
+        "n_hist": 188,
+        "cotizada": false
+      },
+      {
+        "mercado": "over15+over05_local",
+        "etiqueta": "Over 1.5 + Over 0.5 L",
+        "tipo": "COMBINADA",
+        "p": 0.7664,
+        "cuota_justa": 1.27,
+        "cuota_segura": 1.39,
+        "acierto_hist": 78.6,
+        "n_hist": 182,
+        "cotizada": true
+      },
+      {
+        "mercado": "do1x+over05_local",
+        "etiqueta": "DO L o Empate + Over 0.5 L",
+        "tipo": "COMBINADA",
+        "p": 0.5509,
+        "cuota_justa": 1.69,
+        "cuota_segura": 1.93,
+        "acierto_hist": 59.3,
+        "n_hist": 172,
+        "cotizada": true
+      },
+      {
+        "mercado": "under45+over05_local",
+        "etiqueta": "Under 4.5 + Over 0.5 L",
+        "tipo": "COMBINADA",
+        "p": 0.5423,
+        "cuota_justa": 1.84,
+        "cuota_segura": 2.13,
+        "acierto_hist": 54.4,
+        "n_hist": 171,
+        "cotizada": true
+      },
+      {
+        "mercado": "dox2",
+        "etiqueta": "DO Empate o V",
+        "tipo": "simple",
+        "p": 0.6409,
+        "cuota_justa": 1.64,
+        "cuota_segura": 1.87,
+        "acierto_hist": 61.1,
+        "n_hist": 167,
+        "cotizada": true
+      },
+      {
+        "mercado": "hcp2_local",
+        "etiqueta": "HCP +2 L",
+        "tipo": "simple",
+        "p": 0.7744,
+        "cuota_justa": 1.33,
+        "cuota_segura": 1.47,
+        "acierto_hist": 75.3,
+        "n_hist": 166,
+        "cotizada": false
+      },
+      {
+        "mercado": "visit_corners_equipo_over3.5+visit_remates_over7.5",
+        "etiqueta": "V Corners Over 3.5 + V Remates Over 7.5",
+        "tipo": "COMBINADA",
+        "p": 0.6019,
+        "cuota_justa": 1.62,
+        "cuota_segura": 1.85,
+        "acierto_hist": 61.9,
+        "n_hist": 160,
+        "cotizada": false
+      },
+      {
+        "mercado": "over15+hcp3_visit",
+        "etiqueta": "Over 1.5 + HCP +3 V",
+        "tipo": "COMBINADA",
+        "p": 0.7932,
+        "cuota_justa": 1.32,
+        "cuota_segura": 1.46,
+        "acierto_hist": 76.0,
+        "n_hist": 150,
+        "cotizada": false
+      }
+    ]
   }
 ];
