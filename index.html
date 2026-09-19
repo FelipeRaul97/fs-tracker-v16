@@ -1547,11 +1547,17 @@ function renderLigaTipo(){
       const bx=gx+ti*barW;
       if(s.settled>0){
         const wr=s.wr||0;
-        svg.appendChild(svgEl('rect',{x:bx,y:sy(wr),width:barW-2,height:iH-sy(wr)+PT,fill:cols[tipo],rx:'2',opacity:'0.8'}));
+        const tip=`${LIGA_NAMES[liga]||liga} · ${tipo}\n${wr.toFixed(0)}% (${s.ganadas}/${s.settled} ganadas)\nP&L ${s.pl>=0?'+':''}${s.pl.toFixed(2)}u · ROI ${s.roi>=0?'+':''}${s.roi.toFixed(1)}%`;
+        const rect=svgEl('rect',{x:bx,y:sy(wr),width:barW-2,height:iH-sy(wr)+PT,fill:cols[tipo],rx:'2',opacity:'0.8'});
+        rect.appendChild(svgEl('title',{})).textContent=tip;
+        svg.appendChild(rect);
         const vt=svgEl('text',{x:bx+(barW-2)/2,y:sy(wr)-3,fill:cols[tipo],'font-size':'9','text-anchor':'middle'});
         vt.textContent=wr.toFixed(0)+'%';svg.appendChild(vt);
       }else{
-        svg.appendChild(svgEl('rect',{x:bx,y:sy(0)-2,width:barW-2,height:'2',fill:cols[tipo],rx:'1',opacity:'0.35'}));
+        const tip=`${LIGA_NAMES[liga]||liga} · ${tipo}\nSin apuestas confirmadas todavía`;
+        const rect=svgEl('rect',{x:bx,y:sy(0)-2,width:barW-2,height:'2',fill:cols[tipo],rx:'1',opacity:'0.35'});
+        rect.appendChild(svgEl('title',{})).textContent=tip;
+        svg.appendChild(rect);
         const vt=svgEl('text',{x:bx+(barW-2)/2,y:sy(0)-6,fill:'var(--text3)','font-size':'9','text-anchor':'middle'});
         vt.textContent='0%';svg.appendChild(vt);
       }
