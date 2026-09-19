@@ -931,10 +931,10 @@ function renderBets(){
     if(plGrupo!=null) resumen.push('<b class="'+(plGrupo>=0?'pl-pos':'pl-neg')+'">'+(plGrupo>=0?'+':'')+plGrupo.toFixed(2)+'u</b>');
     let html='<tr class="bets-group" data-bgid="'+safeGid+'" onclick="toggleBetsGroup(\''+safeGid+'\')" style="cursor:pointer;background:var(--surface2)">'
       +'<td class="bets-caret" style="color:var(--text3);font-weight:700">▶</td>'
-      +'<td colspan="2"><div class="partido-cell">'+p.partido+'</div>'
+      +'<td><div class="partido-cell">'+p.partido+'</div>'
         +'<div class="partido-sub">'+(LIGA_NAMES[p.liga]||p.liga)+' · J'+p.jornada+' · '+p.fecha+(p.resultado_partido?' · <strong>'+p.resultado_partido+'</strong>':'')+'</div></td>'
       +'<td>'+badge(LIGA_NAMES[p.liga]||p.liga,'liga')+'</td>'
-      +'<td colspan="7" style="color:var(--text3);font-size:12px">'+resumen.join(' · ')+'</td></tr>';
+      +'<td colspan="9" style="color:var(--text3);font-size:12px">'+resumen.join(' · ')+'</td></tr>';
 
     html+=items.map(({p,a,pi,ai})=>{
       const i=gi++; // indice global unico para el detalle expandible
