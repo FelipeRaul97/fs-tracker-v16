@@ -8,7 +8,7 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
     --bg:#f8f7f4; --surface:#ffffff; --surface2:#f1efe8; --border:rgba(0,0,0,0.10);
-    --border2:rgba(0,0,0,0.18); --text:#1a1a18; --text2:#5f5e5a; --text3:#888780;
+    --border2:rgba(0,0,0,0.18); --border3:rgba(0,0,0,0.38); --text:#1a1a18; --text2:#5f5e5a; --text3:#888780;
     --green:#3b6d11; --green-bg:#eaf3de; --green-mid:#639922;
     --red:#a32d2d; --red-bg:#fcebeb; --red-mid:#e24b4a;
     --amber:#854f0b; --amber-bg:#faeeda; --amber-mid:#ef9f27;
@@ -18,7 +18,7 @@
   }
   @media(prefers-color-scheme:dark){:root{
     --bg:#1c1c1a; --surface:#252523; --surface2:#2e2e2b;
-    --border:rgba(255,255,255,0.10); --border2:rgba(255,255,255,0.18);
+    --border:rgba(255,255,255,0.10); --border2:rgba(255,255,255,0.18); --border3:rgba(255,255,255,0.38);
     --text:#f0ede6; --text2:#b4b2a9; --text3:#888780;
     --green:#97c459; --green-bg:#1a2e0a; --green-mid:#639922;
     --red:#f09595; --red-bg:#2e0f0f; --red-mid:#e24b4a;
@@ -146,10 +146,10 @@
   .empty{text-align:center;padding:40px;color:var(--text3);font-size:13px}
   .bar-bg{background:var(--surface2);border-radius:3px;height:6px;overflow:hidden}
   .bar-fill{height:100%;border-radius:3px}
-  .hm-table{width:100%;border-collapse:collapse;font-size:12px}
+  .hm-table{width:100%;border-collapse:collapse;font-size:12px;border:1px solid var(--border3)}
   #diag-equipos,#diag-ligas,#diag-conf{overflow-x:auto}
   #diag-equipos table,#diag-ligas table,#diag-conf table{width:auto;max-width:560px}
-  .hm-table th,.hm-table td{padding:6px 10px;text-align:center;border:1px solid var(--border2)}
+  .hm-table th,.hm-table td{padding:6px 10px;text-align:center;border:1px solid var(--border3)}
   .hm-table th{background:var(--surface2);font-weight:500;color:var(--text3)}
   .hm-table td:first-child{text-align:left;font-weight:500;color:var(--text)}
   .alert-box{background:var(--red-bg);border:1px solid var(--red-mid);border-radius:var(--r);
@@ -1500,10 +1500,10 @@ function renderMercadoCuotaHeatmap(){
 
   function hmBg(roi,n){
     if(n===0)return'var(--surface2)';
-    if(roi>=15)return'rgba(99,153,34,0.35)';
-    if(roi>=0)return'rgba(99,153,34,0.15)';
-    if(roi>=-15)return'rgba(226,75,74,0.15)';
-    return'rgba(226,75,74,0.30)';
+    if(roi>=15)return'rgba(99,153,34,0.55)';
+    if(roi>=0)return'rgba(99,153,34,0.28)';
+    if(roi>=-15)return'rgba(226,75,74,0.28)';
+    return'rgba(226,75,74,0.50)';
   }
 
   let html='<table class="hm-table"><thead><tr><th>Mercado</th><th>N</th>';
@@ -1603,7 +1603,7 @@ function renderVariablesHeatmap(){
   const roiVals=rows.map(r=>r.roi).filter(v=>v!=null);
   const minWR=Math.min(...wrVals,0),maxWR=Math.max(...wrVals,100);
   const minROI=Math.min(...roiVals,0),maxROI=Math.max(...roiVals,0);
-  function hmColor(v,min,max){if(v==null)return'var(--surface2)';const t=(v-min)/(max-min||1);if(t>0.65)return`rgba(99,153,34,${0.15+t*0.45})`;if(t<0.35)return`rgba(226,75,74,${0.15+(1-t)*0.3})`;return`rgba(239,159,39,0.2)`;}
+  function hmColor(v,min,max){if(v==null)return'var(--surface2)';const t=(v-min)/(max-min||1);if(t>0.65)return`rgba(99,153,34,${0.30+t*0.45})`;if(t<0.35)return`rgba(226,75,74,${0.30+(1-t)*0.3})`;return`rgba(239,159,39,0.35)`;}
   el.innerHTML=`<div style="overflow-x:auto"><table class="hm-table">
     <thead><tr><th>Variable</th><th>N</th><th>Win Rate</th><th>ROI%</th><th>EV% prom</th></tr></thead>
     <tbody>${rows.map(r=>`<tr>
@@ -2720,10 +2720,10 @@ function renderSnapshotCalib(){
 
   const BANDAS=[[0,20],[20,40],[40,60],[60,80],[80,101]];
   function _bgSesgo(sg){
-    if(sg>=15)return'rgba(99,153,34,0.35)';
-    if(sg>=0)return'rgba(99,153,34,0.15)';
-    if(sg>=-15)return'rgba(226,75,74,0.15)';
-    return'rgba(226,75,74,0.30)';
+    if(sg>=15)return'rgba(99,153,34,0.55)';
+    if(sg>=0)return'rgba(99,153,34,0.28)';
+    if(sg>=-15)return'rgba(226,75,74,0.28)';
+    return'rgba(226,75,74,0.50)';
   }
   xEl.innerHTML='<table class="hm-table"><thead><tr><th style="text-align:left">Mercado</th>'
     +BANDAS.map(b=>'<th>'+b[0]+'-'+(b[1]===101?100:b[1])+'%</th>').join('')
