@@ -217,7 +217,7 @@
       <button type="button" class="btn btn-sm" onclick="limpiarFiltrosApuestas()">Limpiar filtros</button>
       <span id="f-liga-eco" class="filter-label" style="margin-left:auto;font-style:italic"></span>
     </div>
-    <div class="table-wrap">
+    <div class="table-wrap table-wrap-scroll">
       <table><thead><tr>
         <th>#</th><th>Partido</th><th>Liga</th><th>Apuesta</th><th>Tipo</th>
         <th class="num">Cuota</th><th class="num">Prob%</th><th class="num">EV%</th>
@@ -1997,7 +1997,8 @@ function renderUnicidadTotales(){
   const el=document.getElementById('wl-unicidad'); if(!el) return;
   const items=_dataLiga().flatMap(p=>(p.watchlist||[])
     .filter(w=>w.regla_unicidad_totales)
-    .map(w=>({...w,partido:p})));
+    .map(w=>({...w,partido:p})))
+    .sort((a,b)=>new Date(b.partido.fecha)-new Date(a.partido.fecha));
   if(!items.length){ el.innerHTML='<p class="empty">Todavía no compitieron dos totales de goles por el mismo PICK.</p>'; return; }
   const cerr=items.filter(w=>w.acerto!=null);
   const filas=items.map(w=>{
@@ -2025,9 +2026,9 @@ function renderUnicidadTotales(){
       +'<span>'+veredicto+'</span></div>';
   }
   el.innerHTML=resumen
-    +'<table class="hm-table"><thead><tr><th style="text-align:left">Partido</th>'
+    +'<div class="table-wrap table-wrap-scroll"><table class="hm-table"><thead><tr><th style="text-align:left">Partido</th>'
     +'<th style="text-align:left">Selección (cedió)</th><th style="text-align:left">Motivo</th>'
-    +'<th>Cuota</th><th>EV%</th><th>Resultado</th><th>P&L teórico</th></tr></thead><tbody>'+filas+'</tbody></table>';
+    +'<th>Cuota</th><th>EV%</th><th>Resultado</th><th>P&L teórico</th></tr></thead><tbody>'+filas+'</tbody></table></div>';
 }
 
 // Filtro de calidad del edge: rendimiento de los PICK candidatos (EV+) que el filtro
@@ -2036,7 +2037,8 @@ function renderFiltroEdge(){
   const el=document.getElementById('wl-filtroedge'); if(!el) return;
   const items=_dataLiga().flatMap(p=>(p.watchlist||[])
     .filter(w=>w.filtro_edge)
-    .map(w=>({...w,partido:p})));
+    .map(w=>({...w,partido:p})))
+    .sort((a,b)=>new Date(b.partido.fecha)-new Date(a.partido.fecha));
   if(!items.length){ el.innerHTML='<p class="empty">El filtro aún no bloqueó ningún PICK candidato.</p>'; return; }
   const cerr=items.filter(w=>w.acerto!=null);
   const filas=items.map(w=>{
@@ -2064,9 +2066,9 @@ function renderFiltroEdge(){
       +'<span>'+veredicto+'</span></div>';
   }
   el.innerHTML=resumen
-    +'<table class="hm-table"><thead><tr><th style="text-align:left">Partido</th>'
+    +'<div class="table-wrap table-wrap-scroll"><table class="hm-table"><thead><tr><th style="text-align:left">Partido</th>'
     +'<th style="text-align:left">Selección</th><th style="text-align:left">Motivo</th>'
-    +'<th>Cuota</th><th>EV%</th><th>Resultado</th><th>P&L teórico</th></tr></thead><tbody>'+filas+'</tbody></table>';
+    +'<th>Cuota</th><th>EV%</th><th>Resultado</th><th>P&L teórico</th></tr></thead><tbody>'+filas+'</tbody></table></div>';
 }
 
 // Capa 1X2 (en observacion): mide como habrian rendido los empates y victorias del
@@ -2075,7 +2077,8 @@ function renderCapa1x2(){
   const el=document.getElementById('wl-capa1x2'); if(!el) return;
   const items=_dataLiga().flatMap(p=>(p.watchlist||[])
     .filter(w=>w.regla_1x2_no_pick)
-    .map(w=>({...w,partido:p})));
+    .map(w=>({...w,partido:p})))
+    .sort((a,b)=>new Date(b.partido.fecha)-new Date(a.partido.fecha));
   if(!items.length){ el.innerHTML='<p class="empty">La capa aún no bloqueó ninguna 1X2 con EV+.</p>'; return; }
   const cerr=items.filter(w=>w.acerto!=null);
   const filas=items.map(w=>{
@@ -2102,9 +2105,9 @@ function renderCapa1x2(){
       +'<span>'+veredicto+'</span></div>';
   }
   el.innerHTML=resumen
-    +'<table class="hm-table"><thead><tr><th style="text-align:left">Partido</th>'
+    +'<div class="table-wrap table-wrap-scroll"><table class="hm-table"><thead><tr><th style="text-align:left">Partido</th>'
     +'<th style="text-align:left">Selección</th><th>Cuota</th><th>EV%</th>'
-    +'<th>Resultado</th><th>P&L teórico</th></tr></thead><tbody>'+filas+'</tbody></table>';
+    +'<th>Resultado</th><th>P&L teórico</th></tr></thead><tbody>'+filas+'</tbody></table></div>';
 }
 
 // ── Snapshot calibration helpers ─────────────────────────
