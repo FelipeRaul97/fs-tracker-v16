@@ -78,8 +78,8 @@
   table{width:100%;border-collapse:collapse;min-width:750px}
   th{font-size:11px;font-weight:500;color:var(--text3);text-transform:uppercase;
     letter-spacing:.04em;padding:10px 12px;text-align:left;
-    border-bottom:1px solid var(--border);background:var(--surface2);white-space:nowrap;}
-  td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:middle;}
+    border-bottom:1px solid var(--border2);background:var(--surface2);white-space:nowrap;}
+  td{padding:9px 12px;border-bottom:1px solid var(--border2);vertical-align:middle;}
   tr:last-child td{border-bottom:none}
   .num{text-align:right;font-variant-numeric:tabular-nums}
   .partido-cell{font-weight:500}
@@ -149,7 +149,7 @@
   .hm-table{width:100%;border-collapse:collapse;font-size:12px}
   #diag-equipos,#diag-ligas,#diag-conf{overflow-x:auto}
   #diag-equipos table,#diag-ligas table,#diag-conf table{width:auto;max-width:560px}
-  .hm-table th,.hm-table td{padding:6px 10px;text-align:center;border:1px solid var(--border)}
+  .hm-table th,.hm-table td{padding:6px 10px;text-align:center;border:1px solid var(--border2)}
   .hm-table th{background:var(--surface2);font-weight:500;color:var(--text3)}
   .hm-table td:first-child{text-align:left;font-weight:500;color:var(--text)}
   .alert-box{background:var(--red-bg);border:1px solid var(--red-mid);border-radius:var(--r);
@@ -388,6 +388,10 @@
     <div id="wl-summary" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:16px"></div>
     <div class="filters" style="margin-bottom:12px">
       <span class="filter-label">Filtrar:</span>
+      <select id="f-wl-liga"><option value="">Todas las ligas</option>
+        <option value="D1">Bundesliga</option><option value="E0">Premier</option>
+        <option value="F1">Ligue 1</option><option value="I1">Serie A</option>
+        <option value="SP1">La Liga</option></select>
       <select id="f-wl-tipo"><option value="">Todos los tipos</option>
         <option value="GOLES">Goles</option><option value="POR_EQUIPO">Por equipo</option>
         <option value="COMBINADA">Combinada</option></select>
@@ -718,11 +722,16 @@ function calcStats(apuestas){
 }
 
 // Liga seleccionada en el filtro global (vacio = todas). Las vistas que ACUMULAN
-// datos (Diagnostico, calibracion del snapshot, watchlist) leen _dataLiga() en vez
-// de _DATA para respetar el filtro. La pestaña "Ligas" NO lo usa: es el desglose
+// datos (Diagnostico, calibracion del snapshot) leen _dataLiga() en vez de _DATA
+// para respetar el filtro. La pestaña "Ligas" NO lo usa: es el desglose
 // comparativo y debe mostrar siempre todas.
 function _ligaSel(){ const el=document.getElementById('f-liga'); return el?el.value:''; }
 function _dataLiga(){ const L=_ligaSel(); return L?_DATA.filter(p=>p.liga===L):_DATA; }
+// Watchlist tiene su propio filtro de liga (f-wl-liga), independiente del global
+// de Apuestas -- antes heredaba _dataLiga() en silencio y mostraba solo la liga
+// que hubiera quedado seleccionada en otra pestaña, sin ningun control visible aca.
+function _wlLigaSel(){ const el=document.getElementById('f-wl-liga'); return el?el.value:''; }
+function _dataWLLiga(){ const L=_wlLigaSel(); return L?_DATA.filter(p=>p.liga===L):_DATA; }
 const LIGA_NOMBRE={D1:'Bundesliga',E0:'Premier',F1:'Ligue 1',I1:'Serie A',SP1:'La Liga'};
 function _ecoLiga(){ const L=_ligaSel();
   const el=document.getElementById('f-liga-eco'); if(!el)return;
@@ -1819,7 +1828,7 @@ window.toggleWLGroup=toggleWLGroup;
 function _wlPL(w){ return w.acerto==null?null:(w.acerto?w.cuota-1:-1); }
 
 function renderWatchlist(){
-  const allWLFull=_dataLiga().flatMap(p=>(p.watchlist||[]).map(w=>({...w,partido:p})));
+  const allWLFull=_dataWLLiga().flatMap(p=>(p.watchlist||[]).map(w=>({...w,partido:p})));
 
   // Filtros: por tipo (Goles/Equipo/Combinada) y por mercado agrupado (_wlGrupo).
   // El select de mercado se repuebla con lo que haya en la liga elegida, ordenado
@@ -1971,7 +1980,7 @@ function renderWatchlist(){
 // "no pasan", para ver si el EV/cruce de estos mercados predice algo o es ruido.
 function renderPorEquipoEV(){
   const el=document.getElementById('wl-porequipo-ev'); if(!el) return;
-  const items=_dataLiga().flatMap(p=>(p.watchlist||[])
+  const items=_dataWLLiga().flatMap(p=>(p.watchlist||[])
     .filter(w=>w.tipo==='POR_EQUIPO'||w.tipo==='COMBINADA')
     .map(w=>({...w,partido:p})));
   if(!items.length){ el.innerHTML='<p class="empty">Sin mercados por equipo/combinadas registrados todavía.</p>'; return; }
@@ -2015,7 +2024,7 @@ function renderPorEquipoEV(){
 // al ganador, no si el perdedor "merecia" ser bloqueado.
 function renderUnicidadTotales(){
   const el=document.getElementById('wl-unicidad'); if(!el) return;
-  const items=_dataLiga().flatMap(p=>(p.watchlist||[])
+  const items=_dataWLLiga().flatMap(p=>(p.watchlist||[])
     .filter(w=>w.regla_unicidad_totales)
     .map(w=>({...w,partido:p})))
     .sort((a,b)=>new Date(b.partido.fecha)-new Date(a.partido.fecha));
@@ -2055,7 +2064,7 @@ function renderUnicidadTotales(){
 // mando a watchlist. Mismo patron que renderCapa1x2, con columna de motivo.
 function renderFiltroEdge(){
   const el=document.getElementById('wl-filtroedge'); if(!el) return;
-  const items=_dataLiga().flatMap(p=>(p.watchlist||[])
+  const items=_dataWLLiga().flatMap(p=>(p.watchlist||[])
     .filter(w=>w.filtro_edge)
     .map(w=>({...w,partido:p})))
     .sort((a,b)=>new Date(b.partido.fecha)-new Date(a.partido.fecha));
@@ -2095,7 +2104,7 @@ function renderFiltroEdge(){
 // desfavorecido que la regla degrado de PICK a watchlist. ROI si se hubieran apostado.
 function renderCapa1x2(){
   const el=document.getElementById('wl-capa1x2'); if(!el) return;
-  const items=_dataLiga().flatMap(p=>(p.watchlist||[])
+  const items=_dataWLLiga().flatMap(p=>(p.watchlist||[])
     .filter(w=>w.regla_1x2_no_pick)
     .map(w=>({...w,partido:p})))
     .sort((a,b)=>new Date(b.partido.fecha)-new Date(a.partido.fecha));
