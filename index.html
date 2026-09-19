@@ -1737,7 +1737,7 @@ function renderLigaRollingROI(){
       const roi=win.reduce((s,a)=>s+(a.pl||0),0)/WINDOW*100;
       pts.push(roi);
     }
-    seriesData[liga]=pts;
+    seriesData[liga]={pts,bets};
     if(pts.length>maxLen) maxLen=pts.length;
   });
 
@@ -1746,7 +1746,7 @@ function renderLigaRollingROI(){
 
   const W=700,H=220,PL=45,PR=90,PT=20,PB=30;
   const iW=W-PL-PR,iH=H-PT-PB;
-  const allVals=Object.values(seriesData).flat();
+  const allVals=Object.values(seriesData).flatMap(s=>s.pts);
   const minY=Math.min(0,...allVals)-5;
   const maxY=Math.max(0,...allVals)+5;
   const sy=v=>PT+iH*(1-(v-minY)/(maxY-minY));
@@ -1765,15 +1765,23 @@ function renderLigaRollingROI(){
 
   // Lines per liga
   activeLigas.forEach((liga,li)=>{
-    const pts=seriesData[liga];
+    const {pts,bets}=seriesData[liga];
     const col=ligaCols[liga]||'var(--text2)';
     const sx=i=>PL+(i/(maxLen-1||1))*iW;
     const d=pts.map((v,i)=>`${i===0?'M':'L'}${sx(i)},${sy(v)}`).join(' ');
     svg.appendChild(svgEl('path',{d,fill:'none',stroke:col,'stroke-width':'2',opacity:'0.85'}));
-    // End dot
+    // End dot -- tooltip con el detalle de la ultima ventana de WINDOW apuestas
     const lastY=sy(pts[pts.length-1]);
     const lastX=sx(pts.length-1);
-    svg.appendChild(svgEl('circle',{cx:lastX,cy:lastY,r:'4',fill:col}));
+    const win=bets.slice(-WINDOW);
+    const ganadas=win.filter(a=>a.estado==='GANADA').length;
+    const plSum=win.reduce((s,a)=>s+(a.pl||0),0);
+    const desde=win[0].partido.fecha, hasta=win[win.length-1].partido.fecha;
+    const dot=svgEl('circle',{cx:lastX,cy:lastY,r:'4',fill:col});
+    dot.appendChild(svgEl('title',{})).textContent=
+      `${LIGA_NAMES[liga]||liga}\nROI ${pts[pts.length-1]>=0?'+':''}${pts[pts.length-1].toFixed(1)}% (últimas ${WINDOW})\n`+
+      `${ganadas}/${WINDOW} ganadas · P&L ${plSum>=0?'+':''}${plSum.toFixed(2)}u\n${desde} → ${hasta}`;
+    svg.appendChild(dot);
   });
 
   // Legend
