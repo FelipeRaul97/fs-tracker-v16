@@ -2719,19 +2719,26 @@ function renderSnapshotCalib(){
     }).join('')+'</tbody></table>';
 
   const BANDAS=[[0,20],[20,40],[40,60],[60,80],[80,101]];
+  function _bgSesgo(sg){
+    if(sg>=15)return'rgba(99,153,34,0.35)';
+    if(sg>=0)return'rgba(99,153,34,0.15)';
+    if(sg>=-15)return'rgba(226,75,74,0.15)';
+    return'rgba(226,75,74,0.30)';
+  }
   xEl.innerHTML='<table class="hm-table"><thead><tr><th style="text-align:left">Mercado</th>'
     +BANDAS.map(b=>'<th>'+b[0]+'-'+(b[1]===101?100:b[1])+'%</th>').join('')
     +'</tr></thead><tbody>'
     +filas.map(f=>{
       const celdas=BANDAS.map(([lo,hi])=>{
         const a=porMkt[f.m].filter(o=>o.prob>=lo&&o.prob<hi);
-        if(!a.length) return '<td style="color:var(--text3)">--</td>';
+        if(!a.length) return '<td style="background:var(--surface2);color:var(--text3);text-align:center">--</td>';
         const pred=a.reduce((s,o)=>s+o.prob,0)/a.length;
         const real=a.filter(o=>o.acerto).length/a.length*100;
         const sg=real-pred, poco=a.length<100;
-        const col=sg>3?'var(--green)':sg<-3?'var(--red)':'var(--text3)';
-        return '<td style="opacity:'+(poco?0.35:1)+'" title="'+(poco?'menos de 100 obs: ruido':'')+'">'
-          +'<div style="color:'+col+';font-weight:'+(poco?400:600)+'">'+(sg>=0?'+':'')+sg.toFixed(1)+'%</div>'
+        const col=sg>=0?'var(--green)':'var(--red)';
+        const bg=_bgSesgo(sg);
+        return '<td style="background:'+bg+';opacity:'+(poco?0.55:1)+';text-align:center;line-height:1.3" title="'+(poco?'menos de 100 obs: ruido':'')+'">'
+          +'<div style="font-weight:'+(poco?400:600)+';color:'+col+'">'+(sg>=0?'+':'')+sg.toFixed(1)+'%</div>'
           +'<div style="font-size:10px;color:var(--text3)">n='+a.length+'</div></td>';
       }).join('');
       return '<tr><td style="text-align:left">'+f.m+'</td>'+celdas+'</tr>';
