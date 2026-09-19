@@ -523,6 +523,12 @@
           contrasta ese cruce contra los partidos reales.</p>
         <div id="diag-lam-ou25"></div>
         <div style="font-size:12px;color:var(--text3);margin:18px 0 4px;font-weight:600">
+          ②b Over/Under 3.5: mismo análisis, línea de 3.5</div>
+        <p style="font-size:11px;color:var(--text3);margin:0 0 6px">
+          El punto teórico donde Over 3.5 supera a Under es λ_total ≈ 3.75. Misma lógica
+          que arriba, línea más alta.</p>
+        <div id="diag-lam-ou35"></div>
+        <div style="font-size:12px;color:var(--text3);margin:18px 0 4px;font-weight:600">
           ③ Estimación de goles por banda — ¿la λ misma sub/sobreestima en algún tramo?</div>
         <p style="font-size:11px;color:var(--text3);margin:0 0 6px">
           Compara λ_total proyectada contra los goles que de verdad se marcaron. Un sesgo
@@ -2432,6 +2438,25 @@ function renderLambdaBandas(){
         +'<td>'+(real>50?'Over ✓':'Under')+'</td></tr>';
     }).join('')+'</tbody></table>'
     +'<p style="font-size:11px;color:var(--text3);margin-top:6px">Filas atenuadas: menos de 15 partidos, todavía ruido.</p>';
+
+  // (2b) Mismo analisis que (2) pero con la linea de 3.5 (Over 3.5 = total >= 4).
+  const ou35=document.getElementById('diag-lam-ou35');
+  if(ou35){
+    ou35.innerHTML='<table class="hm-table"><thead><tr><th style="text-align:left">Banda λ_total</th>'
+      +'<th title="Cantidad de partidos cerrados en esa banda de λ_total">N</th><th>P(O3.5) modelo</th><th>O3.5 real</th><th>Sesgo</th><th>Cruza 50%</th></tr></thead><tbody>'
+      +bandas.map(({b,arr})=>{
+        const pred=arr.reduce((s,p)=>s+(p.mercados_snapshot.over35||0),0)/arr.length;
+        const real=arr.filter(p=>_golesReales(p).tot>=4).length/arr.length*100;
+        const sg=pred-real, poco=arr.length<15;
+        const cs=Math.abs(sg)<3?'var(--text3)':(sg>0?'var(--red)':'var(--green)');
+        return '<tr style="opacity:'+(poco?0.5:1)+'"><td style="text-align:left">'+b+'</td>'
+          +'<td style="color:var(--text3)">'+arr.length+'</td>'
+          +'<td>'+pred.toFixed(1)+'%</td><td>'+real.toFixed(1)+'%</td>'
+          +'<td style="color:'+cs+';font-weight:600">'+(sg>=0?'+':'')+sg.toFixed(1)+'%</td>'
+          +'<td>'+(real>50?'Over ✓':'Under')+'</td></tr>';
+      }).join('')+'</tbody></table>'
+      +'<p style="font-size:11px;color:var(--text3);margin-top:6px">Filas atenuadas: menos de 15 partidos, todavía ruido.</p>';
+  }
 
   // (3) sesgo de la estimacion de goles: lambda_total proyectada vs goles reales.
   gl.innerHTML='<table class="hm-table"><thead><tr><th style="text-align:left">Banda λ_total</th>'
