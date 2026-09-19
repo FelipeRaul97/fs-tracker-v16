@@ -2769,21 +2769,18 @@ function renderAll(){
 }
 
 // ── Tabs ──────────────────────────────────────────────────
+// Antes esta lista duplicaba a mano las funciones de renderAll() por pestaña,
+// y se desincronizo: calibracion/mercados/ligas terminaron sin llamar a
+// renderCalibByMarket/renderMercadoCuotaHeatmap/renderLigaRollingROI, asi que
+// esas secciones quedaban en blanco hasta que el usuario tocaba un filtro
+// (que si dispara renderAll() completo). Ahora reusa renderAll() directo.
 document.querySelectorAll('.tab').forEach(tab=>{
   tab.addEventListener('click',()=>{
     document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
     document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
     tab.classList.add('active');
     document.getElementById('tab-'+tab.dataset.tab).classList.add('active');
-    const t=tab.dataset.tab;
-    if(t==='tendencias'){renderPLChart();renderHighEVLost();renderRacha();}
-    if(t==='calibracion'){renderEVScatter();renderCalibBands();}
-    if(t==='mercados'){renderCuotaROI();renderTipoStats();renderMercadoFreq();}
-    if(t==='ligas'){renderLigaTipo();renderLigaCards();}
-    if(t==='variables'){renderVariablesHeatmap();}
-    if(t==='watchlist'){renderWatchlist();renderCrucesValidados();}
-    if(t==='diagnostico'){renderDiagnostico();}
-    if(t==='confianza'){renderConfianza();}
+    renderAll();
   });
 });
 
