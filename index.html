@@ -1023,7 +1023,7 @@ function renderPLChart(){
     .sort((a,b)=>new Date(a.partido.fecha)-new Date(b.partido.fecha));
   const el=document.getElementById('chart-pl');
   if(settled.length<2){el.innerHTML='<p class="empty">Mínimo 2 apuestas confirmadas</p>';return;}
-  const W=800,H=220,PL=55,PR=55,PT=16,PB=30,WINDOW=10;
+  const W=800,H=220,PL=55,PR=55,PT=34,PB=30,WINDOW=10;
   const iW=W-PL-PR,iH=H-PT-PB;
   let cum=0;
   const cumPL=settled.map(a=>{cum+=(a.pl||0);return cum;});
@@ -1069,9 +1069,9 @@ function renderPLChart(){
   xAxisLabel.textContent='Fecha del partido (orden cronológico)'; svg.appendChild(xAxisLabel);
   [{c:'var(--green-mid)',l:'P&L acum',dash:false},{c:'var(--amber-mid)',l:`WR rolling ${WINDOW}`,dash:true}]
     .forEach((it,i)=>{
-      const lx=PL+8+i*120;
-      svg.appendChild(svgEl('line',{x1:lx,y1:PT+8,x2:lx+18,y2:PT+8,stroke:it.c,'stroke-width':'2',...(it.dash?{'stroke-dasharray':'5,3'}:{})}));
-      const lt=svgEl('text',{x:lx+22,y:PT+12,fill:'var(--text2)','font-size':'11'});
+      const lx=PL+8+i*140;
+      svg.appendChild(svgEl('line',{x1:lx,y1:14,x2:lx+18,y2:14,stroke:it.c,'stroke-width':'2',...(it.dash?{'stroke-dasharray':'5,3'}:{})}));
+      const lt=svgEl('text',{x:lx+22,y:18,fill:'var(--text2)','font-size':'11'});
       lt.textContent=it.l;svg.appendChild(lt);
     });
   el.innerHTML='';el.appendChild(svg);
