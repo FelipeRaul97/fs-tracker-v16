@@ -12083,7 +12083,7 @@ const TRACKER_DATA = [
     },
     "confianza": "ALTA",
     "notas": "",
-    "resultado_partido": "1-3",
+    "resultado_partido": "2-3",
     "goles_esperados": "2.92",
     "apuestas": [
       {
@@ -12170,7 +12170,7 @@ const TRACKER_DATA = [
         "cuota": 1.17,
         "prob": 82.9,
         "ev_pct": -3.0,
-        "acerto": true
+        "acerto": false
       },
       {
         "mercado": "btts",
@@ -12308,7 +12308,7 @@ const TRACKER_DATA = [
         "cuota_segura": 1.8,
         "acierto_hist": 59.6,
         "n_hist": 582,
-        "acerto": false
+        "acerto": true
       },
       {
         "mercado": "over05_local+hcp2_visit",
@@ -12365,7 +12365,7 @@ const TRACKER_DATA = [
         "cuota_segura": 2.05,
         "acierto_hist": 54.1,
         "n_hist": 338,
-        "acerto": false
+        "acerto": true
       }
     ],
     "mercados_snapshot": {
@@ -12500,7 +12500,7 @@ const TRACKER_DATA = [
         "n": 582,
         "cruza": false,
         "cruza_segura": false,
-        "acerto": false
+        "acerto": true
       },
       {
         "mercado": "over05_local+hcp2_visit",
@@ -12536,7 +12536,7 @@ const TRACKER_DATA = [
         "n": 338,
         "cruza": false,
         "cruza_segura": false,
-        "acerto": false
+        "acerto": true
       },
       {
         "mercado": "over15+hcp3_visit",
@@ -12574,7 +12574,7 @@ const TRACKER_DATA = [
         "acierto_hist": 59.6,
         "n_hist": 582,
         "cotizada": true,
-        "acerto": false
+        "acerto": true
       },
       {
         "mercado": "over05_local+hcp2_visit",
@@ -12634,7 +12634,7 @@ const TRACKER_DATA = [
         "acierto_hist": 54.1,
         "n_hist": 338,
         "cotizada": true,
-        "acerto": false
+        "acerto": true
       },
       {
         "mercado": "over15+hcp3_local",
@@ -12694,7 +12694,7 @@ const TRACKER_DATA = [
         "acierto_hist": 60.1,
         "n_hist": 308,
         "cotizada": false,
-        "acerto": true
+        "acerto": false
       },
       {
         "mercado": "local_corners_equipo_over3.5+local_remates_over8.5",
@@ -12850,7 +12850,7 @@ const TRACKER_DATA = [
         "acierto_hist": 67.1,
         "n_hist": 246,
         "cotizada": false,
-        "acerto": true
+        "acerto": false
       },
       {
         "mercado": "hcp2_visit",
@@ -12922,7 +12922,7 @@ const TRACKER_DATA = [
         "acierto_hist": 67.6,
         "n_hist": 222,
         "cotizada": false,
-        "acerto": false
+        "acerto": true
       },
       {
         "mercado": "over05_visit+hcp2_visit",
@@ -13138,7 +13138,7 @@ const TRACKER_DATA = [
         "acierto_hist": 66.5,
         "n_hist": 155,
         "cotizada": false,
-        "acerto": false
+        "acerto": true
       }
     ],
     "stats_reales": null,
@@ -13153,7 +13153,7 @@ const TRACKER_DATA = [
       "under25": false,
       "over35": true,
       "under35": false,
-      "under45": true,
+      "under45": false,
       "btts": true,
       "over05_local": true,
       "over05_visit": true,
