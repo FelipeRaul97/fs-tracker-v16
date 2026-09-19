@@ -73,6 +73,8 @@
 
   /* Table */
   .table-wrap{overflow-x:auto;border-radius:var(--rlg);border:1px solid var(--border);background:var(--surface);}
+  .table-wrap-scroll{max-height:460px;overflow-y:auto;}
+  .table-wrap-scroll thead th{position:sticky;top:0;z-index:1;}
   table{width:100%;border-collapse:collapse;min-width:750px}
   th{font-size:11px;font-weight:500;color:var(--text3);text-transform:uppercase;
     letter-spacing:.04em;padding:10px 12px;text-align:left;
@@ -396,7 +398,7 @@
         <div class="card-title">Watchlist por partido</div>
         <p style="font-size:12px;color:var(--text3);margin:0 0 10px">
           "P&amp;L" es teórico -- no se apostó, es lo que habría dado (cuota−1 si acertó, −1 si no).</p>
-        <div class="table-wrap">
+        <div class="table-wrap table-wrap-scroll">
           <table><thead><tr>
             <th>#</th><th>Partido</th><th>Liga</th><th>Tipo</th><th>Mercado</th>
             <th class="num">Cuota</th><th class="num">Justa</th><th class="num">Prob%</th>
