@@ -2268,7 +2268,7 @@ function renderDiagnostico(){
   const obs=_diagObs();
 
   // un partido aporta a los DOS equipos: el modelo predijo sobre ambos
-  eq.innerHTML=_tablaSesgo(_agrupar(obs,o=>[o.loc,o.vis],59),'Equipo');
+  eq.innerHTML='<div class="table-wrap table-wrap-scroll">'+_tablaSesgo(_agrupar(obs,o=>[o.loc,o.vis],59),'Equipo')+'</div>';
   document.getElementById('diag-ligas').innerHTML=
     _tablaSesgo(_agrupar(obs,o=>LIGA_NAMES[o.liga]||o.liga,59),'Liga');
   document.getElementById('diag-conf').innerHTML=
