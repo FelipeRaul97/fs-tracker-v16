@@ -702,6 +702,12 @@ function persistLocal(){
 }
 
 // ── Utils ─────────────────────────────────────────────────
+// Fecha+hora de un partido como Date ordenable. Las tablas ordenaban solo por
+// `fecha` (dia), asi que partidos del mismo dia quedaban en el orden en que
+// llegaron a _DATA en vez de por horario real de inicio. Sin `hora` (entradas
+// viejas o sin capturar) cae a medianoche, que sigue ordenando bien contra el
+// resto del mismo dia (queda primero).
+function _pFechaHora(p){ return new Date((p&&p.fecha||0)+'T'+(p&&p.hora||'00:00')); }
 const fmt=(n,d=2)=>n==null?'—':Number(n).toFixed(d);
 const fmtP=n=>n==null?'—':Number(n).toFixed(1)+'%';
 const fmtL=n=>n==null?'—':(n>=0?'+':'')+Number(n).toFixed(2)+'u';
@@ -929,7 +935,7 @@ function renderBets(){
   });
   // Mas recientes primero -- _DATA viene en orden de carga (ascendente), no
   // de fecha del partido, asi que hay que ordenar explicito.
-  groups.sort((a,b)=>new Date(b.p.fecha)-new Date(a.p.fecha));
+  groups.sort((a,b)=>_pFechaHora(b.p)-_pFechaHora(a.p));
 
   // Contador global de apuestas por liga
   const ligaCount={};
@@ -1022,7 +1028,7 @@ window.toggleBetsGroup=toggleBetsGroup;
 // ── Charts (mismo código que antes) ──────────────────────
 function renderPLChart(){
   const settled=flatBets().filter(a=>a.estado==='GANADA'||a.estado==='PERDIDA')
-    .sort((a,b)=>new Date(a.partido.fecha)-new Date(b.partido.fecha));
+    .sort((a,b)=>_pFechaHora(a.partido)-_pFechaHora(b.partido));
   const el=document.getElementById('chart-pl');
   if(settled.length<2){el.innerHTML='<p class="empty">Mínimo 2 apuestas confirmadas</p>';return;}
   const W=800,H=220,PL=55,PR=55,PT=34,PB=30,WINDOW=10;
@@ -1260,7 +1266,7 @@ function renderRollingLogLoss(){
   const el = document.getElementById('chart-rolling-logloss');
   const settled = flatBets()
     .filter(a => (a.estado==='GANADA'||a.estado==='PERDIDA') && a.prob != null)
-    .sort((a,b) => new Date(a.partido?.fecha||0) - new Date(b.partido?.fecha||0));
+    .sort((a,b) => _pFechaHora(a.partido) - _pFechaHora(b.partido));
 
   const WIN = 15;
   if(settled.length < WIN){ el.innerHTML=`<p class="empty">Mínimo ${WIN} apuestas para rolling log-loss</p>`; return; }
@@ -1626,7 +1632,7 @@ function renderHighEVLost(){
 }
 
 function renderRacha(){
-  const settled=flatBets().filter(a=>a.estado==='GANADA'||a.estado==='PERDIDA').sort((a,b)=>new Date(b.partido.fecha)-new Date(a.partido.fecha));
+  const settled=flatBets().filter(a=>a.estado==='GANADA'||a.estado==='PERDIDA').sort((a,b)=>_pFechaHora(b.partido)-_pFechaHora(a.partido));
   const el=document.getElementById('racha-actual');
   if(!settled.length){el.innerHTML='<p class="empty">Sin apuestas confirmadas</p>';return;}
   let streak=0,tipo=settled[0].estado;
@@ -1746,7 +1752,7 @@ function renderLigaRollingROI(){
   let maxLen=0;
   ligas.forEach(liga=>{
     const bets=flatBets({liga}).filter(a=>a.estado==='GANADA'||a.estado==='PERDIDA')
-      .sort((a,b)=>new Date(a.partido.fecha)-new Date(b.partido.fecha));
+      .sort((a,b)=>_pFechaHora(a.partido)-_pFechaHora(b.partido));
     if(bets.length<WINDOW) return;
     const pts=[];
     for(let i=WINDOW;i<=bets.length;i++){
@@ -1878,7 +1884,7 @@ function renderWatchlist(){
     allWL.forEach(w=>{ const g=w.partido.id||w.partido.partido;
       if(!groups.has(g)) groups.set(g,{p:w.partido, items:[]});
       groups.get(g).items.push(w); });
-    const arr=[...groups.values()].sort((a,b)=>new Date(b.p.fecha)-new Date(a.p.fecha));
+    const arr=[...groups.values()].sort((a,b)=>_pFechaHora(b.p)-_pFechaHora(a.p));
     let html='';
     arr.forEach(({p,items})=>{
       const gid=String(p.id||p.partido).replace(/[^\w-]/g,'');
@@ -2029,7 +2035,7 @@ function renderUnicidadTotales(){
   const items=_dataWLLiga().flatMap(p=>(p.watchlist||[])
     .filter(w=>w.regla_unicidad_totales)
     .map(w=>({...w,partido:p})))
-    .sort((a,b)=>new Date(b.partido.fecha)-new Date(a.partido.fecha));
+    .sort((a,b)=>_pFechaHora(b.partido)-_pFechaHora(a.partido));
   if(!items.length){ el.innerHTML='<p class="empty">Todavía no compitieron dos totales de goles por el mismo PICK.</p>'; return; }
   const cerr=items.filter(w=>w.acerto!=null);
   const filas=items.map(w=>{
@@ -2069,7 +2075,7 @@ function renderFiltroEdge(){
   const items=_dataWLLiga().flatMap(p=>(p.watchlist||[])
     .filter(w=>w.filtro_edge)
     .map(w=>({...w,partido:p})))
-    .sort((a,b)=>new Date(b.partido.fecha)-new Date(a.partido.fecha));
+    .sort((a,b)=>_pFechaHora(b.partido)-_pFechaHora(a.partido));
   if(!items.length){ el.innerHTML='<p class="empty">El filtro aún no bloqueó ningún PICK candidato.</p>'; return; }
   const cerr=items.filter(w=>w.acerto!=null);
   const filas=items.map(w=>{
@@ -2109,7 +2115,7 @@ function renderCapa1x2(){
   const items=_dataWLLiga().flatMap(p=>(p.watchlist||[])
     .filter(w=>w.regla_1x2_no_pick)
     .map(w=>({...w,partido:p})))
-    .sort((a,b)=>new Date(b.partido.fecha)-new Date(a.partido.fecha));
+    .sort((a,b)=>_pFechaHora(b.partido)-_pFechaHora(a.partido));
   if(!items.length){ el.innerHTML='<p class="empty">La capa aún no bloqueó ninguna 1X2 con EV+.</p>'; return; }
   const cerr=items.filter(w=>w.acerto!=null);
   const filas=items.map(w=>{
