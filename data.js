@@ -5,6 +5,7 @@ const TRACKER_DATA = [
   {
     "id": "001",
     "fecha": "2026-09-11",
+    "hora": "20:00",
     "jornada": 5,
     "liga": "SP1",
     "partido": "Sevilla vs Valencia",
@@ -877,6 +878,7 @@ const TRACKER_DATA = [
   {
     "id": "002",
     "fecha": "2026-09-12",
+    "hora": "17:30",
     "jornada": 5,
     "liga": "SP1",
     "partido": "Athletic Club vs Elche",
@@ -1820,6 +1822,7 @@ const TRACKER_DATA = [
   {
     "id": "003",
     "fecha": "2026-09-12",
+    "hora": "13:00",
     "jornada": 5,
     "liga": "SP1",
     "partido": "Racing Santander vs Alaves",
@@ -2707,6 +2710,7 @@ const TRACKER_DATA = [
   {
     "id": "004",
     "fecha": "2026-09-12",
+    "hora": "20:00",
     "jornada": 5,
     "liga": "SP1",
     "partido": "Real Madrid vs Rayo Vallecano",
@@ -3213,6 +3217,7 @@ const TRACKER_DATA = [
   {
     "id": "005",
     "fecha": "2026-09-13",
+    "hora": "15:15",
     "jornada": 5,
     "liga": "SP1",
     "partido": "Levante vs Barcelona",
@@ -3701,6 +3706,7 @@ const TRACKER_DATA = [
   {
     "id": "006",
     "fecha": "2026-09-13",
+    "hora": "17:30",
     "jornada": 5,
     "liga": "SP1",
     "partido": "Getafe vs Deportivo La Coruna",
@@ -4579,6 +4585,7 @@ const TRACKER_DATA = [
   {
     "id": "007",
     "fecha": "2026-09-14",
+    "hora": "20:00",
     "jornada": 5,
     "liga": "SP1",
     "partido": "Villarreal vs Real Betis",
@@ -5210,6 +5217,7 @@ const TRACKER_DATA = [
   {
     "id": "008",
     "fecha": "2026-09-13",
+    "hora": "20:00",
     "jornada": 5,
     "liga": "SP1",
     "partido": "Real Sociedad vs Atletico Madrid",
@@ -6332,6 +6340,7 @@ const TRACKER_DATA = [
   {
     "id": "010",
     "fecha": "2026-09-15",
+    "hora": "19:30",
     "jornada": 6,
     "liga": "SP1",
     "partido": "Elche vs Real Madrid",
@@ -6953,6 +6962,7 @@ const TRACKER_DATA = [
   {
     "id": "011",
     "fecha": "2026-09-16",
+    "hora": "17:00",
     "jornada": 6,
     "liga": "SP1",
     "partido": "Atletico Madrid vs Osasuna",
@@ -7843,6 +7853,7 @@ const TRACKER_DATA = [
   {
     "id": "012",
     "fecha": "2026-09-16",
+    "hora": "17:00",
     "jornada": 6,
     "liga": "SP1",
     "partido": "Deportivo La Coruna vs Sevilla",
@@ -8852,6 +8863,7 @@ const TRACKER_DATA = [
   {
     "id": "013",
     "fecha": "2026-09-16",
+    "hora": "19:30",
     "jornada": 6,
     "liga": "SP1",
     "partido": "Barcelona vs Racing Santander",
@@ -9363,6 +9375,7 @@ const TRACKER_DATA = [
   {
     "id": "014",
     "fecha": "2026-09-17",
+    "hora": "17:00",
     "jornada": 6,
     "liga": "SP1",
     "partido": "Real Betis vs Getafe",
@@ -10254,6 +10267,7 @@ const TRACKER_DATA = [
   {
     "id": "016",
     "fecha": "2026-09-18",
+    "hora": "18:45",
     "jornada": 5,
     "liga": "F1",
     "partido": "Monaco vs Lens",
@@ -11316,6 +11330,7 @@ const TRACKER_DATA = [
   {
     "id": "017",
     "fecha": "2026-09-18",
+    "hora": "19:00",
     "jornada": 5,
     "liga": "E0",
     "partido": "Brentford vs Chelsea",
@@ -12007,6 +12022,7 @@ const TRACKER_DATA = [
   {
     "id": "018",
     "fecha": "2026-09-19",
+    "hora": "11:30",
     "jornada": 5,
     "liga": "E0",
     "partido": "Tottenham vs Aston Villa",
@@ -13210,6 +13226,7 @@ const TRACKER_DATA = [
   {
     "id": "019",
     "fecha": "2026-09-19",
+    "hora": "13:00",
     "jornada": 5,
     "liga": "I1",
     "partido": "Udinese vs Cagliari",
@@ -14297,6 +14314,7 @@ const TRACKER_DATA = [
   {
     "id": "020",
     "fecha": "2026-09-19",
+    "hora": "14:00",
     "jornada": 5,
     "liga": "E0",
     "partido": "Brighton vs Arsenal",
@@ -15339,6 +15357,7 @@ const TRACKER_DATA = [
   {
     "id": "021",
     "fecha": "2026-09-19",
+    "hora": "14:00",
     "jornada": 5,
     "liga": "E0",
     "partido": "Everton vs Ipswich",
@@ -16296,6 +16315,7 @@ const TRACKER_DATA = [
   {
     "id": "022",
     "fecha": "2026-09-19",
+    "hora": "14:00",
     "jornada": 5,
     "liga": "E0",
     "partido": "Newcastle vs Hull",
@@ -17252,6 +17272,7 @@ const TRACKER_DATA = [
   {
     "id": "023",
     "fecha": "2026-09-19",
+    "hora": "14:15",
     "jornada": 7,
     "liga": "SP1",
     "partido": "Athletic Club vs Alaves",
@@ -18279,6 +18300,7 @@ const TRACKER_DATA = [
   {
     "id": "024",
     "fecha": "2026-09-19",
+    "hora": "15:15",
     "jornada": 5,
     "liga": "F1",
     "partido": "Paris FC vs Strasbourg",
@@ -19260,6 +19282,7 @@ const TRACKER_DATA = [
   {
     "id": "025",
     "fecha": "2026-09-19",
+    "hora": "16:00",
     "jornada": 5,
     "liga": "I1",
     "partido": "Roma vs Inter",
@@ -19934,6 +19957,7 @@ const TRACKER_DATA = [
   {
     "id": "026",
     "fecha": "2026-09-19",
+    "hora": "16:30",
     "jornada": 5,
     "liga": "E0",
     "partido": "Nott'm Forest vs Coventry",
@@ -20913,6 +20937,7 @@ const TRACKER_DATA = [
   {
     "id": "027",
     "fecha": "2026-09-19",
+    "hora": "18:45",
     "jornada": 5,
     "liga": "F1",
     "partido": "Lyon vs Rennes",
@@ -21771,7 +21796,8 @@ const TRACKER_DATA = [
   },
   {
     "id": "028",
-    "fecha": "2026-09-20",
+    "fecha": "2026-09-19",
+    "hora": "18:45",
     "jornada": 5,
     "liga": "I1",
     "partido": "Venezia vs Lazio",
@@ -22717,7 +22743,8 @@ const TRACKER_DATA = [
   },
   {
     "id": "029",
-    "fecha": "2026-09-20",
+    "fecha": "2026-09-19",
+    "hora": "19:00",
     "jornada": 7,
     "liga": "SP1",
     "partido": "Sevilla vs Barcelona",
@@ -24116,7 +24143,8 @@ const TRACKER_DATA = [
   },
   {
     "id": "031",
-    "fecha": "2026-09-19",
+    "fecha": "2026-09-20",
+    "hora": "15:00",
     "jornada": 5,
     "liga": "E0",
     "partido": "Bournemouth vs Liverpool",
@@ -25178,6 +25206,7 @@ const TRACKER_DATA = [
   {
     "id": "032",
     "fecha": "2026-09-20",
+    "hora": "15:00",
     "jornada": 5,
     "liga": "E0",
     "partido": "Manchester City vs Sunderland",
@@ -25975,6 +26004,7 @@ const TRACKER_DATA = [
   {
     "id": "033",
     "fecha": "2026-09-20",
+    "hora": "15:00",
     "jornada": 5,
     "liga": "I1",
     "partido": "Frosinone vs Como",
@@ -26679,6 +26709,7 @@ const TRACKER_DATA = [
   {
     "id": "034",
     "fecha": "2026-09-20",
+    "hora": "17:15",
     "jornada": 5,
     "liga": "F1",
     "partido": "Nice vs Lille",
@@ -27648,6 +27679,7 @@ const TRACKER_DATA = [
   {
     "id": "035",
     "fecha": "2026-09-20",
+    "hora": "16:15",
     "jornada": 7,
     "liga": "SP1",
     "partido": "Atletico Madrid vs Real Madrid",
@@ -28238,6 +28270,7 @@ const TRACKER_DATA = [
   {
     "id": "036",
     "fecha": "2026-09-20",
+    "hora": "17:30",
     "jornada": 5,
     "liga": "E0",
     "partido": "Fulham vs Man United",
@@ -29204,6 +29237,7 @@ const TRACKER_DATA = [
   {
     "id": "037",
     "fecha": "2026-09-20",
+    "hora": "18:00",
     "jornada": 5,
     "liga": "I1",
     "partido": "Juventus vs Atalanta",
@@ -29802,6 +29836,7 @@ const TRACKER_DATA = [
   {
     "id": "038",
     "fecha": "2026-09-20",
+    "hora": "18:30",
     "jornada": 7,
     "liga": "SP1",
     "partido": "La Coruna vs Betis",
@@ -30817,6 +30852,7 @@ const TRACKER_DATA = [
   {
     "id": "039",
     "fecha": "2026-09-20",
+    "hora": "20:45",
     "jornada": 5,
     "liga": "I1",
     "partido": "Milan vs Lecce",
@@ -31332,6 +31368,7 @@ const TRACKER_DATA = [
   {
     "id": "040",
     "fecha": "2026-09-20",
+    "hora": "20:45",
     "jornada": 5,
     "liga": "F1",
     "partido": "Marseille vs Paris Saint Germain",
