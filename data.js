@@ -27644,5 +27644,595 @@ const TRACKER_DATA = [
         "cotizada": false
       }
     ]
+  },
+  {
+    "id": "035",
+    "fecha": "2026-09-20",
+    "jornada": 7,
+    "liga": "SP1",
+    "partido": "Atletico Madrid vs Real Madrid",
+    "lambda_forma_l": 1.657,
+    "lambda_forma_v": 2.516,
+    "lambda_reg_l": 1.6352,
+    "lambda_reg_v": 1.4881,
+    "lambda_base_l": 1.6417,
+    "lambda_base_v": 1.7965,
+    "lambda_final_l": 1.6262,
+    "lambda_final_v": 1.812,
+    "lambda_shadow_l": 1.6704,
+    "lambda_shadow_v": 1.812,
+    "lambda_corners": 10.119,
+    "ratio": 0.8974613686534216,
+    "visit_dominante": "False",
+    "variables_activas": "V#3(L:1.07) - V#4(L:0.96)",
+    "variables": {
+      "v1": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa": false,
+        "activa_local": false,
+        "activa_visit": false,
+        "detalle_local": "--",
+        "detalle_visit": "--",
+        "detalle": "Ambos necesitan >=20 PJ (local:6, visit:6)"
+      },
+      "v2": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa_local": false,
+        "activa_visit": false,
+        "detalle_local": "Rank 4, margen 8pts -- fuera de riesgo",
+        "detalle_visit": "Rank 2, margen 10pts -- fuera de riesgo"
+      },
+      "v3": {
+        "factor_local": 1.07,
+        "activa": true,
+        "n_partidos": 20,
+        "GpG_casa": 2.2,
+        "GpG_liga": 1.5,
+        "hs": 0.7,
+        "muestra_completa": true,
+        "detalle": "hs=+0.70 (20 ptdos)"
+      },
+      "v4": {
+        "factor_local": 0.96,
+        "factor_visit": 1.0,
+        "activa_local": true,
+        "activa_visit": false,
+        "bajas_local": 2,
+        "bajas_visit": 0
+      },
+      "v5": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa_local": false,
+        "activa_visit": false
+      },
+      "v6": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa": false
+      },
+      "v7": {
+        "skip": false,
+        "activa_local": false,
+        "activa_visit": false,
+        "detalle": "Sin DT nuevo"
+      },
+      "v8": {
+        "activa": false,
+        "anulado_derby": false,
+        "detalle": "Inactiva"
+      }
+    },
+    "confianza": "ALTA",
+    "notas": "",
+    "resultado_partido": null,
+    "goles_esperados": "3.44",
+    "apuestas": [
+      {
+        "tipo": "PICK",
+        "mercado": "over05_local",
+        "linea": null,
+        "etiqueta": "Over 0.5 Atletico Madrid",
+        "cuota": 1.26,
+        "prob": 82.3,
+        "ev_pct": 3.7,
+        "estado": "PENDIENTE",
+        "pl": null
+      },
+      {
+        "tipo": "PICK",
+        "mercado": "hcp2_des",
+        "linea": null,
+        "etiqueta": "HCP +2 Atletico Madrid",
+        "cuota": 1.32,
+        "prob": 77.2,
+        "ev_pct": 1.9,
+        "estado": "PENDIENTE",
+        "pl": null
+      },
+      {
+        "tipo": "COMBO",
+        "mercado": "local_remates_puerta_over2.5+over05_local",
+        "etiqueta": "L Remates a puerta Over 2.5 + Over 0.5 L",
+        "cuota": 1.36,
+        "prob": 78.5,
+        "ev_pct": 6.8,
+        "estado": "PENDIENTE",
+        "pl": null,
+        "patas": [
+          "local_remates_puerta_over2.5",
+          "over05_local"
+        ],
+        "promovida_combinada": true,
+        "nivel_cruce": "justa",
+        "cuota_justa": 1.33,
+        "cuota_segura": 1.46,
+        "acierto_hist": 75.0,
+        "n_hist": 184
+      }
+    ],
+    "watchlist": [
+      {
+        "mercado": "over15",
+        "linea": null,
+        "etiqueta": "Over 1.5",
+        "cuota": 1.15,
+        "prob": 85.7,
+        "ev_pct": -1.4
+      },
+      {
+        "mercado": "over25",
+        "linea": null,
+        "etiqueta": "Over 2.5",
+        "cuota": 1.47,
+        "prob": 66.1,
+        "ev_pct": -2.8
+      },
+      {
+        "mercado": "over35",
+        "linea": null,
+        "etiqueta": "Over 3.5",
+        "cuota": 2.12,
+        "prob": 45.0,
+        "ev_pct": -4.6
+      },
+      {
+        "mercado": "hcp3_des",
+        "linea": null,
+        "etiqueta": "HCP +3 Atletico Madrid",
+        "cuota": 1.11,
+        "prob": 90.0,
+        "ev_pct": -0.1
+      },
+      {
+        "mercado": "corners65",
+        "linea": null,
+        "etiqueta": "Over 6.5 corners",
+        "cuota": 1.1,
+        "prob": 86.1,
+        "ev_pct": -5.3
+      },
+      {
+        "mercado": "corners75",
+        "linea": null,
+        "etiqueta": "Over 7.5 corners",
+        "cuota": 1.19,
+        "prob": 76.4,
+        "ev_pct": -9.1
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 2.5,
+        "etiqueta": "Real Madrid Corners equipo Over 2.5",
+        "cuota": 1.09,
+        "prob": 84.8,
+        "ev_pct": -7.6,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates_puerta",
+        "linea": 3.5,
+        "etiqueta": "Real Madrid Remates a puerta Over 3.5",
+        "cuota": 1.42,
+        "prob": 83.4,
+        "ev_pct": 18.4,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_corners_equipo",
+        "linea": 2.5,
+        "etiqueta": "Atletico Madrid Corners equipo Over 2.5",
+        "cuota": 1.13,
+        "prob": 80.2,
+        "ev_pct": -9.4,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates_puerta",
+        "linea": 3.5,
+        "etiqueta": "Atletico Madrid Remates a puerta Over 3.5",
+        "cuota": 1.42,
+        "prob": 78.7,
+        "ev_pct": 11.8,
+        "tipo": "POR_EQUIPO",
+        "cuota_justa": 1.26,
+        "cuota_segura": 1.36,
+        "acierto_hist": 79.7,
+        "n_hist": 187
+      },
+      {
+        "mercado": "local_remates",
+        "linea": 11.5,
+        "etiqueta": "Atletico Madrid Remates Over 11.5",
+        "cuota": 1.27,
+        "prob": 77.4,
+        "ev_pct": -1.7,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "dox2+hcp3_local",
+        "linea": null,
+        "etiqueta": "DO Empate o V + HCP +3 L",
+        "cuota": 1.53,
+        "prob": 55.0,
+        "ev_pct": -15.8,
+        "tipo": "COMBINADA",
+        "patas": [
+          "dox2",
+          "hcp3_local"
+        ],
+        "lift": 0.968,
+        "cuota_justa": 1.72,
+        "cuota_segura": 1.91,
+        "acierto_hist": 58.1,
+        "n_hist": 296
+      },
+      {
+        "mercado": "under45+hcp2_visit",
+        "linea": null,
+        "etiqueta": "Under 4.5 + HCP +2 V",
+        "cuota": 1.45,
+        "prob": 62.1,
+        "ev_pct": -10.0,
+        "tipo": "COMBINADA",
+        "patas": [
+          "under45",
+          "hcp2_visit"
+        ],
+        "lift": 1.038,
+        "cuota_justa": 1.53,
+        "cuota_segura": 1.72,
+        "acierto_hist": 65.2,
+        "n_hist": 198
+      },
+      {
+        "mercado": "local_corners_equipo_over2.5+local_remates_over11.5",
+        "linea": null,
+        "etiqueta": "L Corners Over 2.5 + L Remates Over 11.5",
+        "cuota": 1.42,
+        "prob": 67.3,
+        "ev_pct": -4.4,
+        "tipo": "COMBINADA",
+        "patas": [
+          "local_corners_equipo_over2.5",
+          "local_remates_over11.5"
+        ],
+        "lift": 1.076,
+        "cuota_justa": 1.5,
+        "cuota_segura": 1.7,
+        "acierto_hist": 66.5,
+        "n_hist": 155
+      }
+    ],
+    "mercados_snapshot": {
+      "victoria_local": 35.0,
+      "empate": 24.7,
+      "victoria_visit": 42.9,
+      "do1x": 57.1,
+      "dox2": 65.0,
+      "over15": 85.7,
+      "over25": 66.1,
+      "under25": 33.9,
+      "over35": 45.0,
+      "under35": 55.0,
+      "under45": 73.7,
+      "btts": 65.1,
+      "over05_local": 82.3,
+      "over05_visit": 83.7,
+      "hcp2_des": 77.2,
+      "hcp3_des": 90.0,
+      "corners65": 86.1,
+      "corners75": 76.4,
+      "local_remates_over7.5": 95.6,
+      "local_remates_over8.5": 92.7,
+      "local_remates_over9.5": 88.7,
+      "local_remates_over10.5": 83.5,
+      "local_remates_over11.5": 77.4,
+      "local_remates_over12.5": 70.5,
+      "local_remates_over13.5": 63.0,
+      "local_remates_over14.5": 55.3,
+      "local_remates_over15.5": 47.6,
+      "local_remates_puerta_over1.5": 96.8,
+      "local_remates_puerta_over2.5": 90.1,
+      "local_remates_puerta_over3.5": 78.7,
+      "local_remates_puerta_over4.5": 63.7,
+      "local_remates_puerta_over5.5": 47.6,
+      "local_remates_puerta_over6.5": 32.9,
+      "local_corners_equipo_over2.5": 80.2,
+      "local_corners_equipo_over3.5": 65.2,
+      "local_corners_equipo_over4.5": 49.4,
+      "local_corners_equipo_over5.5": 35.0,
+      "local_corners_equipo_over6.5": 23.4,
+      "local_corners_equipo_over7.5": 14.8,
+      "visit_remates_over7.5": 93.3,
+      "visit_remates_over8.5": 89.2,
+      "visit_remates_over9.5": 83.8,
+      "visit_remates_over10.5": 77.3,
+      "visit_remates_over11.5": 69.9,
+      "visit_remates_over12.5": 62.0,
+      "visit_remates_over13.5": 53.7,
+      "visit_remates_over14.5": 45.6,
+      "visit_remates_over15.5": 38.0,
+      "visit_remates_puerta_over1.5": 97.8,
+      "visit_remates_puerta_over2.5": 92.7,
+      "visit_remates_puerta_over3.5": 83.4,
+      "visit_remates_puerta_over4.5": 70.2,
+      "visit_remates_puerta_over5.5": 55.0,
+      "visit_remates_puerta_over6.5": 40.1,
+      "visit_corners_equipo_over2.5": 84.8,
+      "visit_corners_equipo_over3.5": 71.9,
+      "visit_corners_equipo_over4.5": 57.3,
+      "visit_corners_equipo_over5.5": 43.0,
+      "visit_corners_equipo_over6.5": 30.5,
+      "visit_corners_equipo_over7.5": 20.6
+    },
+    "cruces_validados": [
+      {
+        "mercado": "dox2",
+        "etiqueta": "DO Empate o V",
+        "cuota": 1.32,
+        "justa": 1.43,
+        "segura": 1.59,
+        "hist": 70.1,
+        "n": 167,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "local_remates_puerta_over3.5",
+        "etiqueta": "Atletico Madrid Remates a puerta Over 3.5",
+        "cuota": 1.42,
+        "justa": 1.26,
+        "segura": 1.36,
+        "hist": 79.7,
+        "n": 187,
+        "cruza": true,
+        "cruza_segura": true
+      },
+      {
+        "mercado": "dox2+hcp3_local",
+        "etiqueta": "DO Empate o V + HCP +3 L",
+        "cuota": 1.53,
+        "justa": 1.72,
+        "segura": 1.91,
+        "hist": 58.1,
+        "n": 296,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "under45+hcp2_visit",
+        "etiqueta": "Under 4.5 + HCP +2 V",
+        "cuota": 1.45,
+        "justa": 1.53,
+        "segura": 1.72,
+        "hist": 65.2,
+        "n": 198,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "local_remates_puerta_over2.5+over05_local",
+        "etiqueta": "L Remates a puerta Over 2.5 + Over 0.5 L",
+        "cuota": 1.36,
+        "justa": 1.33,
+        "segura": 1.46,
+        "hist": 75.0,
+        "n": 184,
+        "cruza": true,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "local_corners_equipo_over2.5+local_remates_over11.5",
+        "etiqueta": "L Corners Over 2.5 + L Remates Over 11.5",
+        "cuota": 1.42,
+        "justa": 1.5,
+        "segura": 1.7,
+        "hist": 66.5,
+        "n": 155,
+        "cruza": false,
+        "cruza_segura": false
+      }
+    ],
+    "validadas": [
+      {
+        "mercado": "local_corners_equipo_over3.5",
+        "etiqueta": "Atletico Madrid Corners Over 3.5",
+        "tipo": "por equipo",
+        "p": 0.6519,
+        "cuota_justa": 1.44,
+        "cuota_segura": 1.56,
+        "acierto_hist": 69.2,
+        "n_hist": 325,
+        "cotizada": false
+      },
+      {
+        "mercado": "under45+over05_visit",
+        "etiqueta": "Under 4.5 + Over 0.5 V",
+        "tipo": "COMBINADA",
+        "p": 0.5778,
+        "cuota_justa": 1.66,
+        "cuota_segura": 1.83,
+        "acierto_hist": 60.1,
+        "n_hist": 308,
+        "cotizada": false
+      },
+      {
+        "mercado": "dox2+hcp3_local",
+        "etiqueta": "DO Empate o V + HCP +3 L",
+        "tipo": "COMBINADA",
+        "p": 0.55,
+        "cuota_justa": 1.72,
+        "cuota_segura": 1.91,
+        "acierto_hist": 58.1,
+        "n_hist": 296,
+        "cotizada": true
+      },
+      {
+        "mercado": "over05_local+hcp3_visit",
+        "etiqueta": "Over 0.5 L + HCP +3 V",
+        "tipo": "COMBINADA",
+        "p": 0.7345,
+        "cuota_justa": 1.37,
+        "cuota_segura": 1.49,
+        "acierto_hist": 72.9,
+        "n_hist": 255,
+        "cotizada": false
+      },
+      {
+        "mercado": "local_corners_equipo_over2.5+local_remates_over9.5",
+        "etiqueta": "L Corners Over 2.5 + L Remates Over 9.5",
+        "tipo": "COMBINADA",
+        "p": 0.7583,
+        "cuota_justa": 1.34,
+        "cuota_segura": 1.46,
+        "acierto_hist": 74.9,
+        "n_hist": 207,
+        "cotizada": false
+      },
+      {
+        "mercado": "under45+hcp2_visit",
+        "etiqueta": "Under 4.5 + HCP +2 V",
+        "tipo": "COMBINADA",
+        "p": 0.6205,
+        "cuota_justa": 1.53,
+        "cuota_segura": 1.72,
+        "acierto_hist": 65.2,
+        "n_hist": 198,
+        "cotizada": true
+      },
+      {
+        "mercado": "do1x+hcp3_visit",
+        "etiqueta": "DO L o Empate + HCP +3 V",
+        "tipo": "COMBINADA",
+        "p": 0.5049,
+        "cuota_justa": 1.92,
+        "cuota_segura": 2.22,
+        "acierto_hist": 52.1,
+        "n_hist": 188,
+        "cotizada": false
+      },
+      {
+        "mercado": "local_remates_over10.5+local_remates_puerta_over4.5",
+        "etiqueta": "L Remates Over 10.5 + L Remates a puerta Over 4.5",
+        "tipo": "COMBINADA",
+        "p": 0.5591,
+        "cuota_justa": 1.75,
+        "cuota_segura": 2.0,
+        "acierto_hist": 57.2,
+        "n_hist": 187,
+        "cotizada": false
+      },
+      {
+        "mercado": "local_remates_puerta_over3.5",
+        "etiqueta": "Atletico Madrid Remates a puerta Over 3.5",
+        "tipo": "por equipo",
+        "p": 0.7871,
+        "cuota_justa": 1.26,
+        "cuota_segura": 1.36,
+        "acierto_hist": 79.7,
+        "n_hist": 187,
+        "cotizada": true
+      },
+      {
+        "mercado": "local_remates_puerta_over2.5+over05_local",
+        "etiqueta": "L Remates a puerta Over 2.5 + Over 0.5 L",
+        "tipo": "COMBINADA",
+        "p": 0.7853,
+        "cuota_justa": 1.33,
+        "cuota_segura": 1.46,
+        "acierto_hist": 75.0,
+        "n_hist": 184,
+        "cotizada": true
+      },
+      {
+        "mercado": "over15+over05_local",
+        "etiqueta": "Over 1.5 + Over 0.5 L",
+        "tipo": "COMBINADA",
+        "p": 0.7511,
+        "cuota_justa": 1.27,
+        "cuota_segura": 1.39,
+        "acierto_hist": 78.6,
+        "n_hist": 182,
+        "cotizada": false
+      },
+      {
+        "mercado": "under45+over05_local",
+        "etiqueta": "Under 4.5 + Over 0.5 L",
+        "tipo": "COMBINADA",
+        "p": 0.5477,
+        "cuota_justa": 1.84,
+        "cuota_segura": 2.13,
+        "acierto_hist": 54.4,
+        "n_hist": 171,
+        "cotizada": false
+      },
+      {
+        "mercado": "dox2",
+        "etiqueta": "DO Empate o V",
+        "tipo": "simple",
+        "p": 0.6504,
+        "cuota_justa": 1.43,
+        "cuota_segura": 1.59,
+        "acierto_hist": 70.1,
+        "n_hist": 167,
+        "cotizada": true
+      },
+      {
+        "mercado": "hcp2_local",
+        "etiqueta": "HCP +2 L",
+        "tipo": "simple",
+        "p": 0.7718,
+        "cuota_justa": 1.33,
+        "cuota_segura": 1.47,
+        "acierto_hist": 75.3,
+        "n_hist": 166,
+        "cotizada": false
+      },
+      {
+        "mercado": "local_corners_equipo_over2.5+local_remates_over11.5",
+        "etiqueta": "L Corners Over 2.5 + L Remates Over 11.5",
+        "tipo": "COMBINADA",
+        "p": 0.6732,
+        "cuota_justa": 1.5,
+        "cuota_segura": 1.7,
+        "acierto_hist": 66.5,
+        "n_hist": 155,
+        "cotizada": true
+      },
+      {
+        "mercado": "over15+hcp3_visit",
+        "etiqueta": "Over 1.5 + HCP +3 V",
+        "tipo": "COMBINADA",
+        "p": 0.7886,
+        "cuota_justa": 1.32,
+        "cuota_segura": 1.46,
+        "acierto_hist": 76.0,
+        "n_hist": 150,
+        "cotizada": false
+      }
+    ]
   }
 ];
