@@ -385,7 +385,6 @@
 
   <!-- Watchlist -->
   <div class="tab-panel" id="tab-watchlist">
-    <div id="wl-summary" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:16px"></div>
     <div class="filters" style="margin-bottom:12px">
       <span class="filter-label">Filtrar:</span>
       <select id="f-wl-liga"><option value="">Todas las ligas</option>
@@ -397,6 +396,7 @@
         <option value="COMBINADA">Combinada</option></select>
       <select id="f-wl-mercado"><option value="">Todos los mercados</option></select>
     </div>
+    <div id="wl-summary" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:16px"></div>
     <div class="grid2" style="margin-bottom:16px">
       <div class="card card-full">
         <div class="card-title">Watchlist por partido</div>
@@ -2859,7 +2859,7 @@ window.limpiarFiltrosApuestas=limpiarFiltrosApuestas;
 // Filtros propios del tab Watchlist (tipo de mercado + mercado agrupado): solo
 // repintan ese tab, no afectan a Apuestas ni al resto -- son un recorte interno
 // de la vista, no el filtro global de liga.
-['f-wl-tipo','f-wl-mercado'].forEach(id=>{
+['f-wl-liga','f-wl-tipo','f-wl-mercado'].forEach(id=>{
   document.getElementById(id).addEventListener('change',renderWatchlist);
 });
 
