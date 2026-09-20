@@ -2298,12 +2298,21 @@ function _ladoMercado(k, entry){
   return 'ambos'; // no deberia caer aca con las claves conocidas -- ver arriba
 }
 
+// El campo 'partido' lo escribe Claude a mano en cada carga, no sale de un
+// mapeo centralizado -- el mismo club puede quedar con dos nombres
+// ('Betis' vs 'Real Betis', 'La Coruna' vs 'Deportivo La Coruna') y el
+// Ranking por equipo le partiria el historial en dos, en silencio. Misma
+// tabla que config.json -> equipos_atipicos.alias (equipos_atipicos.py);
+// agregar aca cualquier variante nueva que aparezca en las DOS.
+const _EQUIPO_ALIAS={'La Coruna':'Deportivo La Coruna','Betis':'Real Betis'};
+const _normEquipo=n=>_EQUIPO_ALIAS[n]||n;
+
 function _diagObs(){
   const o=[];
   _dataLiga().forEach(p=>{
     const s=p.mercados_snapshot, r=p.snapshot_resultados;
     if(!s||!r) return;
-    const [loc,vis]=(p.partido||' vs ').split(' vs ').map(x=>x.trim());
+    const [loc,vis]=(p.partido||' vs ').split(' vs ').map(x=>_normEquipo(x.trim()));
     Object.entries(r).forEach(([k,ac])=>{
       if(s[k]==null) return;
       o.push({prob:s[k], acerto:!!ac, liga:p.liga, conf:p.confianza,
