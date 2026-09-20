@@ -485,10 +485,12 @@
       <div class="card card-full">
         <div class="card-title">Ranking por equipo — ¿con quién acierta el modelo?</div>
         <p style="font-size:12px;color:var(--text3);margin:0 0 10px">
-          Sobre las 59 predicciones de cada partido, no solo las apostadas.
-          Sesgo = lo que dijo el modelo − lo que pasó.
-          <b>N</b> = cantidad de predicciones de mercado acumuladas (no partidos) —
-          cada partido cerrado aporta hasta 59.</p>
+          Sobre las ~59 predicciones de cada partido, no solo las apostadas.
+          Sesgo = lo que dijo el modelo − lo que pasó. <b>N</b> = predicciones de
+          mercado acumuladas (no partidos). Separado en dos tablas (2026-09-21):
+          mezclar todo bajo los dos equipos por igual contaminaba el ranking de
+          un equipo con mercados que en realidad eran del rival (ej. un
+          "Remates Over" que es solo del local también le sumaba al visitante).</p>
         <div id="diag-equipos"></div>
       </div>
     </div>
@@ -2271,6 +2273,31 @@ function renderCrucesValidados(){
 // Usa mercados_snapshot + snapshot_resultados (59 predicciones por partido), no
 // solo las apostadas: la muestra es 10x mayor y no esta sesgada por lo que uno
 // eligio cotizar.
+
+// De los ~59 mercados de cada partido, unos dependen de las DOS lambdas por
+// igual (no hay a quien de los dos equipos atribuirle un sesgo) y otros son
+// de un solo lado. Sin esta distincion el ranking por equipo mezclaba todo
+// bajo [loc,vis] -- un mercado que es solo de Milan (ej. "Milan Remates a
+// puerta Over 4.5") tambien le sumaba a la cuenta de Lecce. Ver CLAUDE.md ->
+// Mercados para el catalogo completo de los 18 de goles/corners + 42 por equipo.
+const _MERCADOS_AMBOS=new Set(['victoria_local','empate','victoria_visit',
+  'over15','over25','over35','under25','under35','under45','btts','corners65','corners75']);
+
+function _ladoMercado(k, entry){
+  if(_MERCADOS_AMBOS.has(k)) return 'ambos';
+  if(k.startsWith('local_')||k==='over05_local'||k==='do1x') return 'local';
+  if(k.startsWith('visit_')||k==='over05_visit'||k==='dox2') return 'visit';
+  if(k==='hcp2_des'||k==='hcp3_des'){
+    // el hcp lo cotiza el DESFAVORECIDO -- no esta en la clave, hay que
+    // resolverlo con las mismas lambda que uso el engine (misma convencion
+    // que _derivar en add_bet.py: favorito = lambda_final mas alta).
+    const ll=entry.lambda_final_l, lv=entry.lambda_final_v;
+    if(ll==null||lv==null) return null;
+    return ll>=lv ? 'visit' : 'local';
+  }
+  return 'ambos'; // no deberia caer aca con las claves conocidas -- ver arriba
+}
+
 function _diagObs(){
   const o=[];
   _dataLiga().forEach(p=>{
@@ -2280,7 +2307,7 @@ function _diagObs(){
     Object.entries(r).forEach(([k,ac])=>{
       if(s[k]==null) return;
       o.push({prob:s[k], acerto:!!ac, liga:p.liga, conf:p.confianza,
-              loc, vis, vars:p.variables||{}, entry:p});
+              loc, vis, vars:p.variables||{}, entry:p, lado:_ladoMercado(k,p)});
     });
   });
   return o;
@@ -2316,8 +2343,22 @@ function renderDiagnostico(){
   if(!eq) return;
   const obs=_diagObs();
 
-  // un partido aporta a los DOS equipos: el modelo predijo sobre ambos
-  eq.innerHTML='<div class="table-wrap table-wrap-scroll">'+_tablaSesgo(_agrupar(obs,o=>[o.loc,o.vis],59),'Equipo')+'</div>';
+  // Separado en dos vistas (2026-09-21, a pedido): mercados CONJUNTOS (goles
+  // totales, 1X2, corners totales -- ninguno de los dos equipos es mas
+  // "responsable" que el otro) atribuidos a los DOS como antes, vs mercados
+  // INDIVIDUALES (DO, hcp del desfavorecido, Over 0.5 propio, remates/corners
+  // por equipo) atribuidos SOLO al equipo que corresponde. minN baja de 59 a
+  // lo que aporta un partido en cada bolsa (12 conjuntos, ~24 individuales
+  // por lado) para que "1 partido" siga siendo el piso, no una cifra vieja.
+  const obsAmbos=obs.filter(o=>o.lado==='ambos');
+  const obsIndiv=obs.filter(o=>o.lado==='local'||o.lado==='visit');
+  eq.innerHTML=
+    '<p style="font-size:12px;color:var(--text3);margin:0 0 8px"><b>Conjuntos</b> -- '
+    +'1X2, goles totales, BTTS, corners totales: dependen de las dos lambdas por igual, cuentan para los dos equipos.</p>'
+    +'<div class="table-wrap table-wrap-scroll">'+_tablaSesgo(_agrupar(obsAmbos,o=>[o.loc,o.vis],12),'Equipo')+'</div>'
+    +'<p style="font-size:12px;color:var(--text3);margin:16px 0 8px"><b>Individuales</b> -- '
+    +'DO, hcp del desfavorecido, Over 0.5 propio, remates/ST/corners por equipo: cuentan SOLO para el equipo al que corresponden.</p>'
+    +'<div class="table-wrap table-wrap-scroll">'+_tablaSesgo(_agrupar(obsIndiv,o=>o.lado==='local'?o.loc:o.vis,20),'Equipo')+'</div>';
   document.getElementById('diag-ligas').innerHTML=
     _tablaSesgo(_agrupar(obs,o=>LIGA_NAMES[o.liga]||o.liga,59),'Liga');
   document.getElementById('diag-conf').innerHTML=
