@@ -24266,7 +24266,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "hora": "10:30"
   },
   {
     "id": "031",
