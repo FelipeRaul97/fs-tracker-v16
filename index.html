@@ -487,10 +487,14 @@
         <p style="font-size:12px;color:var(--text3);margin:0 0 10px">
           Sobre las ~59 predicciones de cada partido, no solo las apostadas.
           Sesgo = lo que dijo el modelo − lo que pasó. <b>N</b> = predicciones de
-          mercado acumuladas (no partidos). Separado en dos tablas (2026-09-21):
-          mezclar todo bajo los dos equipos por igual contaminaba el ranking de
-          un equipo con mercados que en realidad eran del rival (ej. un
-          "Remates Over" que es solo del local también le sumaba al visitante).</p>
+          mercado acumuladas (no partidos). <b>Conjuntos</b> (1X2, goles totales,
+          BTTS, corners totales) dependen de las dos λ por igual y cuentan para
+          los dos equipos; <b>Individuales</b> (DO, hcp del desfavorecido, Over
+          0.5 propio, remates/ST/corners por equipo) cuentan solo para el que
+          corresponde — antes de 2026-09-21 todo se mezclaba bajo los dos por
+          igual, y un "Remates Over" que era solo del local también le sumaba
+          al ranking del visitante. "—" = esa categoría no llega a la muestra
+          mínima para este equipo todavía.</p>
         <div id="diag-equipos"></div>
       </div>
     </div>
@@ -2347,27 +2351,79 @@ function _agrupar(obs, fn, minN){
   }).sort((x,y)=>Math.abs(y.sesgo)-Math.abs(x.sesgo));
 }
 
+// Ranking por equipo, en UNA fila por equipo con las dos columnas (conjuntos e
+// individuales) lado a lado (2026-09-21, a pedido) -- con dos tablas separadas,
+// cada una ordenada por su propio sesgo, el mismo equipo caia en filas distintas
+// y no se podia ver de un vistazo si el problema era conjunto, individual o los
+// dos. '-' cuando esa categoria no llega al minN de ESE equipo (no se descarta
+// la fila entera, alcanza con que califique en una de las dos). Orden: por el
+// mayor |sesgo| entre las dos categorias, para que el peor caso de cada equipo
+// (venga de donde venga) suba primero.
+function _agruparEquipoDual(obsAmbos, obsIndiv, minAmbos, minIndiv){
+  const amb={}, ind={};
+  obsAmbos.forEach(o=>{ [o.loc,o.vis].forEach(k=>{ (amb[k]=amb[k]||[]).push(o); }); });
+  obsIndiv.forEach(o=>{ const k=o.lado==='local'?o.loc:o.vis; (ind[k]=ind[k]||[]).push(o); });
+  const calc=arr=>{
+    if(!arr||!arr.length) return null;
+    const pred=arr.reduce((s,o)=>s+o.prob,0)/arr.length;
+    const real=arr.filter(o=>o.acerto).length/arr.length*100;
+    return {n:arr.length,pred,real,sesgo:pred-real};
+  };
+  const equipos=new Set([...Object.keys(amb),...Object.keys(ind)]);
+  const rows=[];
+  equipos.forEach(eq=>{
+    const a0=calc(amb[eq]), i0=calc(ind[eq]);
+    const a=(a0&&a0.n>=minAmbos)?a0:null, i=(i0&&i0.n>=minIndiv)?i0:null;
+    if(a||i) rows.push({eq,a,i});
+  });
+  return rows.sort((x,y)=>{
+    const mx=Math.max(x.a?Math.abs(x.a.sesgo):0, x.i?Math.abs(x.i.sesgo):0);
+    const my=Math.max(y.a?Math.abs(y.a.sesgo):0, y.i?Math.abs(y.i.sesgo):0);
+    return my-mx;
+  });
+}
+
+function _tablaSesgoDual(rows){
+  if(!rows.length) return '<p class="empty">Sin partidos cerrados todavía.</p>';
+  const celda=o=>{
+    if(!o) return '<td colspan="4" style="color:var(--text3);text-align:center">—</td>';
+    const c=Math.abs(o.sesgo)<2?'var(--text3)':(o.sesgo>0?'var(--red)':'var(--green)');
+    return '<td style="color:var(--text3)">'+o.n+'</td><td>'+o.pred.toFixed(1)+'%</td>'
+      +'<td>'+o.real.toFixed(1)+'%</td>'
+      +'<td style="color:'+c+';font-weight:600">'+(o.sesgo>=0?'+':'')+o.sesgo.toFixed(1)+'%</td>';
+  };
+  return '<table class="hm-table"><thead><tr>'
+    +'<th rowspan="2" style="text-align:left;vertical-align:bottom">Equipo</th>'
+    +'<th colspan="4">Conjuntos</th><th colspan="4">Individuales</th></tr>'
+    +'<tr><th>N</th><th>Pred.</th><th>Real</th><th>Sesgo</th>'
+    +'<th>N</th><th>Pred.</th><th>Real</th><th>Sesgo</th></tr></thead><tbody>'
+    +rows.map(r=>'<tr><td style="text-align:left">'+r.eq+'</td>'+celda(r.a)+celda(r.i)+'</tr>').join('')
+    +'</tbody></table>';
+}
+
 function renderDiagnostico(){
   const eq=document.getElementById('diag-equipos');
   if(!eq) return;
   const obs=_diagObs();
 
-  // Separado en dos vistas (2026-09-21, a pedido): mercados CONJUNTOS (goles
-  // totales, 1X2, corners totales -- ninguno de los dos equipos es mas
-  // "responsable" que el otro) atribuidos a los DOS como antes, vs mercados
+  // Mercados CONJUNTOS (goles totales, 1X2, corners totales -- ninguno de los
+  // dos equipos es mas "responsable" que el otro) atribuidos a los DOS, vs
   // INDIVIDUALES (DO, hcp del desfavorecido, Over 0.5 propio, remates/corners
-  // por equipo) atribuidos SOLO al equipo que corresponde. minN baja de 59 a
-  // lo que aporta un partido en cada bolsa (12 conjuntos, ~24 individuales
-  // por lado) para que "1 partido" siga siendo el piso, no una cifra vieja.
+  // por equipo) atribuidos SOLO al equipo que corresponde. minN NO es un
+  // "12 por partido" fijo -- medido en consola, el conjunto real por partido
+  // es 10-12 (corners65/75 faltan en partidos previos a que existieran o
+  // cuando mercados_equipo no alcanzo) y el individual es 23-73 segun cuantos
+  // partidos y si hubo datos suficientes de por-equipo. Umbrales puestos
+  // DEBAJO del piso observado (10 y 23) para no descartar un equipo de 1
+  // partido legitimo solo porque le falto corners75 -- ver
+  // CLAUDE.md -> Tracker -> Tab Diagnostico si vuelve a desalinearse.
+  // Una sola fila por equipo con las dos columnas lado a lado (2026-09-21, a
+  // pedido) -- con dos tablas separadas, cada una ordenada por su propio
+  // sesgo, el mismo equipo caia en filas distintas y no se podia comparar.
   const obsAmbos=obs.filter(o=>o.lado==='ambos');
   const obsIndiv=obs.filter(o=>o.lado==='local'||o.lado==='visit');
-  eq.innerHTML=
-    '<p style="font-size:12px;color:var(--text3);margin:0 0 8px"><b>Conjuntos</b> -- '
-    +'1X2, goles totales, BTTS, corners totales: dependen de las dos lambdas por igual, cuentan para los dos equipos.</p>'
-    +'<div class="table-wrap table-wrap-scroll">'+_tablaSesgo(_agrupar(obsAmbos,o=>[o.loc,o.vis],12),'Equipo')+'</div>'
-    +'<p style="font-size:12px;color:var(--text3);margin:16px 0 8px"><b>Individuales</b> -- '
-    +'DO, hcp del desfavorecido, Over 0.5 propio, remates/ST/corners por equipo: cuentan SOLO para el equipo al que corresponden.</p>'
-    +'<div class="table-wrap table-wrap-scroll">'+_tablaSesgo(_agrupar(obsIndiv,o=>o.lado==='local'?o.loc:o.vis,20),'Equipo')+'</div>';
+  eq.innerHTML='<div class="table-wrap table-wrap-scroll">'
+    +_tablaSesgoDual(_agruparEquipoDual(obsAmbos,obsIndiv,8,15))+'</div>';
   document.getElementById('diag-ligas').innerHTML=
     _tablaSesgo(_agrupar(obs,o=>LIGA_NAMES[o.liga]||o.liga,59),'Liga');
   document.getElementById('diag-conf').innerHTML=
