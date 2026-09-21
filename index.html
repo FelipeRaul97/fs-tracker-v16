@@ -218,6 +218,8 @@
   .hm-table tbody tr:last-child td{border-bottom:none}
   .hm-table tbody tr:hover td{background:var(--surface2)}
   .hm-table td:first-child{text-align:left;font-weight:500;color:var(--text)}
+  .hm-total-row td{border-top:2px solid var(--border3);background:var(--surface2)}
+  .hm-total-row td:first-child{font-weight:700;text-transform:uppercase;font-size:11px;letter-spacing:.03em}
   .diag-team-row{cursor:pointer}
   .diag-team-row td:first-child::before{content:'▸ ';color:var(--text3);display:inline-block;width:12px}
   .diag-team-row.expanded td:first-child::before{content:'▾ '}
@@ -1537,7 +1539,23 @@ function renderCalibBands(){
       <td style="padding:4px 6px;text-align:right;font-weight:500;${sc}">${sesgo>=0?'+':''}${sesgo.toFixed(1)}%</td>
       <td style="padding:4px 6px;text-align:right;${roi>=0?'color:var(--green-mid)':'color:var(--red-mid)'}">${roi>=0?'+':''}${roi.toFixed(1)}%</td>
     </tr>`;
-  }).join('');
+  }).join('')+(()=>{
+    // Fila TOTAL (2026-09-21, a pedido) -- sobre TODAS las confirmadas con prob.
+    if(!settled.length) return'';
+    const wr=settled.filter(a=>a.estado==='GANADA').length/settled.length*100;
+    const probMed=settled.reduce((s,a)=>s+a.prob,0)/settled.length;
+    const sesgo=wr-probMed;
+    const roi=settled.reduce((s,a)=>s+(a.pl||0),0)/settled.length*100;
+    const sc=sesgo>3?'color:var(--green-mid)':sesgo<-3?'color:var(--red-mid)':'color:var(--text3)';
+    return`<tr class="hm-total-row">
+      <td style="padding:4px 6px">TOTAL</td>
+      <td style="padding:4px 6px;text-align:right;color:var(--text3)">${settled.length}</td>
+      <td style="padding:4px 6px;text-align:right">${probMed.toFixed(1)}%</td>
+      <td style="padding:4px 6px;text-align:right">${wr.toFixed(1)}%</td>
+      <td style="padding:4px 6px;text-align:right;font-weight:600;${sc}">${sesgo>=0?'+':''}${sesgo.toFixed(1)}%</td>
+      <td style="padding:4px 6px;text-align:right;font-weight:600;${roi>=0?'color:var(--green-mid)':'color:var(--red-mid)'}">${roi>=0?'+':''}${roi.toFixed(1)}%</td>
+    </tr>`;
+  })();
 
   if(note) note.textContent=`Sesgo = WR real − Prob̄ modelo. Verde >+3%, Rojo <−3%. ${settled.length<20?`⚠ Muestra pequeña (${settled.length} apuestas).`:`n=${settled.length} apuestas confirmadas.`}`;
 
@@ -1685,6 +1703,39 @@ function _hmBgRoi(roi,n){
   return'rgba(226,75,74,0.50)';
 }
 
+// Fila TOTAL al pie de un heatmap mercado x <columna> (2026-09-21, a pedido).
+// Suma TODAS las apuestas confirmadas por columna -- no solo las de los
+// mercados que quedaron en las filas (el heatmap corta a los 12 mercados mas
+// frecuentes, pero el TOTAL de la columna es de todo, igual que la columna
+// "Total" de cada fila ya sumaba todas las bandas de ESE mercado sin cortar).
+// cols: [{label, test(apuesta)->bool}]. bets: TODAS las confirmadas del heatmap.
+function _hmFilaTotal(bets,cols){
+  let row='<tr class="hm-total-row"><td>TOTAL</td>'
+    +`<td style="color:var(--text3)">${bets.length}</td>`;
+  cols.forEach(col=>{
+    const en=bets.filter(col.test);
+    if(!en.length){row+='<td style="background:var(--surface2);color:var(--text3);text-align:center">--</td>';return;}
+    const cs=calcStats(en);
+    const roi=cs.roi||0, wr=cs.wr||0, pl=cs.pl||0;
+    const bg=_hmBgRoi(roi,en.length);
+    const roiC=roi>=0?'var(--green)':'var(--red)';
+    const plC=pl>=0?'var(--green)':'var(--red)';
+    row+=`<td style="background:${bg};text-align:center;line-height:1.3" title="TOTAL @ ${col.label}\nN=${en.length} WR=${wr.toFixed(0)}% ROI=${roi>=0?'+':''}${roi.toFixed(0)}% P&L=${fmtL(pl)}">
+      <div style="font-weight:600;color:${roiC}">${roi>=0?'+':''}${roi.toFixed(0)}%</div>
+      <div style="font-size:10px;color:${plC}">${fmtL(pl)}</div>
+      <div style="font-size:10px;color:var(--text3)">${wr.toFixed(0)}%WR · ${en.length}</div>
+    </td>`;
+  });
+  const gs=calcStats(bets);
+  const gRoi=gs.roi||0,gPl=gs.pl||0;
+  const gRoiC=gRoi>=0?'var(--green)':'var(--red)', gPlC=gPl>=0?'var(--green)':'var(--red)';
+  row+=`<td style="text-align:center;line-height:1.3">
+    <div style="font-weight:600;color:${gRoiC}">${gRoi>=0?'+':''}${gRoi.toFixed(0)}%</div>
+    <div style="font-size:10px;color:${gPlC}">${fmtL(gs.pl)}</div>
+  </td></tr>`;
+  return row;
+}
+
 function renderMercadoCuotaHeatmap(){
   const el=document.getElementById('hm-mercado-cuota');
   const bets=flatBets().filter(a=>a.estado==='GANADA'||a.estado==='PERDIDA');
@@ -1737,6 +1788,7 @@ function renderMercadoCuotaHeatmap(){
     </td></tr>`;
   });
 
+  html+=_hmFilaTotal(bets,bands.map(b=>({label:b.l,test:a=>a.cuota>=b.min&&a.cuota<b.max})));
   html+='</tbody></table>';
   el.innerHTML=html;
 }
@@ -1792,6 +1844,7 @@ function renderMercadoLigaHeatmap(){
     </td></tr>`;
   });
 
+  html+=_hmFilaTotal(bets,ligas.map(l=>({label:LIGA_NAMES[l]||l,test:a=>a.partido.liga===l})));
   html+='</tbody></table>';
   el.innerHTML=html;
 }
@@ -1990,7 +2043,25 @@ function renderCalibByMarket(){
         <td style="${roiC};font-weight:500">${r.roi>=0?'+':''}${r.roi.toFixed(1)}%</td>
         <td style="color:${diagC};font-size:11px">${diag}</td>
       </tr>`;
-    }).join('')}</tbody></table>`;
+    }).join('')}${(()=>{
+      // Fila TOTAL (2026-09-21, a pedido) -- sobre TODAS las apuestas con prob,
+      // no solo las de mercados que llegaron al MIN_N=3 de las filas.
+      const wr=bets.filter(a=>a.estado==='GANADA').length/bets.length*100;
+      const probMed=bets.reduce((s,a)=>s+a.prob,0)/bets.length;
+      const sesgo=wr-probMed;
+      const roi=bets.reduce((s,a)=>s+(a.pl||0),0)/bets.length*100;
+      const sc=sesgo>5?'color:var(--green);font-weight:600':sesgo<-5?'color:var(--red);font-weight:600':'color:var(--text3)';
+      const roiC=roi>=0?'color:var(--green)':'color:var(--red)';
+      return `<tr class="hm-total-row">
+        <td style="text-align:left">TOTAL</td>
+        <td style="color:var(--text3)">${bets.length}</td>
+        <td>${probMed.toFixed(1)}%</td>
+        <td>${wr.toFixed(1)}%</td>
+        <td style="${sc}">${sesgo>=0?'+':''}${sesgo.toFixed(1)}%</td>
+        <td style="${roiC};font-weight:600">${roi>=0?'+':''}${roi.toFixed(1)}%</td>
+        <td></td>
+      </tr>`;
+    })()}</tbody></table>`;
 }
 
 // ── Liga rolling ROI ─────────────────────────────────────
