@@ -152,6 +152,11 @@
   .hm-table th,.hm-table td{padding:6px 10px;text-align:center;border:1px solid var(--border3)}
   .hm-table th{background:var(--surface2);font-weight:500;color:var(--text3)}
   .hm-table td:first-child{text-align:left;font-weight:500;color:var(--text)}
+  .diag-team-row{cursor:pointer}
+  .diag-team-row:hover{background:var(--surface2)}
+  .diag-team-row td:first-child::before{content:'▸ ';color:var(--text3);display:inline-block;width:12px}
+  .diag-team-row.expanded td:first-child::before{content:'▾ '}
+  .diag-detail-row td{cursor:default}
   .alert-box{background:var(--red-bg);border:1px solid var(--red-mid);border-radius:var(--r);
     padding:10px 14px;font-size:13px;color:var(--red);margin-bottom:12px}
   .wl-item{display:flex;justify-content:space-between;align-items:center;padding:3px 0;font-size:12px}
@@ -2328,7 +2333,7 @@ function _diagObs(){
     Object.entries(r).forEach(([k,ac])=>{
       if(s[k]==null) return;
       o.push({prob:s[k], acerto:!!ac, liga:p.liga, conf:p.confianza,
-              loc, vis, vars:p.variables||{}, entry:p, lado:_ladoMercado(k,p)});
+              loc, vis, vars:p.variables||{}, entry:p, lado:_ladoMercado(k,p), mercado:k});
     });
   });
   return o;
@@ -2400,6 +2405,48 @@ function _agruparEquipoDual(obsAmbos, obsIndiv, minAmbos, minIndiv){
   });
 }
 
+// Traduce la clave interna del mercado (la misma que usa add_bet.py/el engine,
+// ver CLAUDE.md -> Mercados) a una etiqueta legible para el desglose por
+// equipo. No pretende ser exhaustiva pata por pata de las 42 individuales --
+// las claves 'local_'/'visit_' de remates/ST/corners por equipo siguen un
+// patron regular (`<lado>_<mercado>_over<linea>`) que alcanza con separar por
+// guion bajo y capitalizar.
+const _MERCADO_LABEL={
+  victoria_local:'1X2 Victoria local', empate:'1X2 Empate', victoria_visit:'1X2 Victoria visita',
+  over15:'Over 1.5', over25:'Over 2.5', over35:'Over 3.5',
+  under25:'Under 2.5', under35:'Under 3.5', under45:'Under 4.5',
+  btts:'BTTS', corners65:'Córners total Over 6.5', corners75:'Córners total Over 7.5',
+  do1x:'Doble oportunidad 1X', dox2:'Doble oportunidad X2',
+  over05_local:'Over 0.5 propio', over05_visit:'Over 0.5 propio',
+  hcp2_des:'Hándicap +2 (desfavorecido)', hcp3_des:'Hándicap +3 (desfavorecido)'};
+function _mercadoLabel(k){
+  if(_MERCADO_LABEL[k]) return _MERCADO_LABEL[k];
+  let s=k.replace(/^local_|^visit_/,'').replace(/_equipo/,'').replace(/_over/,' Over ').replace(/_/g,' ');
+  s=s.replace(/\bst\b/i,'ST').replace(/\bremates\b/i,'Remates').replace(/\bcorners\b/i,'Córners');
+  return s.charAt(0).toUpperCase()+s.slice(1);
+}
+
+// Desglose mercado-por-mercado dentro de un equipo (fila expandible del
+// Ranking por equipo, 2026-09-21 a pedido) -- misma idea que
+// equipos_atipicos.py pero sobre las 59 predicciones del snapshot en vez de
+// lambda vs marcador. minN bajo (3) porque el universo por equipo ya es chico
+// (11-34 partidos-mercado); no tiene sentido pedirle 30 a un desglose que
+// parte de una muestra de ese tamaño.
+function _mercadoDetalleEquipo(eq, obsAmbos, obsIndiv){
+  const amb=obsAmbos.filter(o=>o.loc===eq||o.vis===eq);
+  const ind=obsIndiv.filter(o=>(o.lado==='local'&&o.loc===eq)||(o.lado==='visit'&&o.vis===eq));
+  const gAmb=_agrupar(amb,o=>_mercadoLabel(o.mercado),3);
+  const gInd=_agrupar(ind,o=>_mercadoLabel(o.mercado),3);
+  return '<tr class="diag-detail-row" data-detail-for="'+eq.replace(/"/g,'&quot;')+'">'
+    +'<td colspan="9" style="background:var(--surface2);padding:14px;text-align:left">'
+    +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">'
+    +'<div><div style="font-size:11px;font-weight:600;color:var(--text3);margin-bottom:6px">CONJUNTOS -- '+eq+'</div>'
+    +_tablaSesgo(gAmb,'Mercado')+'</div>'
+    +'<div><div style="font-size:11px;font-weight:600;color:var(--text3);margin-bottom:6px">INDIVIDUALES -- '+eq+'</div>'
+    +_tablaSesgo(gInd,'Mercado')+'</div>'
+    +'</div></td></tr>';
+}
+
 function _tablaSesgoDual(rows){
   if(!rows.length) return '<p class="empty">Sin partidos con esta selección todavía.</p>';
   const celda=o=>{
@@ -2418,9 +2465,14 @@ function _tablaSesgoDual(rows){
     +'<th style="text-align:left">Equipo</th>'
     +'<th>Conj. N</th><th>Conj. Pred.</th><th>Conj. Real</th><th>Conj. Sesgo</th>'
     +'<th>Indiv. N</th><th>Indiv. Pred.</th><th>Indiv. Real</th><th>Indiv. Sesgo</th></tr></thead><tbody>'
-    +rows.map(r=>'<tr><td style="text-align:left">'+r.eq+'</td>'+celda(r.a)+celda(r.i)+'</tr>').join('')
+    +rows.map(r=>'<tr class="diag-team-row" data-eq="'+r.eq.replace(/"/g,'&quot;')+'">'
+      +'<td style="text-align:left">'+r.eq+'</td>'+celda(r.a)+celda(r.i)+'</tr>').join('')
     +'</tbody></table>';
 }
+
+// Ultimo obsAmbos/obsIndiv (ya filtrados por liga/equipo) usado por el click
+// delegado de la fila expandible, ver mas abajo junto a los demas listeners.
+let _diagTeamData={obsAmbos:[],obsIndiv:[]};
 
 function renderDiagnostico(){
   const eq=document.getElementById('diag-equipos');
@@ -2465,6 +2517,10 @@ function renderDiagnostico(){
   // de cada partido (los "Conjuntos" son del partido, no de un solo lado) --
   // acá se recorta a la fila del equipo pedido nomás.
   if(eqSel) rowsEq=rowsEq.filter(r=>r.eq===eqSel);
+  // Guardado para el listener delegado de la fila expandible (click en un
+  // equipo -> desglose por mercado) -- usa el mismo obsAmbos/obsIndiv YA
+  // filtrados por liga/equipo de este render.
+  _diagTeamData={obsAmbos,obsIndiv};
   eq.innerHTML='<div class="table-wrap table-wrap-scroll">'+_tablaSesgoDual(rowsEq)+'</div>';
   document.getElementById('diag-ligas').innerHTML=
     _tablaSesgo(_agrupar(obs,o=>LIGA_NAMES[o.liga]||o.liga,59),'Liga');
@@ -3035,6 +3091,22 @@ window.limpiarFiltrosApuestas=limpiarFiltrosApuestas;
 // listener a los dos.
 ['f-diag-liga','f-diag-equipo'].forEach(id=>{
   document.getElementById(id).addEventListener('change',renderDiagnostico);
+});
+
+// Fila expandible del Ranking por equipo: click en un equipo abre/cierra su
+// desglose por mercado debajo. Delegado en el contenedor fijo #diag-equipos
+// (no en las filas, que se reconstruyen en cada render) para que siga
+// funcionando despues de cambiar de filtro.
+document.getElementById('diag-equipos').addEventListener('click',e=>{
+  const tr=e.target.closest('tr.diag-team-row');
+  if(!tr) return;
+  const next=tr.nextElementSibling;
+  if(next&&next.classList.contains('diag-detail-row')){
+    next.remove(); tr.classList.remove('expanded'); return;
+  }
+  tr.insertAdjacentHTML('afterend',
+    _mercadoDetalleEquipo(tr.dataset.eq,_diagTeamData.obsAmbos,_diagTeamData.obsIndiv));
+  tr.classList.add('expanded');
 });
 
 // Filtro Origen (Real/Watchlist/Todos) de la calibracion sobre TODAS las
