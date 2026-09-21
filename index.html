@@ -495,6 +495,14 @@
           igual, y un "Remates Over" que era solo del local también le sumaba
           al ranking del visitante. "—" = esa categoría no llega a la muestra
           mínima para este equipo todavía.</p>
+        <div class="filters" style="margin-bottom:10px">
+          <span class="filter-label">Filtrar:</span>
+          <select id="f-diag-liga"><option value="">Todas las ligas</option>
+            <option value="D1">Bundesliga</option><option value="E0">Premier</option>
+            <option value="F1">Ligue 1</option><option value="I1">Serie A</option>
+            <option value="SP1">La Liga</option></select>
+          <select id="f-diag-equipo"><option value="">Todos los equipos</option></select>
+        </div>
         <div id="diag-equipos"></div>
       </div>
     </div>
@@ -2359,6 +2367,15 @@ function _agrupar(obs, fn, minN){
 // la fila entera, alcanza con que califique en una de las dos). Orden: por el
 // mayor |sesgo| entre las dos categorias, para que el peor caso de cada equipo
 // (venga de donde venga) suba primero.
+// Equipo -> liga, para el filtro en cascada (liga elegida acota el <select> de
+// equipo). Un equipo siempre juega en una sola liga dentro del tracker, asi
+// que el primer avistamiento alcanza.
+function _equipoLigaMap(obs){
+  const m={};
+  obs.forEach(o=>{ if(o.loc&&!m[o.loc]) m[o.loc]=o.liga; if(o.vis&&!m[o.vis]) m[o.vis]=o.liga; });
+  return m;
+}
+
 function _agruparEquipoDual(obsAmbos, obsIndiv, minAmbos, minIndiv){
   const amb={}, ind={};
   obsAmbos.forEach(o=>{ [o.loc,o.vis].forEach(k=>{ (amb[k]=amb[k]||[]).push(o); }); });
@@ -2384,7 +2401,7 @@ function _agruparEquipoDual(obsAmbos, obsIndiv, minAmbos, minIndiv){
 }
 
 function _tablaSesgoDual(rows){
-  if(!rows.length) return '<p class="empty">Sin partidos cerrados todavía.</p>';
+  if(!rows.length) return '<p class="empty">Sin partidos con esta selección todavía.</p>';
   const celda=o=>{
     if(!o) return '<td colspan="4" style="color:var(--text3);text-align:center">—</td>';
     const c=Math.abs(o.sesgo)<2?'var(--text3)':(o.sesgo>0?'var(--red)':'var(--green)');
@@ -2392,11 +2409,15 @@ function _tablaSesgoDual(rows){
       +'<td>'+o.real.toFixed(1)+'%</td>'
       +'<td style="color:'+c+';font-weight:600">'+(o.sesgo>=0?'+':'')+o.sesgo.toFixed(1)+'%</td>';
   };
+  // Header en UNA sola fila (no rowspan/colspan): con dos filas de <th>, el
+  // sticky (position:sticky;top:0) hace que ambas se peguen al mismo top:0 y
+  // se superpongan/tapen entre si al hacer scroll -- fila "Equipo" quedaba
+  // fija y la de "N/Pred/Real/Sesgo" tambien, encimadas. Ver imagen del pedido
+  // 2026-09-21. Una sola fila evita el problema de raiz.
   return '<table class="hm-table"><thead><tr>'
-    +'<th rowspan="2" style="text-align:left;vertical-align:bottom">Equipo</th>'
-    +'<th colspan="4">Conjuntos</th><th colspan="4">Individuales</th></tr>'
-    +'<tr><th>N</th><th>Pred.</th><th>Real</th><th>Sesgo</th>'
-    +'<th>N</th><th>Pred.</th><th>Real</th><th>Sesgo</th></tr></thead><tbody>'
+    +'<th style="text-align:left">Equipo</th>'
+    +'<th>Conj. N</th><th>Conj. Pred.</th><th>Conj. Real</th><th>Conj. Sesgo</th>'
+    +'<th>Indiv. N</th><th>Indiv. Pred.</th><th>Indiv. Real</th><th>Indiv. Sesgo</th></tr></thead><tbody>'
     +rows.map(r=>'<tr><td style="text-align:left">'+r.eq+'</td>'+celda(r.a)+celda(r.i)+'</tr>').join('')
     +'</tbody></table>';
 }
@@ -2420,10 +2441,31 @@ function renderDiagnostico(){
   // Una sola fila por equipo con las dos columnas lado a lado (2026-09-21, a
   // pedido) -- con dos tablas separadas, cada una ordenada por su propio
   // sesgo, el mismo equipo caia en filas distintas y no se podia comparar.
-  const obsAmbos=obs.filter(o=>o.lado==='ambos');
-  const obsIndiv=obs.filter(o=>o.lado==='local'||o.lado==='visit');
-  eq.innerHTML='<div class="table-wrap table-wrap-scroll">'
-    +_tablaSesgoDual(_agruparEquipoDual(obsAmbos,obsIndiv,8,15))+'</div>';
+  // Filtros propios de esta tabla (liga + equipo, con equipo acotado a la liga
+  // elegida) -- repueblan el <select> de equipo cada render para no listar
+  // equipos de otra liga ni quedar vacios tras cambiar de liga.
+  const fLiga=document.getElementById('f-diag-liga'), fEq=document.getElementById('f-diag-equipo');
+  const eqLigaMap=_equipoLigaMap(obs);
+  const ligaSel=fLiga?fLiga.value:'', eqSelPrev=fEq?fEq.value:'';
+  if(fEq){
+    const nombres=Object.keys(eqLigaMap)
+      .filter(n=>!ligaSel||eqLigaMap[n]===ligaSel)
+      .sort((a,b)=>a.localeCompare(b));
+    fEq.innerHTML='<option value="">Todos los equipos</option>'
+      +nombres.map(n=>'<option value="'+n.replace(/"/g,'&quot;')+'"'
+        +(n===eqSelPrev?' selected':'')+'>'+n+'</option>').join('');
+    if(eqSelPrev && !nombres.includes(eqSelPrev)) fEq.value='';
+  }
+  const eqSel=fEq?fEq.value:'';
+  const obsFilt=obs.filter(o=>(!ligaSel||o.liga===ligaSel)&&(!eqSel||o.loc===eqSel||o.vis===eqSel));
+  const obsAmbos=obsFilt.filter(o=>o.lado==='ambos');
+  const obsIndiv=obsFilt.filter(o=>o.lado==='local'||o.lado==='visit');
+  let rowsEq=_agruparEquipoDual(obsAmbos,obsIndiv,8,15);
+  // Con un equipo puntual elegido, el filtro de arriba trae tambien al rival
+  // de cada partido (los "Conjuntos" son del partido, no de un solo lado) --
+  // acá se recorta a la fila del equipo pedido nomás.
+  if(eqSel) rowsEq=rowsEq.filter(r=>r.eq===eqSel);
+  eq.innerHTML='<div class="table-wrap table-wrap-scroll">'+_tablaSesgoDual(rowsEq)+'</div>';
   document.getElementById('diag-ligas').innerHTML=
     _tablaSesgo(_agrupar(obs,o=>LIGA_NAMES[o.liga]||o.liga,59),'Liga');
   document.getElementById('diag-conf').innerHTML=
@@ -2985,6 +3027,14 @@ window.limpiarFiltrosApuestas=limpiarFiltrosApuestas;
 // de la vista, no el filtro global de liga.
 ['f-wl-liga','f-wl-tipo','f-wl-mercado'].forEach(id=>{
   document.getElementById(id).addEventListener('change',renderWatchlist);
+});
+
+// Filtros propios del Ranking por equipo (tab Diagnostico): liga + equipo en
+// cascada. Cambiar la liga tambien repuebla el <select> de equipo (lo hace
+// renderDiagnostico en cada render), por eso alcanza con reenganchar el mismo
+// listener a los dos.
+['f-diag-liga','f-diag-equipo'].forEach(id=>{
+  document.getElementById(id).addEventListener('change',renderDiagnostico);
 });
 
 // Filtro Origen (Real/Watchlist/Todos) de la calibracion sobre TODAS las
