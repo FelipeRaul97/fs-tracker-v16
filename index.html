@@ -264,6 +264,16 @@
         <div class="chart-note">Línea continua: P&amp;L acumulado · Línea punteada: WR% rolling 10 apuestas</div>
       </div>
     </div>
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
+        <div class="card-title">Distribución de P&amp;L por apuesta</div>
+        <div class="chart-wrap" id="chart-pl-dist"></div>
+        <div class="chart-note">Cuenta de apuestas confirmadas por tamaño de resultado. La barra de "-1u"
+          son todas las perdidas (mismo stake); a la derecha, cómo se reparten las ganadas según la cuota
+          que pagaron -- una cola larga a la derecha con pocas apuestas dice que el ROI depende de pocos
+          aciertos de cuota alta, no de ganar seguido.</div>
+      </div>
+    </div>
     <div class="grid2">
       <div class="card"><div class="card-title">Alto EV% + PERDIDA</div><div id="high-ev-lost"></div></div>
       <div class="card"><div class="card-title">Racha actual</div><div id="racha-actual"></div></div>
@@ -1139,6 +1149,60 @@ function renderPLChart(){
   el.innerHTML='';el.appendChild(svg);
 }
 
+// Histograma de P&L por apuesta (2026-09-21, a pedido -- "aprovechar mejor la
+// informacion"). El dato pl de cada apuesta ya se usaba para sumas/promedios
+// (P&L acum, ROI) en todos lados, pero su DISTRIBUCION -- cuantas apuestas caen
+// en cada tamano de resultado -- no se mostraba en ningun lado. Es la pregunta
+// que ROI/WR agregados no contestan: si el retorno viene de ganar seguido y
+// poco, o de pocos aciertos de cuota alta que cargan con todo el acumulado
+// (cola larga a la derecha). Las perdidas colapsan todas en una sola barra
+// porque el stake es siempre el mismo (-1u).
+function renderPLDist(){
+  const el=document.getElementById('chart-pl-dist');
+  if(!el) return;
+  const bets=flatBets().filter(a=>a.estado==='GANADA'||a.estado==='PERDIDA');
+  if(bets.length<8){el.innerHTML='<p class="empty">Mínimo 8 apuestas confirmadas</p>';return;}
+  const buckets=[
+    {l:'-1u\n(perdida)',min:-1.001,max:-0.999},
+    {l:'0–0.3u',min:0,max:0.3},{l:'0.3–0.6u',min:0.3,max:0.6},
+    {l:'0.6–1u',min:0.6,max:1},{l:'1–1.5u',min:1,max:1.5},
+    {l:'1.5–2.5u',min:1.5,max:2.5},{l:'2.5u+',min:2.5,max:999}];
+  const data=buckets.map(b=>({...b,en:bets.filter(a=>a.pl>=b.min&&a.pl<b.max)}));
+  const W=760,H=200,PL=40,PR=15,PT=18,PB=44;
+  const iW=W-PL-PR,iH=H-PT-PB;
+  const maxN=Math.max(...data.map(d=>d.en.length),1);
+  const bw=iW/data.length-10;
+  const sy=n=>PT+iH*(1-n/maxN);
+  const svg=makeSVG(W,H);
+  [0.25,0.5,0.75,1].forEach(f=>{
+    const y=PT+iH*(1-f);
+    svg.appendChild(svgEl('line',{x1:PL,y1:y,x2:W-PR,y2:y,stroke:'var(--border)','stroke-width':'1','stroke-dasharray':'3,3'}));
+    const t=svgEl('text',{x:PL-4,y:y+4,fill:'var(--text3)','font-size':'10','text-anchor':'end'});
+    t.textContent=Math.round(maxN*f);svg.appendChild(t);
+  });
+  data.forEach((d,i)=>{
+    const bx=PL+i*(iW/data.length)+5;
+    const n=d.en.length;
+    const col=d.min<0?'var(--red-mid)':'var(--green-mid)';
+    if(n>0){
+      const by=sy(n),barH=H-PB-by;
+      const rect=svgEl('rect',{x:bx,y:by,width:bw,height:barH||1,fill:col,rx:'3',opacity:'0.8'});
+      const cuotas=d.en.map(a=>a.cuota).filter(c=>c!=null);
+      const cuotaTxt=cuotas.length?`\nCuota media: ${(cuotas.reduce((s,c)=>s+c,0)/cuotas.length).toFixed(2)}`:'';
+      const title=svgEl('title',{});
+      title.textContent=`${d.l.replace('\n',' ')}\nn=${n} (${(n/bets.length*100).toFixed(0)}% del total)${cuotaTxt}`;
+      rect.appendChild(title); svg.appendChild(rect);
+      const vt=svgEl('text',{x:bx+bw/2,y:by-5,fill:col,'font-size':'11','font-weight':'600','text-anchor':'middle'});
+      vt.textContent=n;svg.appendChild(vt);
+    }
+    d.l.split('\n').forEach((line,li)=>{
+      const xt=svgEl('text',{x:bx+bw/2,y:H-PB+14+li*11,fill:'var(--text2)','font-size':'10','text-anchor':'middle'});
+      xt.textContent=line;svg.appendChild(xt);
+    });
+  });
+  el.innerHTML='';el.appendChild(svg);
+}
+
 function renderEVScatter(){
   const bets=flatBets().filter(a=>(a.estado==='GANADA'||a.estado==='PERDIDA')&&a.ev_pct!=null);
   const el=document.getElementById('chart-ev-scatter');
@@ -1341,7 +1405,12 @@ function renderRollingLogLoss(){
     points.push({ ll, base, i });
   }
 
-  const W=620,H=180,PL=50,PR=15,PT=15,PB=28;
+  // PT subido de 15 a 34 (2026-09-21, a pedido) -- la leyenda se dibujaba en
+  // ly=PT+4, adentro del area de datos (que arrancaba en el mismo PT=15) y se
+  // superponia con la linea de log-loss/baseline cuando pasaban cerca del
+  // techo del grafico. Con PT=34 la leyenda vive en el margen superior, igual
+  // que en renderPLChart (que ya lo hacia bien).
+  const W=620,H=200,PL=50,PR=15,PT=34,PB=28;
   const iW=W-PL-PR, iH=H-PT-PB;
   const allVals = points.flatMap(p=>[p.ll, p.base]);
   const minY = Math.max(0, Math.min(...allVals)-0.02);
@@ -1382,9 +1451,10 @@ function renderRollingLogLoss(){
     t.textContent=v.toFixed(2); svg.appendChild(t);
   });
 
-  // Leyenda
+  // Leyenda EN EL MARGEN SUPERIOR (y=16, por encima de PT=34 donde arrancan los
+  // datos) -- antes vivia adentro del area de datos y se tapaba con la linea.
   [['Log-loss modelo','var(--blue-mid)',''],['Baseline WR','var(--text3)','5,3']].forEach(([lbl,col,dash],i)=>{
-    const lx=PL+10+i*140, ly=PT+4;
+    const lx=PL+10+i*140, ly=16;
     svg.appendChild(svgEl('line',{x1:lx,y1:ly,x2:lx+18,y2:ly,stroke:col,'stroke-width':'1.5','stroke-dasharray':dash||'0',opacity:'0.8'}));
     const lt=svgEl('text',{x:lx+22,y:ly+4,fill:'var(--text3)','font-size':'10'}); lt.textContent=lbl; svg.appendChild(lt);
   });
@@ -3079,7 +3149,7 @@ function renderAll(){
   renderBets();
   // Re-render active tab
   const active=document.querySelector('.tab.active')?.dataset.tab;
-  if(active==='tendencias'){renderPLChart();renderHighEVLost();renderRacha();}
+  if(active==='tendencias'){renderPLChart();renderPLDist();renderHighEVLost();renderRacha();}
   if(active==='calibracion'){renderEVScatter();renderCalibBands();renderCalibByMarket();}
   if(active==='mercados'){renderCuotaROI();renderMercadoCuotaHeatmap();renderTipoStats();renderMercadoFreq();}
   if(active==='ligas'){renderLigaTipo();renderLigaRollingROI();renderLigaCards();}
