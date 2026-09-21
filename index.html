@@ -81,6 +81,8 @@
     border-bottom:1px solid var(--border2);background:var(--surface2);white-space:nowrap;}
   td{padding:9px 12px;border-bottom:1px solid var(--border2);vertical-align:middle;}
   tr:last-child td{border-bottom:none}
+  tbody tr{transition:background-color .1s}
+  tbody tr:hover{background:var(--surface2)}
   .num{text-align:right;font-variant-numeric:tabular-nums}
   .partido-cell{font-weight:500}
   .partido-sub{font-size:12px;color:var(--text3);font-weight:400}
@@ -146,17 +148,33 @@
   .empty{text-align:center;padding:40px;color:var(--text3);font-size:13px}
   .bar-bg{background:var(--surface2);border-radius:3px;height:6px;overflow:hidden}
   .bar-fill{height:100%;border-radius:3px}
-  .hm-table{width:100%;border-collapse:collapse;font-size:12px;border:1px solid var(--border3)}
+  /* Tablas compactas de comparacion (Diagnostico, Calibracion, heatmaps): antes
+     llevaban grilla completa (borde en las 4 caras de cada celda, --border3 al
+     0.38 de opacidad) -- se aliviana a separadores horizontales nomas, en linea
+     con el estilo de fila de la tabla principal de arriba (borde solo abajo,
+     --border2), y se le agrega hover + numeros tabulares para que se lea mejor
+     una tabla larga (pedido 2026-09-21, pulido de presentacion). */
+  .hm-table{width:100%;border-collapse:collapse;font-size:12px;
+    border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
+  /* Cuando ya esta dentro de .table-wrap (que trae su propio borde+radio para
+     el scroll con header sticky), no duplicar el borde -- uno solo, afuera. */
+  .table-wrap .hm-table{border:none;border-radius:0}
   #diag-equipos,#diag-ligas,#diag-conf{overflow-x:auto}
   #diag-equipos table,#diag-ligas table,#diag-conf table{width:auto;max-width:560px}
-  .hm-table th,.hm-table td{padding:6px 10px;text-align:center;border:1px solid var(--border3)}
-  .hm-table th{background:var(--surface2);font-weight:500;color:var(--text3)}
+  .hm-table th,.hm-table td{padding:7px 10px;text-align:center;
+    border-bottom:1px solid var(--border2);font-variant-numeric:tabular-nums}
+  .hm-table thead th{font-size:11px;font-weight:500;color:var(--text3);
+    text-transform:uppercase;letter-spacing:.04em;background:var(--surface2);
+    white-space:nowrap}
+  .hm-table tbody tr:last-child td{border-bottom:none}
+  .hm-table tbody tr:hover td{background:var(--surface2)}
   .hm-table td:first-child{text-align:left;font-weight:500;color:var(--text)}
   .diag-team-row{cursor:pointer}
-  .diag-team-row:hover{background:var(--surface2)}
   .diag-team-row td:first-child::before{content:'▸ ';color:var(--text3);display:inline-block;width:12px}
   .diag-team-row.expanded td:first-child::before{content:'▾ '}
+  .diag-team-row.expanded td{background:var(--surface2)}
   .diag-detail-row td{cursor:default}
+  .diag-detail-row:hover td{background:var(--surface2)}
   .alert-box{background:var(--red-bg);border:1px solid var(--red-mid);border-radius:var(--r);
     padding:10px 14px;font-size:13px;color:var(--red);margin-bottom:12px}
   .wl-item{display:flex;justify-content:space-between;align-items:center;padding:3px 0;font-size:12px}
@@ -3100,10 +3118,13 @@ window.limpiarFiltrosApuestas=limpiarFiltrosApuestas;
 document.getElementById('diag-equipos').addEventListener('click',e=>{
   const tr=e.target.closest('tr.diag-team-row');
   if(!tr) return;
-  const next=tr.nextElementSibling;
-  if(next&&next.classList.contains('diag-detail-row')){
-    next.remove(); tr.classList.remove('expanded'); return;
-  }
+  const wasOpen=tr.nextElementSibling&&tr.nextElementSibling.classList.contains('diag-detail-row');
+  // Acordeon: como mucho un equipo abierto a la vez -- cerrar cualquier otro
+  // antes de abrir el clickeado, para no acumular desgloses largos uno debajo
+  // del otro y perder de vista la tabla (pedido 2026-09-21).
+  document.querySelectorAll('#diag-equipos tr.diag-detail-row').forEach(r=>r.remove());
+  document.querySelectorAll('#diag-equipos tr.diag-team-row.expanded').forEach(r=>r.classList.remove('expanded'));
+  if(wasOpen) return;
   tr.insertAdjacentHTML('afterend',
     _mercadoDetalleEquipo(tr.dataset.eq,_diagTeamData.obsAmbos,_diagTeamData.obsIndiv));
   tr.classList.add('expanded');
