@@ -13,18 +13,24 @@
     --red:#a32d2d; --red-bg:#fcebeb; --red-mid:#e24b4a;
     --amber:#854f0b; --amber-bg:#faeeda; --amber-mid:#ef9f27;
     --blue:#185fa5; --blue-bg:#e6f1fb; --blue-mid:#378add;
+    --violet:#6d3fa8; --violet-bg:#efe6fa; --violet-mid:#8b5cf6;
     --gray:#5f5e5a; --gray-bg:#f1efe8;
     --r:8px; --rlg:12px;
   }
+  /* Paleta oscura retocada 2026-09-21 a pedido -- acerca fondo/superficies y el
+     acento azul al negro-azulado + violeta/celeste de un dashboard de referencia
+     (SUPREMO), sin tocar el modo claro ni los colores semanticos verde/rojo
+     (ganada/perdida) que son significado, no decoracion. */
   @media(prefers-color-scheme:dark){:root{
-    --bg:#1c1c1a; --surface:#252523; --surface2:#2e2e2b;
-    --border:rgba(255,255,255,0.10); --border2:rgba(255,255,255,0.18); --border3:rgba(255,255,255,0.38);
-    --text:#f0ede6; --text2:#b4b2a9; --text3:#888780;
-    --green:#97c459; --green-bg:#1a2e0a; --green-mid:#639922;
-    --red:#f09595; --red-bg:#2e0f0f; --red-mid:#e24b4a;
-    --amber:#fac775; --amber-bg:#2e1e06; --amber-mid:#ef9f27;
-    --blue:#85b7eb; --blue-bg:#042c53; --blue-mid:#378add;
-    --gray:#b4b2a9; --gray-bg:#2e2e2b;
+    --bg:#0a0d15; --surface:#12151f; --surface2:#1a1e2c;
+    --border:rgba(255,255,255,0.08); --border2:rgba(255,255,255,0.15); --border3:rgba(255,255,255,0.32);
+    --text:#e8eaf1; --text2:#a1a7bd; --text3:#767c92;
+    --green:#8fd67f; --green-bg:#132417; --green-mid:#4fbf5f;
+    --red:#f0908f; --red-bg:#2a1418; --red-mid:#e0555c;
+    --amber:#fbc878; --amber-bg:#2a1f0e; --amber-mid:#f0a13c;
+    --blue:#a9c7fa; --blue-bg:#141e3a; --blue-mid:#5b8ff0;
+    --violet:#c3a6f7; --violet-bg:#1e1a35; --violet-mid:#9b7cee;
+    --gray:#a1a7bd; --gray-bg:#1a1e2c;
   }}
   body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
     background:var(--bg);color:var(--text);font-size:14px;line-height:1.5;}
@@ -1095,6 +1101,17 @@ function renderPLChart(){
   svg.appendChild(svgEl('path',{d:aD,fill:cumPL[cumPL.length-1]>=0?'rgba(99,153,34,0.15)':'rgba(226,75,74,0.15)'}));
   const plD=settled.map((_,i)=>`${i===0?'M':'L'}${sx(i)},${syPL(cumPL[i])}`).join(' ');
   svg.appendChild(svgEl('path',{d:plD,fill:'none',stroke:cumPL[cumPL.length-1]>=0?'var(--green-mid)':'var(--red-mid)','stroke-width':'2'}));
+  // Puntos invisibles con tooltip nativo por apuesta (2026-09-21, a pedido --
+  // antes la equity curve era una linea muda, sin forma de saber que apuesta
+  // era cada tramo sin contar manualmente el eje X). Radio grande para que el
+  // hover sea comodo aunque el punto real quede tapado por la linea.
+  settled.forEach((a,i)=>{
+    const dot=svgEl('circle',{cx:sx(i),cy:syPL(cumPL[i]),r:'7',fill:'transparent'});
+    const title=svgEl('title',{});
+    title.textContent=`#${i+1} ${a.partido?.partido||''}\n${a.partido?.fecha||''}\n`
+      +`${a.mercado||''} -- ${a.estado}\nP&L: ${fmtL(a.pl)}  ·  acumulado: ${fmtL(cumPL[i])}`;
+    dot.appendChild(title); svg.appendChild(dot);
+  });
   const wrPts=rolling.map((v,i)=>v!=null?[sx(i),syWR(v)]:null).filter(Boolean);
   if(wrPts.length>1){
     const wrD=wrPts.map((p,i)=>`${i===0?'M':'L'}${p[0]},${p[1]}`).join(' ');
@@ -1479,7 +1496,10 @@ function renderEVROI(){
       const barH=Math.abs(sy(d.roi)-zy);
       const by=d.roi>=0?sy(d.roi):zy;
       const col=d.roi>=0?'var(--green-mid)':'var(--red-mid)';
-      svg.appendChild(svgEl('rect',{x:bx,y:by,width:bw,height:barH||1,fill:col,rx:'3',opacity:'0.8'}));
+      const rect=svgEl('rect',{x:bx,y:by,width:bw,height:barH||1,fill:col,rx:'3',opacity:'0.8'});
+      const title=svgEl('title',{});
+      title.textContent=`EV ${d.l}\nROI: ${d.roi>=0?'+':''}${d.roi.toFixed(1)}%\nn=${d.n}`;
+      rect.appendChild(title); svg.appendChild(rect);
       const lp=_roiLabelPos(d.roi,by,barH);
       const vt=svgEl('text',{x:bx+bw/2,y:lp.y,fill:col,'font-size':'11','text-anchor':'middle'});
       vt.textContent=(d.roi>=0?'+':'')+d.roi.toFixed(1)+'%'; svg.appendChild(vt);
@@ -1513,7 +1533,10 @@ function renderCuotaROI(){
     const by=d.roi>=0?sy(d.roi):zy;
     const col=d.roi>=0?'var(--green-mid)':'var(--red-mid)';
     if(d.n>0){
-      svg.appendChild(svgEl('rect',{x:bx,y:by,width:bw,height:barH||1,fill:col,rx:'3',opacity:'0.8'}));
+      const rect=svgEl('rect',{x:bx,y:by,width:bw,height:barH||1,fill:col,rx:'3',opacity:'0.8'});
+      const title=svgEl('title',{});
+      title.textContent=`Cuota ${d.label}\nROI: ${d.roi>=0?'+':''}${d.roi.toFixed(1)}%\nWR: ${(d.wr||0).toFixed(0)}%\nn=${d.n}  ·  P&L: ${fmtL(d.pl)}`;
+      rect.appendChild(title); svg.appendChild(rect);
       const lp=_roiLabelPos(d.roi,by,barH);
       const vt=svgEl('text',{x:bx+bw/2,y:lp.y,fill:col,'font-size':'11','text-anchor':'middle'});
       vt.textContent=(d.roi>=0?'+':'')+d.roi.toFixed(1)+'%';svg.appendChild(vt);
