@@ -317,6 +317,13 @@
       <div class="chart-wrap" id="chart-liga-rolling-roi"></div>
       <div class="chart-note">Cada línea = ROI% rolling de 8 apuestas confirmadas en esa liga. Por debajo de 0% = modelo sin edge en esa ventana.</div>
     </div>
+    <div class="card card-full" style="margin-bottom:16px">
+      <div class="card-title">Mercado x Liga — ¿qué mercados rinden en cada liga?</div>
+      <div id="hm-mercado-liga" style="overflow-x:auto"></div>
+      <div class="chart-note">Los 12 mercados con más apuestas confirmadas, cruzados por liga. "--" = sin apuestas
+        confirmadas de ese mercado en esa liga todavía. Mismo color que el heatmap de Mercados (verde = ROI positivo,
+        rojo = negativo, más intenso a partir de ±15%).</div>
+    </div>
     <div class="grid2" id="liga-cards"></div>
   </div>
 
@@ -1623,6 +1630,17 @@ function renderCuotaROI(){
   el.innerHTML='';el.appendChild(svg);
 }
 
+// Color de fondo de celda ROI para los heatmaps mercado x <lo que sea>
+// (cuota, liga...) -- factorizado 2026-09-21 al agregar el segundo heatmap
+// (mercado x liga) para no duplicar los mismos 5 umbrales dos veces.
+function _hmBgRoi(roi,n){
+  if(n===0)return'var(--surface2)';
+  if(roi>=15)return'rgba(99,153,34,0.55)';
+  if(roi>=0)return'rgba(99,153,34,0.28)';
+  if(roi>=-15)return'rgba(226,75,74,0.28)';
+  return'rgba(226,75,74,0.50)';
+}
+
 function renderMercadoCuotaHeatmap(){
   const el=document.getElementById('hm-mercado-cuota');
   const bets=flatBets().filter(a=>a.estado==='GANADA'||a.estado==='PERDIDA');
@@ -1640,14 +1658,7 @@ function renderMercadoCuotaHeatmap(){
 
   if(!markets.length){el.innerHTML='<p class="empty">Sin datos</p>';return;}
 
-  function hmBg(roi,n){
-    if(n===0)return'var(--surface2)';
-    if(roi>=15)return'rgba(99,153,34,0.55)';
-    if(roi>=0)return'rgba(99,153,34,0.28)';
-    if(roi>=-15)return'rgba(226,75,74,0.28)';
-    return'rgba(226,75,74,0.50)';
-  }
-
+  const hmBg=_hmBgRoi;
   let html='<table class="hm-table"><thead><tr><th>Mercado</th><th>N</th>';
   bands.forEach(b=>{html+=`<th>${b.l}</th>`;});
   html+='<th>Total</th></tr></thead><tbody>';
@@ -1667,6 +1678,61 @@ function renderMercadoCuotaHeatmap(){
       const roiC=roi>=0?'var(--green)':'var(--red)';
       const plC=pl>=0?'var(--green)':'var(--red)';
       html+=`<td style="background:${bg};text-align:center;line-height:1.3" title="${mkt} @ ${b.l}\nN=${en.length} WR=${wr.toFixed(0)}% ROI=${roi>=0?'+':''}${roi.toFixed(0)}% P&L=${fmtL(pl)}">
+        <div style="font-weight:500;color:${roiC}">${roi>=0?'+':''}${roi.toFixed(0)}%</div>
+        <div style="font-size:10px;color:${plC}">${fmtL(pl)}</div>
+        <div style="font-size:10px;color:var(--text3)">${wr.toFixed(0)}%WR · ${en.length}</div>
+      </td>`;
+    });
+    const totalRoi=s.roi||0;
+    const totalC=totalRoi>=0?'var(--green)':'var(--red)';
+    const totalPl=s.pl||0;
+    const totalPlC=totalPl>=0?'var(--green)':'var(--red)';
+    html+=`<td style="text-align:center;line-height:1.3">
+      <div style="font-weight:500;color:${totalC}">${totalRoi>=0?'+':''}${totalRoi.toFixed(0)}%</div>
+      <div style="font-size:10px;color:${totalPlC}">${fmtL(totalPl)}</div>
+    </td></tr>`;
+  });
+
+  html+='</tbody></table>';
+  el.innerHTML=html;
+}
+
+// Mercado x Liga (2026-09-21, a pedido -- "cuales son los mercados que mas me
+// resultan por LIGA"). Mismo patron que el heatmap mercado x cuota de arriba
+// (misma escala de color _hmBgRoi, mismo tooltip con N/WR/ROI/P&L) pero
+// cruzando por liga en vez de por rango de cuota -- ese cruce no existia en
+// ningun lado: "Por liga" solo tenia el agregado (WR/ROI de la liga entera,
+// sin abrir por mercado) y "Mercados" solo tenia el agregado por mercado
+// (sin abrir por liga).
+function renderMercadoLigaHeatmap(){
+  const el=document.getElementById('hm-mercado-liga');
+  if(!el) return;
+  const bets=flatBets().filter(a=>a.estado==='GANADA'||a.estado==='PERDIDA');
+  if(bets.length<3){el.innerHTML='<p class="empty">Mínimo 3 apuestas confirmadas</p>';return;}
+
+  const ligas=Object.keys(LIGA_NAMES).filter(l=>_DATA.some(p=>p.liga===l));
+  const mktMap={};
+  bets.forEach(a=>{const k=a.mercado.split('+')[0].trim();(mktMap[k]=mktMap[k]||[]).push(a);});
+  const markets=Object.keys(mktMap).sort((a,b)=>mktMap[b].length-mktMap[a].length).slice(0,12);
+  if(!markets.length){el.innerHTML='<p class="empty">Sin datos</p>';return;}
+
+  let html='<table class="hm-table"><thead><tr><th>Mercado</th><th>N</th>';
+  ligas.forEach(l=>{html+=`<th>${LIGA_NAMES[l]||l}</th>`;});
+  html+='<th>Total</th></tr></thead><tbody>';
+
+  markets.forEach(mkt=>{
+    const all=mktMap[mkt];
+    const s=calcStats(all);
+    html+=`<tr><td>${mkt}</td><td style="color:var(--text3)">${s.settled}</td>`;
+    ligas.forEach(liga=>{
+      const en=all.filter(a=>a.partido.liga===liga);
+      if(!en.length){html+='<td style="background:var(--surface2);color:var(--text3);text-align:center">--</td>';return;}
+      const cs=calcStats(en);
+      const roi=cs.roi||0, wr=cs.wr||0, pl=cs.pl||0;
+      const bg=_hmBgRoi(roi,en.length);
+      const roiC=roi>=0?'var(--green)':'var(--red)';
+      const plC=pl>=0?'var(--green)':'var(--red)';
+      html+=`<td style="background:${bg};text-align:center;line-height:1.3" title="${mkt} @ ${LIGA_NAMES[liga]||liga}\nN=${en.length} WR=${wr.toFixed(0)}% ROI=${roi>=0?'+':''}${roi.toFixed(0)}% P&L=${fmtL(pl)}">
         <div style="font-weight:500;color:${roiC}">${roi>=0?'+':''}${roi.toFixed(0)}%</div>
         <div style="font-size:10px;color:${plC}">${fmtL(pl)}</div>
         <div style="font-size:10px;color:var(--text3)">${wr.toFixed(0)}%WR · ${en.length}</div>
@@ -3152,7 +3218,7 @@ function renderAll(){
   if(active==='tendencias'){renderPLChart();renderPLDist();renderHighEVLost();renderRacha();}
   if(active==='calibracion'){renderEVScatter();renderCalibBands();renderCalibByMarket();}
   if(active==='mercados'){renderCuotaROI();renderMercadoCuotaHeatmap();renderTipoStats();renderMercadoFreq();}
-  if(active==='ligas'){renderLigaTipo();renderLigaRollingROI();renderLigaCards();}
+  if(active==='ligas'){renderLigaTipo();renderLigaRollingROI();renderMercadoLigaHeatmap();renderLigaCards();}
   if(active==='variables'){renderVariablesHeatmap();}
   if(active==='watchlist'){renderWatchlist();renderCrucesValidados();}
     if(active==='diagnostico'){renderDiagnostico();}
