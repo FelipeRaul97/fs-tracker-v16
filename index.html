@@ -4,6 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Forescore Tracker v16</title>
+<script>
+// Aplica el tema guardado ANTES de pintar la pagina (si no fuera aca arriba
+// de todo, sino en el <script> principal al final del body, se veria un
+// flash del tema del sistema y despues el guardado por encima -- FOUC).
+(function(){
+  try{
+    const t=localStorage.getItem('forescore_theme');
+    if(t==='light'||t==='dark') document.documentElement.setAttribute('data-theme',t);
+  }catch(e){}
+})();
+</script>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
@@ -32,6 +43,38 @@
     --violet:#c3a6f7; --violet-bg:#1e1a35; --violet-mid:#9b7cee;
     --gray:#a1a7bd; --gray-bg:#1a1e2c;
   }}
+  /* Switch manual claro/oscuro (2026-09-21, a pedido) -- data-theme en <html>,
+     guardado en localStorage por setTheme() mas abajo. Un selector con atributo
+     (:root[data-theme=...]) pesa mas que el :root pelado de arriba, con o sin
+     media query, asi que gana solo con estar presente -- no hace falta anular
+     el media query a mano. Mismos valores que los bloques de arriba, repetidos
+     para que el switch funcione IGUAL este el sistema en claro u oscuro. */
+  :root[data-theme="light"]{
+    --bg:#f8f7f4; --surface:#ffffff; --surface2:#f1efe8; --border:rgba(0,0,0,0.10);
+    --border2:rgba(0,0,0,0.18); --border3:rgba(0,0,0,0.38); --text:#1a1a18; --text2:#5f5e5a; --text3:#6e6d67;
+    --green:#3b6d11; --green-bg:#eaf3de; --green-mid:#639922;
+    --red:#a32d2d; --red-bg:#fcebeb; --red-mid:#e24b4a;
+    --amber:#854f0b; --amber-bg:#faeeda; --amber-mid:#ef9f27;
+    --blue:#185fa5; --blue-bg:#e6f1fb; --blue-mid:#378add;
+    --violet:#6d3fa8; --violet-bg:#efe6fa; --violet-mid:#8b5cf6;
+    --gray:#5f5e5a; --gray-bg:#f1efe8;
+  }
+  :root[data-theme="dark"]{
+    --bg:#0a0d15; --surface:#12151f; --surface2:#1a1e2c;
+    --border:rgba(255,255,255,0.08); --border2:rgba(255,255,255,0.15); --border3:rgba(255,255,255,0.32);
+    --text:#e8eaf1; --text2:#a1a7bd; --text3:#767c92;
+    --green:#8fd67f; --green-bg:#132417; --green-mid:#4fbf5f;
+    --red:#f0908f; --red-bg:#2a1418; --red-mid:#e0555c;
+    --amber:#fbc878; --amber-bg:#2a1f0e; --amber-mid:#f0a13c;
+    --blue:#a9c7fa; --blue-bg:#141e3a; --blue-mid:#5b8ff0;
+    --violet:#c3a6f7; --violet-bg:#1e1a35; --violet-mid:#9b7cee;
+    --gray:#a1a7bd; --gray-bg:#1a1e2c;
+  }
+  .theme-switch{display:inline-flex;align-items:center;gap:6px;cursor:pointer;
+    padding:5px 10px;border-radius:var(--r);border:1px solid var(--border2);
+    background:var(--surface);color:var(--text2);font-size:13px;font-weight:500;
+    user-select:none;transition:all .15s;}
+  .theme-switch:hover{border-color:var(--blue-mid);color:var(--blue-mid)}
   body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
     background:var(--bg);color:var(--text);font-size:14px;line-height:1.5;}
   .app{max-width:1200px;margin:0 auto;padding:24px 16px;}
@@ -208,6 +251,7 @@
     <h1>Forescore Tracker <span style="color:var(--text3);font-weight:400">v16</span></h1>
     <div class="topbar-right">
       <span class="save-status" id="save-status"></span>
+      <span class="theme-switch" id="theme-switch" onclick="toggleTheme()" title="Cambiar tema claro/oscuro"></span>
       <button class="btn btn-sm" onclick="openTokenModal()" title="Configurar token de GitHub">🔑 Token</button>
       <button class="btn btn-primary btn-sm" id="save-btn" onclick="saveToGitHub()">
         💾 Guardar <span id="unsaved-dot" class="unsaved-dot" style="display:none"></span>
@@ -3248,6 +3292,38 @@ document.querySelectorAll('.tab').forEach(tab=>{
   document.getElementById(id).addEventListener('change',()=>{ _ecoLiga(); renderAll(); });
 });
 _ecoLiga();
+
+// ── Switch claro/oscuro ──────────────────────────────────────
+// El <script> del <head> ya aplico data-theme (si habia uno guardado) antes
+// de pintar, para evitar el flash. Aca solo falta reflejar el estado en el
+// boton -- si no habia nada guardado, sigue el sistema (sin atributo) y el
+// boton muestra lo que prefers-color-scheme este resolviendo ahora mismo.
+function _temaActual(){
+  const t=document.documentElement.getAttribute('data-theme');
+  if(t) return t;
+  return window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+}
+function _pintarThemeSwitch(){
+  const sw=document.getElementById('theme-switch');
+  if(!sw) return;
+  const dark=_temaActual()==='dark';
+  sw.textContent=(dark?'🌙 Oscuro':'☀️ Claro');
+}
+function toggleTheme(){
+  const next=_temaActual()==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme',next);
+  try{ localStorage.setItem('forescore_theme',next); }catch(e){}
+  _pintarThemeSwitch();
+}
+window.toggleTheme=toggleTheme;
+_pintarThemeSwitch();
+// Si el usuario no eligio nada a mano todavia, seguir el cambio de tema del
+// SO en vivo (ej. Windows pasa a modo oscuro a la noche automaticamente).
+if(window.matchMedia){
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>{
+    if(!document.documentElement.getAttribute('data-theme')) _pintarThemeSwitch();
+  });
+}
 
 function limpiarFiltrosApuestas(){
   ['f-liga','f-estado','f-tipo','f-conf'].forEach(id=>{ document.getElementById(id).value=''; });
