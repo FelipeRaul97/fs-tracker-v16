@@ -45464,5 +45464,498 @@ const TRACKER_DATA = [
         "cotizada": false
       }
     ]
+  },
+  {
+    "id": "053",
+    "fecha": "2026-10-10",
+    "jornada": 6,
+    "liga": "I1",
+    "partido": "Inter vs Parma",
+    "lambda_forma_l": 2.8489,
+    "lambda_forma_v": 1.1095,
+    "lambda_reg_l": 2.6856,
+    "lambda_reg_v": 0.7136,
+    "lambda_base_l": 2.7346,
+    "lambda_base_v": 0.8324,
+    "lambda_final_l": 2.9248,
+    "lambda_final_v": 0.6422,
+    "lambda_shadow_l": 3.2173,
+    "lambda_shadow_v": 0.6101,
+    "lambda_corners": 12.061,
+    "ratio": 4.554344440984117,
+    "visit_dominante": "False",
+    "variables_activas": "V#2(V:0.95) - V#3(L:1.10)",
+    "variables": {
+      "v1": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa": false,
+        "activa_local": false,
+        "activa_visit": false,
+        "detalle_local": "--",
+        "detalle_visit": "--",
+        "detalle": "Ambos necesitan >=20 PJ (local:5, visit:5)"
+      },
+      "v2": {
+        "factor_local": 1.0,
+        "factor_visit": 0.95,
+        "activa_local": false,
+        "activa_visit": true,
+        "detalle_local": "Rank 2, margen 11pts -- fuera de riesgo",
+        "detalle_visit": "Rank 15, margen 2pts sobre zona desc"
+      },
+      "v3": {
+        "factor_local": 1.1,
+        "activa": true,
+        "n_partidos": 20,
+        "GpG_casa": 2.8,
+        "GpG_liga": 1.35,
+        "hs": 1.45,
+        "muestra_completa": true,
+        "detalle": "hs=+1.45 (20 ptdos)"
+      },
+      "v4": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa_local": false,
+        "activa_visit": false,
+        "bajas_local": 1,
+        "bajas_visit": 1
+      },
+      "v5": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa_local": false,
+        "activa_visit": false
+      },
+      "v6": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa": false
+      },
+      "v7": {
+        "skip": false,
+        "activa_local": false,
+        "activa_visit": false,
+        "detalle": "Sin DT nuevo"
+      },
+      "v8": {
+        "activa": false,
+        "anulado_derby": false,
+        "detalle": "Inactiva"
+      }
+    },
+    "confianza": "ALTA",
+    "notas": "",
+    "resultado_partido": null,
+    "goles_esperados": "3.57",
+    "apuestas": [
+      {
+        "tipo": "PICK",
+        "mercado": "hcp2_des",
+        "linea": null,
+        "etiqueta": "HCP +2 Parma",
+        "cuota": 2.87,
+        "prob": 35.5,
+        "ev_pct": 1.9,
+        "estado": "PENDIENTE",
+        "pl": null
+      },
+      {
+        "tipo": "COMBO",
+        "mercado": "over15+visit_remates_puerta_over2.5",
+        "etiqueta": "Over 1.5 + V Remates a puerta Over 2.5",
+        "cuota": 2.05,
+        "prob": 55.3,
+        "ev_pct": 13.4,
+        "estado": "PENDIENTE",
+        "pl": null,
+        "patas": [
+          "over15",
+          "visit_remates_puerta_over2.5"
+        ],
+        "promovida_combinada": true,
+        "nivel_cruce": "segura",
+        "cuota_justa": 1.73,
+        "cuota_segura": 1.92,
+        "acierto_hist": 57.7,
+        "n_hist": 310
+      }
+    ],
+    "watchlist": [
+      {
+        "mercado": "over15",
+        "linea": null,
+        "etiqueta": "Over 1.5",
+        "cuota": 1.12,
+        "prob": 86.7,
+        "ev_pct": -2.9
+      },
+      {
+        "mercado": "under25",
+        "linea": null,
+        "etiqueta": "Under 2.5",
+        "cuota": 3.15,
+        "prob": 31.8,
+        "ev_pct": 0.2,
+        "filtro_edge": "EV=+0.2% < 1.5"
+      },
+      {
+        "mercado": "under35",
+        "linea": null,
+        "etiqueta": "Under 3.5",
+        "cuota": 1.9,
+        "prob": 52.2,
+        "ev_pct": -0.8
+      },
+      {
+        "mercado": "under45",
+        "linea": null,
+        "etiqueta": "Under 4.5",
+        "cuota": 1.4,
+        "prob": 71.3,
+        "ev_pct": -0.2
+      },
+      {
+        "mercado": "btts",
+        "linea": null,
+        "etiqueta": "BTTS",
+        "cuota": 2.12,
+        "prob": 51.3,
+        "ev_pct": 8.8,
+        "filtro_edge": "dPlatt=6.5pp"
+      },
+      {
+        "mercado": "do1x",
+        "linea": null,
+        "etiqueta": "DO Inter o Empate",
+        "cuota": 1.03,
+        "prob": 96.2,
+        "ev_pct": -0.9
+      },
+      {
+        "mercado": "dox2",
+        "linea": null,
+        "etiqueta": "DO Empate o Parma",
+        "cuota": 5.9,
+        "prob": 16.6,
+        "ev_pct": -2.1
+      },
+      {
+        "mercado": "victoria_local",
+        "linea": null,
+        "etiqueta": "Victoria Inter",
+        "cuota": 1.15,
+        "prob": 83.3,
+        "ev_pct": -4.2
+      },
+      {
+        "mercado": "over05_visit",
+        "linea": null,
+        "etiqueta": "Over 0.5 Parma",
+        "cuota": 2.05,
+        "prob": 47.4,
+        "ev_pct": -2.8
+      },
+      {
+        "mercado": "corners65",
+        "linea": null,
+        "etiqueta": "corners65",
+        "cuota": 1.12,
+        "prob": 93.4,
+        "ev_pct": 4.6
+      },
+      {
+        "mercado": "corners75",
+        "linea": null,
+        "etiqueta": "corners75",
+        "cuota": 1.24,
+        "prob": 86.6,
+        "ev_pct": 7.4
+      },
+      {
+        "mercado": "local_corners_equipo",
+        "linea": 5.5,
+        "etiqueta": "Inter Corners equipo Over 5.5",
+        "cuota": 1.28,
+        "prob": 80.3,
+        "ev_pct": 2.8,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_corners_equipo",
+        "linea": 6.5,
+        "etiqueta": "Inter Corners equipo Over 6.5",
+        "cuota": 1.55,
+        "prob": 71.1,
+        "ev_pct": 10.2,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_corners_equipo",
+        "linea": 7.5,
+        "etiqueta": "Inter Corners equipo Over 7.5",
+        "cuota": 1.98,
+        "prob": 61.1,
+        "ev_pct": 21.0,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 2.5,
+        "etiqueta": "Parma Corners equipo Over 2.5",
+        "cuota": 1.98,
+        "prob": 55.0,
+        "ev_pct": 8.9,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 3.5,
+        "etiqueta": "Parma Corners equipo Over 3.5",
+        "cuota": 3.4,
+        "prob": 35.3,
+        "ev_pct": 20.0,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 4.5,
+        "etiqueta": "Parma Corners equipo Over 4.5",
+        "cuota": 6.0,
+        "prob": 20.5,
+        "ev_pct": 23.0,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates",
+        "linea": 7.5,
+        "etiqueta": "Parma Remates Over 7.5",
+        "cuota": 1.72,
+        "prob": 61.5,
+        "ev_pct": 5.8,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates",
+        "linea": 8.5,
+        "etiqueta": "Parma Remates Over 8.5",
+        "cuota": 2.25,
+        "prob": 50.1,
+        "ev_pct": 12.7,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates",
+        "linea": 9.5,
+        "etiqueta": "Parma Remates Over 9.5",
+        "cuota": 3.05,
+        "prob": 39.2,
+        "ev_pct": 19.6,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates",
+        "linea": 10.5,
+        "etiqueta": "Parma Remates Over 10.5",
+        "cuota": 4.3,
+        "prob": 29.5,
+        "ev_pct": 26.8,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates",
+        "linea": 11.5,
+        "etiqueta": "Parma Remates Over 11.5",
+        "cuota": 6.1,
+        "prob": 21.4,
+        "ev_pct": 30.5,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates_puerta",
+        "linea": 6.5,
+        "etiqueta": "Inter Remates a puerta Over 6.5",
+        "cuota": 1.42,
+        "prob": 84.7,
+        "ev_pct": 20.3,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates_puerta",
+        "linea": 1.5,
+        "etiqueta": "Parma Remates a puerta Over 1.5",
+        "cuota": 1.31,
+        "prob": 79.5,
+        "ev_pct": 4.1,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates_puerta",
+        "linea": 2.5,
+        "etiqueta": "Parma Remates a puerta Over 2.5",
+        "cuota": 1.91,
+        "prob": 57.6,
+        "ev_pct": 10.0,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates_puerta",
+        "linea": 3.5,
+        "etiqueta": "Parma Remates a puerta Over 3.5",
+        "cuota": 3.2,
+        "prob": 36.0,
+        "ev_pct": 15.2,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "do1x+hcp3_visit",
+        "linea": null,
+        "etiqueta": "DO L o Empate + HCP +3 V",
+        "cuota": 1.93,
+        "prob": 51.7,
+        "ev_pct": -0.2,
+        "tipo": "COMBINADA",
+        "patas": [
+          "do1x",
+          "hcp3_visit"
+        ],
+        "lift": 0.962,
+        "cuota_justa": 1.92,
+        "cuota_segura": 2.22,
+        "acierto_hist": 52.1,
+        "n_hist": 188
+      },
+      {
+        "mercado": "hcp3_des",
+        "linea": null,
+        "etiqueta": "HCP +3 Parma",
+        "cuota": 1.78,
+        "prob": 57.1,
+        "ev_pct": 1.6,
+        "regla_unicidad_handicap": "cede ante hcp2_des (EV 1.9%)"
+      }
+    ],
+    "mercados_snapshot": {
+      "victoria_local": 83.3,
+      "empate": 11.5,
+      "victoria_visit": 3.7,
+      "do1x": 96.2,
+      "dox2": 16.6,
+      "over15": 86.7,
+      "over25": 68.2,
+      "under25": 31.8,
+      "over35": 47.7,
+      "under35": 52.2,
+      "under45": 71.3,
+      "btts": 51.3,
+      "over05_local": 95.9,
+      "over05_visit": 47.4,
+      "hcp2_des": 35.5,
+      "hcp3_des": 57.1,
+      "corners65": 93.4,
+      "corners75": 86.6,
+      "local_remates_over7.5": 99.9,
+      "local_remates_over8.5": 99.8,
+      "local_remates_over9.5": 99.6,
+      "local_remates_over10.5": 99.3,
+      "local_remates_over11.5": 98.9,
+      "local_remates_over12.5": 98.2,
+      "local_remates_over13.5": 97.2,
+      "local_remates_over14.5": 95.8,
+      "local_remates_over15.5": 94.1,
+      "local_remates_puerta_over1.5": 99.9,
+      "local_remates_puerta_over2.5": 99.5,
+      "local_remates_puerta_over3.5": 98.3,
+      "local_remates_puerta_over4.5": 95.8,
+      "local_remates_puerta_over5.5": 91.4,
+      "local_remates_puerta_over6.5": 84.7,
+      "local_corners_equipo_over2.5": 97.3,
+      "local_corners_equipo_over3.5": 93.6,
+      "local_corners_equipo_over4.5": 87.9,
+      "local_corners_equipo_over5.5": 80.3,
+      "local_corners_equipo_over6.5": 71.1,
+      "local_corners_equipo_over7.5": 61.1,
+      "visit_remates_over7.5": 61.5,
+      "visit_remates_over8.5": 50.1,
+      "visit_remates_over9.5": 39.2,
+      "visit_remates_over10.5": 29.5,
+      "visit_remates_over11.5": 21.4,
+      "visit_remates_over12.5": 15.0,
+      "visit_remates_over13.5": 10.2,
+      "visit_remates_over14.5": 6.7,
+      "visit_remates_over15.5": 4.3,
+      "visit_remates_puerta_over1.5": 79.5,
+      "visit_remates_puerta_over2.5": 57.6,
+      "visit_remates_puerta_over3.5": 36.0,
+      "visit_remates_puerta_over4.5": 19.6,
+      "visit_remates_puerta_over5.5": 9.5,
+      "visit_remates_puerta_over6.5": 4.1,
+      "visit_corners_equipo_over2.5": 55.0,
+      "visit_corners_equipo_over3.5": 35.3,
+      "visit_corners_equipo_over4.5": 20.5,
+      "visit_corners_equipo_over5.5": 10.9,
+      "visit_corners_equipo_over6.5": 5.4,
+      "visit_corners_equipo_over7.5": 2.5
+    },
+    "cruces_validados": [
+      {
+        "mercado": "over15+visit_remates_puerta_over2.5",
+        "etiqueta": "Over 1.5 + V Remates a puerta Over 2.5",
+        "cuota": 2.05,
+        "justa": 1.73,
+        "segura": 1.92,
+        "hist": 57.7,
+        "n": 310,
+        "cruza": true,
+        "cruza_segura": true
+      },
+      {
+        "mercado": "do1x+hcp3_visit",
+        "etiqueta": "DO L o Empate + HCP +3 V",
+        "cuota": 1.93,
+        "justa": 1.92,
+        "segura": 2.22,
+        "hist": 52.1,
+        "n": 188,
+        "cruza": true,
+        "cruza_segura": false
+      }
+    ],
+    "validadas": [
+      {
+        "mercado": "btts+local_remates_puerta_over2.5",
+        "etiqueta": "BTTS + L Remates a puerta Over 2.5",
+        "tipo": "COMBINADA",
+        "p": 0.5647,
+        "cuota_justa": 1.77,
+        "cuota_segura": 1.94,
+        "acierto_hist": 56.6,
+        "n_hist": 362,
+        "cotizada": false
+      },
+      {
+        "mercado": "over15+visit_remates_puerta_over2.5",
+        "etiqueta": "Over 1.5 + V Remates a puerta Over 2.5",
+        "tipo": "COMBINADA",
+        "p": 0.553,
+        "cuota_justa": 1.73,
+        "cuota_segura": 1.92,
+        "acierto_hist": 57.7,
+        "n_hist": 310,
+        "cotizada": true
+      },
+      {
+        "mercado": "do1x+hcp3_visit",
+        "etiqueta": "DO L o Empate + HCP +3 V",
+        "tipo": "COMBINADA",
+        "p": 0.5173,
+        "cuota_justa": 1.92,
+        "cuota_segura": 2.22,
+        "acierto_hist": 52.1,
+        "n_hist": 188,
+        "cotizada": true
+      }
+    ]
   }
 ];
