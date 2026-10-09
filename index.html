@@ -548,6 +548,19 @@
     </div>
     <div class="grid2" style="margin-bottom:16px">
       <div class="card card-full">
+        <div class="card-title">Reglas de selección — rendimiento de lo que bloquearon</div>
+        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">
+          Mercados con EV+ que <em>habrían sido PICK</em> y una regla de <code>add_bet.py</code>
+          mandó a watchlist: <b>no elegible</b> (bajo su piso de probabilidad o magnitud de λ),
+          <b>DO del desfavorecido</b>, <b>DO contra el favorito</b> (1X y X2 juntos) y
+          <b>unicidad de hándicap</b> (cede ante el otro hándicap). Mide qué habría pasado si se
+          hubieran apostado: ROI &lt; 0 = la regla acertó en evitarlas; ROI &gt; 0 = costó dinero.
+          Por debajo de 10 cerradas por regla no concluye.</p>
+        <div id="wl-reglas"></div>
+      </div>
+    </div>
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
         <div class="card-title">Por equipo y combinadas — ¿las que pasan el filtro rinden mejor?</div>
         <p style="font-size:12px;color:var(--text3);margin:0 0 10px">
           Estas nunca son PICK por política (no por un filtro de calidad puntual —
@@ -2305,6 +2318,7 @@ function renderWatchlist(){
   renderCapa1x2();
   renderFiltroEdge();
   renderUnicidadTotales();
+  renderReglasSeleccion();
   renderPorEquipoEV();
 }
 
@@ -2431,6 +2445,54 @@ function renderFiltroEdge(){
   el.innerHTML=resumen
     +'<div class="table-wrap table-wrap-scroll"><table class="hm-table"><thead><tr><th style="text-align:left">Partido</th>'
     +'<th style="text-align:left">Selección</th><th style="text-align:left">Motivo</th>'
+    +'<th>Cuota</th><th>EV%</th><th>Resultado</th><th>P&L teórico</th></tr></thead><tbody>'+filas+'</tbody></table></div>';
+}
+
+// Reglas de seleccion de add_bet.py sin vista propia (2026-10-10): no elegible, DO del
+// desfavorecido, DO contra el favorito y unicidad de handicap. Mismo criterio que la
+// Capa 1X2: ROI teorico (cuota-1 si habria ganado, -1 si no) de lo que cada regla saco
+// de PICK. Se agrupa por regla; "acerto" lo deduce el cierre para todo item de watchlist.
+const _REGLAS_SEL=[
+  {k:'regla_no_elegible',    n:'No elegible (bajo su piso / magnitud de λ)'},
+  {k:'regla_do_desfavorito', n:'DO del desfavorecido'},
+  {k:'regla_do_favorito',    n:'DO contra el favorito (1X y X2 juntos)'},
+  {k:'regla_unicidad_handicap', n:'Unicidad de hándicap (cede ante el otro)'}
+];
+function renderReglasSeleccion(){
+  const el=document.getElementById('wl-reglas'); if(!el) return;
+  const todos=_dataWLLiga().flatMap(p=>(p.watchlist||[]).map(w=>({...w,partido:p})));
+  const por=_REGLAS_SEL.map(r=>({...r,items:todos.filter(w=>w[r.k])
+    .sort((a,b)=>_pFechaHora(b.partido)-_pFechaHora(a.partido))}));
+  if(!por.some(r=>r.items.length)){
+    el.innerHTML='<p class="empty">Ninguna de estas reglas ha bloqueado todavía una selección.</p>'; return;
+  }
+  const f2=n=>(n>=0?'+':'')+n.toFixed(2);
+  const resumen=por.map(r=>{
+    const cerr=r.items.filter(w=>w.acerto!=null);
+    if(!r.items.length) return '<tr><td style="text-align:left">'+r.n+'</td><td>0</td><td>0</td><td>—</td><td>—</td><td>—</td></tr>';
+    if(!cerr.length) return '<tr><td style="text-align:left">'+r.n+'</td><td>'+r.items.length+'</td><td>0</td><td>—</td><td>—</td><td style="color:var(--text3)">sin cerrar</td></tr>';
+    const ac=cerr.filter(w=>w.acerto).length;
+    const roi=cerr.reduce((s,w)=>s+(w.acerto?w.cuota-1:-1),0)/cerr.length*100;
+    const ver=cerr.length<10?'<span style="color:var(--text3)">muestra chica</span>'
+      :(roi<0?'<span class="pl-pos">acierta en evitarlas</span>':'<span class="pl-neg">está costando; revisar</span>');
+    return '<tr><td style="text-align:left">'+r.n+'</td><td>'+r.items.length+'</td><td>'+cerr.length+'</td>'
+      +'<td>'+(ac/cerr.length*100).toFixed(0)+'%</td>'
+      +'<td class="'+(roi>=0?'pl-neg':'pl-pos')+'">'+(roi>=0?'+':'')+roi.toFixed(1)+'%</td><td>'+ver+'</td></tr>';
+  }).join('');
+  const filas=por.flatMap(r=>r.items.map(w=>{
+    const salio=w.acerto==null?'<span style="color:var(--text3)">pendiente</span>'
+      :(w.acerto?'<span class="pl-pos">habría ganado</span>':'<span class="pl-neg">habría perdido</span>');
+    const pl=w.acerto==null?'—':f2(w.acerto?w.cuota-1:-1);
+    return '<tr><td style="text-align:left">'+w.partido.partido+'</td>'
+      +'<td style="text-align:left">'+(w.etiqueta||w.mercado)+'</td>'
+      +'<td style="text-align:left;font-size:11px;color:var(--text3)">'+r.n+'</td>'
+      +'<td>'+w.cuota.toFixed(2)+'</td><td>'+(w.ev_pct>=0?'+':'')+w.ev_pct+'%</td>'
+      +'<td>'+salio+'</td><td>'+pl+'</td></tr>';
+  })).join('');
+  el.innerHTML='<div class="table-wrap"><table class="hm-table"><thead><tr><th style="text-align:left">Regla</th>'
+    +'<th>Bloqueadas</th><th>Cerradas</th><th>Acierto</th><th>ROI si apostadas</th><th>Lectura</th></tr></thead><tbody>'+resumen+'</tbody></table></div>'
+    +'<div class="table-wrap table-wrap-scroll" style="margin-top:12px"><table class="hm-table"><thead><tr>'
+    +'<th style="text-align:left">Partido</th><th style="text-align:left">Selección</th><th style="text-align:left">Regla</th>'
     +'<th>Cuota</th><th>EV%</th><th>Resultado</th><th>P&L teórico</th></tr></thead><tbody>'+filas+'</tbody></table></div>';
 }
 
