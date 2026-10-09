@@ -37047,5 +37047,645 @@ const TRACKER_DATA = [
         "cotizada": true
       }
     ]
+  },
+  {
+    "id": "045",
+    "fecha": "2026-10-10",
+    "jornada": 6,
+    "liga": "D1",
+    "partido": "Hoffenheim vs Hamburg",
+    "lambda_forma_l": 2.7229,
+    "lambda_forma_v": 1.3436,
+    "lambda_reg_l": 1.9825,
+    "lambda_reg_v": 1.0723,
+    "lambda_base_l": 2.2046,
+    "lambda_base_v": 1.1537,
+    "lambda_final_l": 2.3097,
+    "lambda_final_v": 1.0486,
+    "lambda_shadow_l": 2.2403,
+    "lambda_shadow_v": 0.9563,
+    "lambda_corners": 12.18,
+    "ratio": 2.2026511539195117,
+    "visit_dominante": "False",
+    "variables_activas": "V#2(L:0.95) - V#2(V:0.95) - V#3(L:1.02) - V#4(V:0.96)",
+    "variables": {
+      "v1": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa": false,
+        "activa_local": false,
+        "activa_visit": false,
+        "detalle_local": "--",
+        "detalle_visit": "--",
+        "detalle": "Ambos necesitan >=20 PJ (local:4, visit:4)"
+      },
+      "v2": {
+        "factor_local": 0.95,
+        "factor_visit": 0.95,
+        "activa_local": true,
+        "activa_visit": true,
+        "detalle_local": "Rank 14, margen 0pts sobre zona desc",
+        "detalle_visit": "Rank 16, margen 0pts sobre zona desc"
+      },
+      "v3": {
+        "factor_local": 1.021,
+        "activa": true,
+        "n_partidos": 20,
+        "GpG_casa": 1.95,
+        "GpG_liga": 1.74,
+        "hs": 0.21,
+        "muestra_completa": true,
+        "detalle": "hs=+0.21 (20 ptdos)"
+      },
+      "v4": {
+        "factor_local": 1.0,
+        "factor_visit": 0.96,
+        "activa_local": false,
+        "activa_visit": true,
+        "bajas_local": 1,
+        "bajas_visit": 3
+      },
+      "v5": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa_local": false,
+        "activa_visit": false
+      },
+      "v6": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa": false
+      },
+      "v7": {
+        "skip": false,
+        "activa_local": false,
+        "activa_visit": false,
+        "detalle": "Sin DT nuevo"
+      },
+      "v8": {
+        "activa": false,
+        "anulado_derby": false,
+        "detalle": "Inactiva"
+      }
+    },
+    "confianza": "ALTA",
+    "notas": "",
+    "resultado_partido": null,
+    "goles_esperados": "3.36",
+    "apuestas": [
+      {
+        "tipo": "PICK",
+        "mercado": "under35",
+        "linea": null,
+        "etiqueta": "Under 3.5",
+        "cuota": 1.82,
+        "prob": 56.8,
+        "ev_pct": 3.4,
+        "estado": "PENDIENTE",
+        "pl": null
+      },
+      {
+        "tipo": "COMBO",
+        "mercado": "over15+hcp3_visit",
+        "etiqueta": "Over 1.5 + HCP +3 V",
+        "cuota": 1.57,
+        "prob": 61.3,
+        "ev_pct": -3.8,
+        "estado": "PENDIENTE",
+        "pl": null,
+        "patas": [
+          "over15",
+          "hcp3_visit"
+        ],
+        "promovida_combinada": true,
+        "nivel_cruce": "justa",
+        "cuota_justa": 1.55,
+        "cuota_segura": 1.68,
+        "acierto_hist": 64.5,
+        "n_hist": 375
+      }
+    ],
+    "watchlist": [
+      {
+        "mercado": "over15",
+        "linea": null,
+        "etiqueta": "Over 1.5",
+        "cuota": 1.13,
+        "prob": 84.9,
+        "ev_pct": -4.1
+      },
+      {
+        "mercado": "do1x",
+        "linea": null,
+        "etiqueta": "DO Hoffenheim o Empate",
+        "cuota": 1.13,
+        "prob": 86.8,
+        "ev_pct": -1.9
+      },
+      {
+        "mercado": "dox2",
+        "linea": null,
+        "etiqueta": "DO Empate o Hamburg",
+        "cuota": 2.85,
+        "prob": 34.4,
+        "ev_pct": -2.0
+      },
+      {
+        "mercado": "empate",
+        "linea": null,
+        "etiqueta": "Empate",
+        "cuota": 4.9,
+        "prob": 20.2,
+        "ev_pct": -1.0
+      },
+      {
+        "mercado": "hcp2_des",
+        "linea": null,
+        "etiqueta": "HCP +2 Hamburg",
+        "cuota": 1.75,
+        "prob": 57.0,
+        "ev_pct": -0.3
+      },
+      {
+        "mercado": "hcp3_des",
+        "linea": null,
+        "etiqueta": "HCP +3 Hamburg",
+        "cuota": 1.31,
+        "prob": 76.4,
+        "ev_pct": 0.1,
+        "filtro_edge": "EV=+0.1% < 1.5"
+      },
+      {
+        "mercado": "corners65",
+        "linea": null,
+        "etiqueta": "corners65",
+        "cuota": 1.1,
+        "prob": 93.7,
+        "ev_pct": 3.1
+      },
+      {
+        "mercado": "corners75",
+        "linea": null,
+        "etiqueta": "corners75",
+        "cuota": 1.2,
+        "prob": 87.1,
+        "ev_pct": 4.5
+      },
+      {
+        "mercado": "local_corners_equipo",
+        "linea": 5.5,
+        "etiqueta": "Hoffenheim Corners equipo Over 5.5",
+        "cuota": 1.4,
+        "prob": 81.1,
+        "ev_pct": 13.5,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_corners_equipo",
+        "linea": 6.5,
+        "etiqueta": "Hoffenheim Corners equipo Over 6.5",
+        "cuota": 1.78,
+        "prob": 72.2,
+        "ev_pct": 28.5,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_corners_equipo",
+        "linea": 7.5,
+        "etiqueta": "Hoffenheim Corners equipo Over 7.5",
+        "cuota": 2.37,
+        "prob": 62.3,
+        "ev_pct": 47.7,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 2.5,
+        "etiqueta": "Hamburg Corners equipo Over 2.5",
+        "cuota": 1.42,
+        "prob": 54.7,
+        "ev_pct": -22.3,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 3.5,
+        "etiqueta": "Hamburg Corners equipo Over 3.5",
+        "cuota": 2.05,
+        "prob": 34.9,
+        "ev_pct": -28.5,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 4.5,
+        "etiqueta": "Hamburg Corners equipo Over 4.5",
+        "cuota": 3.2,
+        "prob": 20.2,
+        "ev_pct": -35.4,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates",
+        "linea": 8.5,
+        "etiqueta": "Hamburg Remates Over 8.5",
+        "cuota": 1.53,
+        "prob": 52.6,
+        "ev_pct": -19.5,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates",
+        "linea": 9.5,
+        "etiqueta": "Hamburg Remates Over 9.5",
+        "cuota": 1.9,
+        "prob": 41.7,
+        "ev_pct": -20.8,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates",
+        "linea": 10.5,
+        "etiqueta": "Hamburg Remates Over 10.5",
+        "cuota": 2.45,
+        "prob": 31.9,
+        "ev_pct": -21.8,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates_puerta",
+        "linea": 5.5,
+        "etiqueta": "Hoffenheim Remates a puerta Over 5.5",
+        "cuota": 1.44,
+        "prob": 83.7,
+        "ev_pct": 20.5,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates_puerta",
+        "linea": 6.5,
+        "etiqueta": "Hoffenheim Remates a puerta Over 6.5",
+        "cuota": 1.83,
+        "prob": 73.5,
+        "ev_pct": 34.5,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates_puerta",
+        "linea": 2.5,
+        "etiqueta": "Hamburg Remates a puerta Over 2.5",
+        "cuota": 1.47,
+        "prob": 63.9,
+        "ev_pct": -6.1,
+        "tipo": "POR_EQUIPO",
+        "cuota_justa": 1.55,
+        "cuota_segura": 1.73,
+        "acierto_hist": 64.3,
+        "n_hist": 227
+      },
+      {
+        "mercado": "visit_remates_puerta",
+        "linea": 3.5,
+        "etiqueta": "Hamburg Remates a puerta Over 3.5",
+        "cuota": 2.12,
+        "prob": 42.7,
+        "ev_pct": -9.5,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates_puerta",
+        "linea": 4.5,
+        "etiqueta": "Hamburg Remates a puerta Over 4.5",
+        "cuota": 3.45,
+        "prob": 25.0,
+        "ev_pct": -13.7,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "do1x+hcp3_visit",
+        "linea": null,
+        "etiqueta": "DO L o Empate + HCP +3 V",
+        "cuota": 1.57,
+        "prob": 60.7,
+        "ev_pct": -4.8,
+        "tipo": "COMBINADA",
+        "patas": [
+          "do1x",
+          "hcp3_visit"
+        ],
+        "lift": 0.962,
+        "cuota_justa": 1.54,
+        "cuota_segura": 1.65,
+        "acierto_hist": 65.1,
+        "n_hist": 498
+      },
+      {
+        "mercado": "over15+visit_remates_puerta_over2.5",
+        "linea": null,
+        "etiqueta": "Over 1.5 + V Remates a puerta Over 2.5",
+        "cuota": 1.57,
+        "prob": 60.1,
+        "ev_pct": -5.7,
+        "tipo": "COMBINADA",
+        "patas": [
+          "over15",
+          "visit_remates_puerta_over2.5"
+        ],
+        "lift": 1.075,
+        "cuota_justa": 1.65,
+        "cuota_segura": 1.81,
+        "acierto_hist": 60.4,
+        "n_hist": 364
+      },
+      {
+        "mercado": "over25+over05_visit",
+        "linea": null,
+        "etiqueta": "Over 2.5 + Over 0.5 V",
+        "cuota": 1.75,
+        "prob": 51.0,
+        "ev_pct": -10.8,
+        "tipo": "COMBINADA",
+        "patas": [
+          "over25",
+          "over05_visit"
+        ],
+        "lift": 1.262,
+        "cuota_justa": 1.82,
+        "cuota_segura": 2.05,
+        "acierto_hist": 54.9,
+        "n_hist": 253
+      },
+      {
+        "mercado": "under25",
+        "linea": null,
+        "etiqueta": "Under 2.5",
+        "cuota": 2.92,
+        "prob": 35.3,
+        "ev_pct": 3.1,
+        "regla_unicidad_totales": "cede ante under35 (score EV/prob 1.9)"
+      },
+      {
+        "mercado": "under45",
+        "linea": null,
+        "etiqueta": "Under 4.5",
+        "cuota": 1.36,
+        "prob": 75.2,
+        "ev_pct": 2.3,
+        "regla_unicidad_totales": "cede ante under35 (score EV/prob 1.9)"
+      }
+    ],
+    "mercados_snapshot": {
+      "victoria_local": 65.6,
+      "empate": 20.2,
+      "victoria_visit": 13.2,
+      "do1x": 86.8,
+      "dox2": 34.4,
+      "over15": 84.9,
+      "over25": 64.7,
+      "under25": 35.3,
+      "over35": 43.2,
+      "under35": 56.8,
+      "under45": 75.2,
+      "btts": 59.7,
+      "over05_local": 91.8,
+      "over05_visit": 65.0,
+      "hcp2_des": 57.0,
+      "hcp3_des": 76.4,
+      "corners65": 93.7,
+      "corners75": 87.1,
+      "local_remates_over7.5": 99.7,
+      "local_remates_over8.5": 99.4,
+      "local_remates_over9.5": 98.9,
+      "local_remates_over10.5": 98.1,
+      "local_remates_over11.5": 96.9,
+      "local_remates_over12.5": 95.3,
+      "local_remates_over13.5": 93.2,
+      "local_remates_over14.5": 90.5,
+      "local_remates_over15.5": 87.2,
+      "local_remates_puerta_over1.5": 99.7,
+      "local_remates_puerta_over2.5": 98.7,
+      "local_remates_puerta_over3.5": 96.1,
+      "local_remates_puerta_over4.5": 91.3,
+      "local_remates_puerta_over5.5": 83.7,
+      "local_remates_puerta_over6.5": 73.5,
+      "local_corners_equipo_over2.5": 97.4,
+      "local_corners_equipo_over3.5": 94.0,
+      "local_corners_equipo_over4.5": 88.5,
+      "local_corners_equipo_over5.5": 81.1,
+      "local_corners_equipo_over6.5": 72.2,
+      "local_corners_equipo_over7.5": 62.3,
+      "visit_remates_over7.5": 63.9,
+      "visit_remates_over8.5": 52.6,
+      "visit_remates_over9.5": 41.7,
+      "visit_remates_over10.5": 31.9,
+      "visit_remates_over11.5": 23.5,
+      "visit_remates_over12.5": 16.7,
+      "visit_remates_over13.5": 11.5,
+      "visit_remates_over14.5": 7.7,
+      "visit_remates_over15.5": 5.0,
+      "visit_remates_puerta_over1.5": 83.6,
+      "visit_remates_puerta_over2.5": 63.9,
+      "visit_remates_puerta_over3.5": 42.7,
+      "visit_remates_puerta_over4.5": 25.0,
+      "visit_remates_puerta_over5.5": 13.1,
+      "visit_remates_puerta_over6.5": 6.1,
+      "visit_corners_equipo_over2.5": 54.7,
+      "visit_corners_equipo_over3.5": 34.9,
+      "visit_corners_equipo_over4.5": 20.2,
+      "visit_corners_equipo_over5.5": 10.7,
+      "visit_corners_equipo_over6.5": 5.3,
+      "visit_corners_equipo_over7.5": 2.5
+    },
+    "cruces_validados": [
+      {
+        "mercado": "over25",
+        "etiqueta": "Over 2.5",
+        "cuota": 1.42,
+        "justa": 1.56,
+        "segura": 1.74,
+        "hist": 64.1,
+        "n": 206,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "btts",
+        "etiqueta": "BTTS",
+        "cuota": 1.55,
+        "justa": 1.7,
+        "segura": 1.83,
+        "hist": 58.7,
+        "n": 606,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "over05_visit",
+        "etiqueta": "Over 0.5 V",
+        "cuota": 1.44,
+        "justa": 1.59,
+        "segura": 1.77,
+        "hist": 62.9,
+        "n": 224,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "visit_remates_puerta_over2.5",
+        "etiqueta": "Hamburg Remates a puerta Over 2.5",
+        "cuota": 1.47,
+        "justa": 1.55,
+        "segura": 1.73,
+        "hist": 64.3,
+        "n": 227,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "do1x+hcp3_visit",
+        "etiqueta": "DO L o Empate + HCP +3 V",
+        "cuota": 1.57,
+        "justa": 1.54,
+        "segura": 1.65,
+        "hist": 65.1,
+        "n": 498,
+        "cruza": true,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "over15+hcp3_visit",
+        "etiqueta": "Over 1.5 + HCP +3 V",
+        "cuota": 1.57,
+        "justa": 1.55,
+        "segura": 1.68,
+        "hist": 64.5,
+        "n": 375,
+        "cruza": true,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "over15+visit_remates_puerta_over2.5",
+        "etiqueta": "Over 1.5 + V Remates a puerta Over 2.5",
+        "cuota": 1.57,
+        "justa": 1.65,
+        "segura": 1.81,
+        "hist": 60.4,
+        "n": 364,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "over25+over05_visit",
+        "etiqueta": "Over 2.5 + Over 0.5 V",
+        "cuota": 1.75,
+        "justa": 1.82,
+        "segura": 2.05,
+        "hist": 54.9,
+        "n": 253,
+        "cruza": false,
+        "cruza_segura": false
+      }
+    ],
+    "validadas": [
+      {
+        "mercado": "btts",
+        "etiqueta": "BTTS",
+        "tipo": "simple",
+        "p": 0.597,
+        "cuota_justa": 1.7,
+        "cuota_segura": 1.83,
+        "acierto_hist": 58.7,
+        "n_hist": 606,
+        "cotizada": true
+      },
+      {
+        "mercado": "over05_visit+hcp2_local",
+        "etiqueta": "Over 0.5 V + HCP +2 L",
+        "tipo": "COMBINADA",
+        "p": 0.5941,
+        "cuota_justa": 1.68,
+        "cuota_segura": 1.8,
+        "acierto_hist": 59.6,
+        "n_hist": 582,
+        "cotizada": false
+      },
+      {
+        "mercado": "do1x+hcp3_visit",
+        "etiqueta": "DO L o Empate + HCP +3 V",
+        "tipo": "COMBINADA",
+        "p": 0.6065,
+        "cuota_justa": 1.54,
+        "cuota_segura": 1.65,
+        "acierto_hist": 65.1,
+        "n_hist": 498,
+        "cotizada": true
+      },
+      {
+        "mercado": "over15+hcp3_visit",
+        "etiqueta": "Over 1.5 + HCP +3 V",
+        "tipo": "COMBINADA",
+        "p": 0.6129,
+        "cuota_justa": 1.55,
+        "cuota_segura": 1.68,
+        "acierto_hist": 64.5,
+        "n_hist": 375,
+        "cotizada": true
+      },
+      {
+        "mercado": "over15+visit_remates_puerta_over2.5",
+        "etiqueta": "Over 1.5 + V Remates a puerta Over 2.5",
+        "tipo": "COMBINADA",
+        "p": 0.6008,
+        "cuota_justa": 1.65,
+        "cuota_segura": 1.81,
+        "acierto_hist": 60.4,
+        "n_hist": 364,
+        "cotizada": true
+      },
+      {
+        "mercado": "over25+over05_visit",
+        "etiqueta": "Over 2.5 + Over 0.5 V",
+        "tipo": "COMBINADA",
+        "p": 0.5096,
+        "cuota_justa": 1.82,
+        "cuota_segura": 2.05,
+        "acierto_hist": 54.9,
+        "n_hist": 253,
+        "cotizada": true
+      },
+      {
+        "mercado": "visit_remates_puerta_over2.5",
+        "etiqueta": "Hamburg Remates a puerta Over 2.5",
+        "tipo": "por equipo",
+        "p": 0.639,
+        "cuota_justa": 1.55,
+        "cuota_segura": 1.73,
+        "acierto_hist": 64.3,
+        "n_hist": 227,
+        "cotizada": true
+      },
+      {
+        "mercado": "over05_visit",
+        "etiqueta": "Over 0.5 V",
+        "tipo": "simple",
+        "p": 0.6496,
+        "cuota_justa": 1.59,
+        "cuota_segura": 1.77,
+        "acierto_hist": 62.9,
+        "n_hist": 224,
+        "cotizada": true
+      },
+      {
+        "mercado": "over25",
+        "etiqueta": "Over 2.5",
+        "tipo": "simple",
+        "p": 0.6472,
+        "cuota_justa": 1.56,
+        "cuota_segura": 1.74,
+        "acierto_hist": 64.1,
+        "n_hist": 206,
+        "cotizada": true
+      }
+    ]
   }
 ];
