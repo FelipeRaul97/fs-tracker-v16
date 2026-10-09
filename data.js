@@ -39782,5 +39782,1029 @@ const TRACKER_DATA = [
         "cotizada": false
       }
     ]
+  },
+  {
+    "id": "048",
+    "fecha": "2026-10-10",
+    "jornada": 6,
+    "liga": "E0",
+    "partido": "Aston Villa vs Brentford",
+    "lambda_forma_l": 1.0676,
+    "lambda_forma_v": 2.1296,
+    "lambda_reg_l": 1.6602,
+    "lambda_reg_v": 1.4951,
+    "lambda_base_l": 1.4824,
+    "lambda_base_v": 1.6854,
+    "lambda_final_l": 1.4621,
+    "lambda_final_v": 1.7057,
+    "lambda_shadow_l": 1.3946,
+    "lambda_shadow_v": 1.6375,
+    "lambda_corners": 9.81,
+    "ratio": 0.8571847335404819,
+    "visit_dominante": "False",
+    "variables_activas": "V#2(L:0.95) - V#3(L:1.00) - V#4(V:0.96)",
+    "variables": {
+      "v1": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa": false,
+        "activa_local": false,
+        "activa_visit": false,
+        "detalle_local": "--",
+        "detalle_visit": "--",
+        "detalle": "Ambos necesitan >=20 PJ (local:5, visit:5)"
+      },
+      "v2": {
+        "factor_local": 0.95,
+        "factor_visit": 1.0,
+        "activa_local": true,
+        "activa_visit": false,
+        "detalle_local": "Rank 16, margen 1pts sobre zona desc",
+        "detalle_visit": "Rank 4, margen 6pts -- fuera de riesgo"
+      },
+      "v3": {
+        "factor_local": 1.004,
+        "activa": true,
+        "n_partidos": 20,
+        "GpG_casa": 1.65,
+        "GpG_liga": 1.61,
+        "hs": 0.04,
+        "muestra_completa": true,
+        "detalle": "hs=+0.04 (20 ptdos)"
+      },
+      "v4": {
+        "factor_local": 1.0,
+        "factor_visit": 0.96,
+        "activa_local": false,
+        "activa_visit": true,
+        "bajas_local": 0,
+        "bajas_visit": 2
+      },
+      "v5": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa_local": false,
+        "activa_visit": false
+      },
+      "v6": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa": false
+      },
+      "v7": {
+        "skip": false,
+        "activa_local": false,
+        "activa_visit": false,
+        "detalle": "Sin DT nuevo"
+      },
+      "v8": {
+        "activa": false,
+        "anulado_derby": false,
+        "detalle": "Inactiva"
+      }
+    },
+    "confianza": "ALTA",
+    "notas": "",
+    "resultado_partido": null,
+    "goles_esperados": "3.17",
+    "apuestas": [
+      {
+        "tipo": "PICK",
+        "mercado": "over25",
+        "linea": null,
+        "etiqueta": "Over 2.5",
+        "cuota": 1.7,
+        "prob": 61.3,
+        "ev_pct": 4.2,
+        "estado": "PENDIENTE",
+        "pl": null,
+        "cuota_justa": 1.56,
+        "cuota_segura": 1.74,
+        "acierto_hist": 64.1,
+        "n_hist": 206
+      },
+      {
+        "tipo": "PICK",
+        "mercado": "dox2",
+        "linea": null,
+        "etiqueta": "DO Empate o Brentford",
+        "cuota": 1.52,
+        "prob": 66.9,
+        "ev_pct": 1.7,
+        "estado": "PENDIENTE",
+        "pl": null,
+        "cuota_justa": 1.43,
+        "cuota_segura": 1.59,
+        "acierto_hist": 70.1,
+        "n_hist": 167
+      },
+      {
+        "tipo": "COMBO",
+        "mercado": "under45+over05_visit",
+        "etiqueta": "Under 4.5 + Over 0.5 V",
+        "cuota": 1.57,
+        "prob": 60.8,
+        "ev_pct": -4.6,
+        "estado": "PENDIENTE",
+        "pl": null,
+        "patas": [
+          "under45",
+          "over05_visit"
+        ],
+        "promovida_combinada": true,
+        "nivel_cruce": "justa",
+        "cuota_justa": 1.56,
+        "cuota_segura": 1.7,
+        "acierto_hist": 64.2,
+        "n_hist": 327
+      }
+    ],
+    "watchlist": [
+      {
+        "mercado": "btts",
+        "linea": null,
+        "etiqueta": "BTTS",
+        "cuota": 1.55,
+        "prob": 62.4,
+        "ev_pct": -3.3,
+        "cuota_justa": 1.6,
+        "cuota_segura": 1.76,
+        "acierto_hist": 62.7,
+        "n_hist": 260
+      },
+      {
+        "mercado": "victoria_visit",
+        "linea": null,
+        "etiqueta": "Victoria Brentford",
+        "cuota": 2.6,
+        "prob": 44.0,
+        "ev_pct": 14.4,
+        "regla_1x2_no_pick": true
+      },
+      {
+        "mercado": "over05_local",
+        "linea": null,
+        "etiqueta": "Over 0.5 Aston Villa",
+        "cuota": 1.25,
+        "prob": 78.7,
+        "ev_pct": -1.6
+      },
+      {
+        "mercado": "over05_visit",
+        "linea": null,
+        "etiqueta": "Over 0.5 Brentford",
+        "cuota": 1.24,
+        "prob": 81.8,
+        "ev_pct": 1.4,
+        "filtro_edge": "EV=+1.4% < 1.5"
+      },
+      {
+        "mercado": "corners65",
+        "linea": null,
+        "etiqueta": "corners65",
+        "cuota": 1.11,
+        "prob": 84.0,
+        "ev_pct": -6.8
+      },
+      {
+        "mercado": "corners75",
+        "linea": null,
+        "etiqueta": "corners75",
+        "cuota": 1.21,
+        "prob": 73.9,
+        "ev_pct": -10.6
+      },
+      {
+        "mercado": "local_corners_equipo",
+        "linea": 3.5,
+        "etiqueta": "Aston Villa Corners equipo Over 3.5",
+        "cuota": 1.25,
+        "prob": 64.1,
+        "ev_pct": -19.9,
+        "tipo": "POR_EQUIPO",
+        "cuota_justa": 1.6,
+        "cuota_segura": 1.79,
+        "acierto_hist": 62.6,
+        "n_hist": 219
+      },
+      {
+        "mercado": "local_corners_equipo",
+        "linea": 4.5,
+        "etiqueta": "Aston Villa Corners equipo Over 4.5",
+        "cuota": 1.55,
+        "prob": 48.2,
+        "ev_pct": -25.3,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_corners_equipo",
+        "linea": 5.5,
+        "etiqueta": "Aston Villa Corners equipo Over 5.5",
+        "cuota": 2.07,
+        "prob": 33.9,
+        "ev_pct": -29.8,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_corners_equipo",
+        "linea": 6.5,
+        "etiqueta": "Aston Villa Corners equipo Over 6.5",
+        "cuota": 3.05,
+        "prob": 22.4,
+        "ev_pct": -31.7,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 2.5,
+        "etiqueta": "Brentford Corners equipo Over 2.5",
+        "cuota": 1.14,
+        "prob": 83.0,
+        "ev_pct": -5.4,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 3.5,
+        "etiqueta": "Brentford Corners equipo Over 3.5",
+        "cuota": 1.36,
+        "prob": 69.3,
+        "ev_pct": -5.8,
+        "tipo": "POR_EQUIPO",
+        "cuota_justa": 1.49,
+        "cuota_segura": 1.68,
+        "acierto_hist": 67.3,
+        "n_hist": 159
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 4.5,
+        "etiqueta": "Brentford Corners equipo Over 4.5",
+        "cuota": 1.78,
+        "prob": 54.1,
+        "ev_pct": -3.7,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 5.5,
+        "etiqueta": "Brentford Corners equipo Over 5.5",
+        "cuota": 2.5,
+        "prob": 39.7,
+        "ev_pct": -0.7,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 6.5,
+        "etiqueta": "Brentford Corners equipo Over 6.5",
+        "cuota": 3.8,
+        "prob": 27.5,
+        "ev_pct": 4.5,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 7.5,
+        "etiqueta": "Brentford Corners equipo Over 7.5",
+        "cuota": 5.9,
+        "prob": 18.1,
+        "ev_pct": 6.8,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates",
+        "linea": 12.5,
+        "etiqueta": "Aston Villa Remates Over 12.5",
+        "cuota": 1.5,
+        "prob": 47.7,
+        "ev_pct": -28.4,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates",
+        "linea": 13.5,
+        "etiqueta": "Aston Villa Remates Over 13.5",
+        "cuota": 1.75,
+        "prob": 39.2,
+        "ev_pct": -31.4,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates",
+        "linea": 14.5,
+        "etiqueta": "Aston Villa Remates Over 14.5",
+        "cuota": 2.15,
+        "prob": 31.5,
+        "ev_pct": -32.3,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates",
+        "linea": 11.5,
+        "etiqueta": "Brentford Remates Over 11.5",
+        "cuota": 1.6,
+        "prob": 75.8,
+        "ev_pct": 21.3,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates",
+        "linea": 12.5,
+        "etiqueta": "Brentford Remates Over 12.5",
+        "cuota": 1.95,
+        "prob": 68.6,
+        "ev_pct": 33.8,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates",
+        "linea": 13.5,
+        "etiqueta": "Brentford Remates Over 13.5",
+        "cuota": 2.45,
+        "prob": 61.0,
+        "ev_pct": 49.5,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates_puerta",
+        "linea": 3.5,
+        "etiqueta": "Aston Villa Remates a puerta Over 3.5",
+        "cuota": 1.4,
+        "prob": 55.8,
+        "ev_pct": -21.9,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates_puerta",
+        "linea": 4.5,
+        "etiqueta": "Aston Villa Remates a puerta Over 4.5",
+        "cuota": 1.88,
+        "prob": 37.1,
+        "ev_pct": -30.3,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates_puerta",
+        "linea": 5.5,
+        "etiqueta": "Aston Villa Remates a puerta Over 5.5",
+        "cuota": 2.75,
+        "prob": 22.2,
+        "ev_pct": -38.9,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates_puerta",
+        "linea": 3.5,
+        "etiqueta": "Brentford Remates a puerta Over 3.5",
+        "cuota": 1.6,
+        "prob": 71.4,
+        "ev_pct": 14.2,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates_puerta",
+        "linea": 4.5,
+        "etiqueta": "Brentford Remates a puerta Over 4.5",
+        "cuota": 2.3,
+        "prob": 54.4,
+        "ev_pct": 25.1,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates_puerta",
+        "linea": 5.5,
+        "etiqueta": "Brentford Remates a puerta Over 5.5",
+        "cuota": 3.55,
+        "prob": 37.8,
+        "ev_pct": 34.2,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "over15+over05_local",
+        "linea": null,
+        "etiqueta": "Over 1.5 + Over 0.5 L",
+        "cuota": 1.35,
+        "prob": 70.7,
+        "ev_pct": -4.6,
+        "tipo": "COMBINADA",
+        "patas": [
+          "over15",
+          "over05_local"
+        ],
+        "lift": 1.158,
+        "cuota_justa": 1.37,
+        "cuota_segura": 1.48,
+        "acierto_hist": 73.0,
+        "n_hist": 289
+      },
+      {
+        "mercado": "over15+hcp3_local",
+        "linea": null,
+        "etiqueta": "Over 1.5 + HCP +3 L",
+        "cuota": 1.3,
+        "prob": 72.8,
+        "ev_pct": -5.4,
+        "tipo": "COMBINADA",
+        "patas": [
+          "over15",
+          "hcp3_local"
+        ],
+        "lift": 0.98,
+        "cuota_justa": 1.35,
+        "cuota_segura": 1.45,
+        "acierto_hist": 74.0,
+        "n_hist": 335
+      },
+      {
+        "mercado": "under45+over05_local",
+        "linea": null,
+        "etiqueta": "Under 4.5 + Over 0.5 L",
+        "cuota": 1.55,
+        "prob": 56.1,
+        "ev_pct": -13.0,
+        "tipo": "COMBINADA",
+        "patas": [
+          "under45",
+          "over05_local"
+        ],
+        "lift": 0.952,
+        "cuota_justa": 1.71,
+        "cuota_segura": 1.91,
+        "acierto_hist": 58.4,
+        "n_hist": 269
+      },
+      {
+        "mercado": "over05_visit+hcp2_local",
+        "linea": null,
+        "etiqueta": "Over 0.5 V + HCP +2 L",
+        "cuota": 1.55,
+        "prob": 59.0,
+        "ev_pct": -8.5,
+        "tipo": "COMBINADA",
+        "patas": [
+          "over05_visit",
+          "hcp2_local"
+        ],
+        "lift": 0.938,
+        "cuota_justa": 1.68,
+        "cuota_segura": 1.8,
+        "acierto_hist": 59.6,
+        "n_hist": 582
+      },
+      {
+        "mercado": "btts+hcp2_local",
+        "linea": null,
+        "etiqueta": "BTTS + HCP +2 L",
+        "cuota": 1.75,
+        "prob": 51.9,
+        "ev_pct": -9.2,
+        "tipo": "COMBINADA",
+        "patas": [
+          "btts",
+          "hcp2_local"
+        ],
+        "lift": 1.053,
+        "cuota_justa": 1.85,
+        "cuota_segura": 2.05,
+        "acierto_hist": 54.1,
+        "n_hist": 338
+      },
+      {
+        "mercado": "over15",
+        "linea": null,
+        "etiqueta": "Over 1.5",
+        "cuota": 1.23,
+        "prob": 83.0,
+        "ev_pct": 2.1,
+        "regla_unicidad_totales": "cede ante over25 (score EV/prob 2.6)"
+      },
+      {
+        "mercado": "over35",
+        "linea": null,
+        "etiqueta": "Over 3.5",
+        "cuota": 2.67,
+        "prob": 39.0,
+        "ev_pct": 4.1,
+        "regla_unicidad_totales": "cede ante over25 (score EV/prob 2.6)"
+      }
+    ],
+    "mercados_snapshot": {
+      "victoria_local": 33.1,
+      "empate": 25.9,
+      "victoria_visit": 44.0,
+      "do1x": 56.0,
+      "dox2": 66.9,
+      "over15": 83.0,
+      "over25": 61.3,
+      "under25": 38.7,
+      "over35": 39.0,
+      "under35": 61.0,
+      "under45": 78.6,
+      "btts": 62.4,
+      "over05_local": 78.7,
+      "over05_visit": 81.8,
+      "hcp2_des": 77.2,
+      "hcp3_des": 90.3,
+      "corners65": 84.0,
+      "corners75": 73.9,
+      "local_remates_over7.5": 87.9,
+      "local_remates_over8.5": 81.7,
+      "local_remates_over9.5": 74.1,
+      "local_remates_over10.5": 65.6,
+      "local_remates_over11.5": 56.7,
+      "local_remates_over12.5": 47.7,
+      "local_remates_over13.5": 39.2,
+      "local_remates_over14.5": 31.5,
+      "local_remates_over15.5": 24.6,
+      "local_remates_puerta_over1.5": 89.8,
+      "local_remates_puerta_over2.5": 74.8,
+      "local_remates_puerta_over3.5": 55.8,
+      "local_remates_puerta_over4.5": 37.1,
+      "local_remates_puerta_over5.5": 22.2,
+      "local_remates_puerta_over6.5": 12.1,
+      "local_corners_equipo_over2.5": 79.4,
+      "local_corners_equipo_over3.5": 64.1,
+      "local_corners_equipo_over4.5": 48.2,
+      "local_corners_equipo_over5.5": 33.9,
+      "local_corners_equipo_over6.5": 22.4,
+      "local_corners_equipo_over7.5": 14.1,
+      "visit_remates_over7.5": 95.2,
+      "visit_remates_over8.5": 92.0,
+      "visit_remates_over9.5": 87.6,
+      "visit_remates_over10.5": 82.2,
+      "visit_remates_over11.5": 75.8,
+      "visit_remates_over12.5": 68.6,
+      "visit_remates_over13.5": 61.0,
+      "visit_remates_over14.5": 53.1,
+      "visit_remates_over15.5": 45.4,
+      "visit_remates_puerta_over1.5": 95.0,
+      "visit_remates_puerta_over2.5": 85.7,
+      "visit_remates_puerta_over3.5": 71.4,
+      "visit_remates_puerta_over4.5": 54.4,
+      "visit_remates_puerta_over5.5": 37.8,
+      "visit_remates_puerta_over6.5": 24.1,
+      "visit_corners_equipo_over2.5": 83.0,
+      "visit_corners_equipo_over3.5": 69.3,
+      "visit_corners_equipo_over4.5": 54.1,
+      "visit_corners_equipo_over5.5": 39.7,
+      "visit_corners_equipo_over6.5": 27.5,
+      "visit_corners_equipo_over7.5": 18.1
+    },
+    "cruces_validados": [
+      {
+        "mercado": "over25",
+        "etiqueta": "Over 2.5",
+        "cuota": 1.7,
+        "justa": 1.56,
+        "segura": 1.74,
+        "hist": 64.1,
+        "n": 206,
+        "cruza": true,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "under35",
+        "etiqueta": "Under 3.5",
+        "cuota": 1.47,
+        "justa": 1.57,
+        "segura": 1.73,
+        "hist": 63.8,
+        "n": 246,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "btts",
+        "etiqueta": "BTTS",
+        "cuota": 1.55,
+        "justa": 1.6,
+        "segura": 1.76,
+        "hist": 62.7,
+        "n": 260,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "dox2",
+        "etiqueta": "DO Empate o V",
+        "cuota": 1.52,
+        "justa": 1.43,
+        "segura": 1.59,
+        "hist": 70.1,
+        "n": 167,
+        "cruza": true,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "local_corners_equipo_over3.5",
+        "etiqueta": "Aston Villa Corners Over 3.5",
+        "cuota": 1.25,
+        "justa": 1.6,
+        "segura": 1.79,
+        "hist": 62.6,
+        "n": 219,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "visit_corners_equipo_over3.5",
+        "etiqueta": "Brentford Corners Over 3.5",
+        "cuota": 1.36,
+        "justa": 1.49,
+        "segura": 1.68,
+        "hist": 67.3,
+        "n": 159,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "over15+over05_local",
+        "etiqueta": "Over 1.5 + Over 0.5 L",
+        "cuota": 1.35,
+        "justa": 1.37,
+        "segura": 1.48,
+        "hist": 73.0,
+        "n": 289,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "over15+hcp3_local",
+        "etiqueta": "Over 1.5 + HCP +3 L",
+        "cuota": 1.3,
+        "justa": 1.35,
+        "segura": 1.45,
+        "hist": 74.0,
+        "n": 335,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "under45+over05_visit",
+        "etiqueta": "Under 4.5 + Over 0.5 V",
+        "cuota": 1.57,
+        "justa": 1.56,
+        "segura": 1.7,
+        "hist": 64.2,
+        "n": 327,
+        "cruza": true,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "under45+over05_local",
+        "etiqueta": "Under 4.5 + Over 0.5 L",
+        "cuota": 1.55,
+        "justa": 1.71,
+        "segura": 1.91,
+        "hist": 58.4,
+        "n": 269,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "over05_visit+hcp2_local",
+        "etiqueta": "Over 0.5 V + HCP +2 L",
+        "cuota": 1.55,
+        "justa": 1.68,
+        "segura": 1.8,
+        "hist": 59.6,
+        "n": 582,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "btts+hcp2_local",
+        "etiqueta": "BTTS + HCP +2 L",
+        "cuota": 1.75,
+        "justa": 1.85,
+        "segura": 2.05,
+        "hist": 54.1,
+        "n": 338,
+        "cruza": false,
+        "cruza_segura": false
+      }
+    ],
+    "validadas": [
+      {
+        "mercado": "over05_visit+hcp2_local",
+        "etiqueta": "Over 0.5 V + HCP +2 L",
+        "tipo": "COMBINADA",
+        "p": 0.5904,
+        "cuota_justa": 1.68,
+        "cuota_segura": 1.8,
+        "acierto_hist": 59.6,
+        "n_hist": 582,
+        "cotizada": true
+      },
+      {
+        "mercado": "btts+hcp2_local",
+        "etiqueta": "BTTS + HCP +2 L",
+        "tipo": "COMBINADA",
+        "p": 0.5186,
+        "cuota_justa": 1.85,
+        "cuota_segura": 2.05,
+        "acierto_hist": 54.1,
+        "n_hist": 338,
+        "cotizada": true
+      },
+      {
+        "mercado": "over15+hcp3_local",
+        "etiqueta": "Over 1.5 + HCP +3 L",
+        "tipo": "COMBINADA",
+        "p": 0.7276,
+        "cuota_justa": 1.35,
+        "cuota_segura": 1.45,
+        "acierto_hist": 74.0,
+        "n_hist": 335,
+        "cotizada": true
+      },
+      {
+        "mercado": "under45+over05_visit",
+        "etiqueta": "Under 4.5 + Over 0.5 V",
+        "tipo": "COMBINADA",
+        "p": 0.6077,
+        "cuota_justa": 1.56,
+        "cuota_segura": 1.7,
+        "acierto_hist": 64.2,
+        "n_hist": 327,
+        "cotizada": true
+      },
+      {
+        "mercado": "btts+local_remates_puerta_over2.5",
+        "etiqueta": "BTTS + L Remates a puerta Over 2.5",
+        "tipo": "COMBINADA",
+        "p": 0.5157,
+        "cuota_justa": 1.86,
+        "cuota_segura": 2.08,
+        "acierto_hist": 53.9,
+        "n_hist": 297,
+        "cotizada": false
+      },
+      {
+        "mercado": "dox2+hcp3_local",
+        "etiqueta": "DO Empate o V + HCP +3 L",
+        "tipo": "COMBINADA",
+        "p": 0.5721,
+        "cuota_justa": 1.72,
+        "cuota_segura": 1.91,
+        "acierto_hist": 58.1,
+        "n_hist": 296,
+        "cotizada": false
+      },
+      {
+        "mercado": "over15+over05_local",
+        "etiqueta": "Over 1.5 + Over 0.5 L",
+        "tipo": "COMBINADA",
+        "p": 0.7067,
+        "cuota_justa": 1.37,
+        "cuota_segura": 1.48,
+        "acierto_hist": 73.0,
+        "n_hist": 289,
+        "cotizada": true
+      },
+      {
+        "mercado": "local_corners_equipo_over2.5",
+        "etiqueta": "Aston Villa Corners Over 2.5",
+        "tipo": "por equipo",
+        "p": 0.7944,
+        "cuota_justa": 1.33,
+        "cuota_segura": 1.44,
+        "acierto_hist": 74.9,
+        "n_hist": 279,
+        "cotizada": false
+      },
+      {
+        "mercado": "under45+over05_local",
+        "etiqueta": "Under 4.5 + Over 0.5 L",
+        "tipo": "COMBINADA",
+        "p": 0.5615,
+        "cuota_justa": 1.71,
+        "cuota_segura": 1.91,
+        "acierto_hist": 58.4,
+        "n_hist": 269,
+        "cotizada": true
+      },
+      {
+        "mercado": "over25+hcp3_local",
+        "etiqueta": "Over 2.5 + HCP +3 L",
+        "tipo": "COMBINADA",
+        "p": 0.5164,
+        "cuota_justa": 1.89,
+        "cuota_segura": 2.14,
+        "acierto_hist": 52.9,
+        "n_hist": 261,
+        "cotizada": false
+      },
+      {
+        "mercado": "btts",
+        "etiqueta": "BTTS",
+        "tipo": "simple",
+        "p": 0.6237,
+        "cuota_justa": 1.6,
+        "cuota_segura": 1.76,
+        "acierto_hist": 62.7,
+        "n_hist": 260,
+        "cotizada": true
+      },
+      {
+        "mercado": "over05_local+hcp3_visit",
+        "etiqueta": "Over 0.5 L + HCP +3 V",
+        "tipo": "COMBINADA",
+        "p": 0.7112,
+        "cuota_justa": 1.37,
+        "cuota_segura": 1.49,
+        "acierto_hist": 72.9,
+        "n_hist": 255,
+        "cotizada": false
+      },
+      {
+        "mercado": "under45+hcp2_visit",
+        "etiqueta": "Under 4.5 + HCP +2 V",
+        "tipo": "COMBINADA",
+        "p": 0.674,
+        "cuota_justa": 1.49,
+        "cuota_segura": 1.64,
+        "acierto_hist": 67.1,
+        "n_hist": 246,
+        "cotizada": false
+      },
+      {
+        "mercado": "under35",
+        "etiqueta": "Under 3.5",
+        "tipo": "simple",
+        "p": 0.6097,
+        "cuota_justa": 1.57,
+        "cuota_segura": 1.73,
+        "acierto_hist": 63.8,
+        "n_hist": 246,
+        "cotizada": true
+      },
+      {
+        "mercado": "under35+hcp2_visit",
+        "etiqueta": "Under 3.5 + HCP +2 V",
+        "tipo": "COMBINADA",
+        "p": 0.5428,
+        "cuota_justa": 1.87,
+        "cuota_segura": 2.12,
+        "acierto_hist": 53.5,
+        "n_hist": 243,
+        "cotizada": false
+      },
+      {
+        "mercado": "local_remates_puerta_over3.5+over15",
+        "etiqueta": "L Remates a puerta Over 3.5 + Over 1.5",
+        "tipo": "COMBINADA",
+        "p": 0.5038,
+        "cuota_justa": 1.94,
+        "cuota_segura": 2.2,
+        "acierto_hist": 51.7,
+        "n_hist": 242,
+        "cotizada": false
+      },
+      {
+        "mercado": "local_corners_equipo_over3.5",
+        "etiqueta": "Aston Villa Corners Over 3.5",
+        "tipo": "por equipo",
+        "p": 0.6415,
+        "cuota_justa": 1.6,
+        "cuota_segura": 1.79,
+        "acierto_hist": 62.6,
+        "n_hist": 219,
+        "cotizada": true
+      },
+      {
+        "mercado": "over25",
+        "etiqueta": "Over 2.5",
+        "tipo": "simple",
+        "p": 0.613,
+        "cuota_justa": 1.56,
+        "cuota_segura": 1.74,
+        "acierto_hist": 64.1,
+        "n_hist": 206,
+        "cotizada": true
+      },
+      {
+        "mercado": "local_remates_puerta_over2.5+over05_local",
+        "etiqueta": "L Remates a puerta Over 2.5 + Over 0.5 L",
+        "tipo": "COMBINADA",
+        "p": 0.6393,
+        "cuota_justa": 1.55,
+        "cuota_segura": 1.74,
+        "acierto_hist": 64.4,
+        "n_hist": 205,
+        "cotizada": false
+      },
+      {
+        "mercado": "local_remates_puerta_over2.5",
+        "etiqueta": "Aston Villa Remates a puerta Over 2.5",
+        "tipo": "por equipo",
+        "p": 0.748,
+        "cuota_justa": 1.39,
+        "cuota_segura": 1.53,
+        "acierto_hist": 72.0,
+        "n_hist": 189,
+        "cotizada": false
+      },
+      {
+        "mercado": "do1x+hcp3_visit",
+        "etiqueta": "DO L o Empate + HCP +3 V",
+        "tipo": "COMBINADA",
+        "p": 0.5077,
+        "cuota_justa": 1.92,
+        "cuota_segura": 2.22,
+        "acierto_hist": 52.1,
+        "n_hist": 188,
+        "cotizada": false
+      },
+      {
+        "mercado": "dox2",
+        "etiqueta": "DO Empate o V",
+        "tipo": "simple",
+        "p": 0.669,
+        "cuota_justa": 1.43,
+        "cuota_segura": 1.59,
+        "acierto_hist": 70.1,
+        "n_hist": 167,
+        "cotizada": true
+      },
+      {
+        "mercado": "hcp2_local",
+        "etiqueta": "HCP +2 L",
+        "tipo": "simple",
+        "p": 0.7721,
+        "cuota_justa": 1.33,
+        "cuota_segura": 1.47,
+        "acierto_hist": 75.3,
+        "n_hist": 166,
+        "cotizada": false
+      },
+      {
+        "mercado": "visit_corners_equipo_over3.5",
+        "etiqueta": "Brentford Corners Over 3.5",
+        "tipo": "por equipo",
+        "p": 0.6929,
+        "cuota_justa": 1.49,
+        "cuota_segura": 1.68,
+        "acierto_hist": 67.3,
+        "n_hist": 159,
+        "cotizada": true
+      },
+      {
+        "mercado": "over25+visit_remates_puerta_over2.5",
+        "etiqueta": "Over 2.5 + V Remates a puerta Over 2.5",
+        "tipo": "COMBINADA",
+        "p": 0.5494,
+        "cuota_justa": 1.96,
+        "cuota_segura": 2.31,
+        "acierto_hist": 50.9,
+        "n_hist": 159,
+        "cotizada": false
+      },
+      {
+        "mercado": "local_corners_equipo_over3.5+local_remates_over8.5",
+        "etiqueta": "L Corners Over 3.5 + L Remates Over 8.5",
+        "tipo": "COMBINADA",
+        "p": 0.5618,
+        "cuota_justa": 1.67,
+        "cuota_segura": 1.92,
+        "acierto_hist": 59.7,
+        "n_hist": 159,
+        "cotizada": false
+      },
+      {
+        "mercado": "local_corners_equipo_over3.5+local_remates_over9.5",
+        "etiqueta": "L Corners Over 3.5 + L Remates Over 9.5",
+        "tipo": "COMBINADA",
+        "p": 0.5252,
+        "cuota_justa": 1.86,
+        "cuota_segura": 2.17,
+        "acierto_hist": 53.8,
+        "n_hist": 156,
+        "cotizada": false
+      },
+      {
+        "mercado": "local_remates_puerta_over3.5+over05_local",
+        "etiqueta": "L Remates a puerta Over 3.5 + Over 0.5 L",
+        "tipo": "COMBINADA",
+        "p": 0.5002,
+        "cuota_justa": 1.87,
+        "cuota_segura": 2.19,
+        "acierto_hist": 53.5,
+        "n_hist": 155,
+        "cotizada": false
+      },
+      {
+        "mercado": "over15+hcp3_visit",
+        "etiqueta": "Over 1.5 + HCP +3 V",
+        "tipo": "COMBINADA",
+        "p": 0.7675,
+        "cuota_justa": 1.32,
+        "cuota_segura": 1.46,
+        "acierto_hist": 76.0,
+        "n_hist": 150,
+        "cotizada": false
+      }
+    ]
   }
 ];
