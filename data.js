@@ -36023,17 +36023,6 @@ const TRACKER_DATA = [
         "pl": null
       },
       {
-        "tipo": "PICK",
-        "mercado": "hcp2_des",
-        "linea": null,
-        "etiqueta": "HCP +2 Leeds",
-        "cuota": 1.72,
-        "prob": 60.4,
-        "ev_pct": 3.9,
-        "estado": "PENDIENTE",
-        "pl": null
-      },
-      {
         "tipo": "COMBO",
         "mercado": "over15+visit_remates_puerta_over2.5",
         "etiqueta": "Over 1.5 + V Remates a puerta Over 2.5",
@@ -36391,6 +36380,15 @@ const TRACKER_DATA = [
         "prob": 35.3,
         "ev_pct": 5.9,
         "regla_do_desfavorito": "DO del desfavorecido (lambda 1.95 vs 0.79); nunca PICK"
+      },
+      {
+        "mercado": "hcp2_des",
+        "linea": null,
+        "etiqueta": "HCP +2 Leeds",
+        "cuota": 1.72,
+        "prob": 60.4,
+        "ev_pct": 3.9,
+        "regla_no_elegible": true
       }
     ],
     "mercados_snapshot": {
@@ -36788,28 +36786,6 @@ const TRACKER_DATA = [
     "goles_esperados": "3.98",
     "apuestas": [
       {
-        "tipo": "PICK",
-        "mercado": "under45",
-        "linea": null,
-        "etiqueta": "Under 4.5",
-        "cuota": 1.88,
-        "prob": 63.2,
-        "ev_pct": 18.8,
-        "estado": "PENDIENTE",
-        "pl": null
-      },
-      {
-        "tipo": "PICK",
-        "mercado": "hcp2_des",
-        "linea": null,
-        "etiqueta": "HCP +2 Augsburg",
-        "cuota": 2.67,
-        "prob": 45.0,
-        "ev_pct": 20.2,
-        "estado": "PENDIENTE",
-        "pl": null
-      },
-      {
         "tipo": "COMBO",
         "mercado": "dox2+under45",
         "etiqueta": "DO Empate o V + Under 4.5",
@@ -37087,6 +37063,24 @@ const TRACKER_DATA = [
         "prob": 65.0,
         "ev_pct": 15.7,
         "regla_unicidad_handicap": "cede ante hcp2_des (EV 20.2%)"
+      },
+      {
+        "mercado": "under45",
+        "linea": null,
+        "etiqueta": "Under 4.5",
+        "cuota": 1.88,
+        "prob": 63.2,
+        "ev_pct": 18.8,
+        "regla_no_elegible": true
+      },
+      {
+        "mercado": "hcp2_des",
+        "linea": null,
+        "etiqueta": "HCP +2 Augsburg",
+        "cuota": 2.67,
+        "prob": 45.0,
+        "ev_pct": 20.2,
+        "regla_no_elegible": true
       }
     ],
     "mercados_snapshot": {
@@ -44493,17 +44487,6 @@ const TRACKER_DATA = [
         "n_hist": 341
       },
       {
-        "tipo": "PICK",
-        "mercado": "hcp2_des",
-        "linea": null,
-        "etiqueta": "HCP +2 Le Havre",
-        "cuota": 1.72,
-        "prob": 63.5,
-        "ev_pct": 9.2,
-        "estado": "PENDIENTE",
-        "pl": null
-      },
-      {
         "tipo": "COMBO",
         "mercado": "visit_remates_over7.5+visit_remates_puerta_over2.5",
         "etiqueta": "V Remates Over 7.5 + V Remates a puerta Over 2.5",
@@ -44956,6 +44939,15 @@ const TRACKER_DATA = [
         "prob": 38.8,
         "ev_pct": 12.5,
         "regla_do_desfavorito": "DO del desfavorecido (lambda 1.91 vs 0.90); nunca PICK"
+      },
+      {
+        "mercado": "hcp2_des",
+        "linea": null,
+        "etiqueta": "HCP +2 Le Havre",
+        "cuota": 1.72,
+        "prob": 63.5,
+        "ev_pct": 9.2,
+        "regla_no_elegible": true
       }
     ],
     "mercados_snapshot": {
@@ -45551,17 +45543,6 @@ const TRACKER_DATA = [
     "goles_esperados": "3.57",
     "apuestas": [
       {
-        "tipo": "PICK",
-        "mercado": "hcp2_des",
-        "linea": null,
-        "etiqueta": "HCP +2 Parma",
-        "cuota": 2.87,
-        "prob": 35.5,
-        "ev_pct": 1.9,
-        "estado": "PENDIENTE",
-        "pl": null
-      },
-      {
         "tipo": "COMBO",
         "mercado": "over15+visit_remates_puerta_over2.5",
         "etiqueta": "Over 1.5 + V Remates a puerta Over 2.5",
@@ -45834,6 +45815,15 @@ const TRACKER_DATA = [
         "prob": 57.1,
         "ev_pct": 1.6,
         "regla_unicidad_handicap": "cede ante hcp2_des (EV 1.9%)"
+      },
+      {
+        "mercado": "hcp2_des",
+        "linea": null,
+        "etiqueta": "HCP +2 Parma",
+        "cuota": 2.87,
+        "prob": 35.5,
+        "ev_pct": 1.9,
+        "regla_no_elegible": true
       }
     ],
     "mercados_snapshot": {
