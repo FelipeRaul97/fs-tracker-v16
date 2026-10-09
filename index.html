@@ -342,7 +342,7 @@
       <div class="chart-wrap" id="chart-cuota-roi"></div>
     </div>
     <div class="card card-full" style="margin-bottom:16px">
-      <div class="card-title">Mercado x Rango de cuota — WR% y ROI%</div>
+      <div class="card-title">Mercado x Rango de cuota — WR% y ROI% (solo PICKs)</div>
       <div style="overflow-x:auto" id="hm-mercado-cuota"></div>
       <div class="chart-note">Celdas coloreadas por ROI%. Verde = rentable, rojo = negativo. Solo celdas con N >= 1.</div>
     </div>
@@ -1754,7 +1754,10 @@ function _hmFilaTotal(bets,cols){
 
 function renderMercadoCuotaHeatmap(){
   const el=document.getElementById('hm-mercado-cuota');
-  const bets=flatBets().filter(a=>a.estado==='GANADA'||a.estado==='PERDIDA');
+  // Solo PICKs (2026-10-10, a pedido): un COMBO tiene una cuota combinada y el
+  // split('+')[0] de abajo lo contaba bajo su primera pata, mezclandolo con los
+  // PICKs de ese mercado. Los COMBOs se analizan aparte.
+  const bets=flatBets().filter(a=>a.tipo==='PICK'&&(a.estado==='GANADA'||a.estado==='PERDIDA'));
   if(bets.length<3){el.innerHTML='<p class="empty">Minimo 3 apuestas confirmadas</p>';return;}
 
   const bands=[
