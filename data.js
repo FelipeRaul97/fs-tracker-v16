@@ -38740,5 +38740,1047 @@ const TRACKER_DATA = [
         "cotizada": false
       }
     ]
+  },
+  {
+    "id": "047",
+    "fecha": "2026-10-10",
+    "jornada": 6,
+    "liga": "D1",
+    "partido": "Paderborn vs Stuttgart",
+    "lambda_forma_l": 1.9043,
+    "lambda_forma_v": 1.8428,
+    "lambda_reg_l": 1.1885,
+    "lambda_reg_v": 1.8849,
+    "lambda_base_l": 1.4032,
+    "lambda_base_v": 1.8723,
+    "lambda_final_l": 1.3563,
+    "lambda_final_v": 1.9192,
+    "lambda_shadow_l": 1.2885,
+    "lambda_shadow_v": 1.8232,
+    "lambda_corners": 11.591,
+    "ratio": 0.7067007086285952,
+    "visit_dominante": "False",
+    "variables_activas": "V#2(L:0.95) - V#2(V:0.95)",
+    "variables": {
+      "v1": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa": false,
+        "activa_local": false,
+        "activa_visit": false,
+        "detalle_local": "--",
+        "detalle_visit": "--",
+        "detalle": "Ambos necesitan >=20 PJ (local:4, visit:4)"
+      },
+      "v2": {
+        "factor_local": 0.95,
+        "factor_visit": 0.95,
+        "activa_local": true,
+        "activa_visit": true,
+        "detalle_local": "Rank 12, margen 1pts sobre zona desc",
+        "detalle_visit": "Rank 15, margen 0pts sobre zona desc"
+      },
+      "v3": {
+        "factor_local": 1.0,
+        "activa": false,
+        "n_partidos": 2,
+        "detalle": "Solo 2 partidos como local (min 10)"
+      },
+      "v4": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa_local": false,
+        "activa_visit": false,
+        "bajas_local": 0,
+        "bajas_visit": 1
+      },
+      "v5": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa_local": false,
+        "activa_visit": false
+      },
+      "v6": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa": false
+      },
+      "v7": {
+        "skip": false,
+        "activa_local": false,
+        "activa_visit": false,
+        "detalle": "Sin DT nuevo"
+      },
+      "v8": {
+        "activa": false,
+        "anulado_derby": false,
+        "detalle": "Inactiva"
+      }
+    },
+    "confianza": "ALTA",
+    "notas": "",
+    "resultado_partido": null,
+    "goles_esperados": "3.28",
+    "apuestas": [
+      {
+        "tipo": "PICK",
+        "mercado": "under35",
+        "linea": null,
+        "etiqueta": "Under 3.5",
+        "cuota": 1.87,
+        "prob": 58.6,
+        "ev_pct": 9.6,
+        "estado": "PENDIENTE",
+        "pl": null
+      },
+      {
+        "tipo": "PICK",
+        "mercado": "over05_local",
+        "linea": null,
+        "etiqueta": "Over 0.5 Paderborn",
+        "cuota": 1.34,
+        "prob": 76.0,
+        "ev_pct": 1.8,
+        "estado": "PENDIENTE",
+        "pl": null
+      },
+      {
+        "tipo": "PICK",
+        "mercado": "hcp2_des",
+        "linea": null,
+        "etiqueta": "HCP +2 Paderborn",
+        "cuota": 1.57,
+        "prob": 71.2,
+        "ev_pct": 11.8,
+        "estado": "PENDIENTE",
+        "pl": null
+      },
+      {
+        "tipo": "COMBO",
+        "mercado": "local_remates_puerta_over2.5+over05_local",
+        "etiqueta": "L Remates a puerta Over 2.5 + Over 0.5 L",
+        "cuota": 1.55,
+        "prob": 70.7,
+        "ev_pct": 9.6,
+        "estado": "PENDIENTE",
+        "pl": null,
+        "patas": [
+          "local_remates_puerta_over2.5",
+          "over05_local"
+        ],
+        "promovida_combinada": true,
+        "nivel_cruce": "segura",
+        "cuota_justa": 1.37,
+        "cuota_segura": 1.49,
+        "acierto_hist": 73.0,
+        "n_hist": 230
+      }
+    ],
+    "watchlist": [
+      {
+        "mercado": "victoria_local",
+        "linea": null,
+        "etiqueta": "Victoria Paderborn",
+        "cuota": 4.9,
+        "prob": 27.1,
+        "ev_pct": 32.8,
+        "regla_1x2_no_pick": true
+      },
+      {
+        "mercado": "empate",
+        "linea": null,
+        "etiqueta": "Empate",
+        "cuota": 4.6,
+        "prob": 24.5,
+        "ev_pct": 12.7,
+        "regla_1x2_no_pick": true
+      },
+      {
+        "mercado": "corners65",
+        "linea": null,
+        "etiqueta": "corners65",
+        "cuota": 1.12,
+        "prob": 92.9,
+        "ev_pct": 4.0
+      },
+      {
+        "mercado": "corners75",
+        "linea": null,
+        "etiqueta": "corners75",
+        "cuota": 1.24,
+        "prob": 85.5,
+        "ev_pct": 6.0
+      },
+      {
+        "mercado": "local_corners_equipo",
+        "linea": 3.5,
+        "etiqueta": "Paderborn Corners equipo Over 3.5",
+        "cuota": 1.6,
+        "prob": 73.4,
+        "ev_pct": 17.4,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_corners_equipo",
+        "linea": 4.5,
+        "etiqueta": "Paderborn Corners equipo Over 4.5",
+        "cuota": 2.3,
+        "prob": 59.1,
+        "ev_pct": 35.9,
+        "tipo": "POR_EQUIPO",
+        "cuota_justa": 1.69,
+        "cuota_segura": 1.88,
+        "acierto_hist": 59.1,
+        "n_hist": 286
+      },
+      {
+        "mercado": "local_corners_equipo",
+        "linea": 5.5,
+        "etiqueta": "Paderborn Corners equipo Over 5.5",
+        "cuota": 3.5,
+        "prob": 44.9,
+        "ev_pct": 57.2,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_corners_equipo",
+        "linea": 6.5,
+        "etiqueta": "Paderborn Corners equipo Over 6.5",
+        "cuota": 5.5,
+        "prob": 32.3,
+        "ev_pct": 77.6,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_corners_equipo",
+        "linea": 7.5,
+        "etiqueta": "Paderborn Corners equipo Over 7.5",
+        "cuota": 8.25,
+        "prob": 22.2,
+        "ev_pct": 83.2,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 3.5,
+        "etiqueta": "Stuttgart Corners equipo Over 3.5",
+        "cuota": 1.18,
+        "prob": 79.3,
+        "ev_pct": -6.4,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 4.5,
+        "etiqueta": "Stuttgart Corners equipo Over 4.5",
+        "cuota": 1.42,
+        "prob": 66.8,
+        "ev_pct": -5.1,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 5.5,
+        "etiqueta": "Stuttgart Corners equipo Over 5.5",
+        "cuota": 1.8,
+        "prob": 53.3,
+        "ev_pct": -4.1,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 6.5,
+        "etiqueta": "Stuttgart Corners equipo Over 6.5",
+        "cuota": 2.47,
+        "prob": 40.6,
+        "ev_pct": 0.3,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 7.5,
+        "etiqueta": "Stuttgart Corners equipo Over 7.5",
+        "cuota": 3.6,
+        "prob": 29.5,
+        "ev_pct": 6.2,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates",
+        "linea": 11.5,
+        "etiqueta": "Paderborn Remates Over 11.5",
+        "cuota": 1.93,
+        "prob": 81.5,
+        "ev_pct": 57.3,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates",
+        "linea": 12.5,
+        "etiqueta": "Paderborn Remates Over 12.5",
+        "cuota": 2.45,
+        "prob": 75.4,
+        "ev_pct": 84.7,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates",
+        "linea": 15.5,
+        "etiqueta": "Stuttgart Remates Over 15.5",
+        "cuota": 1.62,
+        "prob": 51.2,
+        "ev_pct": -17.1,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates_puerta",
+        "linea": 3.5,
+        "etiqueta": "Paderborn Remates a puerta Over 3.5",
+        "cuota": 1.75,
+        "prob": 74.8,
+        "ev_pct": 30.9,
+        "tipo": "POR_EQUIPO",
+        "cuota_justa": 1.37,
+        "cuota_segura": 1.51,
+        "acierto_hist": 72.8,
+        "n_hist": 206
+      },
+      {
+        "mercado": "local_remates_puerta",
+        "linea": 4.5,
+        "etiqueta": "Paderborn Remates a puerta Over 4.5",
+        "cuota": 2.62,
+        "prob": 58.7,
+        "ev_pct": 53.8,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates_puerta",
+        "linea": 5.5,
+        "etiqueta": "Stuttgart Remates a puerta Over 5.5",
+        "cuota": 1.65,
+        "prob": 40.3,
+        "ev_pct": -33.5,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates_puerta",
+        "linea": 6.5,
+        "etiqueta": "Stuttgart Remates a puerta Over 6.5",
+        "cuota": 2.2,
+        "prob": 26.2,
+        "ev_pct": -42.4,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "over15+hcp3_local",
+        "linea": null,
+        "etiqueta": "Over 1.5 + HCP +3 L",
+        "cuota": 1.42,
+        "prob": 70.3,
+        "ev_pct": -0.1,
+        "tipo": "COMBINADA",
+        "patas": [
+          "over15",
+          "hcp3_local"
+        ],
+        "lift": 0.98,
+        "cuota_justa": 1.35,
+        "cuota_segura": 1.45,
+        "acierto_hist": 74.0,
+        "n_hist": 335
+      },
+      {
+        "mercado": "dox2+hcp3_local",
+        "linea": null,
+        "etiqueta": "DO Empate o V + HCP +3 L",
+        "cuota": 1.57,
+        "prob": 59.4,
+        "ev_pct": -6.8,
+        "tipo": "COMBINADA",
+        "patas": [
+          "dox2",
+          "hcp3_local"
+        ],
+        "lift": 0.968,
+        "cuota_justa": 1.72,
+        "cuota_segura": 1.91,
+        "acierto_hist": 58.1,
+        "n_hist": 296
+      },
+      {
+        "mercado": "over25+hcp3_local",
+        "linea": null,
+        "etiqueta": "Over 2.5 + HCP +3 L",
+        "cuota": 1.88,
+        "prob": 50.1,
+        "ev_pct": -5.9,
+        "tipo": "COMBINADA",
+        "patas": [
+          "over25",
+          "hcp3_local"
+        ],
+        "lift": 0.94,
+        "cuota_justa": 1.89,
+        "cuota_segura": 2.14,
+        "acierto_hist": 52.9,
+        "n_hist": 261
+      },
+      {
+        "mercado": "btts+local_remates_puerta_over2.5",
+        "linea": null,
+        "etiqueta": "BTTS + L Remates a puerta Over 2.5",
+        "cuota": 1.7,
+        "prob": 59.0,
+        "ev_pct": 0.3,
+        "tipo": "COMBINADA",
+        "patas": [
+          "btts",
+          "local_remates_puerta_over2.5"
+        ],
+        "lift": 1.085,
+        "cuota_justa": 1.77,
+        "cuota_segura": 1.94,
+        "acierto_hist": 56.6,
+        "n_hist": 362
+      },
+      {
+        "mercado": "dox2+under45",
+        "linea": null,
+        "etiqueta": "DO Empate o V + Under 4.5",
+        "cuota": 1.67,
+        "prob": 56.3,
+        "ev_pct": -6.0,
+        "tipo": "COMBINADA",
+        "patas": [
+          "dox2",
+          "under45"
+        ],
+        "lift": 1.05,
+        "cuota_justa": 1.67,
+        "cuota_segura": 1.88,
+        "acierto_hist": 59.7,
+        "n_hist": 226
+      },
+      {
+        "mercado": "under25",
+        "linea": null,
+        "etiqueta": "Under 2.5",
+        "cuota": 3.05,
+        "prob": 36.8,
+        "ev_pct": 12.2,
+        "regla_unicidad_totales": "cede ante under35 (score EV/prob 5.6)"
+      },
+      {
+        "mercado": "under45",
+        "linea": null,
+        "etiqueta": "Under 4.5",
+        "cuota": 1.38,
+        "prob": 76.7,
+        "ev_pct": 5.8,
+        "regla_unicidad_totales": "cede ante under35 (score EV/prob 5.6)"
+      },
+      {
+        "mercado": "hcp3_des",
+        "linea": null,
+        "etiqueta": "HCP +3 Paderborn",
+        "cuota": 1.23,
+        "prob": 86.5,
+        "ev_pct": 6.4,
+        "regla_unicidad_handicap": "cede ante hcp2_des (EV 11.8%)"
+      },
+      {
+        "mercado": "do1x",
+        "linea": null,
+        "etiqueta": "DO Paderborn o Empate",
+        "cuota": 2.4,
+        "prob": 47.8,
+        "ev_pct": 14.7,
+        "regla_do_desfavorito": "DO del desfavorecido (lambda 1.36 vs 1.92); nunca PICK"
+      }
+    ],
+    "mercados_snapshot": {
+      "victoria_local": 27.1,
+      "empate": 24.5,
+      "victoria_visit": 52.2,
+      "do1x": 47.8,
+      "dox2": 72.9,
+      "over15": 84.1,
+      "over25": 63.3,
+      "under25": 36.8,
+      "over35": 41.4,
+      "under35": 58.6,
+      "under45": 76.7,
+      "btts": 62.7,
+      "over05_local": 76.0,
+      "over05_visit": 85.3,
+      "hcp2_des": 71.2,
+      "hcp3_des": 86.5,
+      "corners65": 92.9,
+      "corners75": 85.5,
+      "local_remates_over7.5": 96.7,
+      "local_remates_over8.5": 94.4,
+      "local_remates_over9.5": 91.1,
+      "local_remates_over10.5": 86.8,
+      "local_remates_over11.5": 81.5,
+      "local_remates_over12.5": 75.4,
+      "local_remates_over13.5": 68.5,
+      "local_remates_over14.5": 61.2,
+      "local_remates_over15.5": 53.8,
+      "local_remates_puerta_over1.5": 95.9,
+      "local_remates_puerta_over2.5": 87.8,
+      "local_remates_puerta_over3.5": 74.8,
+      "local_remates_puerta_over4.5": 58.7,
+      "local_remates_puerta_over5.5": 42.2,
+      "local_remates_puerta_over6.5": 27.9,
+      "local_corners_equipo_over2.5": 85.8,
+      "local_corners_equipo_over3.5": 73.4,
+      "local_corners_equipo_over4.5": 59.1,
+      "local_corners_equipo_over5.5": 44.9,
+      "local_corners_equipo_over6.5": 32.3,
+      "local_corners_equipo_over7.5": 22.2,
+      "visit_remates_over7.5": 96.3,
+      "visit_remates_over8.5": 93.7,
+      "visit_remates_over9.5": 90.1,
+      "visit_remates_over10.5": 85.5,
+      "visit_remates_over11.5": 79.9,
+      "visit_remates_over12.5": 73.4,
+      "visit_remates_over13.5": 66.3,
+      "visit_remates_over14.5": 58.8,
+      "visit_remates_over15.5": 51.2,
+      "visit_remates_puerta_over1.5": 95.5,
+      "visit_remates_puerta_over2.5": 87.0,
+      "visit_remates_puerta_over3.5": 73.4,
+      "visit_remates_puerta_over4.5": 56.8,
+      "visit_remates_puerta_over5.5": 40.3,
+      "visit_remates_puerta_over6.5": 26.2,
+      "visit_corners_equipo_over2.5": 89.5,
+      "visit_corners_equipo_over3.5": 79.3,
+      "visit_corners_equipo_over4.5": 66.8,
+      "visit_corners_equipo_over5.5": 53.3,
+      "visit_corners_equipo_over6.5": 40.6,
+      "visit_corners_equipo_over7.5": 29.5
+    },
+    "cruces_validados": [
+      {
+        "mercado": "over25",
+        "etiqueta": "Over 2.5",
+        "cuota": 1.39,
+        "justa": 1.56,
+        "segura": 1.74,
+        "hist": 64.1,
+        "n": 206,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "btts",
+        "etiqueta": "BTTS",
+        "cuota": 1.45,
+        "justa": 1.6,
+        "segura": 1.76,
+        "hist": 62.7,
+        "n": 260,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "local_corners_equipo_over4.5",
+        "etiqueta": "Paderborn Corners Over 4.5",
+        "cuota": 2.3,
+        "justa": 1.69,
+        "segura": 1.88,
+        "hist": 59.1,
+        "n": 286,
+        "cruza": true,
+        "cruza_segura": true
+      },
+      {
+        "mercado": "local_remates_puerta_over3.5",
+        "etiqueta": "Paderborn Remates a puerta Over 3.5",
+        "cuota": 1.75,
+        "justa": 1.37,
+        "segura": 1.51,
+        "hist": 72.8,
+        "n": 206,
+        "cruza": true,
+        "cruza_segura": true
+      },
+      {
+        "mercado": "over15+hcp3_local",
+        "etiqueta": "Over 1.5 + HCP +3 L",
+        "cuota": 1.42,
+        "justa": 1.35,
+        "segura": 1.45,
+        "hist": 74.0,
+        "n": 335,
+        "cruza": true,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "dox2+hcp3_local",
+        "etiqueta": "DO Empate o V + HCP +3 L",
+        "cuota": 1.57,
+        "justa": 1.72,
+        "segura": 1.91,
+        "hist": 58.1,
+        "n": 296,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "over25+hcp3_local",
+        "etiqueta": "Over 2.5 + HCP +3 L",
+        "cuota": 1.88,
+        "justa": 1.89,
+        "segura": 2.14,
+        "hist": 52.9,
+        "n": 261,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "local_remates_puerta_over2.5+over05_local",
+        "etiqueta": "L Remates a puerta Over 2.5 + Over 0.5 L",
+        "cuota": 1.55,
+        "justa": 1.37,
+        "segura": 1.49,
+        "hist": 73.0,
+        "n": 230,
+        "cruza": true,
+        "cruza_segura": true
+      },
+      {
+        "mercado": "btts+local_remates_puerta_over2.5",
+        "etiqueta": "BTTS + L Remates a puerta Over 2.5",
+        "cuota": 1.7,
+        "justa": 1.77,
+        "segura": 1.94,
+        "hist": 56.6,
+        "n": 362,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "dox2+under45",
+        "etiqueta": "DO Empate o V + Under 4.5",
+        "cuota": 1.67,
+        "justa": 1.67,
+        "segura": 1.88,
+        "hist": 59.7,
+        "n": 226,
+        "cruza": true,
+        "cruza_segura": false
+      }
+    ],
+    "validadas": [
+      {
+        "mercado": "over05_visit+hcp2_local",
+        "etiqueta": "Over 0.5 V + HCP +2 L",
+        "tipo": "COMBINADA",
+        "p": 0.5648,
+        "cuota_justa": 1.68,
+        "cuota_segura": 1.8,
+        "acierto_hist": 59.6,
+        "n_hist": 582,
+        "cotizada": false
+      },
+      {
+        "mercado": "btts+local_remates_puerta_over2.5",
+        "etiqueta": "BTTS + L Remates a puerta Over 2.5",
+        "tipo": "COMBINADA",
+        "p": 0.5902,
+        "cuota_justa": 1.77,
+        "cuota_segura": 1.94,
+        "acierto_hist": 56.6,
+        "n_hist": 362,
+        "cotizada": true
+      },
+      {
+        "mercado": "over15+hcp3_local",
+        "etiqueta": "Over 1.5 + HCP +3 L",
+        "tipo": "COMBINADA",
+        "p": 0.7034,
+        "cuota_justa": 1.35,
+        "cuota_segura": 1.45,
+        "acierto_hist": 74.0,
+        "n_hist": 335,
+        "cotizada": true
+      },
+      {
+        "mercado": "under45+over05_visit",
+        "etiqueta": "Under 4.5 + Over 0.5 V",
+        "tipo": "COMBINADA",
+        "p": 0.6222,
+        "cuota_justa": 1.56,
+        "cuota_segura": 1.7,
+        "acierto_hist": 64.2,
+        "n_hist": 327,
+        "cotizada": false
+      },
+      {
+        "mercado": "local_corners_equipo_over3.5+local_remates_over8.5",
+        "etiqueta": "L Corners Over 3.5 + L Remates Over 8.5",
+        "tipo": "COMBINADA",
+        "p": 0.7669,
+        "cuota_justa": 1.31,
+        "cuota_segura": 1.41,
+        "acierto_hist": 76.2,
+        "n_hist": 303,
+        "cotizada": false
+      },
+      {
+        "mercado": "dox2+hcp3_local",
+        "etiqueta": "DO Empate o V + HCP +3 L",
+        "tipo": "COMBINADA",
+        "p": 0.5936,
+        "cuota_justa": 1.72,
+        "cuota_segura": 1.91,
+        "acierto_hist": 58.1,
+        "n_hist": 296,
+        "cotizada": true
+      },
+      {
+        "mercado": "local_corners_equipo_over4.5",
+        "etiqueta": "Paderborn Corners Over 4.5",
+        "tipo": "por equipo",
+        "p": 0.5912,
+        "cuota_justa": 1.69,
+        "cuota_segura": 1.88,
+        "acierto_hist": 59.1,
+        "n_hist": 286,
+        "cotizada": true
+      },
+      {
+        "mercado": "local_corners_equipo_over2.5+local_remates_over10.5",
+        "etiqueta": "L Corners Over 2.5 + L Remates Over 10.5",
+        "tipo": "COMBINADA",
+        "p": 0.7606,
+        "cuota_justa": 1.34,
+        "cuota_segura": 1.44,
+        "acierto_hist": 74.9,
+        "n_hist": 267,
+        "cotizada": false
+      },
+      {
+        "mercado": "over25+hcp3_local",
+        "etiqueta": "Over 2.5 + HCP +3 L",
+        "tipo": "COMBINADA",
+        "p": 0.5006,
+        "cuota_justa": 1.89,
+        "cuota_segura": 2.14,
+        "acierto_hist": 52.9,
+        "n_hist": 261,
+        "cotizada": true
+      },
+      {
+        "mercado": "btts",
+        "etiqueta": "BTTS",
+        "tipo": "simple",
+        "p": 0.6266,
+        "cuota_justa": 1.6,
+        "cuota_segura": 1.76,
+        "acierto_hist": 62.7,
+        "n_hist": 260,
+        "cotizada": true
+      },
+      {
+        "mercado": "local_corners_equipo_over4.5+local_remates_over10.5",
+        "etiqueta": "L Corners Over 4.5 + L Remates Over 10.5",
+        "tipo": "COMBINADA",
+        "p": 0.5852,
+        "cuota_justa": 1.72,
+        "cuota_segura": 1.92,
+        "acierto_hist": 58.2,
+        "n_hist": 256,
+        "cotizada": false
+      },
+      {
+        "mercado": "over05_local+hcp3_visit",
+        "etiqueta": "Over 0.5 L + HCP +3 V",
+        "tipo": "COMBINADA",
+        "p": 0.7018,
+        "cuota_justa": 1.37,
+        "cuota_segura": 1.49,
+        "acierto_hist": 72.9,
+        "n_hist": 255,
+        "cotizada": false
+      },
+      {
+        "mercado": "under45+hcp2_visit",
+        "etiqueta": "Under 4.5 + HCP +2 V",
+        "tipo": "COMBINADA",
+        "p": 0.6811,
+        "cuota_justa": 1.49,
+        "cuota_segura": 1.64,
+        "acierto_hist": 67.1,
+        "n_hist": 246,
+        "cotizada": false
+      },
+      {
+        "mercado": "under35+hcp2_visit",
+        "etiqueta": "Under 3.5 + HCP +2 V",
+        "tipo": "COMBINADA",
+        "p": 0.5353,
+        "cuota_justa": 1.87,
+        "cuota_segura": 2.12,
+        "acierto_hist": 53.5,
+        "n_hist": 243,
+        "cotizada": false
+      },
+      {
+        "mercado": "local_remates_puerta_over2.5+over05_local",
+        "etiqueta": "L Remates a puerta Over 2.5 + Over 0.5 L",
+        "tipo": "COMBINADA",
+        "p": 0.7072,
+        "cuota_justa": 1.37,
+        "cuota_segura": 1.49,
+        "acierto_hist": 73.0,
+        "n_hist": 230,
+        "cotizada": true
+      },
+      {
+        "mercado": "local_corners_equipo_over4.5+local_remates_over9.5",
+        "etiqueta": "L Corners Over 4.5 + L Remates Over 9.5",
+        "tipo": "COMBINADA",
+        "p": 0.6026,
+        "cuota_justa": 1.55,
+        "cuota_segura": 1.73,
+        "acierto_hist": 64.3,
+        "n_hist": 227,
+        "cotizada": false
+      },
+      {
+        "mercado": "dox2+under45",
+        "etiqueta": "DO Empate o V + Under 4.5",
+        "tipo": "COMBINADA",
+        "p": 0.5631,
+        "cuota_justa": 1.67,
+        "cuota_segura": 1.88,
+        "acierto_hist": 59.7,
+        "n_hist": 226,
+        "cotizada": true
+      },
+      {
+        "mercado": "local_remates_puerta_over3.5",
+        "etiqueta": "Paderborn Remates a puerta Over 3.5",
+        "tipo": "por equipo",
+        "p": 0.7483,
+        "cuota_justa": 1.37,
+        "cuota_segura": 1.51,
+        "acierto_hist": 72.8,
+        "n_hist": 206,
+        "cotizada": true
+      },
+      {
+        "mercado": "over25",
+        "etiqueta": "Over 2.5",
+        "tipo": "simple",
+        "p": 0.6327,
+        "cuota_justa": 1.56,
+        "cuota_segura": 1.74,
+        "acierto_hist": 64.1,
+        "n_hist": 206,
+        "cotizada": true
+      },
+      {
+        "mercado": "local_remates_puerta_over4.5+over15",
+        "etiqueta": "L Remates a puerta Over 4.5 + Over 1.5",
+        "tipo": "COMBINADA",
+        "p": 0.5479,
+        "cuota_justa": 1.94,
+        "cuota_segura": 2.24,
+        "acierto_hist": 51.5,
+        "n_hist": 202,
+        "cotizada": false
+      },
+      {
+        "mercado": "local_corners_equipo_over2.5+local_remates_over11.5",
+        "etiqueta": "L Corners Over 2.5 + L Remates Over 11.5",
+        "tipo": "COMBINADA",
+        "p": 0.7241,
+        "cuota_justa": 1.35,
+        "cuota_segura": 1.47,
+        "acierto_hist": 74.3,
+        "n_hist": 202,
+        "cotizada": false
+      },
+      {
+        "mercado": "local_corners_equipo_over3.5+local_remates_over11.5",
+        "etiqueta": "L Corners Over 3.5 + L Remates Over 11.5",
+        "tipo": "COMBINADA",
+        "p": 0.6283,
+        "cuota_justa": 1.55,
+        "cuota_segura": 1.74,
+        "acierto_hist": 64.4,
+        "n_hist": 191,
+        "cotizada": false
+      },
+      {
+        "mercado": "over05_local+hcp2_local",
+        "etiqueta": "Over 0.5 L + HCP +2 L",
+        "tipo": "COMBINADA",
+        "p": 0.6012,
+        "cuota_justa": 1.66,
+        "cuota_segura": 1.88,
+        "acierto_hist": 60.2,
+        "n_hist": 191,
+        "cotizada": false
+      },
+      {
+        "mercado": "local_remates_over10.5+local_remates_puerta_over4.5",
+        "etiqueta": "L Remates Over 10.5 + L Remates a puerta Over 4.5",
+        "tipo": "COMBINADA",
+        "p": 0.5967,
+        "cuota_justa": 1.75,
+        "cuota_segura": 2.0,
+        "acierto_hist": 57.2,
+        "n_hist": 187,
+        "cotizada": false
+      },
+      {
+        "mercado": "local_corners_equipo_over3.5+local_remates_over10.5",
+        "etiqueta": "L Corners Over 3.5 + L Remates Over 10.5",
+        "tipo": "COMBINADA",
+        "p": 0.7209,
+        "cuota_justa": 1.36,
+        "cuota_segura": 1.5,
+        "acierto_hist": 73.5,
+        "n_hist": 185,
+        "cotizada": false
+      },
+      {
+        "mercado": "local_corners_equipo_over4.5+local_remates_over11.5",
+        "etiqueta": "L Corners Over 4.5 + L Remates Over 11.5",
+        "tipo": "COMBINADA",
+        "p": 0.5718,
+        "cuota_justa": 1.71,
+        "cuota_segura": 1.95,
+        "acierto_hist": 58.5,
+        "n_hist": 183,
+        "cotizada": false
+      },
+      {
+        "mercado": "local_corners_equipo_over3.5+local_remates_over9.5",
+        "etiqueta": "L Corners Over 3.5 + L Remates Over 9.5",
+        "tipo": "COMBINADA",
+        "p": 0.7524,
+        "cuota_justa": 1.27,
+        "cuota_segura": 1.39,
+        "acierto_hist": 78.5,
+        "n_hist": 181,
+        "cotizada": false
+      },
+      {
+        "mercado": "local_corners_equipo_over3.5+local_remates_over13.5",
+        "etiqueta": "L Corners Over 3.5 + L Remates Over 13.5",
+        "tipo": "COMBINADA",
+        "p": 0.541,
+        "cuota_justa": 1.81,
+        "cuota_segura": 2.08,
+        "acierto_hist": 55.2,
+        "n_hist": 181,
+        "cotizada": false
+      },
+      {
+        "mercado": "local_remates_puerta_over3.5+over15",
+        "etiqueta": "L Remates a puerta Over 3.5 + Over 1.5",
+        "tipo": "COMBINADA",
+        "p": 0.6696,
+        "cuota_justa": 1.49,
+        "cuota_segura": 1.66,
+        "acierto_hist": 67.2,
+        "n_hist": 180,
+        "cotizada": false
+      },
+      {
+        "mercado": "local_corners_equipo_over4.5+local_remates_over12.5",
+        "etiqueta": "L Corners Over 4.5 + L Remates Over 12.5",
+        "tipo": "COMBINADA",
+        "p": 0.5309,
+        "cuota_justa": 1.88,
+        "cuota_segura": 2.18,
+        "acierto_hist": 53.1,
+        "n_hist": 177,
+        "cotizada": false
+      },
+      {
+        "mercado": "local_remates_puerta_over3.5+over05_local",
+        "etiqueta": "L Remates a puerta Over 3.5 + Over 0.5 L",
+        "tipo": "COMBINADA",
+        "p": 0.6222,
+        "cuota_justa": 1.65,
+        "cuota_segura": 1.88,
+        "acierto_hist": 60.5,
+        "n_hist": 177,
+        "cotizada": false
+      },
+      {
+        "mercado": "under45+over05_local",
+        "etiqueta": "Under 4.5 + Over 0.5 L",
+        "tipo": "COMBINADA",
+        "p": 0.5212,
+        "cuota_justa": 1.84,
+        "cuota_segura": 2.13,
+        "acierto_hist": 54.4,
+        "n_hist": 171,
+        "cotizada": false
+      },
+      {
+        "mercado": "local_corners_equipo_over3.5+local_remates_over12.5",
+        "etiqueta": "L Corners Over 3.5 + L Remates Over 12.5",
+        "tipo": "COMBINADA",
+        "p": 0.5935,
+        "cuota_justa": 1.77,
+        "cuota_segura": 2.04,
+        "acierto_hist": 56.5,
+        "n_hist": 170,
+        "cotizada": false
+      },
+      {
+        "mercado": "local_corners_equipo_over3.5+local_remates_puerta_over3.5",
+        "etiqueta": "L Corners Over 3.5 + L Remates a puerta Over 3.5",
+        "tipo": "COMBINADA",
+        "p": 0.6012,
+        "cuota_justa": 1.6,
+        "cuota_segura": 1.82,
+        "acierto_hist": 62.7,
+        "n_hist": 166,
+        "cotizada": false
+      },
+      {
+        "mercado": "hcp2_local+local_remates_puerta_over3.5",
+        "etiqueta": "HCP +2 L + L Remates a puerta Over 3.5",
+        "tipo": "COMBINADA",
+        "p": 0.5611,
+        "cuota_justa": 1.71,
+        "cuota_segura": 1.97,
+        "acierto_hist": 58.6,
+        "n_hist": 157,
+        "cotizada": false
+      },
+      {
+        "mercado": "over05_visit+hcp2_visit",
+        "etiqueta": "Over 0.5 V + HCP +2 V",
+        "tipo": "COMBINADA",
+        "p": 0.7937,
+        "cuota_justa": 1.26,
+        "cuota_segura": 1.38,
+        "acierto_hist": 79.6,
+        "n_hist": 152,
+        "cotizada": false
+      },
+      {
+        "mercado": "over15+hcp3_visit",
+        "etiqueta": "Over 1.5 + HCP +3 V",
+        "tipo": "COMBINADA",
+        "p": 0.7978,
+        "cuota_justa": 1.32,
+        "cuota_segura": 1.46,
+        "acierto_hist": 76.0,
+        "n_hist": 150,
+        "cotizada": false
+      }
+    ]
   }
 ];
