@@ -350,6 +350,16 @@
       <div class="card"><div class="card-title">Rendimiento por tipo</div><div id="tipo-stats"></div></div>
       <div class="card"><div class="card-title">Mercados más frecuentes</div><div id="mercado-freq"></div></div>
     </div>
+    <div class="card card-full" style="margin-top:16px">
+      <div class="card-title">COMBOs por par de mercados</div>
+      <p style="font-size:12px;color:var(--text3);margin:0 0 10px">
+        Cada COMBO se analiza como una unidad (su cuota ya incluye la correlación entre patas),
+        agrupado por el par de mercados sin las líneas. <b>Prob. modelo vs WR</b> mide si la
+        probabilidad conjunta del engine es honesta; <b>margen</b> es cuánto superó la cuota
+        a la línea justa validada; <b>pata que falló</b> sale de los 60 resultados del partido.
+        Con menos de 5 cerrados por par, solo orienta.</p>
+      <div id="combos-por-par" style="overflow-x:auto"></div>
+    </div>
   </div>
 
   <!-- Ligas -->
@@ -1822,7 +1832,8 @@ function renderMercadoCuotaHeatmap(){
 function renderMercadoLigaHeatmap(){
   const el=document.getElementById('hm-mercado-liga');
   if(!el) return;
-  const bets=flatBets().filter(a=>a.estado==='GANADA'||a.estado==='PERDIDA');
+  // Solo PICKs: un COMBO tiene cuota combinada (ver renderCombosPorPar).
+  const bets=flatBets().filter(a=>a.tipo==='PICK'&&(a.estado==='GANADA'||a.estado==='PERDIDA'));
   if(bets.length<3){el.innerHTML='<p class="empty">Mínimo 3 apuestas confirmadas</p>';return;}
 
   const ligas=Object.keys(LIGA_NAMES).filter(l=>_DATA.some(p=>p.liga===l));
@@ -2004,7 +2015,7 @@ function renderMercadoFreq(){
   const map={};
   // Solo confirmadas (GANADA/PERDIDA) -- las pendientes no tienen resultado
   // contra el cual validar, mezclarlas infla el conteo sin aportar al WR/PL.
-  flatBets().filter(a=>a.estado==='GANADA'||a.estado==='PERDIDA')
+  flatBets().filter(a=>a.tipo==='PICK'&&(a.estado==='GANADA'||a.estado==='PERDIDA'))
     .forEach(a=>{const k=a.mercado.split('+')[0].trim();if(!map[k])map[k]=[];map[k].push(a);});
   document.getElementById('mercado-freq').innerHTML=
     Object.entries(map).sort((a,b)=>b[1].length-a[1].length).slice(0,8).map(([m,bets])=>{
@@ -2019,9 +2030,71 @@ function renderMercadoFreq(){
     }).join('');
 }
 
+// COMBOs por par de mercados (2026-10-10). Los COMBOs no entran en las tablas por mercado
+// (cuota combinada); aqui se miden como unidad. La pata que fallo se deduce de
+// snapshot_resultados: hcp{n}_local/visit se traducen a hcp{n}_des segun quien era el
+// desfavorecido (misma convencion que add_bet._derivar: favorito = lambda mayor).
+function _comboPata(k,p){
+  const m=k.match(/^hcp([23])_(local|visit)$/);
+  if(!m) return k;
+  const locFav=(p.lambda_final_l||0)>=(p.lambda_final_v||0);
+  const esDes=(m[2]==='visit')?locFav:!locFav;
+  return esDes?('hcp'+m[1]+'_des'):null;   // hcp del favorito: no existe en el snapshot
+}
+const _COMBO_ET={over15:'Over 1.5',over25:'Over 2.5',over35:'Over 3.5',under25:'Under 2.5',under35:'Under 3.5',under45:'Under 4.5',
+  btts:'BTTS',over05_local:'Over 0.5 L',over05_visit:'Over 0.5 V',do1x:'DO 1X',dox2:'DO X2',
+  hcp2_local:'HCP +2 L',hcp2_visit:'HCP +2 V',hcp3_local:'HCP +3 L',hcp3_visit:'HCP +3 V',hcp2_des:'HCP +2',hcp3_des:'HCP +3'};
+function _comboEtPata(x){
+  x=x.trim(); if(_COMBO_ET[x]) return _COMBO_ET[x];
+  const base=_claveMercado(x).replace(/^local_/,'L ').replace(/^visit_/,'V ');
+  return base.replace('remates_puerta','remates a puerta').replace('corners_equipo','córners');
+}
+function _comboNombrePar(k){
+  return k.split('+').map(_comboEtPata).sort().join(' + ');
+}
+function renderCombosPorPar(){
+  const el=document.getElementById('combos-por-par'); if(!el) return;
+  const todos=flatBets().filter(a=>a.tipo==='COMBO'&&(a.estado==='GANADA'||a.estado==='PERDIDA'));
+  if(!todos.length){el.innerHTML='<p class="empty">Sin COMBOs cerrados todavía.</p>';return;}
+  const mapa={};
+  todos.forEach(a=>{const k=_comboNombrePar(a.mercado);(mapa[k]=mapa[k]||[]).push(a);});
+  const pct=(n,d)=>d?(n/d*100).toFixed(0)+'%':'—';
+  const fila=(k,arr)=>{
+    const g=arr.filter(a=>a.estado==='GANADA').length;
+    const conP=arr.filter(a=>a.prob!=null);
+    const probMed=conP.length?conP.reduce((s,a)=>s+a.prob,0)/conP.length:null;
+    const wr=g/arr.length*100;
+    const roi=arr.reduce((s,a)=>s+(a.pl||0),0)/arr.length*100;
+    const conJ=arr.filter(a=>a.cuota_justa);
+    const margen=conJ.length?conJ.reduce((s,a)=>s+(a.cuota/a.cuota_justa-1),0)/conJ.length*100:null;
+    // pata que fallo, solo en las perdidas
+    const fallos={};
+    arr.filter(a=>a.estado==='PERDIDA').forEach(a=>{
+      const sr=a.partido.snapshot_resultados||{};
+      (a.patas||a.mercado.split('+')).forEach(pt=>{
+        const key=_comboPata(pt.trim(),a.partido);
+        if(key&&sr[key]===false){const n=_comboEtPata(pt);fallos[n]=(fallos[n]||0)+1;}
+      });
+    });
+    const fTxt=Object.keys(fallos).length?Object.entries(fallos).map(([n,c])=>n+' ×'+c).join(', '):(arr.some(a=>a.estado==='PERDIDA')?'sin dato':'—');
+    const sesgo=probMed!=null?wr-probMed:null;
+    const chica=arr.length<5?' style="color:var(--text3)"':'';
+    return '<tr'+chica+'><td style="text-align:left">'+k+'</td><td>'+arr.length+'</td>'
+      +'<td>'+wr.toFixed(0)+'%</td>'
+      +'<td>'+(probMed!=null?probMed.toFixed(0)+'%':'—')+(sesgo!=null?' <span style="font-size:10px;color:var(--text3)">('+(sesgo>=0?'+':'')+sesgo.toFixed(0)+')</span>':'')+'</td>'
+      +'<td class="'+(roi>=0?'pl-pos':'pl-neg')+'">'+(roi>=0?'+':'')+roi.toFixed(0)+'%</td>'
+      +'<td>'+(margen!=null?(margen>=0?'+':'')+margen.toFixed(0)+'%':'—')+'</td>'
+      +'<td style="text-align:left;font-size:11px">'+fTxt+'</td></tr>';
+  };
+  const filas=Object.entries(mapa).sort((a,b)=>b[1].length-a[1].length).map(([k,arr])=>fila(k,arr)).join('');
+  el.innerHTML='<table class="hm-table"><thead><tr><th style="text-align:left">Par</th><th>Cerrados</th><th>WR</th>'
+    +'<th>Prob. modelo (sesgo)</th><th>ROI</th><th>Margen vs justa</th><th style="text-align:left">Pata que falló</th></tr></thead><tbody>'
+    +filas+fila('TOTAL',todos).replace('<tr','<tr class="hm-total-row"')+'</tbody></table>';
+}
+
 // ── Calib by market ───────────────────────────────────────
 function renderCalibByMarket(){
-  const bets=flatBets().filter(a=>(a.estado==='GANADA'||a.estado==='PERDIDA')&&a.prob!=null);
+  const bets=flatBets().filter(a=>a.tipo==='PICK'&&(a.estado==='GANADA'||a.estado==='PERDIDA')&&a.prob!=null);
   const el=document.getElementById('calib-by-market');
   if(bets.length<3){el.innerHTML='<p class="empty">Minimo 3 apuestas confirmadas con prob</p>';return;}
 
@@ -3400,7 +3473,7 @@ function renderAll(){
   const active=document.querySelector('.tab.active')?.dataset.tab;
   if(active==='tendencias'){renderPLChart();renderPLDist();renderHighEVLost();renderRacha();}
   if(active==='calibracion'){renderEVScatter();renderCalibBands();renderCalibByMarket();}
-  if(active==='mercados'){renderCuotaROI();renderMercadoCuotaHeatmap();renderTipoStats();renderMercadoFreq();}
+  if(active==='mercados'){renderCuotaROI();renderMercadoCuotaHeatmap();renderTipoStats();renderMercadoFreq();renderCombosPorPar();}
   if(active==='ligas'){renderLigaTipo();renderLigaRollingROI();renderMercadoLigaHeatmap();renderLigaCards();}
   if(active==='variables'){renderVariablesHeatmap();}
   if(active==='watchlist'){renderWatchlist();renderCrucesValidados();}
