@@ -21905,7 +21905,7 @@ const TRACKER_DATA = [
       {
         "mercado": "victoria_visit",
         "linea": null,
-        "etiqueta": "VictoriaVisit",
+        "etiqueta": "Victoria Lazio",
         "cuota": 1.91,
         "prob": 55.3,
         "ev_pct": 5.6,
@@ -21924,7 +21924,7 @@ const TRACKER_DATA = [
       {
         "mercado": "over15",
         "linea": null,
-        "etiqueta": "Over1.5",
+        "etiqueta": "Over 1.5",
         "cuota": 1.25,
         "prob": 80.8,
         "ev_pct": 1,
@@ -21934,7 +21934,7 @@ const TRACKER_DATA = [
       {
         "mercado": "over25",
         "linea": null,
-        "etiqueta": "Over2.5",
+        "etiqueta": "Over 2.5",
         "cuota": 1.75,
         "prob": 57.6,
         "ev_pct": 0.8,
@@ -21948,7 +21948,7 @@ const TRACKER_DATA = [
       {
         "mercado": "over35",
         "linea": null,
-        "etiqueta": "Over3.5",
+        "etiqueta": "Over 3.5",
         "cuota": 2.8,
         "prob": 34.7,
         "ev_pct": -2.8,
@@ -21957,7 +21957,7 @@ const TRACKER_DATA = [
       {
         "mercado": "under45",
         "linea": null,
-        "etiqueta": "Under4.5",
+        "etiqueta": "Under 4.5",
         "cuota": 1.18,
         "prob": 82,
         "ev_pct": -3.2,
@@ -21979,7 +21979,7 @@ const TRACKER_DATA = [
       {
         "mercado": "over05_local",
         "linea": null,
-        "etiqueta": "Over0.5local",
+        "etiqueta": "Over 0.5 Venezia",
         "cuota": 1.39,
         "prob": 69.6,
         "ev_pct": -3.3,
@@ -22001,7 +22001,7 @@ const TRACKER_DATA = [
       {
         "mercado": "corners65",
         "linea": null,
-        "etiqueta": "Corners65",
+        "etiqueta": "Over 6.5 corners",
         "cuota": 1.2,
         "prob": 81.5,
         "ev_pct": -2.2,
@@ -32786,7 +32786,7 @@ const TRACKER_DATA = [
       {
         "mercado": "corners65",
         "linea": null,
-        "etiqueta": "corners65",
+        "etiqueta": "Over 6.5 corners",
         "cuota": 1.26,
         "prob": 82.2,
         "ev_pct": 3.6,
@@ -32795,7 +32795,7 @@ const TRACKER_DATA = [
       {
         "mercado": "corners75",
         "linea": null,
-        "etiqueta": "corners75",
+        "etiqueta": "Over 7.5 corners",
         "cuota": 1.5,
         "prob": 71.8,
         "ev_pct": 7.7,
@@ -32959,7 +32959,7 @@ const TRACKER_DATA = [
       {
         "mercado": "under25",
         "linea": null,
-        "etiqueta": "Under2.5",
+        "etiqueta": "Under 2.5",
         "cuota": 3.0,
         "prob": 36.4,
         "ev_pct": 9.2,
@@ -32969,7 +32969,7 @@ const TRACKER_DATA = [
       {
         "mercado": "under45",
         "linea": null,
-        "etiqueta": "Under4.5",
+        "etiqueta": "Under 4.5",
         "cuota": 1.38,
         "prob": 76.4,
         "ev_pct": 5.4,
@@ -33633,7 +33633,7 @@ const TRACKER_DATA = [
       {
         "mercado": "victoria_visit",
         "linea": null,
-        "etiqueta": "VictoriaVisit",
+        "etiqueta": "Victoria Werder Bremen",
         "cuota": 7.3,
         "prob": 13.8,
         "ev_pct": 0.7,
@@ -33643,7 +33643,7 @@ const TRACKER_DATA = [
       {
         "mercado": "corners65",
         "linea": null,
-        "etiqueta": "corners65",
+        "etiqueta": "Over 6.5 corners",
         "cuota": 1.16,
         "prob": 85.3,
         "ev_pct": -1.1,
@@ -33652,7 +33652,7 @@ const TRACKER_DATA = [
       {
         "mercado": "corners75",
         "linea": null,
-        "etiqueta": "corners75",
+        "etiqueta": "Over 7.5 corners",
         "cuota": 1.3,
         "prob": 75.5,
         "ev_pct": -1.8,
@@ -33853,7 +33853,7 @@ const TRACKER_DATA = [
       {
         "mercado": "under25",
         "linea": null,
-        "etiqueta": "Under2.5",
+        "etiqueta": "Under 2.5",
         "cuota": 3.05,
         "prob": 40.5,
         "ev_pct": 23.5,
@@ -33863,7 +33863,7 @@ const TRACKER_DATA = [
       {
         "mercado": "under45",
         "linea": null,
-        "etiqueta": "Under4.5",
+        "etiqueta": "Under 4.5",
         "cuota": 1.39,
         "prob": 80.3,
         "ev_pct": 11.6,
@@ -34644,7 +34644,7 @@ const TRACKER_DATA = [
       {
         "mercado": "corners65",
         "linea": null,
-        "etiqueta": "corners65",
+        "etiqueta": "Over 6.5 corners",
         "cuota": 1.09,
         "prob": 85.9,
         "ev_pct": -6.4,
@@ -34653,7 +34653,7 @@ const TRACKER_DATA = [
       {
         "mercado": "corners75",
         "linea": null,
-        "etiqueta": "corners75",
+        "etiqueta": "Over 7.5 corners",
         "cuota": 1.18,
         "prob": 76.2,
         "ev_pct": -10.1,
@@ -36128,7 +36128,7 @@ const TRACKER_DATA = [
       {
         "mercado": "corners65",
         "linea": null,
-        "etiqueta": "corners65",
+        "etiqueta": "Over 6.5 corners",
         "cuota": 1.15,
         "prob": 84.1,
         "ev_pct": -3.3
@@ -36136,7 +36136,7 @@ const TRACKER_DATA = [
       {
         "mercado": "corners75",
         "linea": null,
-        "etiqueta": "corners75",
+        "etiqueta": "Over 7.5 corners",
         "cuota": 1.29,
         "prob": 74.1,
         "ev_pct": -4.4
@@ -36847,7 +36847,7 @@ const TRACKER_DATA = [
       {
         "mercado": "corners65",
         "linea": null,
-        "etiqueta": "corners65",
+        "etiqueta": "Over 6.5 corners",
         "cuota": 1.09,
         "prob": 96.4,
         "ev_pct": 5.1
@@ -36855,7 +36855,7 @@ const TRACKER_DATA = [
       {
         "mercado": "corners75",
         "linea": null,
-        "etiqueta": "corners75",
+        "etiqueta": "Over 7.5 corners",
         "cuota": 1.18,
         "prob": 91.6,
         "ev_pct": 8.1
@@ -37516,7 +37516,7 @@ const TRACKER_DATA = [
       {
         "mercado": "corners65",
         "linea": null,
-        "etiqueta": "corners65",
+        "etiqueta": "Over 6.5 corners",
         "cuota": 1.1,
         "prob": 93.7,
         "ev_pct": 3.1
@@ -37524,7 +37524,7 @@ const TRACKER_DATA = [
       {
         "mercado": "corners75",
         "linea": null,
-        "etiqueta": "corners75",
+        "etiqueta": "Over 7.5 corners",
         "cuota": 1.2,
         "prob": 87.1,
         "ev_pct": 4.5
@@ -38144,7 +38144,7 @@ const TRACKER_DATA = [
       {
         "mercado": "corners65",
         "linea": null,
-        "etiqueta": "corners65",
+        "etiqueta": "Over 6.5 corners",
         "cuota": 1.14,
         "prob": 89.2,
         "ev_pct": 1.7
@@ -38152,7 +38152,7 @@ const TRACKER_DATA = [
       {
         "mercado": "corners75",
         "linea": null,
-        "etiqueta": "corners75",
+        "etiqueta": "Over 7.5 corners",
         "cuota": 1.29,
         "prob": 80.4,
         "ev_pct": 3.7
@@ -39196,7 +39196,7 @@ const TRACKER_DATA = [
       {
         "mercado": "corners65",
         "linea": null,
-        "etiqueta": "corners65",
+        "etiqueta": "Over 6.5 corners",
         "cuota": 1.12,
         "prob": 92.9,
         "ev_pct": 4.0
@@ -39204,7 +39204,7 @@ const TRACKER_DATA = [
       {
         "mercado": "corners75",
         "linea": null,
-        "etiqueta": "corners75",
+        "etiqueta": "Over 7.5 corners",
         "cuota": 1.24,
         "prob": 85.5,
         "ev_pct": 6.0
@@ -40259,7 +40259,7 @@ const TRACKER_DATA = [
       {
         "mercado": "corners65",
         "linea": null,
-        "etiqueta": "corners65",
+        "etiqueta": "Over 6.5 corners",
         "cuota": 1.11,
         "prob": 84.0,
         "ev_pct": -6.8
@@ -40267,7 +40267,7 @@ const TRACKER_DATA = [
       {
         "mercado": "corners75",
         "linea": null,
-        "etiqueta": "corners75",
+        "etiqueta": "Over 7.5 corners",
         "cuota": 1.21,
         "prob": 73.9,
         "ev_pct": -10.6
@@ -41303,7 +41303,7 @@ const TRACKER_DATA = [
       {
         "mercado": "corners65",
         "linea": null,
-        "etiqueta": "corners65",
+        "etiqueta": "Over 6.5 corners",
         "cuota": 1.08,
         "prob": 86.8,
         "ev_pct": -6.3
@@ -41311,7 +41311,7 @@ const TRACKER_DATA = [
       {
         "mercado": "corners75",
         "linea": null,
-        "etiqueta": "corners75",
+        "etiqueta": "Over 7.5 corners",
         "cuota": 1.17,
         "prob": 77.3,
         "ev_pct": -9.6
@@ -42424,7 +42424,7 @@ const TRACKER_DATA = [
       {
         "mercado": "corners65",
         "linea": null,
-        "etiqueta": "corners65",
+        "etiqueta": "Over 6.5 corners",
         "cuota": 1.17,
         "prob": 86.5,
         "ev_pct": 1.2
@@ -42432,7 +42432,7 @@ const TRACKER_DATA = [
       {
         "mercado": "corners75",
         "linea": null,
-        "etiqueta": "corners75",
+        "etiqueta": "Over 7.5 corners",
         "cuota": 1.34,
         "prob": 76.9,
         "ev_pct": 3.0
@@ -43556,7 +43556,7 @@ const TRACKER_DATA = [
       {
         "mercado": "corners65",
         "linea": null,
-        "etiqueta": "corners65",
+        "etiqueta": "Over 6.5 corners",
         "cuota": 1.14,
         "prob": 79.5,
         "ev_pct": -9.4
@@ -43564,7 +43564,7 @@ const TRACKER_DATA = [
       {
         "mercado": "corners75",
         "linea": null,
-        "etiqueta": "corners75",
+        "etiqueta": "Over 7.5 corners",
         "cuota": 1.27,
         "prob": 68.8,
         "ev_pct": -12.6
@@ -44562,7 +44562,7 @@ const TRACKER_DATA = [
       {
         "mercado": "corners65",
         "linea": null,
-        "etiqueta": "corners65",
+        "etiqueta": "Over 6.5 corners",
         "cuota": 1.14,
         "prob": 84.3,
         "ev_pct": -3.9
@@ -44570,7 +44570,7 @@ const TRACKER_DATA = [
       {
         "mercado": "corners75",
         "linea": null,
-        "etiqueta": "corners75",
+        "etiqueta": "Over 7.5 corners",
         "cuota": 1.27,
         "prob": 74.2,
         "ev_pct": -5.8
@@ -45639,7 +45639,7 @@ const TRACKER_DATA = [
       {
         "mercado": "corners65",
         "linea": null,
-        "etiqueta": "corners65",
+        "etiqueta": "Over 6.5 corners",
         "cuota": 1.12,
         "prob": 93.4,
         "ev_pct": 4.6
@@ -45647,7 +45647,7 @@ const TRACKER_DATA = [
       {
         "mercado": "corners75",
         "linea": null,
-        "etiqueta": "corners75",
+        "etiqueta": "Over 7.5 corners",
         "cuota": 1.24,
         "prob": 86.6,
         "ev_pct": 7.4
@@ -46139,7 +46139,7 @@ const TRACKER_DATA = [
       {
         "mercado": "corners65",
         "linea": null,
-        "etiqueta": "corners65",
+        "etiqueta": "Over 6.5 corners",
         "cuota": 1.12,
         "prob": 91.8,
         "ev_pct": 2.8
@@ -46147,7 +46147,7 @@ const TRACKER_DATA = [
       {
         "mercado": "corners75",
         "linea": null,
-        "etiqueta": "corners75",
+        "etiqueta": "Over 7.5 corners",
         "cuota": 1.24,
         "prob": 84.0,
         "ev_pct": 4.2
