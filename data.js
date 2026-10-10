@@ -44949,7 +44949,7 @@ const TRACKER_DATA = [
     },
     "confianza": "ALTA",
     "notas": "",
-    "resultado_partido": null,
+    "resultado_partido": "3-0",
     "goles_esperados": "3.57",
     "apuestas": [
       {
@@ -44959,8 +44959,8 @@ const TRACKER_DATA = [
         "cuota": 2.05,
         "prob": 55.3,
         "ev_pct": 13.4,
-        "estado": "PENDIENTE",
-        "pl": null,
+        "estado": "PERDIDA",
+        "pl": -1.0,
         "patas": [
           "over15",
           "visit_remates_puerta_over2.5"
@@ -44980,7 +44980,8 @@ const TRACKER_DATA = [
         "etiqueta": "Over 1.5",
         "cuota": 1.12,
         "prob": 86.7,
-        "ev_pct": -2.9
+        "ev_pct": -2.9,
+        "acerto": true
       },
       {
         "mercado": "under25",
@@ -44989,7 +44990,8 @@ const TRACKER_DATA = [
         "cuota": 3.15,
         "prob": 31.8,
         "ev_pct": 0.2,
-        "filtro_edge": "EV=+0.2% < 1.5"
+        "filtro_edge": "EV=+0.2% < 1.5",
+        "acerto": false
       },
       {
         "mercado": "under35",
@@ -44997,7 +44999,8 @@ const TRACKER_DATA = [
         "etiqueta": "Under 3.5",
         "cuota": 1.9,
         "prob": 52.2,
-        "ev_pct": -0.8
+        "ev_pct": -0.8,
+        "acerto": true
       },
       {
         "mercado": "under45",
@@ -45005,7 +45008,8 @@ const TRACKER_DATA = [
         "etiqueta": "Under 4.5",
         "cuota": 1.4,
         "prob": 71.3,
-        "ev_pct": -0.2
+        "ev_pct": -0.2,
+        "acerto": true
       },
       {
         "mercado": "btts",
@@ -45014,7 +45018,8 @@ const TRACKER_DATA = [
         "cuota": 2.12,
         "prob": 51.3,
         "ev_pct": 8.8,
-        "filtro_edge": "dPlatt=6.5pp"
+        "filtro_edge": "dPlatt=6.5pp",
+        "acerto": false
       },
       {
         "mercado": "do1x",
@@ -45022,7 +45027,8 @@ const TRACKER_DATA = [
         "etiqueta": "DO Inter o Empate",
         "cuota": 1.03,
         "prob": 96.2,
-        "ev_pct": -0.9
+        "ev_pct": -0.9,
+        "acerto": true
       },
       {
         "mercado": "dox2",
@@ -45030,7 +45036,8 @@ const TRACKER_DATA = [
         "etiqueta": "DO Empate o Parma",
         "cuota": 5.9,
         "prob": 16.6,
-        "ev_pct": -2.1
+        "ev_pct": -2.1,
+        "acerto": false
       },
       {
         "mercado": "victoria_local",
@@ -45038,7 +45045,8 @@ const TRACKER_DATA = [
         "etiqueta": "Victoria Inter",
         "cuota": 1.15,
         "prob": 83.3,
-        "ev_pct": -4.2
+        "ev_pct": -4.2,
+        "acerto": true
       },
       {
         "mercado": "over05_visit",
@@ -45046,7 +45054,8 @@ const TRACKER_DATA = [
         "etiqueta": "Over 0.5 Parma",
         "cuota": 2.05,
         "prob": 47.4,
-        "ev_pct": -2.8
+        "ev_pct": -2.8,
+        "acerto": false
       },
       {
         "mercado": "corners65",
@@ -45054,7 +45063,8 @@ const TRACKER_DATA = [
         "etiqueta": "Over 6.5 corners",
         "cuota": 1.12,
         "prob": 93.4,
-        "ev_pct": 4.6
+        "ev_pct": 4.6,
+        "acerto": false
       },
       {
         "mercado": "corners75",
@@ -45062,7 +45072,8 @@ const TRACKER_DATA = [
         "etiqueta": "Over 7.5 corners",
         "cuota": 1.24,
         "prob": 86.6,
-        "ev_pct": 7.4
+        "ev_pct": 7.4,
+        "acerto": false
       },
       {
         "mercado": "local_corners_equipo",
@@ -45071,7 +45082,8 @@ const TRACKER_DATA = [
         "cuota": 1.28,
         "prob": 80.3,
         "ev_pct": 2.8,
-        "tipo": "POR_EQUIPO"
+        "tipo": "POR_EQUIPO",
+        "acerto": false
       },
       {
         "mercado": "local_corners_equipo",
@@ -45080,7 +45092,8 @@ const TRACKER_DATA = [
         "cuota": 1.55,
         "prob": 71.1,
         "ev_pct": 10.2,
-        "tipo": "POR_EQUIPO"
+        "tipo": "POR_EQUIPO",
+        "acerto": false
       },
       {
         "mercado": "local_corners_equipo",
@@ -45089,7 +45102,8 @@ const TRACKER_DATA = [
         "cuota": 1.98,
         "prob": 61.1,
         "ev_pct": 21.0,
-        "tipo": "POR_EQUIPO"
+        "tipo": "POR_EQUIPO",
+        "acerto": false
       },
       {
         "mercado": "visit_corners_equipo",
@@ -45098,7 +45112,8 @@ const TRACKER_DATA = [
         "cuota": 1.98,
         "prob": 55.0,
         "ev_pct": 8.9,
-        "tipo": "POR_EQUIPO"
+        "tipo": "POR_EQUIPO",
+        "acerto": false
       },
       {
         "mercado": "visit_corners_equipo",
@@ -45107,7 +45122,8 @@ const TRACKER_DATA = [
         "cuota": 3.4,
         "prob": 35.3,
         "ev_pct": 20.0,
-        "tipo": "POR_EQUIPO"
+        "tipo": "POR_EQUIPO",
+        "acerto": false
       },
       {
         "mercado": "visit_corners_equipo",
@@ -45116,7 +45132,8 @@ const TRACKER_DATA = [
         "cuota": 6.0,
         "prob": 20.5,
         "ev_pct": 23.0,
-        "tipo": "POR_EQUIPO"
+        "tipo": "POR_EQUIPO",
+        "acerto": false
       },
       {
         "mercado": "visit_remates",
@@ -45125,7 +45142,8 @@ const TRACKER_DATA = [
         "cuota": 1.72,
         "prob": 61.5,
         "ev_pct": 5.8,
-        "tipo": "POR_EQUIPO"
+        "tipo": "POR_EQUIPO",
+        "acerto": true
       },
       {
         "mercado": "visit_remates",
@@ -45134,7 +45152,8 @@ const TRACKER_DATA = [
         "cuota": 2.25,
         "prob": 50.1,
         "ev_pct": 12.7,
-        "tipo": "POR_EQUIPO"
+        "tipo": "POR_EQUIPO",
+        "acerto": true
       },
       {
         "mercado": "visit_remates",
@@ -45143,7 +45162,8 @@ const TRACKER_DATA = [
         "cuota": 3.05,
         "prob": 39.2,
         "ev_pct": 19.6,
-        "tipo": "POR_EQUIPO"
+        "tipo": "POR_EQUIPO",
+        "acerto": false
       },
       {
         "mercado": "visit_remates",
@@ -45152,7 +45172,8 @@ const TRACKER_DATA = [
         "cuota": 4.3,
         "prob": 29.5,
         "ev_pct": 26.8,
-        "tipo": "POR_EQUIPO"
+        "tipo": "POR_EQUIPO",
+        "acerto": false
       },
       {
         "mercado": "visit_remates",
@@ -45161,7 +45182,8 @@ const TRACKER_DATA = [
         "cuota": 6.1,
         "prob": 21.4,
         "ev_pct": 30.5,
-        "tipo": "POR_EQUIPO"
+        "tipo": "POR_EQUIPO",
+        "acerto": false
       },
       {
         "mercado": "local_remates_puerta",
@@ -45170,7 +45192,8 @@ const TRACKER_DATA = [
         "cuota": 1.42,
         "prob": 84.7,
         "ev_pct": 20.3,
-        "tipo": "POR_EQUIPO"
+        "tipo": "POR_EQUIPO",
+        "acerto": false
       },
       {
         "mercado": "visit_remates_puerta",
@@ -45179,7 +45202,8 @@ const TRACKER_DATA = [
         "cuota": 1.31,
         "prob": 79.5,
         "ev_pct": 4.1,
-        "tipo": "POR_EQUIPO"
+        "tipo": "POR_EQUIPO",
+        "acerto": true
       },
       {
         "mercado": "visit_remates_puerta",
@@ -45188,7 +45212,8 @@ const TRACKER_DATA = [
         "cuota": 1.91,
         "prob": 57.6,
         "ev_pct": 10.0,
-        "tipo": "POR_EQUIPO"
+        "tipo": "POR_EQUIPO",
+        "acerto": false
       },
       {
         "mercado": "visit_remates_puerta",
@@ -45197,7 +45222,8 @@ const TRACKER_DATA = [
         "cuota": 3.2,
         "prob": 36.0,
         "ev_pct": 15.2,
-        "tipo": "POR_EQUIPO"
+        "tipo": "POR_EQUIPO",
+        "acerto": false
       },
       {
         "mercado": "do1x+hcp3_visit",
@@ -45215,7 +45241,8 @@ const TRACKER_DATA = [
         "cuota_justa": 1.92,
         "cuota_segura": 2.22,
         "acierto_hist": 52.1,
-        "n_hist": 188
+        "n_hist": 188,
+        "acerto": false
       },
       {
         "mercado": "hcp3_des",
@@ -45224,7 +45251,8 @@ const TRACKER_DATA = [
         "cuota": 1.78,
         "prob": 57.1,
         "ev_pct": 1.6,
-        "regla_unicidad_handicap": "cede ante hcp2_des (EV 1.9%)"
+        "regla_unicidad_handicap": "cede ante hcp2_des (EV 1.9%)",
+        "acerto": false
       },
       {
         "mercado": "hcp2_des",
@@ -45233,7 +45261,8 @@ const TRACKER_DATA = [
         "cuota": 2.87,
         "prob": 35.5,
         "ev_pct": 1.9,
-        "regla_no_elegible": true
+        "regla_no_elegible": true,
+        "acerto": false
       }
     ],
     "mercados_snapshot": {
@@ -45308,7 +45337,8 @@ const TRACKER_DATA = [
         "hist": 57.7,
         "n": 310,
         "cruza": true,
-        "cruza_segura": true
+        "cruza_segura": true,
+        "acerto": false
       },
       {
         "mercado": "do1x+hcp3_visit",
@@ -45319,7 +45349,8 @@ const TRACKER_DATA = [
         "hist": 52.1,
         "n": 188,
         "cruza": true,
-        "cruza_segura": false
+        "cruza_segura": false,
+        "acerto": false
       }
     ],
     "validadas": [
@@ -45332,7 +45363,8 @@ const TRACKER_DATA = [
         "cuota_segura": 1.94,
         "acierto_hist": 56.6,
         "n_hist": 362,
-        "cotizada": false
+        "cotizada": false,
+        "acerto": false
       },
       {
         "mercado": "over15+visit_remates_puerta_over2.5",
@@ -45343,7 +45375,8 @@ const TRACKER_DATA = [
         "cuota_segura": 1.92,
         "acierto_hist": 57.7,
         "n_hist": 310,
-        "cotizada": true
+        "cotizada": true,
+        "acerto": false
       },
       {
         "mercado": "do1x+hcp3_visit",
@@ -45354,9 +45387,73 @@ const TRACKER_DATA = [
         "cuota_segura": 2.22,
         "acierto_hist": 52.1,
         "n_hist": 188,
-        "cotizada": true
+        "cotizada": true,
+        "acerto": false
       }
-    ]
+    ],
+    "stats_reales": null,
+    "snapshot_resultados": {
+      "victoria_local": true,
+      "empate": false,
+      "victoria_visit": false,
+      "do1x": true,
+      "dox2": false,
+      "over15": true,
+      "over25": true,
+      "under25": false,
+      "over35": false,
+      "under35": true,
+      "under45": true,
+      "btts": false,
+      "over05_local": true,
+      "over05_visit": false,
+      "hcp2_des": false,
+      "hcp3_des": false,
+      "corners65": false,
+      "corners75": false,
+      "local_remates_over7.5": true,
+      "local_remates_over8.5": true,
+      "local_remates_over9.5": true,
+      "local_remates_over10.5": true,
+      "local_remates_over11.5": true,
+      "local_remates_over12.5": true,
+      "local_remates_over13.5": true,
+      "local_remates_over14.5": true,
+      "local_remates_over15.5": true,
+      "local_remates_puerta_over1.5": true,
+      "local_remates_puerta_over2.5": true,
+      "local_remates_puerta_over3.5": true,
+      "local_remates_puerta_over4.5": true,
+      "local_remates_puerta_over5.5": true,
+      "local_remates_puerta_over6.5": false,
+      "local_corners_equipo_over2.5": true,
+      "local_corners_equipo_over3.5": false,
+      "local_corners_equipo_over4.5": false,
+      "local_corners_equipo_over5.5": false,
+      "local_corners_equipo_over6.5": false,
+      "local_corners_equipo_over7.5": false,
+      "visit_remates_over7.5": true,
+      "visit_remates_over8.5": true,
+      "visit_remates_over9.5": false,
+      "visit_remates_over10.5": false,
+      "visit_remates_over11.5": false,
+      "visit_remates_over12.5": false,
+      "visit_remates_over13.5": false,
+      "visit_remates_over14.5": false,
+      "visit_remates_over15.5": false,
+      "visit_remates_puerta_over1.5": true,
+      "visit_remates_puerta_over2.5": false,
+      "visit_remates_puerta_over3.5": false,
+      "visit_remates_puerta_over4.5": false,
+      "visit_remates_puerta_over5.5": false,
+      "visit_remates_puerta_over6.5": false,
+      "visit_corners_equipo_over2.5": false,
+      "visit_corners_equipo_over3.5": false,
+      "visit_corners_equipo_over4.5": false,
+      "visit_corners_equipo_over5.5": false,
+      "visit_corners_equipo_over6.5": false,
+      "visit_corners_equipo_over7.5": false
+    }
   },
   {
     "id": "054",
