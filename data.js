@@ -59689,5 +59689,482 @@ const TRACKER_DATA = [
         "cotizada": true
       }
     ]
+  },
+  {
+    "id": "069",
+    "fecha": "2026-10-11",
+    "jornada": 6,
+    "liga": "I1",
+    "partido": "Cagliari vs Juventus",
+    "lambda_forma_l": 0.4544,
+    "lambda_forma_v": 1.8894,
+    "lambda_reg_l": 0.8216,
+    "lambda_reg_v": 1.7273,
+    "lambda_base_l": 0.7114,
+    "lambda_base_v": 1.7759,
+    "lambda_final_l": 0.605,
+    "lambda_final_v": 1.8824,
+    "lambda_shadow_l": 0.5899,
+    "lambda_shadow_v": 1.8824,
+    "lambda_corners": 10.462,
+    "ratio": 0.32139821504462385,
+    "visit_dominante": "True",
+    "variables_activas": "V#3(L:0.97)",
+    "variables": {
+      "v1": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa": false,
+        "activa_local": false,
+        "activa_visit": false,
+        "detalle_local": "--",
+        "detalle_visit": "--",
+        "detalle": "Ambos necesitan >=20 PJ (local:5, visit:5)"
+      },
+      "v2": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa_local": false,
+        "activa_visit": false,
+        "detalle_local": "Rank 4, margen 8pts -- fuera de riesgo",
+        "detalle_visit": "Rank 7, margen 6pts -- fuera de riesgo"
+      },
+      "v3": {
+        "factor_local": 0.975,
+        "activa": true,
+        "n_partidos": 20,
+        "GpG_casa": 1.1,
+        "GpG_liga": 1.35,
+        "hs": -0.25,
+        "muestra_completa": true,
+        "detalle": "hs=-0.25 (20 ptdos)"
+      },
+      "v4": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa_local": false,
+        "activa_visit": false,
+        "bajas_local": 1,
+        "bajas_visit": 0
+      },
+      "v5": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa_local": false,
+        "activa_visit": false
+      },
+      "v6": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa": false
+      },
+      "v7": {
+        "skip": false,
+        "activa_local": false,
+        "activa_visit": false,
+        "detalle": "Sin DT nuevo"
+      },
+      "v8": {
+        "activa": false,
+        "anulado_derby": false,
+        "detalle": "Inactiva"
+      }
+    },
+    "confianza": "ALTA",
+    "notas": "",
+    "resultado_partido": null,
+    "goles_esperados": "2.49",
+    "apuestas": [],
+    "watchlist": [
+      {
+        "mercado": "victoria_visit",
+        "linea": null,
+        "etiqueta": "Victoria Juventus",
+        "cuota": 1.55,
+        "prob": 71.8,
+        "ev_pct": 11.3,
+        "regla_1x2_no_pick": true
+      },
+      {
+        "mercado": "dox2",
+        "linea": null,
+        "etiqueta": "DO Empate o Juventus",
+        "cuota": 1.14,
+        "prob": 88.8,
+        "ev_pct": 1.2,
+        "filtro_edge": "EV=+1.2% < 1.5"
+      },
+      {
+        "mercado": "over15",
+        "linea": null,
+        "etiqueta": "Over 1.5",
+        "cuota": 1.34,
+        "prob": 74.1,
+        "ev_pct": -0.7
+      },
+      {
+        "mercado": "under25",
+        "linea": null,
+        "etiqueta": "Under 2.5",
+        "cuota": 1.82,
+        "prob": 52.8,
+        "ev_pct": -3.9,
+        "cuota_justa": 1.92,
+        "cuota_segura": 2.15,
+        "acierto_hist": 52.1,
+        "n_hist": 307
+      },
+      {
+        "mercado": "under35",
+        "linea": null,
+        "etiqueta": "Under 3.5",
+        "cuota": 1.31,
+        "prob": 76.0,
+        "ev_pct": -0.4,
+        "cuota_justa": 1.28,
+        "cuota_segura": 1.37,
+        "acierto_hist": 77.9,
+        "n_hist": 308
+      },
+      {
+        "mercado": "under45",
+        "linea": null,
+        "etiqueta": "Under 4.5",
+        "cuota": 1.12,
+        "prob": 89.3,
+        "ev_pct": 0.0
+      },
+      {
+        "mercado": "over05_visit",
+        "linea": null,
+        "etiqueta": "Over 0.5 Juventus",
+        "cuota": 1.16,
+        "prob": 84.8,
+        "ev_pct": -1.6
+      },
+      {
+        "mercado": "corners65",
+        "linea": null,
+        "etiqueta": "Over 6.5 corners",
+        "cuota": 1.17,
+        "prob": 87.6,
+        "ev_pct": 2.5
+      },
+      {
+        "mercado": "corners75",
+        "linea": null,
+        "etiqueta": "Over 7.5 corners",
+        "cuota": 1.32,
+        "prob": 78.4,
+        "ev_pct": 3.5
+      },
+      {
+        "mercado": "visit_remates_puerta",
+        "linea": 3.5,
+        "etiqueta": "Juventus Remates a puerta Over 3.5",
+        "cuota": 1.22,
+        "prob": 84.7,
+        "ev_pct": 3.3,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates_puerta",
+        "linea": 1.5,
+        "etiqueta": "Cagliari Remates a puerta Over 1.5",
+        "cuota": 1.27,
+        "prob": 84.3,
+        "ev_pct": 7.1,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates",
+        "linea": 13.5,
+        "etiqueta": "Juventus Remates Over 13.5",
+        "cuota": 1.3,
+        "prob": 81.5,
+        "ev_pct": 5.9,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates",
+        "linea": 14.5,
+        "etiqueta": "Juventus Remates Over 14.5",
+        "cuota": 1.47,
+        "prob": 76.0,
+        "ev_pct": 11.7,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 4.5,
+        "etiqueta": "Juventus Corners equipo Over 4.5",
+        "cuota": 1.4,
+        "prob": 75.1,
+        "ev_pct": 5.1,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates",
+        "linea": 7.5,
+        "etiqueta": "Cagliari Remates Over 7.5",
+        "cuota": 1.28,
+        "prob": 73.2,
+        "ev_pct": -6.3,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates_puerta",
+        "linea": 4.5,
+        "etiqueta": "Juventus Remates a puerta Over 4.5",
+        "cuota": 1.5,
+        "prob": 72.1,
+        "ev_pct": 8.1,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates",
+        "linea": 15.5,
+        "etiqueta": "Juventus Remates Over 15.5",
+        "cuota": 1.7,
+        "prob": 70.0,
+        "ev_pct": 19.0,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates_puerta",
+        "linea": 2.5,
+        "etiqueta": "Cagliari Remates a puerta Over 2.5",
+        "cuota": 1.8,
+        "prob": 65.1,
+        "ev_pct": 17.2,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_corners_equipo",
+        "linea": 2.5,
+        "etiqueta": "Cagliari Corners equipo Over 2.5",
+        "cuota": 1.37,
+        "prob": 63.7,
+        "ev_pct": -12.7,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 5.5,
+        "etiqueta": "Juventus Corners equipo Over 5.5",
+        "cuota": 1.8,
+        "prob": 63.2,
+        "ev_pct": 13.8,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates",
+        "linea": 8.5,
+        "etiqueta": "Cagliari Remates Over 8.5",
+        "cuota": 1.5,
+        "prob": 63.1,
+        "ev_pct": -5.3,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates",
+        "linea": 9.5,
+        "etiqueta": "Cagliari Remates Over 9.5",
+        "cuota": 1.83,
+        "prob": 52.7,
+        "ev_pct": -3.6,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates_puerta",
+        "linea": 5.5,
+        "etiqueta": "Juventus Remates a puerta Over 5.5",
+        "cuota": 1.98,
+        "prob": 57.3,
+        "ev_pct": 13.5,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 6.5,
+        "etiqueta": "Juventus Corners equipo Over 6.5",
+        "cuota": 2.5,
+        "prob": 51.0,
+        "ev_pct": 27.5,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "over15+over05_visit",
+        "linea": null,
+        "etiqueta": "Over 1.5 + Over 0.5 V",
+        "cuota": 1.38,
+        "prob": 69.1,
+        "ev_pct": -4.6,
+        "tipo": "COMBINADA",
+        "patas": [
+          "over15",
+          "over05_visit"
+        ],
+        "lift": 1.173,
+        "cuota_justa": 1.43,
+        "cuota_segura": 1.56,
+        "acierto_hist": 69.9,
+        "n_hist": 269
+      }
+    ],
+    "mercados_snapshot": {
+      "victoria_local": 11.2,
+      "empate": 22.8,
+      "victoria_visit": 71.8,
+      "do1x": 28.2,
+      "dox2": 88.8,
+      "over15": 74.1,
+      "over25": 47.2,
+      "under25": 52.8,
+      "over35": 24.0,
+      "under35": 76.0,
+      "under45": 89.3,
+      "btts": 47.3,
+      "over05_local": 44.8,
+      "over05_visit": 84.8,
+      "hcp2_des": 58.4,
+      "hcp3_des": 79.6,
+      "corners65": 87.6,
+      "corners75": 78.4,
+      "local_remates_over7.5": 73.2,
+      "local_remates_over8.5": 63.1,
+      "local_remates_over9.5": 52.7,
+      "local_remates_over10.5": 42.5,
+      "local_remates_over11.5": 33.1,
+      "local_remates_over12.5": 25.1,
+      "local_remates_over13.5": 18.4,
+      "local_remates_over14.5": 13.1,
+      "local_remates_over15.5": 9.1,
+      "local_remates_puerta_over1.5": 84.3,
+      "local_remates_puerta_over2.5": 65.1,
+      "local_remates_puerta_over3.5": 44.0,
+      "local_remates_puerta_over4.5": 26.2,
+      "local_remates_puerta_over5.5": 13.9,
+      "local_remates_puerta_over6.5": 6.6,
+      "local_corners_equipo_over2.5": 63.7,
+      "local_corners_equipo_over3.5": 44.5,
+      "local_corners_equipo_over4.5": 28.4,
+      "local_corners_equipo_over5.5": 16.7,
+      "local_corners_equipo_over6.5": 9.2,
+      "local_corners_equipo_over7.5": 4.7,
+      "visit_remates_over7.5": 98.7,
+      "visit_remates_over8.5": 97.5,
+      "visit_remates_over9.5": 95.8,
+      "visit_remates_over10.5": 93.5,
+      "visit_remates_over11.5": 90.3,
+      "visit_remates_over12.5": 86.3,
+      "visit_remates_over13.5": 81.5,
+      "visit_remates_over14.5": 76.0,
+      "visit_remates_over15.5": 70.0,
+      "visit_remates_puerta_over1.5": 98.0,
+      "visit_remates_puerta_over2.5": 93.4,
+      "visit_remates_puerta_over3.5": 84.7,
+      "visit_remates_puerta_over4.5": 72.1,
+      "visit_remates_puerta_over5.5": 57.3,
+      "visit_remates_puerta_over6.5": 42.4,
+      "visit_corners_equipo_over2.5": 93.0,
+      "visit_corners_equipo_over3.5": 85.4,
+      "visit_corners_equipo_over4.5": 75.1,
+      "visit_corners_equipo_over5.5": 63.2,
+      "visit_corners_equipo_over6.5": 51.0,
+      "visit_corners_equipo_over7.5": 39.5
+    },
+    "cruces_validados": [
+      {
+        "mercado": "under25",
+        "etiqueta": "Under 2.5",
+        "cuota": 1.82,
+        "justa": 1.92,
+        "segura": 2.15,
+        "hist": 52.1,
+        "n": 307,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "under35",
+        "etiqueta": "Under 3.5",
+        "cuota": 1.31,
+        "justa": 1.28,
+        "segura": 1.37,
+        "hist": 77.9,
+        "n": 308,
+        "cruza": true,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "over15+over05_visit",
+        "etiqueta": "Over 1.5 + Over 0.5 V",
+        "cuota": 1.38,
+        "justa": 1.43,
+        "segura": 1.56,
+        "hist": 69.9,
+        "n": 269,
+        "cruza": false,
+        "cruza_segura": false
+      }
+    ],
+    "validadas": [
+      {
+        "mercado": "under35",
+        "etiqueta": "Under 3.5",
+        "tipo": "simple",
+        "p": 0.7603,
+        "cuota_justa": 1.28,
+        "cuota_segura": 1.37,
+        "acierto_hist": 77.9,
+        "n_hist": 308,
+        "cotizada": true
+      },
+      {
+        "mercado": "under25",
+        "etiqueta": "Under 2.5",
+        "tipo": "simple",
+        "p": 0.5282,
+        "cuota_justa": 1.92,
+        "cuota_segura": 2.15,
+        "acierto_hist": 52.1,
+        "n_hist": 307,
+        "cotizada": true
+      },
+      {
+        "mercado": "over15+hcp3_visit",
+        "etiqueta": "Over 1.5 + HCP +3 V",
+        "tipo": "COMBINADA",
+        "p": 0.7054,
+        "cuota_justa": 1.44,
+        "cuota_segura": 1.56,
+        "acierto_hist": 69.6,
+        "n_hist": 283,
+        "cotizada": false
+      },
+      {
+        "mercado": "over15+over05_visit",
+        "etiqueta": "Over 1.5 + Over 0.5 V",
+        "tipo": "COMBINADA",
+        "p": 0.6913,
+        "cuota_justa": 1.43,
+        "cuota_segura": 1.56,
+        "acierto_hist": 69.9,
+        "n_hist": 269,
+        "cotizada": true
+      },
+      {
+        "mercado": "under25+hcp2_visit",
+        "etiqueta": "Under 2.5 + HCP +2 V",
+        "tipo": "COMBINADA",
+        "p": 0.5318,
+        "cuota_justa": 1.99,
+        "cuota_segura": 2.34,
+        "acierto_hist": 50.3,
+        "n_hist": 163,
+        "cotizada": false
+      }
+    ]
   }
 ];
