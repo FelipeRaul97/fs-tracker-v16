@@ -56145,5 +56145,524 @@ const TRACKER_DATA = [
         "cotizada": false
       }
     ]
+  },
+  {
+    "id": "065",
+    "fecha": "2026-10-11",
+    "jornada": 5,
+    "liga": "D1",
+    "partido": "Freiburg vs Schalke 04",
+    "lambda_forma_l": 2.5143,
+    "lambda_forma_v": 1.0851,
+    "lambda_reg_l": 2.2442,
+    "lambda_reg_v": 1.3041,
+    "lambda_base_l": 2.3252,
+    "lambda_base_v": 1.2384,
+    "lambda_final_l": 2.4339,
+    "lambda_final_v": 1.1297,
+    "lambda_shadow_l": 2.5337,
+    "lambda_shadow_v": 1.0732,
+    "lambda_corners": 10.945,
+    "ratio": 2.15446578737718,
+    "visit_dominante": "False",
+    "variables_activas": "V#2(V:0.95) - V#3(L:1.04)",
+    "variables": {
+      "v1": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa": false,
+        "activa_local": false,
+        "activa_visit": false,
+        "detalle_local": "--",
+        "detalle_visit": "--",
+        "detalle": "Ambos necesitan >=20 PJ (local:4, visit:4)"
+      },
+      "v2": {
+        "factor_local": 1.0,
+        "factor_visit": 0.95,
+        "activa_local": false,
+        "activa_visit": true,
+        "detalle_local": "Rank 3, margen 6pts -- fuera de riesgo",
+        "detalle_visit": "Rank 12, margen 1pts sobre zona desc"
+      },
+      "v3": {
+        "factor_local": 1.041,
+        "activa": true,
+        "n_partidos": 20,
+        "GpG_casa": 2.15,
+        "GpG_liga": 1.74,
+        "hs": 0.41,
+        "muestra_completa": true,
+        "detalle": "hs=+0.41 (20 ptdos)"
+      },
+      "v4": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa_local": false,
+        "activa_visit": false,
+        "bajas_local": 1,
+        "bajas_visit": 0
+      },
+      "v5": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa_local": false,
+        "activa_visit": false
+      },
+      "v6": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa": false
+      },
+      "v7": {
+        "skip": false,
+        "activa_local": false,
+        "activa_visit": false,
+        "detalle": "Sin DT nuevo"
+      },
+      "v8": {
+        "activa": false,
+        "anulado_derby": false,
+        "detalle": "Inactiva"
+      }
+    },
+    "confianza": "ALTA",
+    "notas": "",
+    "resultado_partido": null,
+    "goles_esperados": "3.56",
+    "apuestas": [
+      {
+        "tipo": "PICK",
+        "mercado": "do1x",
+        "linea": null,
+        "etiqueta": "DO Freiburg o Empate",
+        "cuota": 1.21,
+        "prob": 86.6,
+        "ev_pct": 4.8,
+        "estado": "PENDIENTE",
+        "pl": null
+      },
+      {
+        "tipo": "PICK",
+        "mercado": "over35",
+        "linea": null,
+        "etiqueta": "Over 3.5",
+        "cuota": 2.55,
+        "prob": 47.7,
+        "ev_pct": 21.6,
+        "estado": "PENDIENTE",
+        "pl": null
+      },
+      {
+        "tipo": "PICK",
+        "mercado": "over05_local",
+        "linea": null,
+        "etiqueta": "Over 0.5 Freiburg",
+        "cuota": 1.13,
+        "prob": 92.8,
+        "ev_pct": 4.9,
+        "estado": "PENDIENTE",
+        "pl": null
+      },
+      {
+        "tipo": "COMBO",
+        "mercado": "over25+over05_visit",
+        "etiqueta": "Over 2.5 + Over 0.5 V",
+        "cuota": 1.9,
+        "prob": 54.9,
+        "ev_pct": 4.3,
+        "estado": "PENDIENTE",
+        "pl": null,
+        "patas": [
+          "over25",
+          "over05_visit"
+        ],
+        "promovida_combinada": true,
+        "nivel_cruce": "justa",
+        "cuota_justa": 1.82,
+        "cuota_segura": 2.05,
+        "acierto_hist": 54.9,
+        "n_hist": 253
+      }
+    ],
+    "watchlist": [
+      {
+        "mercado": "victoria_local",
+        "linea": null,
+        "etiqueta": "Victoria Freiburg",
+        "cuota": 1.72,
+        "prob": 66.0,
+        "ev_pct": 13.5,
+        "regla_1x2_no_pick": true
+      },
+      {
+        "mercado": "btts",
+        "linea": null,
+        "etiqueta": "BTTS",
+        "cuota": 1.6,
+        "prob": 61.7,
+        "ev_pct": -1.3,
+        "cuota_justa": 1.6,
+        "cuota_segura": 1.76,
+        "acierto_hist": 62.7,
+        "n_hist": 260
+      },
+      {
+        "mercado": "over05_visit",
+        "linea": null,
+        "etiqueta": "Over 0.5 Schalke 04",
+        "cuota": 1.42,
+        "prob": 67.7,
+        "ev_pct": -3.9
+      },
+      {
+        "mercado": "corners65",
+        "linea": null,
+        "etiqueta": "Over 6.5 corners",
+        "cuota": 1.22,
+        "prob": 89.8,
+        "ev_pct": 9.6
+      },
+      {
+        "mercado": "corners75",
+        "linea": null,
+        "etiqueta": "Over 7.5 corners",
+        "cuota": 1.42,
+        "prob": 81.4,
+        "ev_pct": 15.6
+      },
+      {
+        "mercado": "visit_remates_puerta",
+        "linea": 1.5,
+        "etiqueta": "Schalke 04 Remates a puerta Over 1.5",
+        "cuota": 1.14,
+        "prob": 82.0,
+        "ev_pct": -6.5,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_corners_equipo",
+        "linea": 4.5,
+        "etiqueta": "Freiburg Corners equipo Over 4.5",
+        "cuota": 1.57,
+        "prob": 79.6,
+        "ev_pct": 25.0,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates_puerta",
+        "linea": 5.5,
+        "etiqueta": "Freiburg Remates a puerta Over 5.5",
+        "cuota": 1.72,
+        "prob": 74.4,
+        "ev_pct": 28.0,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_corners_equipo",
+        "linea": 5.5,
+        "etiqueta": "Freiburg Corners equipo Over 5.5",
+        "cuota": 2.15,
+        "prob": 68.9,
+        "ev_pct": 48.1,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates",
+        "linea": 7.5,
+        "etiqueta": "Schalke 04 Remates Over 7.5",
+        "cuota": 1.2,
+        "prob": 65.6,
+        "ev_pct": -21.3,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 2.5,
+        "etiqueta": "Schalke 04 Corners equipo Over 2.5",
+        "cuota": 1.35,
+        "prob": 62.1,
+        "ev_pct": -16.2,
+        "tipo": "POR_EQUIPO",
+        "cuota_justa": 1.61,
+        "cuota_segura": 1.84,
+        "acierto_hist": 62.1,
+        "n_hist": 161
+      },
+      {
+        "mercado": "local_remates_puerta",
+        "linea": 6.5,
+        "etiqueta": "Freiburg Remates a puerta Over 6.5",
+        "cuota": 2.35,
+        "prob": 61.6,
+        "ev_pct": 44.8,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates_puerta",
+        "linea": 2.5,
+        "etiqueta": "Schalke 04 Remates a puerta Over 2.5",
+        "cuota": 1.44,
+        "prob": 61.4,
+        "ev_pct": -11.6,
+        "tipo": "POR_EQUIPO",
+        "cuota_justa": 1.55,
+        "cuota_segura": 1.73,
+        "acierto_hist": 64.3,
+        "n_hist": 227
+      },
+      {
+        "mercado": "over15+hcp3_visit",
+        "linea": null,
+        "etiqueta": "Over 1.5 + HCP +3 V",
+        "cuota": 1.45,
+        "prob": 62.2,
+        "ev_pct": -9.9,
+        "tipo": "COMBINADA",
+        "patas": [
+          "over15",
+          "hcp3_visit"
+        ],
+        "lift": 0.962,
+        "cuota_justa": 1.55,
+        "cuota_segura": 1.68,
+        "acierto_hist": 64.5,
+        "n_hist": 375
+      },
+      {
+        "mercado": "over15+visit_remates_puerta_over2.5",
+        "linea": null,
+        "etiqueta": "Over 1.5 + V Remates a puerta Over 2.5",
+        "cuota": 1.62,
+        "prob": 59.0,
+        "ev_pct": -4.4,
+        "tipo": "COMBINADA",
+        "patas": [
+          "over15",
+          "visit_remates_puerta_over2.5"
+        ],
+        "lift": 1.075,
+        "cuota_justa": 1.73,
+        "cuota_segura": 1.92,
+        "acierto_hist": 57.7,
+        "n_hist": 310
+      },
+      {
+        "mercado": "over15",
+        "linea": null,
+        "etiqueta": "Over 1.5",
+        "cuota": 1.21,
+        "prob": 86.8,
+        "ev_pct": 5.0,
+        "regla_unicidad_totales": "cede ante over35 (score EV/prob 10.3)"
+      },
+      {
+        "mercado": "over25",
+        "linea": null,
+        "etiqueta": "Over 2.5",
+        "cuota": 1.65,
+        "prob": 68.2,
+        "ev_pct": 12.5,
+        "regla_unicidad_totales": "cede ante over35 (score EV/prob 10.3)"
+      }
+    ],
+    "mercados_snapshot": {
+      "victoria_local": 66.0,
+      "empate": 19.4,
+      "victoria_visit": 13.5,
+      "do1x": 86.6,
+      "dox2": 33.9,
+      "over15": 86.8,
+      "over25": 68.2,
+      "under25": 31.8,
+      "over35": 47.7,
+      "under35": 52.3,
+      "under45": 71.3,
+      "btts": 61.7,
+      "over05_local": 92.8,
+      "over05_visit": 67.7,
+      "hcp2_des": 55.8,
+      "hcp3_des": 75.1,
+      "corners65": 89.8,
+      "corners75": 81.4,
+      "local_remates_over7.5": 99.7,
+      "local_remates_over8.5": 99.3,
+      "local_remates_over9.5": 98.8,
+      "local_remates_over10.5": 97.9,
+      "local_remates_over11.5": 96.7,
+      "local_remates_over12.5": 95.0,
+      "local_remates_over13.5": 92.7,
+      "local_remates_over14.5": 89.8,
+      "local_remates_over15.5": 86.4,
+      "local_remates_puerta_over1.5": 99.3,
+      "local_remates_puerta_over2.5": 97.3,
+      "local_remates_puerta_over3.5": 92.8,
+      "local_remates_puerta_over4.5": 85.2,
+      "local_remates_puerta_over5.5": 74.4,
+      "local_remates_puerta_over6.5": 61.6,
+      "local_corners_equipo_over2.5": 94.6,
+      "local_corners_equipo_over3.5": 88.4,
+      "local_corners_equipo_over4.5": 79.6,
+      "local_corners_equipo_over5.5": 68.9,
+      "local_corners_equipo_over6.5": 57.4,
+      "local_corners_equipo_over7.5": 46.0,
+      "visit_remates_over7.5": 65.6,
+      "visit_remates_over8.5": 54.5,
+      "visit_remates_over9.5": 43.6,
+      "visit_remates_over10.5": 33.6,
+      "visit_remates_over11.5": 25.0,
+      "visit_remates_over12.5": 18.0,
+      "visit_remates_over13.5": 12.5,
+      "visit_remates_over14.5": 8.5,
+      "visit_remates_over15.5": 5.6,
+      "visit_remates_puerta_over1.5": 82.0,
+      "visit_remates_puerta_over2.5": 61.4,
+      "visit_remates_puerta_over3.5": 40.0,
+      "visit_remates_puerta_over4.5": 22.8,
+      "visit_remates_puerta_over5.5": 11.5,
+      "visit_remates_puerta_over6.5": 5.2,
+      "visit_corners_equipo_over2.5": 62.1,
+      "visit_corners_equipo_over3.5": 42.8,
+      "visit_corners_equipo_over4.5": 26.8,
+      "visit_corners_equipo_over5.5": 15.5,
+      "visit_corners_equipo_over6.5": 8.3,
+      "visit_corners_equipo_over7.5": 4.2
+    },
+    "cruces_validados": [
+      {
+        "mercado": "btts",
+        "etiqueta": "BTTS",
+        "cuota": 1.6,
+        "justa": 1.6,
+        "segura": 1.76,
+        "hist": 62.7,
+        "n": 260,
+        "cruza": true,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "visit_corners_equipo_over2.5",
+        "etiqueta": "Schalke 04 Corners Over 2.5",
+        "cuota": 1.35,
+        "justa": 1.61,
+        "segura": 1.84,
+        "hist": 62.1,
+        "n": 161,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "visit_remates_puerta_over2.5",
+        "etiqueta": "Schalke 04 Remates a puerta Over 2.5",
+        "cuota": 1.44,
+        "justa": 1.55,
+        "segura": 1.73,
+        "hist": 64.3,
+        "n": 227,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "over15+hcp3_visit",
+        "etiqueta": "Over 1.5 + HCP +3 V",
+        "cuota": 1.45,
+        "justa": 1.55,
+        "segura": 1.68,
+        "hist": 64.5,
+        "n": 375,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "over15+visit_remates_puerta_over2.5",
+        "etiqueta": "Over 1.5 + V Remates a puerta Over 2.5",
+        "cuota": 1.62,
+        "justa": 1.73,
+        "segura": 1.92,
+        "hist": 57.7,
+        "n": 310,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "over25+over05_visit",
+        "etiqueta": "Over 2.5 + Over 0.5 V",
+        "cuota": 1.9,
+        "justa": 1.82,
+        "segura": 2.05,
+        "hist": 54.9,
+        "n": 253,
+        "cruza": true,
+        "cruza_segura": false
+      }
+    ],
+    "validadas": [
+      {
+        "mercado": "over15+hcp3_visit",
+        "etiqueta": "Over 1.5 + HCP +3 V",
+        "tipo": "COMBINADA",
+        "p": 0.6215,
+        "cuota_justa": 1.55,
+        "cuota_segura": 1.68,
+        "acierto_hist": 64.5,
+        "n_hist": 375,
+        "cotizada": true
+      },
+      {
+        "mercado": "over15+visit_remates_puerta_over2.5",
+        "etiqueta": "Over 1.5 + V Remates a puerta Over 2.5",
+        "tipo": "COMBINADA",
+        "p": 0.59,
+        "cuota_justa": 1.73,
+        "cuota_segura": 1.92,
+        "acierto_hist": 57.7,
+        "n_hist": 310,
+        "cotizada": true
+      },
+      {
+        "mercado": "btts",
+        "etiqueta": "BTTS",
+        "tipo": "simple",
+        "p": 0.6168,
+        "cuota_justa": 1.6,
+        "cuota_segura": 1.76,
+        "acierto_hist": 62.7,
+        "n_hist": 260,
+        "cotizada": true
+      },
+      {
+        "mercado": "over25+over05_visit",
+        "etiqueta": "Over 2.5 + Over 0.5 V",
+        "tipo": "COMBINADA",
+        "p": 0.5487,
+        "cuota_justa": 1.82,
+        "cuota_segura": 2.05,
+        "acierto_hist": 54.9,
+        "n_hist": 253,
+        "cotizada": true
+      },
+      {
+        "mercado": "visit_remates_puerta_over2.5",
+        "etiqueta": "Schalke 04 Remates a puerta Over 2.5",
+        "tipo": "por equipo",
+        "p": 0.6143,
+        "cuota_justa": 1.55,
+        "cuota_segura": 1.73,
+        "acierto_hist": 64.3,
+        "n_hist": 227,
+        "cotizada": true
+      },
+      {
+        "mercado": "visit_corners_equipo_over2.5",
+        "etiqueta": "Schalke 04 Corners Over 2.5",
+        "tipo": "por equipo",
+        "p": 0.6214,
+        "cuota_justa": 1.61,
+        "cuota_segura": 1.84,
+        "acierto_hist": 62.1,
+        "n_hist": 161,
+        "cotizada": true
+      }
+    ]
   }
 ];
