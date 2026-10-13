@@ -6896,7 +6896,16 @@ const TRACKER_DATA = [
         "acerto": false
       }
     ],
-    "stats_reales": null,
+    "stats_reales": {
+      "local_S": 11,
+      "local_ST": 3,
+      "local_C": 2,
+      "local_GF": 2,
+      "visit_S": 20,
+      "visit_ST": 4,
+      "visit_C": 5,
+      "visit_GF": 3
+    },
     "snapshot_resultados": {
       "victoria_local": false,
       "empate": false,
@@ -7054,7 +7063,7 @@ const TRACKER_DATA = [
         "prob": 74.1,
         "ev_pct": 7.4,
         "estado": "PERDIDA",
-        "pl": -1
+        "pl": -1.0
       },
       {
         "tipo": "COMBO",
@@ -7064,7 +7073,7 @@ const TRACKER_DATA = [
         "prob": 55.2,
         "ev_pct": 17,
         "estado": "PERDIDA",
-        "pl": -1,
+        "pl": -1.0,
         "patas": [
           "under35",
           "hcp2_visit"
@@ -7787,7 +7796,16 @@ const TRACKER_DATA = [
         "acerto": true
       }
     ],
-    "stats_reales": null,
+    "stats_reales": {
+      "local_S": 27,
+      "local_ST": 11,
+      "local_C": 8,
+      "local_GF": 4,
+      "visit_S": 3,
+      "visit_ST": 1,
+      "visit_C": 0,
+      "visit_GF": 0
+    },
     "snapshot_resultados": {
       "victoria_local": true,
       "empate": false,
@@ -7941,7 +7959,7 @@ const TRACKER_DATA = [
         "prob": 75.3,
         "ev_pct": 8.4,
         "estado": "PERDIDA",
-        "pl": -1,
+        "pl": -1.0,
         "cuota_justa": 1.29,
         "cuota_segura": 1.35,
         "acierto_hist": 77.7,
@@ -7956,7 +7974,7 @@ const TRACKER_DATA = [
         "prob": 55.6,
         "ev_pct": 4,
         "estado": "PERDIDA",
-        "pl": -1,
+        "pl": -1.0,
         "cuota_justa": 1.7,
         "cuota_segura": 1.83,
         "acierto_hist": 58.7,
@@ -7971,7 +7989,7 @@ const TRACKER_DATA = [
         "prob": 77.8,
         "ev_pct": 5,
         "estado": "PERDIDA",
-        "pl": -1
+        "pl": -1.0
       }
     ],
     "watchlist": [
@@ -8798,7 +8816,16 @@ const TRACKER_DATA = [
         "acerto": true
       }
     ],
-    "stats_reales": null,
+    "stats_reales": {
+      "local_S": 4,
+      "local_ST": 3,
+      "local_C": 4,
+      "local_GF": 0,
+      "visit_S": 11,
+      "visit_ST": 6,
+      "visit_C": 4,
+      "visit_GF": 1
+    },
     "snapshot_resultados": {
       "victoria_local": false,
       "empate": false,
@@ -9310,7 +9337,16 @@ const TRACKER_DATA = [
         "acerto": false
       }
     ],
-    "stats_reales": null,
+    "stats_reales": {
+      "local_S": 30,
+      "local_ST": 9,
+      "local_C": 18,
+      "local_GF": 7,
+      "visit_S": 5,
+      "visit_ST": 3,
+      "visit_C": 0,
+      "visit_GF": 2
+    },
     "snapshot_resultados": {
       "victoria_local": true,
       "empate": false,
@@ -9467,7 +9503,7 @@ const TRACKER_DATA = [
         "prob": 74.1,
         "ev_pct": 3.7,
         "estado": "PERDIDA",
-        "pl": -1
+        "pl": -1.0
       },
       {
         "tipo": "COMBO",
@@ -9477,7 +9513,7 @@ const TRACKER_DATA = [
         "prob": 59.1,
         "ev_pct": 3.4,
         "estado": "PERDIDA",
-        "pl": -1,
+        "pl": -1.0,
         "patas": [
           "visit_corners_equipo_over2.5",
           "visit_remates_over8.5"
@@ -10201,7 +10237,16 @@ const TRACKER_DATA = [
         "acerto": true
       }
     ],
-    "stats_reales": null,
+    "stats_reales": {
+      "local_S": 22,
+      "local_ST": 8,
+      "local_C": 4,
+      "local_GF": 1,
+      "visit_S": 8,
+      "visit_ST": 2,
+      "visit_C": 3,
+      "visit_GF": 0
+    },
     "snapshot_resultados": {
       "victoria_local": true,
       "empate": false,
@@ -11264,7 +11309,16 @@ const TRACKER_DATA = [
         "acerto": false
       }
     ],
-    "stats_reales": null,
+    "stats_reales": {
+      "local_S": 9,
+      "local_ST": 6,
+      "local_C": 2,
+      "local_GF": 2,
+      "visit_S": 12,
+      "visit_ST": 4,
+      "visit_C": 8,
+      "visit_GF": 1
+    },
     "snapshot_resultados": {
       "victoria_local": true,
       "empate": false,
@@ -11433,7 +11487,7 @@ const TRACKER_DATA = [
         "prob": 47.8,
         "ev_pct": 4.2,
         "estado": "PERDIDA",
-        "pl": -1
+        "pl": -1.0
       },
       {
         "tipo": "PICK",
@@ -11956,7 +12010,16 @@ const TRACKER_DATA = [
         "acerto": false
       }
     ],
-    "stats_reales": null,
+    "stats_reales": {
+      "local_S": 13,
+      "local_ST": 6,
+      "local_C": 4,
+      "local_GF": 3,
+      "visit_S": 12,
+      "visit_ST": 2,
+      "visit_C": 12,
+      "visit_GF": 0
+    },
     "snapshot_resultados": {
       "victoria_local": true,
       "empate": false,
@@ -13160,7 +13223,16 @@ const TRACKER_DATA = [
         "acerto": true
       }
     ],
-    "stats_reales": null,
+    "stats_reales": {
+      "local_S": 20,
+      "local_ST": 7,
+      "local_C": 11,
+      "local_GF": 2,
+      "visit_S": 15,
+      "visit_ST": 6,
+      "visit_C": 1,
+      "visit_GF": 3
+    },
     "snapshot_resultados": {
       "victoria_local": false,
       "empate": false,
@@ -13318,7 +13390,7 @@ const TRACKER_DATA = [
         "prob": 54,
         "ev_pct": 17.7,
         "estado": "PERDIDA",
-        "pl": -1,
+        "pl": -1.0,
         "cuota_justa": 1.95,
         "cuota_segura": 2.17,
         "acierto_hist": 51.3,
@@ -13333,7 +13405,7 @@ const TRACKER_DATA = [
         "prob": 58.3,
         "ev_pct": 7.9,
         "estado": "PERDIDA",
-        "pl": -1,
+        "pl": -1.0,
         "cuota_justa": 1.7,
         "cuota_segura": 1.83,
         "acierto_hist": 58.7,
@@ -13348,7 +13420,7 @@ const TRACKER_DATA = [
         "prob": 80.6,
         "ev_pct": 4,
         "estado": "PERDIDA",
-        "pl": -1
+        "pl": -1.0
       },
       {
         "tipo": "PICK",
@@ -13369,7 +13441,7 @@ const TRACKER_DATA = [
         "prob": 55.9,
         "ev_pct": 11.9,
         "estado": "PERDIDA",
-        "pl": -1,
+        "pl": -1.0,
         "patas": [
           "btts",
           "local_remates_puerta_over2.5"
@@ -14248,7 +14320,16 @@ const TRACKER_DATA = [
         "acerto": false
       }
     ],
-    "stats_reales": null,
+    "stats_reales": {
+      "local_S": 26,
+      "local_ST": 5,
+      "local_C": 16,
+      "local_GF": 0,
+      "visit_S": 5,
+      "visit_ST": 2,
+      "visit_C": 1,
+      "visit_GF": 1
+    },
     "snapshot_resultados": {
       "victoria_local": false,
       "empate": false,
@@ -14417,7 +14498,7 @@ const TRACKER_DATA = [
         "prob": 59.6,
         "ev_pct": 1.3,
         "estado": "PERDIDA",
-        "pl": -1,
+        "pl": -1.0,
         "cuota_justa": 1.7,
         "cuota_segura": 1.83,
         "acierto_hist": 58.7,
@@ -15228,7 +15309,7 @@ const TRACKER_DATA = [
         "acierto_hist": 56.5,
         "n_hist": 161,
         "cotizada": false,
-        "acerto": false
+        "acerto": true
       },
       {
         "mercado": "visit_corners_equipo_over3.5",
@@ -15291,7 +15372,16 @@ const TRACKER_DATA = [
         "acerto": false
       }
     ],
-    "stats_reales": null,
+    "stats_reales": {
+      "local_S": 17,
+      "local_ST": 5,
+      "local_C": 5,
+      "local_GF": 3,
+      "visit_S": 11,
+      "visit_ST": 2,
+      "visit_C": 6,
+      "visit_GF": 0
+    },
     "snapshot_resultados": {
       "victoria_local": true,
       "empate": false,
@@ -15333,8 +15423,8 @@ const TRACKER_DATA = [
       "local_corners_equipo_over7.5": false,
       "visit_remates_over7.5": true,
       "visit_remates_over8.5": true,
-      "visit_remates_over9.5": false,
-      "visit_remates_over10.5": false,
+      "visit_remates_over9.5": true,
+      "visit_remates_over10.5": true,
       "visit_remates_over11.5": false,
       "visit_remates_over12.5": false,
       "visit_remates_over13.5": false,
@@ -15349,7 +15439,7 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over2.5": true,
       "visit_corners_equipo_over3.5": true,
       "visit_corners_equipo_over4.5": true,
-      "visit_corners_equipo_over5.5": false,
+      "visit_corners_equipo_over5.5": true,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     }
@@ -16249,7 +16339,16 @@ const TRACKER_DATA = [
         "acerto": false
       }
     ],
-    "stats_reales": null,
+    "stats_reales": {
+      "local_S": 21,
+      "local_ST": 2,
+      "local_C": 4,
+      "local_GF": 1,
+      "visit_S": 13,
+      "visit_ST": 4,
+      "visit_C": 4,
+      "visit_GF": 0
+    },
     "snapshot_resultados": {
       "victoria_local": true,
       "empate": false,
@@ -17096,7 +17195,7 @@ const TRACKER_DATA = [
         "acierto_hist": 59.8,
         "n_hist": 199,
         "cotizada": false,
-        "acerto": false
+        "acerto": true
       },
       {
         "mercado": "under45+hcp2_visit",
@@ -17207,7 +17306,16 @@ const TRACKER_DATA = [
         "acerto": true
       }
     ],
-    "stats_reales": null,
+    "stats_reales": {
+      "local_S": 12,
+      "local_ST": 5,
+      "local_C": 4,
+      "local_GF": 2,
+      "visit_S": 22,
+      "visit_ST": 4,
+      "visit_C": 7,
+      "visit_GF": 1
+    },
     "snapshot_resultados": {
       "victoria_local": true,
       "empate": false,
@@ -17229,7 +17337,7 @@ const TRACKER_DATA = [
       "local_remates_over8.5": true,
       "local_remates_over9.5": true,
       "local_remates_over10.5": true,
-      "local_remates_over11.5": false,
+      "local_remates_over11.5": true,
       "local_remates_over12.5": false,
       "local_remates_over13.5": false,
       "local_remates_over14.5": false,
@@ -17379,7 +17487,7 @@ const TRACKER_DATA = [
         "prob": 62.4,
         "ev_pct": 1.1,
         "estado": "PERDIDA",
-        "pl": -1,
+        "pl": -1.0,
         "cuota_justa": 1.59,
         "cuota_segura": 1.77,
         "acierto_hist": 62.9,
@@ -18234,7 +18342,16 @@ const TRACKER_DATA = [
         "acerto": true
       }
     ],
-    "stats_reales": null,
+    "stats_reales": {
+      "local_S": 24,
+      "local_ST": 6,
+      "local_C": 5,
+      "local_GF": 0,
+      "visit_S": 2,
+      "visit_ST": 0,
+      "visit_C": 1,
+      "visit_GF": 0
+    },
     "snapshot_resultados": {
       "victoria_local": false,
       "empate": true,
@@ -19216,7 +19333,16 @@ const TRACKER_DATA = [
         "acerto": false
       }
     ],
-    "stats_reales": null,
+    "stats_reales": {
+      "local_S": 17,
+      "local_ST": 7,
+      "local_C": 3,
+      "local_GF": 2,
+      "visit_S": 5,
+      "visit_ST": 1,
+      "visit_C": 0,
+      "visit_GF": 1
+    },
     "snapshot_resultados": {
       "victoria_local": true,
       "empate": false,
@@ -19891,7 +20017,16 @@ const TRACKER_DATA = [
         "acerto": true
       }
     ],
-    "stats_reales": null,
+    "stats_reales": {
+      "local_S": 18,
+      "local_ST": 4,
+      "local_C": 4,
+      "local_GF": 2,
+      "visit_S": 16,
+      "visit_ST": 5,
+      "visit_C": 2,
+      "visit_GF": 2
+    },
     "snapshot_resultados": {
       "victoria_local": false,
       "empate": true,
@@ -20872,7 +21007,16 @@ const TRACKER_DATA = [
         "acerto": false
       }
     ],
-    "stats_reales": null,
+    "stats_reales": {
+      "local_S": 24,
+      "local_ST": 3,
+      "local_C": 6,
+      "local_GF": 0,
+      "visit_S": 10,
+      "visit_ST": 3,
+      "visit_C": 2,
+      "visit_GF": 1
+    },
     "snapshot_resultados": {
       "victoria_local": false,
       "empate": false,
@@ -21028,7 +21172,7 @@ const TRACKER_DATA = [
         "prob": 57.9,
         "ev_pct": 11.7,
         "estado": "PERDIDA",
-        "pl": -1,
+        "pl": -1.0,
         "patas": [
           "over05_visit",
           "visit_remates_puerta_over3.5"
@@ -21731,7 +21875,16 @@ const TRACKER_DATA = [
         "acerto": true
       }
     ],
-    "stats_reales": null,
+    "stats_reales": {
+      "local_S": 15,
+      "local_ST": 9,
+      "local_C": 3,
+      "local_GF": 4,
+      "visit_S": 13,
+      "visit_ST": 4,
+      "visit_C": 8,
+      "visit_GF": 0
+    },
     "snapshot_resultados": {
       "victoria_local": true,
       "empate": false,
@@ -22678,7 +22831,16 @@ const TRACKER_DATA = [
         "acerto": true
       }
     ],
-    "stats_reales": null,
+    "stats_reales": {
+      "local_S": 17,
+      "local_ST": 6,
+      "local_C": 7,
+      "local_GF": 0,
+      "visit_S": 12,
+      "visit_ST": 2,
+      "visit_C": 2,
+      "visit_GF": 2
+    },
     "snapshot_resultados": {
       "victoria_local": false,
       "empate": false,
@@ -22836,7 +22998,7 @@ const TRACKER_DATA = [
         "prob": 55.2,
         "ev_pct": 22.5,
         "estado": "PERDIDA",
-        "pl": -1
+        "pl": -1.0
       },
       {
         "tipo": "COMBO",
@@ -23156,7 +23318,16 @@ const TRACKER_DATA = [
         "acerto": true
       }
     ],
-    "stats_reales": null,
+    "stats_reales": {
+      "local_S": 7,
+      "local_ST": 3,
+      "local_C": 1,
+      "local_GF": 1,
+      "visit_S": 24,
+      "visit_ST": 7,
+      "visit_C": 3,
+      "visit_GF": 3
+    },
     "snapshot_resultados": {
       "victoria_local": false,
       "empate": false,
@@ -31946,7 +32117,16 @@ const TRACKER_DATA = [
         "acerto": true
       }
     ],
-    "stats_reales": null,
+    "stats_reales": {
+      "local_S": 24,
+      "local_ST": 7,
+      "local_C": 11,
+      "local_GF": 1,
+      "visit_S": 11,
+      "visit_ST": 4,
+      "visit_C": 5,
+      "visit_GF": 1
+    },
     "snapshot_resultados": {
       "victoria_local": false,
       "empate": true,
@@ -32554,7 +32734,16 @@ const TRACKER_DATA = [
         "acerto": true
       }
     ],
-    "stats_reales": null,
+    "stats_reales": {
+      "local_S": 10,
+      "local_ST": 4,
+      "local_C": 2,
+      "local_GF": 3,
+      "visit_S": 6,
+      "visit_ST": 3,
+      "visit_C": 3,
+      "visit_GF": 0
+    },
     "snapshot_resultados": {
       "victoria_local": true,
       "empate": false,
@@ -33425,7 +33614,16 @@ const TRACKER_DATA = [
         "acerto": true
       }
     ],
-    "stats_reales": null,
+    "stats_reales": {
+      "local_S": 12,
+      "local_ST": 4,
+      "local_C": 3,
+      "local_GF": 1,
+      "visit_S": 31,
+      "visit_ST": 10,
+      "visit_C": 7,
+      "visit_GF": 2
+    },
     "snapshot_resultados": {
       "victoria_local": false,
       "empate": false,
@@ -36753,7 +36951,16 @@ const TRACKER_DATA = [
         "acerto": true
       }
     ],
-    "stats_reales": null,
+    "stats_reales": {
+      "local_S": 13,
+      "local_ST": 6,
+      "local_C": 2,
+      "local_GF": 2,
+      "visit_S": 11,
+      "visit_ST": 5,
+      "visit_C": 4,
+      "visit_GF": 1
+    },
     "snapshot_resultados": {
       "victoria_local": true,
       "empate": false,
@@ -37508,7 +37715,16 @@ const TRACKER_DATA = [
         "acerto": true
       }
     ],
-    "stats_reales": null,
+    "stats_reales": {
+      "local_S": 12,
+      "local_ST": 5,
+      "local_C": 5,
+      "local_GF": 2,
+      "visit_S": 30,
+      "visit_ST": 10,
+      "visit_C": 9,
+      "visit_GF": 2
+    },
     "snapshot_resultados": {
       "victoria_local": false,
       "empate": true,
@@ -38706,7 +38922,16 @@ const TRACKER_DATA = [
         "acerto": true
       }
     ],
-    "stats_reales": null,
+    "stats_reales": {
+      "local_S": 23,
+      "local_ST": 5,
+      "local_C": 4,
+      "local_GF": 3,
+      "visit_S": 16,
+      "visit_ST": 7,
+      "visit_C": 3,
+      "visit_GF": 4
+    },
     "snapshot_resultados": {
       "victoria_local": false,
       "empate": false,
@@ -39113,7 +39338,7 @@ const TRACKER_DATA = [
         "prob": 75.8,
         "ev_pct": 21.3,
         "tipo": "POR_EQUIPO",
-        "acerto": false
+        "acerto": true
       },
       {
         "mercado": "visit_remates",
@@ -39123,7 +39348,7 @@ const TRACKER_DATA = [
         "prob": 68.6,
         "ev_pct": 33.8,
         "tipo": "POR_EQUIPO",
-        "acerto": false
+        "acerto": true
       },
       {
         "mercado": "visit_remates",
@@ -39133,7 +39358,7 @@ const TRACKER_DATA = [
         "prob": 61.0,
         "ev_pct": 49.5,
         "tipo": "POR_EQUIPO",
-        "acerto": false
+        "acerto": true
       },
       {
         "mercado": "local_remates_puerta",
@@ -39869,7 +40094,16 @@ const TRACKER_DATA = [
         "acerto": true
       }
     ],
-    "stats_reales": null,
+    "stats_reales": {
+      "local_S": 20,
+      "local_ST": 7,
+      "local_C": 2,
+      "local_GF": 2,
+      "visit_S": 14,
+      "visit_ST": 4,
+      "visit_C": 2,
+      "visit_GF": 2
+    },
     "snapshot_resultados": {
       "victoria_local": false,
       "empate": true,
@@ -39913,10 +40147,10 @@ const TRACKER_DATA = [
       "visit_remates_over7.5": true,
       "visit_remates_over8.5": true,
       "visit_remates_over9.5": true,
-      "visit_remates_over10.5": false,
-      "visit_remates_over11.5": false,
-      "visit_remates_over12.5": false,
-      "visit_remates_over13.5": false,
+      "visit_remates_over10.5": true,
+      "visit_remates_over11.5": true,
+      "visit_remates_over12.5": true,
+      "visit_remates_over13.5": true,
       "visit_remates_over14.5": false,
       "visit_remates_over15.5": false,
       "visit_remates_puerta_over1.5": true,
@@ -41145,7 +41379,16 @@ const TRACKER_DATA = [
         "acerto": false
       }
     ],
-    "stats_reales": null,
+    "stats_reales": {
+      "local_S": 10,
+      "local_ST": 6,
+      "local_C": 1,
+      "local_GF": 5,
+      "visit_S": 9,
+      "visit_ST": 4,
+      "visit_C": 7,
+      "visit_GF": 1
+    },
     "snapshot_resultados": {
       "victoria_local": true,
       "empate": false,
@@ -42409,7 +42652,16 @@ const TRACKER_DATA = [
         "acerto": true
       }
     ],
-    "stats_reales": null,
+    "stats_reales": {
+      "local_S": 12,
+      "local_ST": 3,
+      "local_C": 7,
+      "local_GF": 0,
+      "visit_S": 13,
+      "visit_ST": 4,
+      "visit_C": 5,
+      "visit_GF": 2
+    },
     "snapshot_resultados": {
       "victoria_local": false,
       "empate": false,
@@ -43586,7 +43838,16 @@ const TRACKER_DATA = [
         "acerto": false
       }
     ],
-    "stats_reales": null,
+    "stats_reales": {
+      "local_S": 8,
+      "local_ST": 3,
+      "local_C": 0,
+      "local_GF": 1,
+      "visit_S": 22,
+      "visit_ST": 7,
+      "visit_C": 10,
+      "visit_GF": 2
+    },
     "snapshot_resultados": {
       "victoria_local": false,
       "empate": false,
@@ -44803,7 +45064,16 @@ const TRACKER_DATA = [
         "acerto": false
       }
     ],
-    "stats_reales": null,
+    "stats_reales": {
+      "local_S": 5,
+      "local_ST": 1,
+      "local_C": 4,
+      "local_GF": 1,
+      "visit_S": 17,
+      "visit_ST": 2,
+      "visit_C": 5,
+      "visit_GF": 0
+    },
     "snapshot_resultados": {
       "victoria_local": true,
       "empate": false,
@@ -45391,7 +45661,16 @@ const TRACKER_DATA = [
         "acerto": false
       }
     ],
-    "stats_reales": null,
+    "stats_reales": {
+      "local_S": 19,
+      "local_ST": 6,
+      "local_C": 3,
+      "local_GF": 3,
+      "visit_S": 9,
+      "visit_ST": 2,
+      "visit_C": 1,
+      "visit_GF": 0
+    },
     "snapshot_resultados": {
       "victoria_local": true,
       "empate": false,
@@ -46394,7 +46673,16 @@ const TRACKER_DATA = [
         "acerto": true
       }
     ],
-    "stats_reales": null,
+    "stats_reales": {
+      "local_S": 20,
+      "local_ST": 10,
+      "local_C": 3,
+      "local_GF": 6,
+      "visit_S": 18,
+      "visit_ST": 9,
+      "visit_C": 6,
+      "visit_GF": 0
+    },
     "snapshot_resultados": {
       "victoria_local": true,
       "empate": false,
@@ -46948,7 +47236,16 @@ const TRACKER_DATA = [
         "acerto": false
       }
     ],
-    "stats_reales": null,
+    "stats_reales": {
+      "local_S": 23,
+      "local_ST": 8,
+      "local_C": 9,
+      "local_GF": 3,
+      "visit_S": 4,
+      "visit_ST": 1,
+      "visit_C": 2,
+      "visit_GF": 0
+    },
     "snapshot_resultados": {
       "victoria_local": true,
       "empate": false,
@@ -48184,7 +48481,16 @@ const TRACKER_DATA = [
         "acerto": false
       }
     ],
-    "stats_reales": null,
+    "stats_reales": {
+      "local_S": 8,
+      "local_ST": 5,
+      "local_C": 3,
+      "local_GF": 1,
+      "visit_S": 16,
+      "visit_ST": 3,
+      "visit_C": 9,
+      "visit_GF": 0
+    },
     "snapshot_resultados": {
       "victoria_local": true,
       "empate": false,
@@ -49482,7 +49788,16 @@ const TRACKER_DATA = [
         "acerto": true
       }
     ],
-    "stats_reales": null,
+    "stats_reales": {
+      "local_S": 16,
+      "local_ST": 4,
+      "local_C": 4,
+      "local_GF": 2,
+      "visit_S": 9,
+      "visit_ST": 4,
+      "visit_C": 4,
+      "visit_GF": 2
+    },
     "snapshot_resultados": {
       "victoria_local": false,
       "empate": true,
@@ -50155,7 +50470,16 @@ const TRACKER_DATA = [
         "acerto": true
       }
     ],
-    "stats_reales": null,
+    "stats_reales": {
+      "local_S": 22,
+      "local_ST": 8,
+      "local_C": 4,
+      "local_GF": 3,
+      "visit_S": 11,
+      "visit_ST": 3,
+      "visit_C": 4,
+      "visit_GF": 1
+    },
     "snapshot_resultados": {
       "victoria_local": true,
       "empate": false,
@@ -51006,7 +51330,16 @@ const TRACKER_DATA = [
         "acerto": false
       }
     ],
-    "stats_reales": null,
+    "stats_reales": {
+      "local_S": 19,
+      "local_ST": 8,
+      "local_C": 6,
+      "local_GF": 3,
+      "visit_S": 17,
+      "visit_ST": 1,
+      "visit_C": 4,
+      "visit_GF": 0
+    },
     "snapshot_resultados": {
       "victoria_local": true,
       "empate": false,
@@ -52889,7 +53222,16 @@ const TRACKER_DATA = [
         "acerto": false
       }
     ],
-    "stats_reales": null,
+    "stats_reales": {
+      "local_S": 19,
+      "local_ST": 4,
+      "local_C": 6,
+      "local_GF": 0,
+      "visit_S": 9,
+      "visit_ST": 2,
+      "visit_C": 2,
+      "visit_GF": 0
+    },
     "snapshot_resultados": {
       "victoria_local": false,
       "empate": true,
@@ -54261,7 +54603,16 @@ const TRACKER_DATA = [
         "acerto": true
       }
     ],
-    "stats_reales": null,
+    "stats_reales": {
+      "local_S": 17,
+      "local_ST": 7,
+      "local_C": 7,
+      "local_GF": 3,
+      "visit_S": 14,
+      "visit_ST": 6,
+      "visit_C": 6,
+      "visit_GF": 1
+    },
     "snapshot_resultados": {
       "victoria_local": true,
       "empate": false,
@@ -55717,7 +56068,16 @@ const TRACKER_DATA = [
         "acerto": true
       }
     ],
-    "stats_reales": null,
+    "stats_reales": {
+      "local_S": 12,
+      "local_ST": 4,
+      "local_C": 7,
+      "local_GF": 3,
+      "visit_S": 21,
+      "visit_ST": 7,
+      "visit_C": 10,
+      "visit_GF": 2
+    },
     "snapshot_resultados": {
       "victoria_local": true,
       "empate": false,
@@ -56782,7 +57142,16 @@ const TRACKER_DATA = [
         "acerto": true
       }
     ],
-    "stats_reales": null,
+    "stats_reales": {
+      "local_S": 21,
+      "local_ST": 11,
+      "local_C": 12,
+      "local_GF": 4,
+      "visit_S": 12,
+      "visit_ST": 5,
+      "visit_C": 5,
+      "visit_GF": 1
+    },
     "snapshot_resultados": {
       "victoria_local": true,
       "empate": false,
@@ -57393,7 +57762,16 @@ const TRACKER_DATA = [
         "acerto": false
       }
     ],
-    "stats_reales": null,
+    "stats_reales": {
+      "local_S": 10,
+      "local_ST": 4,
+      "local_C": 7,
+      "local_GF": 2,
+      "visit_S": 5,
+      "visit_ST": 1,
+      "visit_C": 2,
+      "visit_GF": 1
+    },
     "snapshot_resultados": {
       "victoria_local": true,
       "empate": false,
@@ -58642,7 +59020,16 @@ const TRACKER_DATA = [
         "acerto": true
       }
     ],
-    "stats_reales": null,
+    "stats_reales": {
+      "local_S": 13,
+      "local_ST": 6,
+      "local_C": 5,
+      "local_GF": 0,
+      "visit_S": 15,
+      "visit_ST": 4,
+      "visit_C": 6,
+      "visit_GF": 3
+    },
     "snapshot_resultados": {
       "victoria_local": false,
       "empate": false,
@@ -58680,7 +59067,7 @@ const TRACKER_DATA = [
       "local_corners_equipo_over2.5": true,
       "local_corners_equipo_over3.5": true,
       "local_corners_equipo_over4.5": true,
-      "local_corners_equipo_over5.5": true,
+      "local_corners_equipo_over5.5": false,
       "local_corners_equipo_over6.5": false,
       "local_corners_equipo_over7.5": false,
       "visit_remates_over7.5": true,
@@ -58701,7 +59088,7 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over2.5": true,
       "visit_corners_equipo_over3.5": true,
       "visit_corners_equipo_over4.5": true,
-      "visit_corners_equipo_over5.5": false,
+      "visit_corners_equipo_over5.5": true,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     }
@@ -59767,7 +60154,16 @@ const TRACKER_DATA = [
         "acerto": true
       }
     ],
-    "stats_reales": null,
+    "stats_reales": {
+      "local_S": 10,
+      "local_ST": 4,
+      "local_C": 3,
+      "local_GF": 1,
+      "visit_S": 11,
+      "visit_ST": 6,
+      "visit_C": 5,
+      "visit_GF": 1
+    },
     "snapshot_resultados": {
       "victoria_local": false,
       "empate": true,
@@ -60827,7 +61223,16 @@ const TRACKER_DATA = [
         "acerto": true
       }
     ],
-    "stats_reales": null,
+    "stats_reales": {
+      "local_S": 20,
+      "local_ST": 7,
+      "local_C": 8,
+      "local_GF": 5,
+      "visit_S": 11,
+      "visit_ST": 5,
+      "visit_C": 4,
+      "visit_GF": 2
+    },
     "snapshot_resultados": {
       "victoria_local": true,
       "empate": false,
