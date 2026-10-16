@@ -70158,5 +70158,469 @@ const TRACKER_DATA = [
         "cotizada": true
       }
     ]
+  },
+  {
+    "id": "077",
+    "fecha": "2026-10-17",
+    "jornada": 7,
+    "liga": "E0",
+    "partido": "Man City vs Ipswich",
+    "lambda_forma_l": 2.2543,
+    "lambda_forma_v": 1.3312,
+    "lambda_reg_l": 2.805,
+    "lambda_reg_v": 0.8623,
+    "lambda_base_l": 2.6398,
+    "lambda_base_v": 1.003,
+    "lambda_final_l": 2.8035,
+    "lambda_final_v": 0.8393,
+    "lambda_shadow_l": 2.8393,
+    "lambda_shadow_v": 0.8393,
+    "lambda_corners": 9.089,
+    "ratio": 3.3402835696413677,
+    "visit_dominante": "False",
+    "variables_activas": "V#3(L:1.09) - V#5(L:0.93)",
+    "variables": {
+      "v1": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa": false,
+        "activa_local": false,
+        "activa_visit": false,
+        "detalle_local": "--",
+        "detalle_visit": "--",
+        "detalle": "Ambos necesitan >=20 PJ (local:6, visit:6)"
+      },
+      "v2": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa_local": false,
+        "activa_visit": false,
+        "detalle_local": "Rank 1, margen 15pts -- fuera de riesgo",
+        "detalle_visit": "Rank 10, margen 6pts -- fuera de riesgo"
+      },
+      "v3": {
+        "factor_local": 1.089,
+        "activa": true,
+        "n_partidos": 20,
+        "GpG_casa": 2.5,
+        "GpG_liga": 1.61,
+        "hs": 0.89,
+        "muestra_completa": true,
+        "detalle": "hs=+0.89 (20 ptdos)"
+      },
+      "v4": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa_local": false,
+        "activa_visit": false,
+        "bajas_local": 0,
+        "bajas_visit": 0
+      },
+      "v5": {
+        "factor_local": 0.93,
+        "factor_visit": 1.0,
+        "activa_local": true,
+        "activa_visit": false
+      },
+      "v6": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa": false
+      },
+      "v7": {
+        "skip": false,
+        "activa_local": false,
+        "activa_visit": false,
+        "detalle": "Sin DT nuevo"
+      },
+      "v8": {
+        "activa": true,
+        "anulado_derby": false,
+        "detalle": "ACTIVA -- copa <=5 dias"
+      }
+    },
+    "confianza": "ALTA",
+    "notas": "",
+    "resultado_partido": null,
+    "goles_esperados": "3.64",
+    "apuestas": [
+      {
+        "tipo": "COMBO",
+        "mercado": "over15+visit_remates_puerta_over2.5",
+        "etiqueta": "Over 1.5 + V Remates a puerta Over 2.5",
+        "cuota": 1.91,
+        "prob": 62.8,
+        "ev_pct": 19.9,
+        "estado": "PENDIENTE",
+        "pl": null,
+        "patas": [
+          "over15",
+          "visit_remates_puerta_over2.5"
+        ],
+        "promovida_combinada": true,
+        "nivel_cruce": "segura",
+        "cuota_justa": 1.65,
+        "cuota_segura": 1.81,
+        "acierto_hist": 60.4,
+        "n_hist": 364
+      }
+    ],
+    "watchlist": [
+      {
+        "mercado": "victoria_local",
+        "linea": null,
+        "etiqueta": "Victoria Man City",
+        "cuota": 1.26,
+        "prob": 78.0,
+        "ev_pct": -1.7
+      },
+      {
+        "mercado": "do1x",
+        "linea": null,
+        "etiqueta": "DO Man City o Empate",
+        "cuota": 1.07,
+        "prob": 93.7,
+        "ev_pct": 0.3,
+        "filtro_edge": "EV=+0.3% < 1.5"
+      },
+      {
+        "mercado": "over15",
+        "linea": null,
+        "etiqueta": "Over 1.5",
+        "cuota": 1.12,
+        "prob": 87.4,
+        "ev_pct": -2.1
+      },
+      {
+        "mercado": "over25",
+        "linea": null,
+        "etiqueta": "Over 2.5",
+        "cuota": 1.38,
+        "prob": 69.4,
+        "ev_pct": -4.2
+      },
+      {
+        "mercado": "over35",
+        "linea": null,
+        "etiqueta": "Over 3.5",
+        "cuota": 1.93,
+        "prob": 49.3,
+        "ev_pct": -4.9
+      },
+      {
+        "mercado": "btts",
+        "linea": null,
+        "etiqueta": "BTTS",
+        "cuota": 1.75,
+        "prob": 56.5,
+        "ev_pct": -1.1,
+        "cuota_justa": 1.7,
+        "cuota_segura": 1.83,
+        "acierto_hist": 58.7,
+        "n_hist": 606
+      },
+      {
+        "mercado": "over05_local",
+        "linea": null,
+        "etiqueta": "Over 0.5 Man City",
+        "cuota": 1.05,
+        "prob": 95.2,
+        "ev_pct": -0.0
+      },
+      {
+        "mercado": "corners65",
+        "linea": null,
+        "etiqueta": "Over 6.5 corners",
+        "cuota": 1.08,
+        "prob": 77.7,
+        "ev_pct": -16.1
+      },
+      {
+        "mercado": "corners75",
+        "linea": null,
+        "etiqueta": "Over 7.5 corners",
+        "cuota": 1.17,
+        "prob": 67.0,
+        "ev_pct": -21.6
+      },
+      {
+        "mercado": "local_remates_puerta",
+        "linea": 4.5,
+        "etiqueta": "Man City Remates a puerta Over 4.5",
+        "cuota": 1.12,
+        "prob": 79.2,
+        "ev_pct": -11.3,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_corners_equipo",
+        "linea": 4.5,
+        "etiqueta": "Man City Corners equipo Over 4.5",
+        "cuota": 1.11,
+        "prob": 76.5,
+        "ev_pct": -15.1,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates",
+        "linea": 7.5,
+        "etiqueta": "Ipswich Remates Over 7.5",
+        "cuota": 1.32,
+        "prob": 72.1,
+        "ev_pct": -4.8,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates_puerta",
+        "linea": 2.5,
+        "etiqueta": "Ipswich Remates a puerta Over 2.5",
+        "cuota": 1.82,
+        "prob": 67.7,
+        "ev_pct": 23.2,
+        "tipo": "POR_EQUIPO",
+        "cuota_justa": 1.47,
+        "cuota_segura": 1.61,
+        "acierto_hist": 68.0,
+        "n_hist": 275
+      },
+      {
+        "mercado": "local_remates_puerta",
+        "linea": 5.5,
+        "etiqueta": "Man City Remates a puerta Over 5.5",
+        "cuota": 1.27,
+        "prob": 66.2,
+        "ev_pct": -15.9,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "do1x+hcp3_visit",
+        "linea": null,
+        "etiqueta": "DO L o Empate + HCP +3 V",
+        "cuota": 1.72,
+        "prob": 54.8,
+        "ev_pct": -5.8,
+        "tipo": "COMBINADA",
+        "patas": [
+          "do1x",
+          "hcp3_visit"
+        ],
+        "lift": 0.962,
+        "cuota_justa": 1.92,
+        "cuota_segura": 2.22,
+        "acierto_hist": 52.1,
+        "n_hist": 188
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 2.5,
+        "etiqueta": "Ipswich Corners equipo Over 2.5",
+        "cuota": 1.7,
+        "prob": 64.8,
+        "ev_pct": 10.2,
+        "tipo": "POR_EQUIPO",
+        "cuota_justa": 1.61,
+        "cuota_segura": 1.84,
+        "acierto_hist": 62.1,
+        "n_hist": 161
+      }
+    ],
+    "mercados_snapshot": {
+      "victoria_local": 78.0,
+      "empate": 14.2,
+      "victoria_visit": 6.3,
+      "do1x": 93.7,
+      "dox2": 22.0,
+      "over15": 87.4,
+      "over25": 69.4,
+      "under25": 30.6,
+      "over35": 49.3,
+      "under35": 50.6,
+      "under45": 69.8,
+      "btts": 56.5,
+      "over05_local": 95.2,
+      "over05_visit": 56.8,
+      "hcp2_des": 42.1,
+      "hcp3_des": 63.2,
+      "corners65": 77.7,
+      "corners75": 67.0,
+      "local_remates_over7.5": 98.6,
+      "local_remates_over8.5": 97.4,
+      "local_remates_over9.5": 95.6,
+      "local_remates_over10.5": 93.1,
+      "local_remates_over11.5": 89.8,
+      "local_remates_over12.5": 85.7,
+      "local_remates_over13.5": 80.7,
+      "local_remates_over14.5": 75.1,
+      "local_remates_over15.5": 68.9,
+      "local_remates_puerta_over1.5": 98.8,
+      "local_remates_puerta_over2.5": 95.7,
+      "local_remates_puerta_over3.5": 89.3,
+      "local_remates_puerta_over4.5": 79.2,
+      "local_remates_puerta_over5.5": 66.2,
+      "local_remates_puerta_over6.5": 51.9,
+      "local_corners_equipo_over2.5": 93.5,
+      "local_corners_equipo_over3.5": 86.3,
+      "local_corners_equipo_over4.5": 76.5,
+      "local_corners_equipo_over5.5": 65.0,
+      "local_corners_equipo_over6.5": 52.9,
+      "local_corners_equipo_over7.5": 41.4,
+      "visit_remates_over7.5": 72.1,
+      "visit_remates_over8.5": 61.9,
+      "visit_remates_over9.5": 51.3,
+      "visit_remates_over10.5": 41.1,
+      "visit_remates_over11.5": 31.8,
+      "visit_remates_over12.5": 23.9,
+      "visit_remates_over13.5": 17.4,
+      "visit_remates_over14.5": 12.3,
+      "visit_remates_over15.5": 8.5,
+      "visit_remates_puerta_over1.5": 85.9,
+      "visit_remates_puerta_over2.5": 67.7,
+      "visit_remates_puerta_over3.5": 47.0,
+      "visit_remates_puerta_over4.5": 28.8,
+      "visit_remates_puerta_over5.5": 15.8,
+      "visit_remates_puerta_over6.5": 7.8,
+      "visit_corners_equipo_over2.5": 64.8,
+      "visit_corners_equipo_over3.5": 45.7,
+      "visit_corners_equipo_over4.5": 29.5,
+      "visit_corners_equipo_over5.5": 17.5,
+      "visit_corners_equipo_over6.5": 9.8,
+      "visit_corners_equipo_over7.5": 5.1
+    },
+    "cruces_validados": [
+      {
+        "mercado": "btts",
+        "etiqueta": "BTTS",
+        "cuota": 1.75,
+        "justa": 1.7,
+        "segura": 1.83,
+        "hist": 58.7,
+        "n": 606,
+        "cruza": true,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "visit_remates_puerta_over2.5",
+        "etiqueta": "Ipswich Remates a puerta Over 2.5",
+        "cuota": 1.82,
+        "justa": 1.47,
+        "segura": 1.61,
+        "hist": 68.0,
+        "n": 275,
+        "cruza": true,
+        "cruza_segura": true
+      },
+      {
+        "mercado": "over15+visit_remates_puerta_over2.5",
+        "etiqueta": "Over 1.5 + V Remates a puerta Over 2.5",
+        "cuota": 1.91,
+        "justa": 1.65,
+        "segura": 1.81,
+        "hist": 60.4,
+        "n": 364,
+        "cruza": true,
+        "cruza_segura": true
+      },
+      {
+        "mercado": "do1x+hcp3_visit",
+        "etiqueta": "DO L o Empate + HCP +3 V",
+        "cuota": 1.72,
+        "justa": 1.92,
+        "segura": 2.22,
+        "hist": 52.1,
+        "n": 188,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "visit_corners_equipo_over2.5",
+        "etiqueta": "Ipswich Corners Over 2.5",
+        "cuota": 1.7,
+        "justa": 1.61,
+        "segura": 1.84,
+        "hist": 62.1,
+        "n": 161,
+        "cruza": true,
+        "cruza_segura": false
+      }
+    ],
+    "validadas": [
+      {
+        "mercado": "btts",
+        "etiqueta": "BTTS",
+        "tipo": "simple",
+        "p": 0.5655,
+        "cuota_justa": 1.7,
+        "cuota_segura": 1.83,
+        "acierto_hist": 58.7,
+        "n_hist": 606,
+        "cotizada": true
+      },
+      {
+        "mercado": "over15+visit_remates_puerta_over2.5",
+        "etiqueta": "Over 1.5 + V Remates a puerta Over 2.5",
+        "tipo": "COMBINADA",
+        "p": 0.6277,
+        "cuota_justa": 1.65,
+        "cuota_segura": 1.81,
+        "acierto_hist": 60.4,
+        "n_hist": 364,
+        "cotizada": true
+      },
+      {
+        "mercado": "btts+local_remates_puerta_over2.5",
+        "etiqueta": "BTTS + L Remates a puerta Over 2.5",
+        "tipo": "COMBINADA",
+        "p": 0.5801,
+        "cuota_justa": 1.77,
+        "cuota_segura": 1.94,
+        "acierto_hist": 56.6,
+        "n_hist": 362,
+        "cotizada": false
+      },
+      {
+        "mercado": "btts+hcp2_local",
+        "etiqueta": "BTTS + HCP +2 L",
+        "tipo": "COMBINADA",
+        "p": 0.5212,
+        "cuota_justa": 1.85,
+        "cuota_segura": 2.05,
+        "acierto_hist": 54.1,
+        "n_hist": 338,
+        "cotizada": false
+      },
+      {
+        "mercado": "visit_remates_puerta_over2.5",
+        "etiqueta": "Ipswich Remates a puerta Over 2.5",
+        "tipo": "por equipo",
+        "p": 0.6773,
+        "cuota_justa": 1.47,
+        "cuota_segura": 1.61,
+        "acierto_hist": 68.0,
+        "n_hist": 275,
+        "cotizada": true
+      },
+      {
+        "mercado": "do1x+hcp3_visit",
+        "etiqueta": "DO L o Empate + HCP +3 V",
+        "tipo": "COMBINADA",
+        "p": 0.5475,
+        "cuota_justa": 1.92,
+        "cuota_segura": 2.22,
+        "acierto_hist": 52.1,
+        "n_hist": 188,
+        "cotizada": true
+      },
+      {
+        "mercado": "visit_corners_equipo_over2.5",
+        "etiqueta": "Ipswich Corners Over 2.5",
+        "tipo": "por equipo",
+        "p": 0.6479,
+        "cuota_justa": 1.61,
+        "cuota_segura": 1.84,
+        "acierto_hist": 62.1,
+        "n_hist": 161,
+        "cotizada": true
+      }
+    ]
   }
 ];
