@@ -614,6 +614,25 @@
     </div>
     <div class="grid2" style="margin-bottom:16px">
       <div class="card card-full">
+        <div class="card-title">Simulación — habilitar la cohorte EV ≤ 0 con todas las reglas de PICK</div>
+        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">
+          Qué habría pasado si las simples de goles con −5% &lt; EV ≤ 0 que cruzan su línea validada
+          pudieran ser PICK, respetando el resto: unicidad de totales (una línea Over/Under por partido),
+          unicidad de hándicap, sin 1X2 ni córners totales. <b>Desempate</b>: gana el que tenga EV&gt;0 por
+          EV×prob; si todos tienen EV ≤ 0, gana el de <b>mayor probabilidad</b>. "Relegados" = PICK reales
+          que un candidato nuevo habría desplazado.</p>
+        <div id="seg-sim-resumen"></div>
+        <div class="table-wrap table-wrap-scroll" style="margin-top:10px;max-height:300px;overflow-y:auto">
+          <table class="hm-table"><thead style="position:sticky;top:0;background:var(--bg2)"><tr>
+            <th style="text-align:left">#</th><th style="text-align:left">Partido</th><th style="text-align:left">Línea</th>
+            <th class="num">Prob%</th><th class="num">Cuota</th><th class="num">EV%</th>
+            <th style="text-align:left">En la simulación</th><th>Estado</th><th class="num">P&amp;L</th>
+          </tr></thead><tbody id="seg-sim-tbody"></tbody></table>
+        </div>
+      </div>
+    </div>
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
         <div class="card-title">Mercados por equipo — ¿cuáles rinden si pasaran los filtros de PICK?</div>
         <p style="font-size:12px;color:var(--text3);margin:0 0 10px">
           Los mercados por equipo nunca se apuestan (siempre van a watchlist). Esta tabla simula
@@ -3556,6 +3575,61 @@ function _segCab(primera,extra){
     <th class="num">Acierto</th><th class="num">P&amp;L</th><th class="num">ROI</th><th class="num">±90%</th>
     <th class="num">Partidos</th>${extra||''}</tr></thead>`;
 }
+// Simulacion: habilitar la cohorte (-5<EV<=0, cruza linea validada) respetando las demas reglas.
+const SEG_TOTALES=new Set(['over15','over25','over35','over45','under15','under25','under35','under45']);
+function _segSim(){
+  const keyDes=x=> x.ev>0 ? [1,x.ev*x.prob/100,x.prob] : [0,x.prob,0];
+  const mayor=(a,b)=>{ for(let i=0;i<a.length;i++){ if(a[i]!==b[i]) return a[i]>b[i]; } return false; };
+  const mejor=arr=>arr.reduce((m,x)=>mayor(keyDes(x),keyDes(m))?x:m,arr[0]);
+  const entran=[], noEntran=[], relegados=[];
+  _DATA.forEach(p=>{
+    const base=(p.apuestas||[]).filter(a=>a.tipo==='PICK').map(a=>({src:'real',p,mercado:a.mercado,et:a.etiqueta,ev:a.ev_pct||0,prob:a.prob||0,
+      cuota:a.cuota,acerto:a.estado==='GANADA'?true:(a.estado==='PERDIDA'?false:null)}));
+    const cand=(p.watchlist||[]).filter(w=>!w.tipo&&!w.regla_1x2_no_pick&&!w.regla_no_elegible&&w.mercado!=='corners65'&&w.mercado!=='corners75'
+      &&w.ev_pct!=null&&w.ev_pct>-5&&w.ev_pct<=0&&w.cuota_justa!=null&&w.cuota>=w.cuota_justa)
+      .map(w=>({src:'nuevo',p,mercado:w.mercado,et:w.etiqueta||w.mercado,ev:w.ev_pct,prob:w.prob||0,cuota:w.cuota,justa:w.cuota_justa,acerto:w.acerto==null?null:w.acerto}));
+    if(!cand.length) return;
+    let pool=base.concat(cand);
+    const familias=[x=>SEG_TOTALES.has(x.mercado), x=>x.mercado==='hcp2_des'||x.mercado==='hcp3_des'];
+    familias.forEach((fam,i)=>{
+      const f=pool.filter(fam); if(f.length<2) return;
+      const gan=i===0?mejor(f):f.reduce((m,x)=>x.ev>m.ev?x:m,f[0]);
+      f.forEach(x=>{ if(x===gan) return;
+        if(x.src==='real'){ if(gan.src==='nuevo') relegados.push({...x,cede:gan.et}); }
+        else noEntran.push({...x,cede:gan.et+(gan.src==='real'?' (PICK real)':' (nuevo)')});
+      });
+      pool=pool.filter(x=>!fam(x)||x===gan);
+    });
+    pool.filter(x=>x.src==='nuevo').forEach(x=>entran.push(x));
+  });
+  return {entran,noEntran,relegados};
+}
+function renderSeguimientoSim(){
+  const r=_segSim();
+  const s=_segStats(r.entran.map(x=>({...x,partido:x.p})));
+  const nTot=r.entran.length+r.noEntran.length;
+  const cls=s.pl>=0?'pl-pos':'pl-neg';
+  document.getElementById('seg-sim-resumen').innerHTML=`<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px">
+    <div class="metric"><div class="metric-label">Candidatos</div><div class="metric-val amber">${nTot}</div></div>
+    <div class="metric"><div class="metric-label">Entran</div><div class="metric-val">${r.entran.length}</div></div>
+    <div class="metric"><div class="metric-label">Ceden por unicidad</div><div class="metric-val">${r.noEntran.length}</div></div>
+    <div class="metric"><div class="metric-label">PICK reales relegados</div><div class="metric-val ${r.relegados.length?'pl-neg':'pl-pos'}">${r.relegados.length}</div></div>
+    <div class="metric"><div class="metric-label">Cerradas / pend.</div><div class="metric-val">${s.n} / ${s.pend}</div></div>
+    <div class="metric"><div class="metric-label">P&amp;L extra</div><div class="metric-val ${cls}">${s.n?(s.pl>=0?'+':'')+s.pl.toFixed(2)+'u':'--'}</div></div>
+    <div class="metric"><div class="metric-label">ROI extra</div><div class="metric-val ${cls}">${s.n?(s.roi>=0?'+':'')+s.roi.toFixed(1)+'%':'--'}${s.moe!=null?' <span style="font-size:11px;color:var(--text3)">±'+s.moe.toFixed(0)+'</span>':''}</div></div></div>
+    <p style="font-size:12px;color:var(--text3);margin-top:8px">${r.relegados.length?'<b class="pl-neg">Atención:</b> en '+r.relegados.length+' caso(s) un candidato nuevo desplaza a un PICK real. ':''}P&amp;L extra = lo que sumarían los candidatos que entran, sin tocar los PICK reales.</p>`;
+  const filas=[...r.entran.map(x=>({...x,en:'<span class="pl-pos">entra</span>'})),
+               ...r.noEntran.map(x=>({...x,en:'<span style="color:var(--text3)">cede ante '+x.cede+'</span>'}))]
+    .sort((a,b)=>String(b.p.id).localeCompare(String(a.p.id)));
+  document.getElementById('seg-sim-tbody').innerHTML=filas.map(x=>{
+    const pl=x.acerto==null?null:(x.acerto?x.cuota-1:-1);
+    const est=x.acerto==null?'<span style="color:var(--text3)">pendiente</span>':(x.acerto?'<span class="pl-pos">salió</span>':'<span class="pl-neg">falló</span>');
+    return `<tr><td style="text-align:left">${x.p.id}</td><td style="text-align:left">${x.p.partido}</td><td style="text-align:left">${x.et}</td>
+      <td class="num">${x.prob.toFixed(1)}</td><td class="num">${x.cuota.toFixed(2)}</td><td class="num">${x.ev.toFixed(1)}</td>
+      <td style="text-align:left">${x.en}</td><td>${est}</td>
+      <td class="num ${pl==null?'':(pl>=0?'pl-pos':'pl-neg')}">${pl==null?'—':(pl>=0?'+':'')+pl.toFixed(2)}</td></tr>`;
+  }).join('')||'<tr><td colspan="9" class="empty">Sin candidatos todavía.</td></tr>';
+}
 function segToggle(k){
   window._segAbierto=window._segAbierto||{};
   window._segAbierto[k]=!window._segAbierto[k];
@@ -3583,6 +3657,8 @@ function renderSeguimiento(){
   document.getElementById('seg-escenarios').innerHTML=
     '<div class="table-wrap"><table class="hm-table">'+_segCab('Escenario')+'<tbody>'
     +filas.map(([l,a])=>_segFila(l,_segStats(a))).join('')+'</tbody></table></div>';
+
+  renderSeguimientoSim();
 
   // 2) Mercados por equipo si pasaran los filtros de PICK
   const eq=wl.filter(w=>w.tipo==='POR_EQUIPO');
