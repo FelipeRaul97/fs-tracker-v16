@@ -3584,9 +3584,6 @@ function renderSeguimiento(){
   };
   const filasEq=SEG_TIPOS_EQ.map(([k,t,l])=>filaEq(`${t} · ${l}`,eq.filter(w=>w.mercado===k)));
   const agr=[
-    ['Remates (ambos lados)',eq.filter(w=>/_remates$/.test(w.mercado))],
-    ['Remates a puerta (ambos lados)',eq.filter(w=>/_remates_puerta$/.test(w.mercado))],
-    ['Córners (ambos lados)',eq.filter(w=>/_corners_equipo$/.test(w.mercado))],
     ['Todos · Local',eq.filter(w=>/^local_/.test(w.mercado))],
     ['Todos · Visita',eq.filter(w=>/^visit_/.test(w.mercado))],
     ['TOTAL por equipo',eq]];
