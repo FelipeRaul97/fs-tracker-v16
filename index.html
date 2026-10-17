@@ -619,7 +619,9 @@
           Los mercados por equipo nunca se apuestan (siempre van a watchlist). Esta tabla simula
           qué habría pasado si se hubiera podido apostar los que pasan el mismo filtro de un PICK:
           EV&gt;0 y, si tienen línea validada, cruzar su <code>cuota_justa</code>; si no la tienen,
-          EV ≥ <span id="seg-minev"></span>%. "Sin filtro" = todas las líneas registradas del mismo mercado.</p>
+          EV ≥ <span id="seg-minev"></span>%. Se cuenta <b>una sola línea por partido y mercado</b>
+          (la de mayor EV×prob), como en un PICK. "Sin filtro" = la mejor línea por partido y mercado
+          sin exigir el filtro.</p>
         <div id="seg-equipo"></div>
       </div>
     </div>
@@ -3577,18 +3579,28 @@ function renderSeguimiento(){
 
   // 2) Mercados por equipo si pasaran los filtros de PICK
   const eq=wl.filter(w=>w.tipo==='POR_EQUIPO');
+  // Una sola linea por partido y mercado (la de mayor EV x prob), igual que la
+  // unicidad de totales: las lineas del mismo mercado (Over 8.5/9.5/10.5) son la
+  // misma apuesta bajo otro umbral y no se apuestan juntas.
+  const unica=arr=>{
+    const m={};
+    arr.forEach(w=>{
+      const k=w.partido.id+'|'+w.mercado, sc=(w.ev_pct||0)*(w.prob||0)/100;
+      if(!m[k]||sc>m[k].sc||(sc===m[k].sc&&(w.prob||0)>(m[k].w.prob||0))) m[k]={w,sc};
+    });
+    return Object.values(m).map(o=>o.w);
+  };
   const filaEq=(lbl,arr)=>{
-    const pasan=_segStats(arr.filter(_segPasaPick)), todas=_segStats(arr);
+    const pasan=_segStats(unica(arr.filter(_segPasaPick))), todas=_segStats(unica(arr));
     const ref=todas.n?`<td class="num" style="color:var(--text3)">${todas.roi>=0?'+':''}${todas.roi.toFixed(1)}% (${todas.n})</td>`:'<td class="num">—</td>';
     return _segFila(lbl,pasan,ref);
   };
   const filasEq=SEG_TIPOS_EQ.map(([k,t,l])=>filaEq(`${t} · ${l}`,eq.filter(w=>w.mercado===k)));
   const cabEq=_segCab('Mercado','<th class="num">Sin filtro: ROI (n)</th>');
-  const mejor=SEG_TIPOS_EQ.map(([k,t,l])=>({k,lbl:`${t} · ${l}`,s:_segStats(eq.filter(w=>w.mercado===k&&_segPasaPick(w)))}))
+  const mejor=SEG_TIPOS_EQ.map(([k,t,l])=>({k,lbl:`${t} · ${l}`,s:_segStats(unica(eq.filter(w=>w.mercado===k&&_segPasaPick(w))))}))
     .filter(r=>r.s.n>=10).sort((a,b)=>b.s.roi-a.s.roi);
   const ver=mejor.length
-    ? `<p style="font-size:12px;margin-top:8px"><b>Mejor:</b> ${mejor[0].lbl} con ROI ${mejor[0].s.roi>=0?'+':''}${mejor[0].s.roi.toFixed(1)}% (±${mejor[0].s.moe.toFixed(0)}, ${mejor[0].s.n} líneas en ${mejor[0].s.partidos} partidos). `
-      +'Las líneas de un mismo partido y mercado están correlacionadas (p. ej. Over 8.5, 9.5 y 10.5 de remates): lo que cuenta es la columna Partidos, no Cerr.</p>'
+    ? `<p style="font-size:12px;margin-top:8px"><b>Mejor:</b> ${mejor[0].lbl} con ROI ${mejor[0].s.roi>=0?'+':''}${mejor[0].s.roi.toFixed(1)}% (±${mejor[0].s.moe.toFixed(0)}, ${mejor[0].s.n} partidos).</p>`
     : '<p style="font-size:12px;color:var(--text3);margin-top:8px">Hacen falta 10+ cerradas por mercado.</p>';
   document.getElementById('seg-equipo').innerHTML=
     '<div class="table-wrap"><table class="hm-table">'+cabEq+'<tbody>'+filasEq.join('')+'</tbody></table></div>'+ver;
