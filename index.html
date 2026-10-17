@@ -636,7 +636,7 @@
         <div class="table-wrap table-wrap-scroll" style="margin-top:10px">
           <table class="hm-table"><thead><tr>
             <th style="text-align:left">#</th><th style="text-align:left">Partido</th>
-            <th style="text-align:left">Mercado</th><th class="num">Cuota</th><th class="num">Justa</th>
+            <th style="text-align:left">Mercado</th><th class="num">Prob%</th><th class="num">Cuota</th><th class="num">Justa</th>
             <th class="num">EV%</th><th>Estado</th><th class="num">P&amp;L</th>
           </tr></thead><tbody id="seg-cohorte-tbody"></tbody></table>
         </div>
@@ -3623,10 +3623,10 @@ function renderSeguimiento(){
     const pl=w.acerto==null?null:(w.acerto?w.cuota-1:-1);
     const est=w.acerto==null?'<span style="color:var(--text3)">pendiente</span>':(w.acerto?'<span class="pl-pos">salió</span>':'<span class="pl-neg">falló</span>');
     return `<tr><td style="text-align:left">${w.partido.id}</td><td style="text-align:left">${w.partido.partido}</td>
-      <td style="text-align:left">${w.etiqueta||w.mercado}</td><td class="num">${w.cuota.toFixed(2)}</td>
+      <td style="text-align:left">${w.etiqueta||w.mercado}</td><td class="num">${w.prob!=null?Number(w.prob).toFixed(1):'—'}</td><td class="num">${w.cuota.toFixed(2)}</td>
       <td class="num">${w.cuota_justa.toFixed(2)}</td><td class="num">${w.ev_pct.toFixed(1)}</td><td>${est}</td>
       <td class="num ${pl==null?'':(pl>=0?'pl-pos':'pl-neg')}">${pl==null?'—':(pl>=0?'+':'')+pl.toFixed(2)}</td></tr>`;
-  }).join('')||'<tr><td colspan="8" class="empty">Sin registros todavía.</td></tr>';
+  }).join('')||'<tr><td colspan="9" class="empty">Sin registros todavía.</td></tr>';
 }
 
 function renderAll(){
