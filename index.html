@@ -3583,10 +3583,6 @@ function renderSeguimiento(){
     return _segFila(lbl,pasan,ref);
   };
   const filasEq=SEG_TIPOS_EQ.map(([k,t,l])=>filaEq(`${t} · ${l}`,eq.filter(w=>w.mercado===k)));
-  const agr=[
-    ['Todos · Local',eq.filter(w=>/^local_/.test(w.mercado))],
-    ['Todos · Visita',eq.filter(w=>/^visit_/.test(w.mercado))],
-    ['TOTAL por equipo',eq]];
   const cabEq=_segCab('Mercado','<th class="num">Sin filtro: ROI (n)</th>');
   const mejor=SEG_TIPOS_EQ.map(([k,t,l])=>({k,lbl:`${t} · ${l}`,s:_segStats(eq.filter(w=>w.mercado===k&&_segPasaPick(w)))}))
     .filter(r=>r.s.n>=10).sort((a,b)=>b.s.roi-a.s.roi);
@@ -3595,9 +3591,7 @@ function renderSeguimiento(){
       +'Las líneas de un mismo partido y mercado están correlacionadas (p. ej. Over 8.5, 9.5 y 10.5 de remates): lo que cuenta es la columna Partidos, no Cerr.</p>'
     : '<p style="font-size:12px;color:var(--text3);margin-top:8px">Hacen falta 10+ cerradas por mercado.</p>';
   document.getElementById('seg-equipo').innerHTML=
-    '<div class="table-wrap"><table class="hm-table">'+cabEq+'<tbody>'+filasEq.join('')
-    +'<tr><td colspan="9" style="background:var(--bg2);height:4px;padding:0"></td></tr>'
-    +agr.map(([l,a])=>filaEq('<i>'+l+'</i>',a)).join('')+'</tbody></table></div>'+ver;
+    '<div class="table-wrap"><table class="hm-table">'+cabEq+'<tbody>'+filasEq.join('')+'</tbody></table></div>'+ver;
 
   // 3) Cohorte EV<=0 que cruza linea validada
   const sC=_segStats(cohorte);
