@@ -272,6 +272,7 @@
     <div class="tab" data-tab="watchlist">Watchlist</div>
     <div class="tab" data-tab="confianza">Confianza</div>
     <div class="tab" data-tab="diagnostico">Diagnóstico</div>
+    <div class="tab" data-tab="seguimiento">Seguimiento</div>
   </div>
 
   <!-- Apuestas -->
@@ -592,6 +593,53 @@
   <!-- Confianza -->
   <div class="tab-panel" id="tab-confianza">
     <div class="grid2" id="conf-cards"></div>
+  </div>
+
+  <!-- Seguimiento: hipotesis abiertas sobre reglas de seleccion (se llena solo al cerrar partidos) -->
+  <div class="tab-panel" id="tab-seguimiento">
+    <p style="font-size:12px;color:var(--text3);margin:0 0 12px">
+      Hipótesis abiertas sobre las reglas de selección. Todo es <b>teórico</b>: 1 unidad por
+      línea, cuota−1 si acertó y −1 si no, sobre el <code>watchlist</code> y las apuestas de
+      <b>todas las ligas</b> (ignora el filtro de liga). "Pend." = registradas que aún no se
+      cerraron: es lo que va a alimentar la muestra. <b>±</b> es el margen aproximado al 90%
+      (normal): si el ROI es menor que el ±, la muestra todavía no distingue el resultado de cero.
+      Contexto (2026-10-17): sobre 65 partidos cerrados el ROI de los PICK reales fue +8.0%.</p>
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
+        <div class="card-title">Escenarios de reglas — ¿qué habría pasado con otro criterio?</div>
+        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">
+          Cada fila es una población distinta (no se suman entre sí). Los PICK reales son la referencia.</p>
+        <div id="seg-escenarios"></div>
+      </div>
+    </div>
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
+        <div class="card-title">Mercados por equipo — ¿cuáles rinden si pasaran los filtros de PICK?</div>
+        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">
+          Los mercados por equipo nunca se apuestan (siempre van a watchlist). Esta tabla simula
+          qué habría pasado si se hubiera podido apostar los que pasan el mismo filtro de un PICK:
+          EV&gt;0 y, si tienen línea validada, cruzar su <code>cuota_justa</code>; si no la tienen,
+          EV ≥ <span id="seg-minev"></span>%. "Sin filtro" = todas las líneas registradas del mismo mercado.</p>
+        <div id="seg-equipo"></div>
+      </div>
+    </div>
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
+        <div class="card-title">EV entre −5% y 0% que cruzan su línea validada</div>
+        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">
+          Simples de goles que hoy <b>no</b> pueden ser PICK por tener EV ≤ 0, pero cuya cuota
+          supera la <code>cuota_justa</code> de su banda histórica (no incluye 1X2 ni córners
+          totales). Si el historial manda sobre el EV del modelo, deberían rendir bien.</p>
+        <div id="seg-cohorte-resumen"></div>
+        <div class="table-wrap table-wrap-scroll" style="margin-top:10px">
+          <table class="hm-table"><thead><tr>
+            <th style="text-align:left">#</th><th style="text-align:left">Partido</th>
+            <th style="text-align:left">Mercado</th><th class="num">Cuota</th><th class="num">Justa</th>
+            <th class="num">EV%</th><th>Estado</th><th class="num">P&amp;L</th>
+          </tr></thead><tbody id="seg-cohorte-tbody"></tbody></table>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- Diagnostico: donde acierta el modelo y donde no -->
@@ -3466,6 +3514,118 @@ function renderConfianza(){
   }).join('');
 }
 
+// ── Seguimiento ───────────────────────────────────────────
+// Hipotesis abiertas sobre las reglas de seleccion. Todo teorico (1u por linea) y
+// sobre TODAS las ligas. Los criterios replican a add_bet.py:
+//   Via A (con linea validada): EV>0 y cuota >= cuota_justa
+//   Via B (sin linea validada): EV >= SEG_MIN_EV  (config.seleccion.filtro_edge.min_ev_pick)
+const SEG_MIN_EV=1.5;
+const SEG_TIPOS_EQ=[
+  ['local_remates','Remates','Local'],['visit_remates','Remates','Visita'],
+  ['local_remates_puerta','Remates a puerta','Local'],['visit_remates_puerta','Remates a puerta','Visita'],
+  ['local_corners_equipo','Córners','Local'],['visit_corners_equipo','Córners','Visita']];
+function _segPasaPick(w){
+  if(w.ev_pct==null||w.ev_pct<=0) return false;
+  return w.cuota_justa!=null ? w.cuota>=w.cuota_justa : w.ev_pct>=SEG_MIN_EV;
+}
+function _segStats(arr){
+  const cerr=arr.filter(w=>w.acerto!=null);
+  const n=cerr.length, pend=arr.length-n;
+  if(!n) return {n:0,pend,ac:0,pl:0,roi:null,moe:null,partidos:0};
+  const x=cerr.map(w=>w.acerto?w.cuota-1:-1);
+  const pl=x.reduce((s,v)=>s+v,0), m=pl/n;
+  const sd=n>1?Math.sqrt(x.reduce((s,v)=>s+(v-m)*(v-m),0)/(n-1)):0;
+  return {n,pend,ac:cerr.filter(w=>w.acerto).length,pl,roi:m*100,moe:n>1?1.645*sd/Math.sqrt(n)*100:null,
+          partidos:new Set(cerr.map(w=>w.partido.id)).size};
+}
+function _segFila(lbl,s,extra){
+  if(!s.n) return `<tr><td style="text-align:left">${lbl}</td><td class="num">0</td><td class="num">${s.pend}</td>
+    <td colspan="5" style="color:var(--text3);text-align:center">sin cerradas</td>${extra||''}</tr>`;
+  const cls=s.pl>=0?'pl-pos':'pl-neg';
+  return `<tr><td style="text-align:left">${lbl}</td><td class="num">${s.n}</td><td class="num">${s.pend}</td>
+    <td class="num">${(s.ac/s.n*100).toFixed(1)}%</td>
+    <td class="num ${cls}">${s.pl>=0?'+':''}${s.pl.toFixed(2)}u</td>
+    <td class="num ${cls}"><b>${s.roi>=0?'+':''}${s.roi.toFixed(1)}%</b></td>
+    <td class="num" style="color:var(--text3)">${s.moe!=null?'±'+s.moe.toFixed(0):'—'}</td>
+    <td class="num">${s.partidos}</td>${extra||''}</tr>`;
+}
+function _segCab(primera,extra){
+  return `<thead><tr><th style="text-align:left">${primera}</th><th class="num">Cerr.</th><th class="num">Pend.</th>
+    <th class="num">Acierto</th><th class="num">P&amp;L</th><th class="num">ROI</th><th class="num">±90%</th>
+    <th class="num">Partidos</th>${extra||''}</tr></thead>`;
+}
+function renderSeguimiento(){
+  const wl=_DATA.flatMap(p=>(p.watchlist||[]).map(w=>({...w,partido:p})));
+  const simples=wl.filter(w=>!w.tipo);
+  const mini=document.getElementById('seg-minev'); if(mini) mini.textContent=SEG_MIN_EV;
+
+  // 1) Escenarios de reglas
+  const picks=_DATA.flatMap(p=>(p.apuestas||[]).filter(a=>a.tipo==='PICK').map(a=>({...a,partido:p})))
+    .map(a=>({...a,acerto:a.estado==='GANADA'?true:(a.estado==='PERDIDA'?false:null)}));
+  const okSimple=simples.filter(w=>!w.regla_1x2_no_pick&&w.mercado!=='corners65'&&w.mercado!=='corners75');
+  const evNeg=okSimple.filter(w=>w.ev_pct!=null&&w.ev_pct>-5&&w.ev_pct<=0);
+  const cohorte=evNeg.filter(w=>w.cuota_justa!=null&&w.cuota>=w.cuota_justa);
+  const piso=simples.filter(w=>String(w.filtro_edge||'').startsWith('EV='));
+  const filas=[
+    ['PICKs reales (referencia)',picks],
+    ['min_ev_pick = 0%: PICK extra (0 &lt; EV &lt; '+SEG_MIN_EV+'%, solo los frenaba el piso)',piso],
+    ['−5% &lt; EV ≤ 0, todos (sin 1X2 ni córners totales)',evNeg],
+    ['−5% &lt; EV ≤ 0 y cruzan su línea validada',cohorte]];
+  document.getElementById('seg-escenarios').innerHTML=
+    '<div class="table-wrap"><table class="hm-table">'+_segCab('Escenario')+'<tbody>'
+    +filas.map(([l,a])=>_segFila(l,_segStats(a))).join('')+'</tbody></table></div>';
+
+  // 2) Mercados por equipo si pasaran los filtros de PICK
+  const eq=wl.filter(w=>w.tipo==='POR_EQUIPO');
+  const filaEq=(lbl,arr)=>{
+    const pasan=_segStats(arr.filter(_segPasaPick)), todas=_segStats(arr);
+    const ref=todas.n?`<td class="num" style="color:var(--text3)">${todas.roi>=0?'+':''}${todas.roi.toFixed(1)}% (${todas.n})</td>`:'<td class="num">—</td>';
+    return _segFila(lbl,pasan,ref);
+  };
+  const filasEq=SEG_TIPOS_EQ.map(([k,t,l])=>filaEq(`${t} · ${l}`,eq.filter(w=>w.mercado===k)));
+  const agr=[
+    ['Remates (ambos lados)',eq.filter(w=>/_remates$/.test(w.mercado))],
+    ['Remates a puerta (ambos lados)',eq.filter(w=>/_remates_puerta$/.test(w.mercado))],
+    ['Córners (ambos lados)',eq.filter(w=>/_corners_equipo$/.test(w.mercado))],
+    ['Todos · Local',eq.filter(w=>/^local_/.test(w.mercado))],
+    ['Todos · Visita',eq.filter(w=>/^visit_/.test(w.mercado))],
+    ['TOTAL por equipo',eq]];
+  const cabEq=_segCab('Mercado','<th class="num">Sin filtro: ROI (n)</th>');
+  const mejor=SEG_TIPOS_EQ.map(([k,t,l])=>({k,lbl:`${t} · ${l}`,s:_segStats(eq.filter(w=>w.mercado===k&&_segPasaPick(w)))}))
+    .filter(r=>r.s.n>=10).sort((a,b)=>b.s.roi-a.s.roi);
+  const ver=mejor.length
+    ? `<p style="font-size:12px;margin-top:8px"><b>Mejor:</b> ${mejor[0].lbl} con ROI ${mejor[0].s.roi>=0?'+':''}${mejor[0].s.roi.toFixed(1)}% (±${mejor[0].s.moe.toFixed(0)}, ${mejor[0].s.n} líneas en ${mejor[0].s.partidos} partidos). `
+      +'Las líneas de un mismo partido y mercado están correlacionadas (p. ej. Over 8.5, 9.5 y 10.5 de remates): lo que cuenta es la columna Partidos, no Cerr.</p>'
+    : '<p style="font-size:12px;color:var(--text3);margin-top:8px">Hacen falta 10+ cerradas por mercado.</p>';
+  document.getElementById('seg-equipo').innerHTML=
+    '<div class="table-wrap"><table class="hm-table">'+cabEq+'<tbody>'+filasEq.join('')
+    +'<tr><td colspan="9" style="background:var(--bg2);height:4px;padding:0"></td></tr>'
+    +agr.map(([l,a])=>filaEq('<i>'+l+'</i>',a)).join('')+'</tbody></table></div>'+ver;
+
+  // 3) Cohorte EV<=0 que cruza linea validada
+  const sC=_segStats(cohorte);
+  const resEl=document.getElementById('seg-cohorte-resumen');
+  const refPick=_segStats(picks);
+  resEl.innerHTML=`<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px">
+    <div class="metric"><div class="metric-label">Registradas</div><div class="metric-val amber">${cohorte.length}</div></div>
+    <div class="metric"><div class="metric-label">Cerradas</div><div class="metric-val">${sC.n}</div></div>
+    <div class="metric"><div class="metric-label">Pendientes</div><div class="metric-val">${sC.pend}</div></div>
+    <div class="metric"><div class="metric-label">Acierto</div><div class="metric-val">${sC.n?(sC.ac/sC.n*100).toFixed(1)+'%':'--'}</div></div>
+    <div class="metric"><div class="metric-label">P&amp;L teórico</div><div class="metric-val ${sC.pl>=0?'pl-pos':'pl-neg'}">${sC.n?(sC.pl>=0?'+':'')+sC.pl.toFixed(2)+'u':'--'}</div></div>
+    <div class="metric"><div class="metric-label">ROI teórico</div><div class="metric-val ${sC.roi>=0?'pl-pos':'pl-neg'}">${sC.n?(sC.roi>=0?'+':'')+sC.roi.toFixed(1)+'%':'--'}${sC.moe!=null?' <span style="font-size:11px;color:var(--text3)">±'+sC.moe.toFixed(0)+'</span>':''}</div></div>
+    <div class="metric"><div class="metric-label">Ref. PICKs reales</div><div class="metric-val">${refPick.n?(refPick.roi>=0?'+':'')+refPick.roi.toFixed(1)+'%':'--'}</div></div></div>
+    <p style="font-size:12px;color:var(--text3);margin-top:8px">${sC.n<40?'Con menos de ~40 cerradas el resultado no es concluyente (se fijó 40 como umbral para reabrir la regla).':'Muestra suficiente para evaluar si el cruce de línea debería permitir PICK con EV ≤ 0.'}</p>`;
+  const rows=[...cohorte].sort((a,b)=>String(b.partido.id).localeCompare(String(a.partido.id)));
+  document.getElementById('seg-cohorte-tbody').innerHTML=rows.map(w=>{
+    const pl=w.acerto==null?null:(w.acerto?w.cuota-1:-1);
+    const est=w.acerto==null?'<span style="color:var(--text3)">pendiente</span>':(w.acerto?'<span class="pl-pos">salió</span>':'<span class="pl-neg">falló</span>');
+    return `<tr><td style="text-align:left">${w.partido.id}</td><td style="text-align:left">${w.partido.partido}</td>
+      <td style="text-align:left">${w.etiqueta||w.mercado}</td><td class="num">${w.cuota.toFixed(2)}</td>
+      <td class="num">${w.cuota_justa.toFixed(2)}</td><td class="num">${w.ev_pct.toFixed(1)}</td><td>${est}</td>
+      <td class="num ${pl==null?'':(pl>=0?'pl-pos':'pl-neg')}">${pl==null?'—':(pl>=0?'+':'')+pl.toFixed(2)}</td></tr>`;
+  }).join('')||'<tr><td colspan="8" class="empty">Sin registros todavía.</td></tr>';
+}
+
 function renderAll(){
   renderMetrics();
   renderBets();
@@ -3478,6 +3638,7 @@ function renderAll(){
   if(active==='variables'){renderVariablesHeatmap();}
   if(active==='watchlist'){renderWatchlist();renderCrucesValidados();}
     if(active==='diagnostico'){renderDiagnostico();}
+  if(active==='seguimiento'){renderSeguimiento();}
   if(active==='confianza'){renderConfianza();}
 }
 
