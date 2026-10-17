@@ -3556,6 +3556,13 @@ function _segCab(primera,extra){
     <th class="num">Acierto</th><th class="num">P&amp;L</th><th class="num">ROI</th><th class="num">±90%</th>
     <th class="num">Partidos</th>${extra||''}</tr></thead>`;
 }
+function segToggle(k){
+  window._segAbierto=window._segAbierto||{};
+  window._segAbierto[k]=!window._segAbierto[k];
+  const d=document.getElementById('seg-det-'+k), c=document.getElementById('seg-car-'+k);
+  if(d) d.style.display=window._segAbierto[k]?'table-row':'none';
+  if(c) c.textContent=window._segAbierto[k]?'▾':'▸';
+}
 function renderSeguimiento(){
   const wl=_DATA.flatMap(p=>(p.watchlist||[]).map(w=>({...w,partido:p})));
   const simples=wl.filter(w=>!w.tipo);
@@ -3590,12 +3597,34 @@ function renderSeguimiento(){
     });
     return Object.values(m).map(o=>o.w);
   };
-  const filaEq=(lbl,arr)=>{
-    const pasan=_segStats(unica(arr.filter(_segPasaPick))), todas=_segStats(unica(arr));
+  // Cada fila se abre con un click y muestra, en una lista con scroll, las lineas
+  // (una por partido) que cuentan en esa fila: las que pasan el filtro de PICK.
+  window._segAbierto=window._segAbierto||{};
+  const filaEq=(k,lbl,arr)=>{
+    const sel=unica(arr.filter(_segPasaPick));
+    const pasan=_segStats(sel), todas=_segStats(unica(arr));
     const ref=todas.n?`<td class="num" style="color:var(--text3)">${todas.roi>=0?'+':''}${todas.roi.toFixed(1)}% (${todas.n})</td>`:'<td class="num">—</td>';
-    return _segFila(lbl,pasan,ref);
+    const abierto=!!window._segAbierto[k];
+    const fila=_segFila(`<span id="seg-car-${k}" style="display:inline-block;width:14px;color:var(--text3)">${abierto?'▾':'▸'}</span>${lbl}`,pasan,ref)
+      .replace('<tr>',`<tr class="seg-row" style="cursor:pointer" title="Click para ver cada apuesta" onclick="segToggle('${k}')">`);
+    const filasDet=[...sel].sort((a,b)=>String(b.partido.id).localeCompare(String(a.partido.id))).map(w=>{
+      const pl=w.acerto==null?null:(w.acerto?w.cuota-1:-1);
+      const est=w.acerto==null?'<span style="color:var(--text3)">pendiente</span>':(w.acerto?'<span class="pl-pos">salió</span>':'<span class="pl-neg">falló</span>');
+      return `<tr><td style="text-align:left">${w.partido.id}</td><td style="text-align:left">${w.partido.partido}</td>
+        <td style="text-align:left">${w.etiqueta||w.mercado}</td><td class="num">${w.prob!=null?Number(w.prob).toFixed(1):'—'}</td>
+        <td class="num">${w.cuota.toFixed(2)}</td><td class="num">${w.cuota_justa!=null?w.cuota_justa.toFixed(2):'—'}</td>
+        <td class="num">${w.ev_pct!=null?w.ev_pct.toFixed(1):'—'}</td><td>${est}</td>
+        <td class="num ${pl==null?'':(pl>=0?'pl-pos':'pl-neg')}">${pl==null?'—':(pl>=0?'+':'')+pl.toFixed(2)}</td></tr>`;
+    }).join('')||'<tr><td colspan="9" class="empty">Sin líneas que pasen el filtro todavía.</td></tr>';
+    const det=`<tr id="seg-det-${k}" style="display:${abierto?'table-row':'none'}"><td colspan="9" style="padding:8px 12px;background:var(--bg2)">
+      <div style="max-height:280px;overflow-y:auto;border:1px solid var(--border,#ddd);border-radius:8px;background:var(--bg,#fff)">
+        <table class="hm-table" style="margin:0"><thead style="position:sticky;top:0;background:var(--bg2)"><tr>
+          <th style="text-align:left">#</th><th style="text-align:left">Partido</th><th style="text-align:left">Línea</th>
+          <th class="num">Prob%</th><th class="num">Cuota</th><th class="num">Justa</th><th class="num">EV%</th>
+          <th>Estado</th><th class="num">P&amp;L</th></tr></thead><tbody>${filasDet}</tbody></table></div></td></tr>`;
+    return fila+det;
   };
-  const filasEq=SEG_TIPOS_EQ.map(([k,t,l])=>filaEq(`${t} · ${l}`,eq.filter(w=>w.mercado===k)));
+  const filasEq=SEG_TIPOS_EQ.map(([k,t,l])=>filaEq(k,`${t} · ${l}`,eq.filter(w=>w.mercado===k)));
   const cabEq=_segCab('Mercado','<th class="num">Sin filtro: ROI (n)</th>');
   const mejor=SEG_TIPOS_EQ.map(([k,t,l])=>({k,lbl:`${t} · ${l}`,s:_segStats(unica(eq.filter(w=>w.mercado===k&&_segPasaPick(w))))}))
     .filter(r=>r.s.n>=10).sort((a,b)=>b.s.roi-a.s.roi);
