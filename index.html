@@ -3600,21 +3600,22 @@ function renderSegLambda(){
     const own=l?w.partido.lambda_final_l:w.partido.lambda_final_v, riv=l?w.partido.lambda_final_v:w.partido.lambda_final_l;
     return (own==null||riv==null)?null:{lado:l?'local':'visit',own,riv,fav:own>riv}; };
   const fila=(lbl,rows)=>{
-    if(!rows.length) return `<tr><td style="text-align:left">${lbl}</td><td class="num">0</td><td colspan="4" style="color:var(--text3);text-align:center">sin casos</td></tr>`;
+    if(!rows.length) return `<tr><td style="text-align:left">${lbl}</td><td class="num">0</td><td colspan="5" style="color:var(--text3);text-align:center">sin casos</td></tr>`;
     const n=rows.length, ac=rows.filter(r=>r.w.acerto).length;
-    const roi=rows.reduce((t,r)=>t+(r.w.acerto?r.w.cuota-1:-1),0)/n*100;
+    const pl=rows.reduce((t,r)=>t+(r.w.acerto?r.w.cuota-1:-1),0), roi=pl/n*100;
     const m=k=>(rows.reduce((t,r)=>t+r.I[k],0)/n).toFixed(2);
     return `<tr style="${n<10?'opacity:.5':''}"><td style="text-align:left">${lbl}</td><td class="num">${n}</td>
       <td class="num">${(ac/n*100).toFixed(0)}%</td>
+      <td class="num ${pl>=0?'pl-pos':'pl-neg'}">${pl>=0?'+':''}${pl.toFixed(2)}u</td>
       <td class="num ${roi>=0?'pl-pos':'pl-neg'}"><b>${roi>=0?'+':''}${roi.toFixed(0)}%</b></td>
       <td class="num">${m('own')}</td><td class="num">${m('riv')}</td></tr>`;
   };
   el.innerHTML='<div class="table-wrap"><table class="hm-table"><thead><tr><th style="text-align:left">Grupo</th><th class="num">Casos</th>'
-    +'<th class="num">Acierto</th><th class="num">ROI</th><th class="num">λ equipo</th><th class="num">λ rival</th></tr></thead><tbody>'
+    +'<th class="num">Acierto</th><th class="num">P&amp;L</th><th class="num">ROI</th><th class="num">λ equipo</th><th class="num">λ rival</th></tr></thead><tbody>'
     +tipos.map(([k,t])=>{
       const rows=unica(eq.filter(w=>w.mercado.endsWith('_'+k)&&w.acerto!=null&&(modo==='todas'||_segPasaPick(w))))
         .map(w=>({w,I:info(w)})).filter(x=>x.I);
-      return `<tr><td colspan="6" style="text-align:left;font-weight:600;background:var(--bg2)">${t}</td></tr>`
+      return `<tr><td colspan="7" style="text-align:left;font-weight:600;background:var(--bg2)">${t}</td></tr>`
         +grupos.map(([lbl,lado,fav])=>fila(lbl,rows.filter(x=>x.I.lado===lado&&x.I.fav===fav))).join('');
     }).join('')+'</tbody></table></div>';
 }
