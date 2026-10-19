@@ -2144,7 +2144,7 @@ function renderCombosPorPar(){
     const conP=arr.filter(a=>a.prob!=null);
     const probMed=conP.length?conP.reduce((s,a)=>s+a.prob,0)/conP.length:null;
     const wr=g/arr.length*100;
-    const roi=arr.reduce((s,a)=>s+(a.pl||0),0)/arr.length*100;
+    const plTot=arr.reduce((s,a)=>s+(a.pl||0),0), roi=plTot/arr.length*100;
     const conJ=arr.filter(a=>a.cuota_justa);
     const margen=conJ.length?conJ.reduce((s,a)=>s+(a.cuota/a.cuota_justa-1),0)/conJ.length*100:null;
     // pata que fallo, solo en las perdidas
@@ -2162,13 +2162,14 @@ function renderCombosPorPar(){
     return '<tr'+chica+'><td style="text-align:left">'+k+'</td><td>'+arr.length+'</td>'
       +'<td>'+wr.toFixed(0)+'%</td>'
       +'<td>'+(probMed!=null?probMed.toFixed(0)+'%':'—')+(sesgo!=null?' <span style="font-size:10px;color:var(--text3)">('+(sesgo>=0?'+':'')+sesgo.toFixed(0)+')</span>':'')+'</td>'
+      +'<td class="'+(plTot>=0?'pl-pos':'pl-neg')+'">'+(plTot>=0?'+':'')+plTot.toFixed(2)+'u</td>'
       +'<td class="'+(roi>=0?'pl-pos':'pl-neg')+'">'+(roi>=0?'+':'')+roi.toFixed(0)+'%</td>'
       +'<td>'+(margen!=null?(margen>=0?'+':'')+margen.toFixed(0)+'%':'—')+'</td>'
       +'<td style="text-align:left;font-size:11px">'+fTxt+'</td></tr>';
   };
   const filas=Object.entries(mapa).sort((a,b)=>b[1].length-a[1].length).map(([k,arr])=>fila(k,arr)).join('');
   el.innerHTML='<table class="hm-table"><thead><tr><th style="text-align:left">Par</th><th>Cerrados</th><th>WR</th>'
-    +'<th>Prob. modelo (sesgo)</th><th>ROI</th><th>Margen vs justa</th><th style="text-align:left">Pata que falló</th></tr></thead><tbody>'
+    +'<th>Prob. modelo (sesgo)</th><th>P&amp;L</th><th>ROI</th><th>Margen vs justa</th><th style="text-align:left">Pata que falló</th></tr></thead><tbody>'
     +filas+fila('TOTAL',todos).replace('<tr','<tr class="hm-total-row"')+'</tbody></table>';
 }
 
