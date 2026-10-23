@@ -783,6 +783,24 @@
           Poisson multiplica λL × λV como si los goles de los dos equipos fueran independientes.
           Correlación real &gt; 0: marcan juntos más de lo previsto → BTTS infravalorado. &lt; 0: lo contrario.</p>
         <div id="diag-lam-indep"></div>
+
+        <div style="border-top:1px solid var(--border);margin:22px 0 4px"></div>
+        <div style="font-size:12px;color:var(--text2);margin:6px 0 4px;font-weight:700">
+          Lo que de verdad apostaste — rentabilidad por tramo de λ</div>
+        <p style="font-size:11px;color:var(--text3);margin:0 0 6px">
+          Las tablas de arriba miden la calibración del modelo (las 59 predicciones). Estas dos miden
+          dinero: solo las apuestas cargadas (PICK y COMBO) ya cerradas, con su cuota y P&amp;L reales.
+          ROI = P&amp;L / nº de apuestas (1u por apuesta). Break-even = 1 / cuota media: el acierto
+          mínimo para no perder.</p>
+        <div style="font-size:12px;color:var(--text3);margin:14px 0 4px;font-weight:600">
+          ⑪ P&amp;L y ROI por banda de λ_total — ¿en qué ritmo de partido ganas dinero?</div>
+        <div id="diag-lam-roi"></div>
+        <div style="font-size:12px;color:var(--text3);margin:18px 0 4px;font-weight:600">
+          ⑫ Over 0.5 de un equipo: P&amp;L y ROI según la λ de ESE equipo — ¿rinde el Over con λ baja?</div>
+        <p style="font-size:11px;color:var(--text3);margin:0 0 6px">
+          Incluye el Over 0.5 apostado suelto y como pata de un COMBO. Se banda por la λ individual
+          (local con λ local, visita con λ visita), igual que ④.</p>
+        <div id="diag-lam-roi-eq"></div>
       </div>
     </div>
     <div class="grid2" style="margin-bottom:16px">
@@ -3147,7 +3165,74 @@ function _pearson(xs,ys){
   return sxy/Math.sqrt(sxx*syy);
 }
 
+// Resumen de dinero de un grupo de apuestas cerradas: acierto, cuota media, P&L, ROI.
+function _resumenRoi(arr){
+  const n=arr.length, g=arr.filter(a=>a.estado==='GANADA').length;
+  const pl=arr.reduce((s,a)=>s+(a.pl||0),0);
+  const cuota=arr.reduce((s,a)=>s+(a.cuota||0),0)/n;
+  return {n,g,acc:g/n*100,cuota,be:100/cuota,pl,roi:pl/n*100};
+}
+// Filas de una tabla de rentabilidad: por cada tramo, una fila Todas y una por tipo
+// (PICK / COMBO). obs = [{b, a}] con b = tramo y a = la apuesta cerrada.
+function _tablaRoi(obs,orden,titulo,colN){
+  const filas=[];
+  orden.forEach(b=>{
+    const arr=obs.filter(o=>o.b===b).map(o=>o.a);
+    if(!arr.length) return;
+    const tipos=[['Todas',arr],['PICK',arr.filter(a=>a.tipo==='PICK')],['COMBO',arr.filter(a=>a.tipo==='COMBO')]]
+      .filter(([,x])=>x.length);
+    // Si hay un solo tipo, "Todas" repetiría la misma fila.
+    const vis=tipos.length===2?tipos.slice(1):tipos;
+    vis.forEach(([t,x],i)=>{
+      const r=_resumenRoi(x), poco=r.n<15;
+      const cs=Math.abs(r.pl)<0.005?'':(r.pl>0?'pl-pos':'pl-neg');
+      const brk=r.acc>=r.be?'var(--green)':'var(--red)';
+      filas.push('<tr style="background:'+(poco?'var(--surface2)':'transparent')+'">'
+        +(i===0?'<td style="text-align:left" rowspan="'+vis.length+'">'+b+'</td>':'')
+        +'<td style="color:var(--text3);font-size:11px">'+t+'</td>'
+        +'<td style="color:var(--text3)">'+r.n+'</td>'
+        +'<td>'+r.g+'</td>'
+        +'<td style="color:'+brk+';font-weight:600">'+r.acc.toFixed(0)+'%</td>'
+        +'<td style="color:var(--text3)">'+r.cuota.toFixed(2)+'</td>'
+        +'<td style="color:var(--text3)">'+r.be.toFixed(0)+'%</td>'
+        +'<td class="'+cs+'">'+fmtL(r.pl)+'</td>'
+        +'<td class="'+cs+'" style="font-weight:600">'+(r.roi>=0?'+':'')+r.roi.toFixed(0)+'%</td></tr>');
+    });
+  });
+  if(!filas.length) return '<p class="empty">Sin apuestas cerradas con λ todavía.</p>';
+  return '<table class="hm-table"><thead><tr><th style="text-align:left">'+titulo+'</th><th>tipo</th>'
+    +'<th title="'+colN+'">N</th><th>Ganadas</th><th title="Verde si supera el break-even">Acierto</th>'
+    +'<th>Cuota media</th><th title="Acierto mínimo para no perder, 1 / cuota media">Break-even</th>'
+    +'<th>P&amp;L</th><th>ROI</th></tr></thead><tbody>'+filas.join('')+'</tbody></table>'
+    +'<p style="font-size:11px;color:var(--text3);margin-top:6px">Filas atenuadas: menos de 15 apuestas, todavía ruido.</p>';
+}
+// ⑪ y ⑫: dinero real (apuestas cargadas y cerradas) por tramo de lambda.
+function renderLambdaRoi(){
+  const el=document.getElementById('diag-lam-roi'), eq=document.getElementById('diag-lam-roi-eq');
+  if(!el||!eq) return;
+  const cerr=[];
+  _dataLiga().forEach(p=>{
+    if(p.lambda_final_l==null||p.lambda_final_v==null) return;
+    (p.apuestas||[]).forEach(a=>{
+      if(a.estado==='GANADA'||a.estado==='PERDIDA') cerr.push({p,a});
+    });
+  });
+  el.innerHTML=_tablaRoi(cerr.map(({p,a})=>({b:_lamBanda(p.lambda_final_l+p.lambda_final_v),a})),
+    _LAM_ORDER,'Banda λ_total','Apuestas cerradas en esa banda de λ_total');
+
+  // Over 0.5 de equipo: la pata puede ir suelta (mercado) o dentro de un COMBO (patas).
+  const obsEq=[];
+  cerr.forEach(({p,a})=>{
+    (a.patas||[a.mercado]).forEach(m=>{
+      if(m==='over05_local') obsEq.push({b:_lamBandaEq(p.lambda_final_l),a});
+      else if(m==='over05_visit') obsEq.push({b:_lamBandaEq(p.lambda_final_v),a});
+    });
+  });
+  eq.innerHTML=_tablaRoi(obsEq,_LAM_EQ_ORDER,'Banda λ equipo','Apuestas con Over 0.5 de equipo en esa banda de λ');
+}
+
 function renderLambdaBandas(){
+  renderLambdaRoi();
   const c1=document.getElementById('diag-lam-calib');
   if(!c1) return;
 
