@@ -109151,5 +109151,1568 @@ const TRACKER_DATA = [
         "cotizada": true
       }
     ]
+  },
+  {
+    "id": "114",
+    "fecha": "2026-10-25",
+    "jornada": 8,
+    "liga": "I1",
+    "partido": "Atalanta vs Frosinone",
+    "lambda_forma_l": 1.6817,
+    "lambda_forma_v": 1.8839,
+    "lambda_reg_l": 2.4561,
+    "lambda_reg_v": 1.2273,
+    "lambda_base_l": 2.2238,
+    "lambda_base_v": 1.4243,
+    "lambda_final_l": 2.3038,
+    "lambda_final_v": 1.3444,
+    "lambda_shadow_l": 2.1318,
+    "lambda_shadow_v": 1.3444,
+    "lambda_corners": 9.339,
+    "ratio": 1.7136268967569175,
+    "visit_dominante": "False",
+    "variables_activas": "V#3(L:0.99) - V#5(L:0.93)",
+    "variables": {
+      "v1": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa": false,
+        "activa_local": false,
+        "activa_visit": false,
+        "detalle_local": "--",
+        "detalle_visit": "--",
+        "detalle": "Ambos necesitan >=20 PJ (local:7, visit:7)"
+      },
+      "v2": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa_local": false,
+        "activa_visit": false,
+        "detalle_local": "Rank 11, margen 5pts -- fuera de riesgo",
+        "detalle_visit": "Rank 6, margen 9pts -- fuera de riesgo"
+      },
+      "v3": {
+        "factor_local": 0.995,
+        "activa": true,
+        "n_partidos": 20,
+        "GpG_casa": 1.3,
+        "GpG_liga": 1.35,
+        "hs": -0.05,
+        "muestra_completa": true,
+        "detalle": "hs=-0.05 (20 ptdos)"
+      },
+      "v4": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa_local": false,
+        "activa_visit": false,
+        "bajas_local": 1,
+        "bajas_visit": 0
+      },
+      "v5": {
+        "factor_local": 0.93,
+        "factor_visit": 1.0,
+        "activa_local": true,
+        "activa_visit": false
+      },
+      "v6": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa": false
+      },
+      "v7": {
+        "skip": false,
+        "activa_local": false,
+        "activa_visit": false,
+        "detalle": "Sin DT nuevo"
+      },
+      "v8": {
+        "activa": true,
+        "anulado_derby": false,
+        "detalle": "ACTIVA -- copa <=5 dias"
+      }
+    },
+    "confianza": "MEDIA",
+    "notas": "",
+    "resultado_partido": null,
+    "goles_esperados": "3.65",
+    "apuestas": [
+      {
+        "tipo": "PICK",
+        "mercado": "do1x",
+        "linea": null,
+        "etiqueta": "DO Atalanta o Empate",
+        "cuota": 1.31,
+        "prob": 80.9,
+        "ev_pct": 6.0,
+        "estado": "PENDIENTE",
+        "pl": null
+      },
+      {
+        "tipo": "PICK",
+        "mercado": "over05_local",
+        "linea": null,
+        "etiqueta": "Over 0.5 Atalanta",
+        "cuota": 1.11,
+        "prob": 91.7,
+        "ev_pct": 1.8,
+        "estado": "PENDIENTE",
+        "pl": null
+      }
+    ],
+    "watchlist": [
+      {
+        "mercado": "victoria_local",
+        "linea": null,
+        "etiqueta": "Victoria Atalanta",
+        "cuota": 1.88,
+        "prob": 58.9,
+        "ev_pct": 10.7,
+        "regla_1x2_no_pick": true
+      },
+      {
+        "mercado": "over15",
+        "linea": null,
+        "etiqueta": "Over 1.5",
+        "cuota": 1.13,
+        "prob": 87.5,
+        "ev_pct": -1.1
+      },
+      {
+        "mercado": "over25",
+        "linea": null,
+        "etiqueta": "Over 2.5",
+        "cuota": 1.42,
+        "prob": 69.5,
+        "ev_pct": -1.3
+      },
+      {
+        "mercado": "over35",
+        "linea": null,
+        "etiqueta": "Over 3.5",
+        "cuota": 2.0,
+        "prob": 49.5,
+        "ev_pct": -1.0
+      },
+      {
+        "mercado": "corners65",
+        "linea": null,
+        "etiqueta": "Over 6.5 corners",
+        "cuota": 1.09,
+        "prob": 80.4,
+        "ev_pct": -12.4
+      },
+      {
+        "mercado": "corners75",
+        "linea": null,
+        "etiqueta": "Over 7.5 corners",
+        "cuota": 1.19,
+        "prob": 69.8,
+        "ev_pct": -16.9
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 2.5,
+        "etiqueta": "Frosinone Corners equipo Over 2.5",
+        "cuota": 1.23,
+        "prob": 83.2,
+        "ev_pct": 2.3,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates",
+        "linea": 11.5,
+        "etiqueta": "Frosinone Remates Over 11.5",
+        "cuota": 1.25,
+        "prob": 77.9,
+        "ev_pct": -2.6,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_corners_equipo",
+        "linea": 3.5,
+        "etiqueta": "Atalanta Corners equipo Over 3.5",
+        "cuota": 1.14,
+        "prob": 77.1,
+        "ev_pct": -12.1,
+        "tipo": "POR_EQUIPO",
+        "cuota_justa": 1.26,
+        "cuota_segura": 1.35,
+        "acierto_hist": 79.4,
+        "n_hist": 257
+      },
+      {
+        "mercado": "local_remates_puerta",
+        "linea": 4.5,
+        "etiqueta": "Atalanta Remates a puerta Over 4.5",
+        "cuota": 1.37,
+        "prob": 74.4,
+        "ev_pct": 1.9,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates_puerta",
+        "linea": 3.5,
+        "etiqueta": "Frosinone Remates a puerta Over 3.5",
+        "cuota": 1.39,
+        "prob": 74.1,
+        "ev_pct": 3.0,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "over15+hcp3_visit",
+        "linea": null,
+        "etiqueta": "Over 1.5 + HCP +3 V",
+        "cuota": 1.31,
+        "prob": 67.9,
+        "ev_pct": -11.0,
+        "tipo": "COMBINADA",
+        "patas": [
+          "over15",
+          "hcp3_visit"
+        ],
+        "lift": 0.962,
+        "cuota_justa": 1.42,
+        "cuota_segura": 1.54,
+        "acierto_hist": 70.2,
+        "n_hist": 332
+      },
+      {
+        "mercado": "under45+over05_local",
+        "linea": null,
+        "etiqueta": "Under 4.5 + Over 0.5 L",
+        "cuota": 1.6,
+        "prob": 59.9,
+        "ev_pct": -4.2,
+        "tipo": "COMBINADA",
+        "patas": [
+          "under45",
+          "over05_local"
+        ],
+        "lift": 0.952,
+        "cuota_justa": 1.71,
+        "cuota_segura": 1.91,
+        "acierto_hist": 58.4,
+        "n_hist": 269
+      },
+      {
+        "mercado": "over05_local+hcp3_visit",
+        "linea": null,
+        "etiqueta": "Over 0.5 L + HCP +3 V",
+        "cuota": 1.29,
+        "prob": 70.1,
+        "ev_pct": -9.6,
+        "tipo": "COMBINADA",
+        "patas": [
+          "over05_local",
+          "hcp3_visit"
+        ],
+        "lift": 0.974,
+        "cuota_justa": 1.37,
+        "cuota_segura": 1.49,
+        "acierto_hist": 72.9,
+        "n_hist": 255
+      },
+      {
+        "mercado": "do1x+under45",
+        "linea": null,
+        "etiqueta": "DO L o Empate + Under 4.5",
+        "cuota": 1.78,
+        "prob": 54.6,
+        "ev_pct": -2.8,
+        "tipo": "COMBINADA",
+        "patas": [
+          "do1x",
+          "under45"
+        ],
+        "lift": 1.021,
+        "cuota_justa": 1.83,
+        "cuota_segura": 2.1,
+        "acierto_hist": 54.7,
+        "n_hist": 192
+      },
+      {
+        "mercado": "over25+hcp3_visit",
+        "linea": null,
+        "etiqueta": "Over 2.5 + HCP +3 V",
+        "cuota": 1.72,
+        "prob": 50.6,
+        "ev_pct": -13.0,
+        "tipo": "COMBINADA",
+        "patas": [
+          "over25",
+          "hcp3_visit"
+        ],
+        "lift": 0.888,
+        "cuota_justa": 1.92,
+        "cuota_segura": 2.25,
+        "acierto_hist": 52.2,
+        "n_hist": 161
+      }
+    ],
+    "mercados_snapshot": {
+      "victoria_local": 58.9,
+      "empate": 21.3,
+      "victoria_visit": 19.1,
+      "do1x": 80.9,
+      "dox2": 41.0,
+      "over15": 87.5,
+      "over25": 69.5,
+      "under25": 30.5,
+      "over35": 49.5,
+      "under35": 50.5,
+      "under45": 69.7,
+      "btts": 64.7,
+      "over05_local": 91.7,
+      "over05_visit": 73.9,
+      "hcp2_des": 62.6,
+      "hcp3_des": 80.0,
+      "corners65": 80.4,
+      "corners75": 69.8,
+      "local_remates_over7.5": 98.4,
+      "local_remates_over8.5": 97.1,
+      "local_remates_over9.5": 95.1,
+      "local_remates_over10.5": 92.4,
+      "local_remates_over11.5": 88.9,
+      "local_remates_over12.5": 84.5,
+      "local_remates_over13.5": 79.3,
+      "local_remates_over14.5": 73.4,
+      "local_remates_over15.5": 67.0,
+      "local_remates_puerta_over1.5": 98.3,
+      "local_remates_puerta_over2.5": 94.2,
+      "local_remates_puerta_over3.5": 86.2,
+      "local_remates_puerta_over4.5": 74.4,
+      "local_remates_puerta_over5.5": 60.1,
+      "local_remates_puerta_over6.5": 45.2,
+      "local_corners_equipo_over2.5": 88.1,
+      "local_corners_equipo_over3.5": 77.1,
+      "local_corners_equipo_over4.5": 63.8,
+      "local_corners_equipo_over5.5": 50.0,
+      "local_corners_equipo_over6.5": 37.3,
+      "local_corners_equipo_over7.5": 26.5,
+      "visit_remates_over7.5": 95.8,
+      "visit_remates_over8.5": 92.9,
+      "visit_remates_over9.5": 88.9,
+      "visit_remates_over10.5": 83.9,
+      "visit_remates_over11.5": 77.9,
+      "visit_remates_over12.5": 71.0,
+      "visit_remates_over13.5": 63.6,
+      "visit_remates_over14.5": 55.9,
+      "visit_remates_over15.5": 48.3,
+      "visit_remates_puerta_over1.5": 95.7,
+      "visit_remates_puerta_over2.5": 87.4,
+      "visit_remates_puerta_over3.5": 74.1,
+      "visit_remates_puerta_over4.5": 57.8,
+      "visit_remates_puerta_over5.5": 41.3,
+      "visit_remates_puerta_over6.5": 27.1,
+      "visit_corners_equipo_over2.5": 83.2,
+      "visit_corners_equipo_over3.5": 69.5,
+      "visit_corners_equipo_over4.5": 54.4,
+      "visit_corners_equipo_over5.5": 40.0,
+      "visit_corners_equipo_over6.5": 27.8,
+      "visit_corners_equipo_over7.5": 18.4
+    },
+    "cruces_validados": [
+      {
+        "mercado": "btts",
+        "etiqueta": "BTTS",
+        "cuota": 1.4,
+        "justa": 1.6,
+        "segura": 1.76,
+        "hist": 62.7,
+        "n": 260,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "local_corners_equipo_over3.5",
+        "etiqueta": "Atalanta Corners Over 3.5",
+        "cuota": 1.14,
+        "justa": 1.26,
+        "segura": 1.35,
+        "hist": 79.4,
+        "n": 257,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "over15+hcp3_visit",
+        "etiqueta": "Over 1.5 + HCP +3 V",
+        "cuota": 1.31,
+        "justa": 1.42,
+        "segura": 1.54,
+        "hist": 70.2,
+        "n": 332,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "under45+over05_local",
+        "etiqueta": "Under 4.5 + Over 0.5 L",
+        "cuota": 1.6,
+        "justa": 1.71,
+        "segura": 1.91,
+        "hist": 58.4,
+        "n": 269,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "over05_local+hcp3_visit",
+        "etiqueta": "Over 0.5 L + HCP +3 V",
+        "cuota": 1.29,
+        "justa": 1.37,
+        "segura": 1.49,
+        "hist": 72.9,
+        "n": 255,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "do1x+under45",
+        "etiqueta": "DO L o Empate + Under 4.5",
+        "cuota": 1.78,
+        "justa": 1.83,
+        "segura": 2.1,
+        "hist": 54.7,
+        "n": 192,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "over25+hcp3_visit",
+        "etiqueta": "Over 2.5 + HCP +3 V",
+        "cuota": 1.72,
+        "justa": 1.92,
+        "segura": 2.25,
+        "hist": 52.2,
+        "n": 161,
+        "cruza": false,
+        "cruza_segura": false
+      }
+    ],
+    "validadas": [
+      {
+        "mercado": "over15+hcp3_visit",
+        "etiqueta": "Over 1.5 + HCP +3 V",
+        "tipo": "COMBINADA",
+        "p": 0.6794,
+        "cuota_justa": 1.42,
+        "cuota_segura": 1.54,
+        "acierto_hist": 70.2,
+        "n_hist": 332,
+        "cotizada": true
+      },
+      {
+        "mercado": "local_corners_equipo_over3.5+local_remates_over8.5",
+        "etiqueta": "L Corners Over 3.5 + L Remates Over 8.5",
+        "tipo": "COMBINADA",
+        "p": 0.7763,
+        "cuota_justa": 1.31,
+        "cuota_segura": 1.41,
+        "acierto_hist": 76.2,
+        "n_hist": 303,
+        "cotizada": false
+      },
+      {
+        "mercado": "under45+over05_local",
+        "etiqueta": "Under 4.5 + Over 0.5 L",
+        "tipo": "COMBINADA",
+        "p": 0.5985,
+        "cuota_justa": 1.71,
+        "cuota_segura": 1.91,
+        "acierto_hist": 58.4,
+        "n_hist": 269,
+        "cotizada": true
+      },
+      {
+        "mercado": "btts",
+        "etiqueta": "BTTS",
+        "tipo": "simple",
+        "p": 0.6466,
+        "cuota_justa": 1.6,
+        "cuota_segura": 1.76,
+        "acierto_hist": 62.7,
+        "n_hist": 260,
+        "cotizada": true
+      },
+      {
+        "mercado": "local_corners_equipo_over3.5",
+        "etiqueta": "Atalanta Corners Over 3.5",
+        "tipo": "por equipo",
+        "p": 0.7714,
+        "cuota_justa": 1.26,
+        "cuota_segura": 1.35,
+        "acierto_hist": 79.4,
+        "n_hist": 257,
+        "cotizada": true
+      },
+      {
+        "mercado": "local_corners_equipo_over4.5+local_remates_over10.5",
+        "etiqueta": "L Corners Over 4.5 + L Remates Over 10.5",
+        "tipo": "COMBINADA",
+        "p": 0.5944,
+        "cuota_justa": 1.72,
+        "cuota_segura": 1.92,
+        "acierto_hist": 58.2,
+        "n_hist": 256,
+        "cotizada": false
+      },
+      {
+        "mercado": "over05_local+hcp3_visit",
+        "etiqueta": "Over 0.5 L + HCP +3 V",
+        "tipo": "COMBINADA",
+        "p": 0.7006,
+        "cuota_justa": 1.37,
+        "cuota_segura": 1.49,
+        "acierto_hist": 72.9,
+        "n_hist": 255,
+        "cotizada": true
+      },
+      {
+        "mercado": "local_corners_equipo_over4.5+local_remates_over9.5",
+        "etiqueta": "L Corners Over 4.5 + L Remates Over 9.5",
+        "tipo": "COMBINADA",
+        "p": 0.6149,
+        "cuota_justa": 1.55,
+        "cuota_segura": 1.73,
+        "acierto_hist": 64.3,
+        "n_hist": 227,
+        "cotizada": false
+      },
+      {
+        "mercado": "do1x+under45",
+        "etiqueta": "DO L o Empate + Under 4.5",
+        "tipo": "COMBINADA",
+        "p": 0.5461,
+        "cuota_justa": 1.83,
+        "cuota_segura": 2.1,
+        "acierto_hist": 54.7,
+        "n_hist": 192,
+        "cotizada": true
+      },
+      {
+        "mercado": "local_corners_equipo_over3.5+local_remates_over10.5",
+        "etiqueta": "L Corners Over 3.5 + L Remates Over 10.5",
+        "tipo": "COMBINADA",
+        "p": 0.7408,
+        "cuota_justa": 1.36,
+        "cuota_segura": 1.5,
+        "acierto_hist": 73.5,
+        "n_hist": 185,
+        "cotizada": false
+      },
+      {
+        "mercado": "local_corners_equipo_over4.5+local_remates_over11.5",
+        "etiqueta": "L Corners Over 4.5 + L Remates Over 11.5",
+        "tipo": "COMBINADA",
+        "p": 0.58,
+        "cuota_justa": 1.71,
+        "cuota_segura": 1.95,
+        "acierto_hist": 58.5,
+        "n_hist": 183,
+        "cotizada": false
+      },
+      {
+        "mercado": "local_corners_equipo_over3.5+local_remates_over9.5",
+        "etiqueta": "L Corners Over 3.5 + L Remates Over 9.5",
+        "tipo": "COMBINADA",
+        "p": 0.7635,
+        "cuota_justa": 1.27,
+        "cuota_segura": 1.39,
+        "acierto_hist": 78.5,
+        "n_hist": 181,
+        "cotizada": false
+      },
+      {
+        "mercado": "over25+hcp3_visit",
+        "etiqueta": "Over 2.5 + HCP +3 V",
+        "tipo": "COMBINADA",
+        "p": 0.5061,
+        "cuota_justa": 1.92,
+        "cuota_segura": 2.25,
+        "acierto_hist": 52.2,
+        "n_hist": 161,
+        "cotizada": true
+      },
+      {
+        "mercado": "visit_corners_equipo_over3.5",
+        "etiqueta": "Frosinone Corners Over 3.5",
+        "tipo": "por equipo",
+        "p": 0.6955,
+        "cuota_justa": 1.49,
+        "cuota_segura": 1.68,
+        "acierto_hist": 67.3,
+        "n_hist": 159,
+        "cotizada": false
+      }
+    ]
+  },
+  {
+    "id": "115",
+    "fecha": "2026-10-25",
+    "jornada": 7,
+    "liga": "D1",
+    "partido": "Hoffenheim vs Leverkusen",
+    "lambda_forma_l": 1.9404,
+    "lambda_forma_v": 2.5388,
+    "lambda_reg_l": 1.4174,
+    "lambda_reg_v": 1.7769,
+    "lambda_base_l": 1.5743,
+    "lambda_base_v": 2.0055,
+    "lambda_final_l": 1.5312,
+    "lambda_final_v": 2.0486,
+    "lambda_shadow_l": 1.3948,
+    "lambda_shadow_v": 1.9052,
+    "lambda_corners": 8.817,
+    "ratio": 0.7474372742360637,
+    "visit_dominante": "False",
+    "variables_activas": "V#2(L:0.95) - V#3(L:1.03) - V#5(L:0.93) - V#5(V:0.93)",
+    "variables": {
+      "v1": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa": false,
+        "activa_local": false,
+        "activa_visit": false,
+        "detalle_local": "--",
+        "detalle_visit": "--",
+        "detalle": "Ambos necesitan >=20 PJ (local:6, visit:6)"
+      },
+      "v2": {
+        "factor_local": 0.95,
+        "factor_visit": 1.0,
+        "activa_local": true,
+        "activa_visit": false,
+        "detalle_local": "Rank 14, margen 0pts sobre zona desc",
+        "detalle_visit": "Rank 4, margen 7pts -- fuera de riesgo"
+      },
+      "v3": {
+        "factor_local": 1.031,
+        "activa": true,
+        "n_partidos": 20,
+        "GpG_casa": 2.05,
+        "GpG_liga": 1.74,
+        "hs": 0.31,
+        "muestra_completa": true,
+        "detalle": "hs=+0.31 (20 ptdos)"
+      },
+      "v4": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa_local": false,
+        "activa_visit": false,
+        "bajas_local": 0,
+        "bajas_visit": 0
+      },
+      "v5": {
+        "factor_local": 0.93,
+        "factor_visit": 0.93,
+        "activa_local": true,
+        "activa_visit": true
+      },
+      "v6": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa": false
+      },
+      "v7": {
+        "skip": false,
+        "activa_local": false,
+        "activa_visit": false,
+        "detalle": "Sin DT nuevo"
+      },
+      "v8": {
+        "activa": true,
+        "anulado_derby": false,
+        "detalle": "ACTIVA -- copa <=5 dias"
+      }
+    },
+    "confianza": "MEDIA",
+    "notas": "",
+    "resultado_partido": null,
+    "goles_esperados": "3.58",
+    "apuestas": [
+      {
+        "tipo": "PICK",
+        "mercado": "dox2",
+        "linea": null,
+        "etiqueta": "DO Empate o Leverkusen",
+        "cuota": 1.47,
+        "prob": 71.1,
+        "ev_pct": 4.5,
+        "estado": "PENDIENTE",
+        "pl": null
+      },
+      {
+        "tipo": "COMBO",
+        "mercado": "over05_visit+hcp2_visit",
+        "etiqueta": "Over 0.5 V + HCP +2 V",
+        "cuota": 1.28,
+        "prob": 79.5,
+        "ev_pct": 1.8,
+        "estado": "PENDIENTE",
+        "pl": null,
+        "patas": [
+          "over05_visit",
+          "hcp2_visit"
+        ],
+        "promovida_combinada": true,
+        "nivel_cruce": "justa",
+        "cuota_justa": 1.26,
+        "cuota_segura": 1.38,
+        "acierto_hist": 79.6,
+        "n_hist": 152
+      }
+    ],
+    "watchlist": [
+      {
+        "mercado": "victoria_visit",
+        "linea": null,
+        "etiqueta": "Victoria Leverkusen",
+        "cuota": 2.3,
+        "prob": 51.2,
+        "ev_pct": 17.8,
+        "regla_1x2_no_pick": true
+      },
+      {
+        "mercado": "over15",
+        "linea": null,
+        "etiqueta": "Over 1.5",
+        "cuota": 1.13,
+        "prob": 86.9,
+        "ev_pct": -1.8
+      },
+      {
+        "mercado": "over25",
+        "linea": null,
+        "etiqueta": "Over 2.5",
+        "cuota": 1.42,
+        "prob": 68.4,
+        "ev_pct": -2.9
+      },
+      {
+        "mercado": "over35",
+        "linea": null,
+        "etiqueta": "Over 3.5",
+        "cuota": 2.0,
+        "prob": 48.0,
+        "ev_pct": -4.0
+      },
+      {
+        "mercado": "over05_local",
+        "linea": null,
+        "etiqueta": "Over 0.5 Hoffenheim",
+        "cuota": 1.19,
+        "prob": 80.3,
+        "ev_pct": -4.4
+      },
+      {
+        "mercado": "over05_visit",
+        "linea": null,
+        "etiqueta": "Over 0.5 Leverkusen",
+        "cuota": 1.15,
+        "prob": 87.1,
+        "ev_pct": 0.2,
+        "filtro_edge": "EV=+0.2% < 1.5"
+      },
+      {
+        "mercado": "corners65",
+        "linea": null,
+        "etiqueta": "Over 6.5 corners",
+        "cuota": 1.1,
+        "prob": 75.6,
+        "ev_pct": -16.8
+      },
+      {
+        "mercado": "corners75",
+        "linea": null,
+        "etiqueta": "Over 7.5 corners",
+        "cuota": 1.19,
+        "prob": 64.6,
+        "ev_pct": -23.1
+      },
+      {
+        "mercado": "under45",
+        "linea": null,
+        "etiqueta": "Under 4.5",
+        "cuota": 1.36,
+        "prob": 71.0,
+        "ev_pct": -3.4
+      },
+      {
+        "mercado": "visit_remates_puerta",
+        "linea": 3.5,
+        "etiqueta": "Leverkusen Remates a puerta Over 3.5",
+        "cuota": 1.19,
+        "prob": 81.4,
+        "ev_pct": -3.1,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates_puerta",
+        "linea": 3.5,
+        "etiqueta": "Hoffenheim Remates a puerta Over 3.5",
+        "cuota": 1.19,
+        "prob": 80.7,
+        "ev_pct": -4.0,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 2.5,
+        "etiqueta": "Leverkusen Corners equipo Over 2.5",
+        "cuota": 1.12,
+        "prob": 79.6,
+        "ev_pct": -10.8,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_corners_equipo",
+        "linea": 3.5,
+        "etiqueta": "Hoffenheim Corners equipo Over 3.5",
+        "cuota": 1.26,
+        "prob": 75.2,
+        "ev_pct": -5.2,
+        "tipo": "POR_EQUIPO",
+        "cuota_justa": 1.26,
+        "cuota_segura": 1.35,
+        "acierto_hist": 79.4,
+        "n_hist": 257
+      },
+      {
+        "mercado": "over05_visit+hcp2_local",
+        "linea": null,
+        "etiqueta": "Over 0.5 V + HCP +2 L",
+        "cuota": 1.5,
+        "prob": 58.1,
+        "ev_pct": -12.8,
+        "tipo": "COMBINADA",
+        "patas": [
+          "over05_visit",
+          "hcp2_local"
+        ],
+        "lift": 0.938,
+        "cuota_justa": 1.68,
+        "cuota_segura": 1.8,
+        "acierto_hist": 59.6,
+        "n_hist": 582
+      },
+      {
+        "mercado": "btts+hcp2_local",
+        "linea": null,
+        "etiqueta": "BTTS + HCP +2 L",
+        "cuota": 1.62,
+        "prob": 52.4,
+        "ev_pct": -15.0,
+        "tipo": "COMBINADA",
+        "patas": [
+          "btts",
+          "hcp2_local"
+        ],
+        "lift": 1.053,
+        "cuota_justa": 1.85,
+        "cuota_segura": 2.05,
+        "acierto_hist": 54.1,
+        "n_hist": 338
+      },
+      {
+        "mercado": "over15+hcp3_local",
+        "linea": null,
+        "etiqueta": "Over 1.5 + HCP +3 L",
+        "cuota": 1.24,
+        "prob": 73.2,
+        "ev_pct": -9.2,
+        "tipo": "COMBINADA",
+        "patas": [
+          "over15",
+          "hcp3_local"
+        ],
+        "lift": 0.98,
+        "cuota_justa": 1.35,
+        "cuota_segura": 1.45,
+        "acierto_hist": 74.0,
+        "n_hist": 335
+      },
+      {
+        "mercado": "under45+over05_visit",
+        "linea": null,
+        "etiqueta": "Under 4.5 + Over 0.5 V",
+        "cuota": 1.62,
+        "prob": 58.4,
+        "ev_pct": -5.4,
+        "tipo": "COMBINADA",
+        "patas": [
+          "under45",
+          "over05_visit"
+        ],
+        "lift": 0.934,
+        "cuota_justa": 1.66,
+        "cuota_segura": 1.83,
+        "acierto_hist": 60.1,
+        "n_hist": 308
+      },
+      {
+        "mercado": "dox2+hcp3_local",
+        "linea": null,
+        "etiqueta": "DO Empate o V + HCP +3 L",
+        "cuota": 1.67,
+        "prob": 57.0,
+        "ev_pct": -4.7,
+        "tipo": "COMBINADA",
+        "patas": [
+          "dox2",
+          "hcp3_local"
+        ],
+        "lift": 0.968,
+        "cuota_justa": 1.72,
+        "cuota_segura": 1.91,
+        "acierto_hist": 58.1,
+        "n_hist": 296
+      },
+      {
+        "mercado": "over15+over05_local",
+        "linea": null,
+        "etiqueta": "Over 1.5 + Over 0.5 L",
+        "cuota": 1.26,
+        "prob": 74.1,
+        "ev_pct": -6.6,
+        "tipo": "COMBINADA",
+        "patas": [
+          "over15",
+          "over05_local"
+        ],
+        "lift": 1.158,
+        "cuota_justa": 1.37,
+        "cuota_segura": 1.48,
+        "acierto_hist": 73.0,
+        "n_hist": 289
+      },
+      {
+        "mercado": "under45+hcp2_visit",
+        "linea": null,
+        "etiqueta": "Under 4.5 + HCP +2 V",
+        "cuota": 1.55,
+        "prob": 62.0,
+        "ev_pct": -3.8,
+        "tipo": "COMBINADA",
+        "patas": [
+          "under45",
+          "hcp2_visit"
+        ],
+        "lift": 1.038,
+        "cuota_justa": 1.53,
+        "cuota_segura": 1.72,
+        "acierto_hist": 65.2,
+        "n_hist": 198
+      },
+      {
+        "mercado": "over05_local+hcp2_local",
+        "linea": null,
+        "etiqueta": "Over 0.5 L + HCP +2 L",
+        "cuota": 1.38,
+        "prob": 62.5,
+        "ev_pct": -13.7,
+        "tipo": "COMBINADA",
+        "patas": [
+          "over05_local",
+          "hcp2_local"
+        ],
+        "lift": 1.085,
+        "cuota_justa": 1.66,
+        "cuota_segura": 1.88,
+        "acierto_hist": 60.2,
+        "n_hist": 191
+      },
+      {
+        "mercado": "local_remates_puerta_over2.5+over05_local",
+        "linea": null,
+        "etiqueta": "L Remates a puerta Over 2.5 + Over 0.5 L",
+        "cuota": 1.23,
+        "prob": 77.6,
+        "ev_pct": -4.6,
+        "tipo": "COMBINADA",
+        "patas": [
+          "local_remates_puerta_over2.5",
+          "over05_local"
+        ],
+        "lift": 1.081,
+        "cuota_justa": 1.33,
+        "cuota_segura": 1.46,
+        "acierto_hist": 75.0,
+        "n_hist": 184
+      },
+      {
+        "mercado": "local_corners_equipo_over4.5+local_remates_over12.5",
+        "linea": null,
+        "etiqueta": "L Corners Over 4.5 + L Remates Over 12.5",
+        "cuota": 1.78,
+        "prob": 52.1,
+        "ev_pct": -7.2,
+        "tipo": "COMBINADA",
+        "patas": [
+          "local_corners_equipo_over4.5",
+          "local_remates_over12.5"
+        ],
+        "lift": 1.21,
+        "cuota_justa": 1.88,
+        "cuota_segura": 2.18,
+        "acierto_hist": 53.1,
+        "n_hist": 177
+      },
+      {
+        "mercado": "under45+over05_local",
+        "linea": null,
+        "etiqueta": "Under 4.5 + Over 0.5 L",
+        "cuota": 1.7,
+        "prob": 50.6,
+        "ev_pct": -13.9,
+        "tipo": "COMBINADA",
+        "patas": [
+          "under45",
+          "over05_local"
+        ],
+        "lift": 0.952,
+        "cuota_justa": 1.84,
+        "cuota_segura": 2.13,
+        "acierto_hist": 54.4,
+        "n_hist": 171
+      },
+      {
+        "mercado": "local_corners_equipo_over3.5+local_remates_puerta_over3.5",
+        "linea": null,
+        "etiqueta": "L Corners Over 3.5 + L Remates a puerta Over 3.5",
+        "cuota": 1.47,
+        "prob": 64.6,
+        "ev_pct": -5.0,
+        "tipo": "COMBINADA",
+        "patas": [
+          "local_corners_equipo_over3.5",
+          "local_remates_puerta_over3.5"
+        ],
+        "lift": 1.075,
+        "cuota_justa": 1.6,
+        "cuota_segura": 1.82,
+        "acierto_hist": 62.7,
+        "n_hist": 166
+      }
+    ],
+    "mercados_snapshot": {
+      "victoria_local": 28.9,
+      "empate": 23.4,
+      "victoria_visit": 51.2,
+      "do1x": 48.8,
+      "dox2": 71.1,
+      "over15": 86.9,
+      "over25": 68.4,
+      "under25": 31.6,
+      "over35": 48.0,
+      "under35": 51.9,
+      "under45": 71.0,
+      "btts": 65.8,
+      "over05_local": 80.3,
+      "over05_visit": 87.1,
+      "hcp2_des": 71.0,
+      "hcp3_des": 86.0,
+      "corners65": 75.6,
+      "corners75": 64.6,
+      "local_remates_over7.5": 95.8,
+      "local_remates_over8.5": 93.0,
+      "local_remates_over9.5": 89.1,
+      "local_remates_over10.5": 84.1,
+      "local_remates_over11.5": 78.1,
+      "local_remates_over12.5": 71.3,
+      "local_remates_over13.5": 63.9,
+      "local_remates_over14.5": 56.3,
+      "local_remates_over15.5": 48.6,
+      "local_remates_puerta_over1.5": 97.2,
+      "local_remates_puerta_over2.5": 91.2,
+      "local_remates_puerta_over3.5": 80.7,
+      "local_remates_puerta_over4.5": 66.4,
+      "local_remates_puerta_over5.5": 50.6,
+      "local_remates_puerta_over6.5": 35.7,
+      "local_corners_equipo_over2.5": 86.9,
+      "local_corners_equipo_over3.5": 75.2,
+      "local_corners_equipo_over4.5": 61.3,
+      "local_corners_equipo_over5.5": 47.3,
+      "local_corners_equipo_over6.5": 34.6,
+      "local_corners_equipo_over7.5": 24.1,
+      "visit_remates_over7.5": 93.8,
+      "visit_remates_over8.5": 90.0,
+      "visit_remates_over9.5": 84.9,
+      "visit_remates_over10.5": 78.7,
+      "visit_remates_over11.5": 71.6,
+      "visit_remates_over12.5": 63.8,
+      "visit_remates_over13.5": 55.7,
+      "visit_remates_over14.5": 47.7,
+      "visit_remates_over15.5": 40.0,
+      "visit_remates_puerta_over1.5": 97.4,
+      "visit_remates_puerta_over2.5": 91.6,
+      "visit_remates_puerta_over3.5": 81.4,
+      "visit_remates_puerta_over4.5": 67.4,
+      "visit_remates_puerta_over5.5": 51.7,
+      "visit_remates_puerta_over6.5": 36.8,
+      "visit_corners_equipo_over2.5": 79.6,
+      "visit_corners_equipo_over3.5": 64.4,
+      "visit_corners_equipo_over4.5": 48.5,
+      "visit_corners_equipo_over5.5": 34.2,
+      "visit_corners_equipo_over6.5": 22.7,
+      "visit_corners_equipo_over7.5": 14.3
+    },
+    "cruces_validados": [
+      {
+        "mercado": "local_corners_equipo_over3.5",
+        "etiqueta": "Hoffenheim Corners Over 3.5",
+        "cuota": 1.26,
+        "justa": 1.26,
+        "segura": 1.35,
+        "hist": 79.4,
+        "n": 257,
+        "cruza": true,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "over05_visit+hcp2_local",
+        "etiqueta": "Over 0.5 V + HCP +2 L",
+        "cuota": 1.5,
+        "justa": 1.68,
+        "segura": 1.8,
+        "hist": 59.6,
+        "n": 582,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "btts+hcp2_local",
+        "etiqueta": "BTTS + HCP +2 L",
+        "cuota": 1.62,
+        "justa": 1.85,
+        "segura": 2.05,
+        "hist": 54.1,
+        "n": 338,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "over15+hcp3_local",
+        "etiqueta": "Over 1.5 + HCP +3 L",
+        "cuota": 1.24,
+        "justa": 1.35,
+        "segura": 1.45,
+        "hist": 74.0,
+        "n": 335,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "under45+over05_visit",
+        "etiqueta": "Under 4.5 + Over 0.5 V",
+        "cuota": 1.62,
+        "justa": 1.66,
+        "segura": 1.83,
+        "hist": 60.1,
+        "n": 308,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "dox2+hcp3_local",
+        "etiqueta": "DO Empate o V + HCP +3 L",
+        "cuota": 1.67,
+        "justa": 1.72,
+        "segura": 1.91,
+        "hist": 58.1,
+        "n": 296,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "over15+over05_local",
+        "etiqueta": "Over 1.5 + Over 0.5 L",
+        "cuota": 1.26,
+        "justa": 1.37,
+        "segura": 1.48,
+        "hist": 73.0,
+        "n": 289,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "under45+hcp2_visit",
+        "etiqueta": "Under 4.5 + HCP +2 V",
+        "cuota": 1.55,
+        "justa": 1.53,
+        "segura": 1.72,
+        "hist": 65.2,
+        "n": 198,
+        "cruza": true,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "over05_local+hcp2_local",
+        "etiqueta": "Over 0.5 L + HCP +2 L",
+        "cuota": 1.38,
+        "justa": 1.66,
+        "segura": 1.88,
+        "hist": 60.2,
+        "n": 191,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "local_remates_puerta_over2.5+over05_local",
+        "etiqueta": "L Remates a puerta Over 2.5 + Over 0.5 L",
+        "cuota": 1.23,
+        "justa": 1.33,
+        "segura": 1.46,
+        "hist": 75.0,
+        "n": 184,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "local_corners_equipo_over4.5+local_remates_over12.5",
+        "etiqueta": "L Corners Over 4.5 + L Remates Over 12.5",
+        "cuota": 1.78,
+        "justa": 1.88,
+        "segura": 2.18,
+        "hist": 53.1,
+        "n": 177,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "under45+over05_local",
+        "etiqueta": "Under 4.5 + Over 0.5 L",
+        "cuota": 1.7,
+        "justa": 1.84,
+        "segura": 2.13,
+        "hist": 54.4,
+        "n": 171,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "local_corners_equipo_over3.5+local_remates_puerta_over3.5",
+        "etiqueta": "L Corners Over 3.5 + L Remates a puerta Over 3.5",
+        "cuota": 1.47,
+        "justa": 1.6,
+        "segura": 1.82,
+        "hist": 62.7,
+        "n": 166,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "over05_visit+hcp2_visit",
+        "etiqueta": "Over 0.5 V + HCP +2 V",
+        "cuota": 1.28,
+        "justa": 1.26,
+        "segura": 1.38,
+        "hist": 79.6,
+        "n": 152,
+        "cruza": true,
+        "cruza_segura": false
+      }
+    ],
+    "validadas": [
+      {
+        "mercado": "over05_visit+hcp2_local",
+        "etiqueta": "Over 0.5 V + HCP +2 L",
+        "tipo": "COMBINADA",
+        "p": 0.5815,
+        "cuota_justa": 1.68,
+        "cuota_segura": 1.8,
+        "acierto_hist": 59.6,
+        "n_hist": 582,
+        "cotizada": true
+      },
+      {
+        "mercado": "btts+hcp2_local",
+        "etiqueta": "BTTS + HCP +2 L",
+        "tipo": "COMBINADA",
+        "p": 0.5244,
+        "cuota_justa": 1.85,
+        "cuota_segura": 2.05,
+        "acierto_hist": 54.1,
+        "n_hist": 338,
+        "cotizada": true
+      },
+      {
+        "mercado": "over15+hcp3_local",
+        "etiqueta": "Over 1.5 + HCP +3 L",
+        "tipo": "COMBINADA",
+        "p": 0.7321,
+        "cuota_justa": 1.35,
+        "cuota_segura": 1.45,
+        "acierto_hist": 74.0,
+        "n_hist": 335,
+        "cotizada": true
+      },
+      {
+        "mercado": "under45+over05_visit",
+        "etiqueta": "Under 4.5 + Over 0.5 V",
+        "tipo": "COMBINADA",
+        "p": 0.584,
+        "cuota_justa": 1.66,
+        "cuota_segura": 1.83,
+        "acierto_hist": 60.1,
+        "n_hist": 308,
+        "cotizada": true
+      },
+      {
+        "mercado": "local_corners_equipo_over3.5+local_remates_over8.5",
+        "etiqueta": "L Corners Over 3.5 + L Remates Over 8.5",
+        "tipo": "COMBINADA",
+        "p": 0.7737,
+        "cuota_justa": 1.31,
+        "cuota_segura": 1.41,
+        "acierto_hist": 76.2,
+        "n_hist": 303,
+        "cotizada": false
+      },
+      {
+        "mercado": "dox2+hcp3_local",
+        "etiqueta": "DO Empate o V + HCP +3 L",
+        "tipo": "COMBINADA",
+        "p": 0.5705,
+        "cuota_justa": 1.72,
+        "cuota_segura": 1.91,
+        "acierto_hist": 58.1,
+        "n_hist": 296,
+        "cotizada": true
+      },
+      {
+        "mercado": "over15+over05_local",
+        "etiqueta": "Over 1.5 + Over 0.5 L",
+        "tipo": "COMBINADA",
+        "p": 0.741,
+        "cuota_justa": 1.37,
+        "cuota_segura": 1.48,
+        "acierto_hist": 73.0,
+        "n_hist": 289,
+        "cotizada": true
+      },
+      {
+        "mercado": "local_corners_equipo_over2.5+local_remates_over10.5",
+        "etiqueta": "L Corners Over 2.5 + L Remates Over 10.5",
+        "tipo": "COMBINADA",
+        "p": 0.7876,
+        "cuota_justa": 1.34,
+        "cuota_segura": 1.44,
+        "acierto_hist": 74.9,
+        "n_hist": 267,
+        "cotizada": false
+      },
+      {
+        "mercado": "local_corners_equipo_over3.5",
+        "etiqueta": "Hoffenheim Corners Over 3.5",
+        "tipo": "por equipo",
+        "p": 0.7518,
+        "cuota_justa": 1.26,
+        "cuota_segura": 1.35,
+        "acierto_hist": 79.4,
+        "n_hist": 257,
+        "cotizada": true
+      },
+      {
+        "mercado": "local_corners_equipo_over4.5+local_remates_over10.5",
+        "etiqueta": "L Corners Over 4.5 + L Remates Over 10.5",
+        "tipo": "COMBINADA",
+        "p": 0.5881,
+        "cuota_justa": 1.72,
+        "cuota_segura": 1.92,
+        "acierto_hist": 58.2,
+        "n_hist": 256,
+        "cotizada": false
+      },
+      {
+        "mercado": "over05_local+hcp3_visit",
+        "etiqueta": "Over 0.5 L + HCP +3 V",
+        "tipo": "COMBINADA",
+        "p": 0.7332,
+        "cuota_justa": 1.37,
+        "cuota_segura": 1.49,
+        "acierto_hist": 72.9,
+        "n_hist": 255,
+        "cotizada": false
+      },
+      {
+        "mercado": "local_corners_equipo_over4.5+local_remates_over9.5",
+        "etiqueta": "L Corners Over 4.5 + L Remates Over 9.5",
+        "tipo": "COMBINADA",
+        "p": 0.6113,
+        "cuota_justa": 1.55,
+        "cuota_segura": 1.73,
+        "acierto_hist": 64.3,
+        "n_hist": 227,
+        "cotizada": false
+      },
+      {
+        "mercado": "visit_corners_equipo_over3.5",
+        "etiqueta": "Leverkusen Corners Over 3.5",
+        "tipo": "por equipo",
+        "p": 0.6441,
+        "cuota_justa": 1.64,
+        "cuota_segura": 1.84,
+        "acierto_hist": 60.9,
+        "n_hist": 225,
+        "cotizada": false
+      },
+      {
+        "mercado": "local_corners_equipo_over2.5+local_remates_over11.5",
+        "etiqueta": "L Corners Over 2.5 + L Remates Over 11.5",
+        "tipo": "COMBINADA",
+        "p": 0.7359,
+        "cuota_justa": 1.35,
+        "cuota_segura": 1.47,
+        "acierto_hist": 74.3,
+        "n_hist": 202,
+        "cotizada": false
+      },
+      {
+        "mercado": "under45+hcp2_visit",
+        "etiqueta": "Under 4.5 + HCP +2 V",
+        "tipo": "COMBINADA",
+        "p": 0.6204,
+        "cuota_justa": 1.53,
+        "cuota_segura": 1.72,
+        "acierto_hist": 65.2,
+        "n_hist": 198,
+        "cotizada": true
+      },
+      {
+        "mercado": "over05_local+hcp2_local",
+        "etiqueta": "Over 0.5 L + HCP +2 L",
+        "tipo": "COMBINADA",
+        "p": 0.6254,
+        "cuota_justa": 1.66,
+        "cuota_segura": 1.88,
+        "acierto_hist": 60.2,
+        "n_hist": 191,
+        "cotizada": true
+      },
+      {
+        "mercado": "local_remates_over10.5+local_remates_puerta_over3.5",
+        "etiqueta": "L Remates Over 10.5 + L Remates a puerta Over 3.5",
+        "tipo": "COMBINADA",
+        "p": 0.7097,
+        "cuota_justa": 1.42,
+        "cuota_segura": 1.58,
+        "acierto_hist": 70.2,
+        "n_hist": 188,
+        "cotizada": false
+      },
+      {
+        "mercado": "local_remates_over10.5+local_remates_puerta_over4.5",
+        "etiqueta": "L Remates Over 10.5 + L Remates a puerta Over 4.5",
+        "tipo": "COMBINADA",
+        "p": 0.5866,
+        "cuota_justa": 1.75,
+        "cuota_segura": 2.0,
+        "acierto_hist": 57.2,
+        "n_hist": 187,
+        "cotizada": false
+      },
+      {
+        "mercado": "local_corners_equipo_over3.5+local_remates_over10.5",
+        "etiqueta": "L Corners Over 3.5 + L Remates Over 10.5",
+        "tipo": "COMBINADA",
+        "p": 0.7151,
+        "cuota_justa": 1.36,
+        "cuota_segura": 1.5,
+        "acierto_hist": 73.5,
+        "n_hist": 185,
+        "cotizada": false
+      },
+      {
+        "mercado": "local_remates_puerta_over2.5+over05_local",
+        "etiqueta": "L Remates a puerta Over 2.5 + Over 0.5 L",
+        "tipo": "COMBINADA",
+        "p": 0.7757,
+        "cuota_justa": 1.33,
+        "cuota_segura": 1.46,
+        "acierto_hist": 75.0,
+        "n_hist": 184,
+        "cotizada": true
+      },
+      {
+        "mercado": "local_corners_equipo_over4.5+local_remates_over11.5",
+        "etiqueta": "L Corners Over 4.5 + L Remates Over 11.5",
+        "tipo": "COMBINADA",
+        "p": 0.5684,
+        "cuota_justa": 1.71,
+        "cuota_segura": 1.95,
+        "acierto_hist": 58.5,
+        "n_hist": 183,
+        "cotizada": false
+      },
+      {
+        "mercado": "local_corners_equipo_over3.5+local_remates_over9.5",
+        "etiqueta": "L Corners Over 3.5 + L Remates Over 9.5",
+        "tipo": "COMBINADA",
+        "p": 0.7534,
+        "cuota_justa": 1.27,
+        "cuota_segura": 1.39,
+        "acierto_hist": 78.5,
+        "n_hist": 181,
+        "cotizada": false
+      },
+      {
+        "mercado": "local_corners_equipo_over4.5+local_remates_over12.5",
+        "etiqueta": "L Corners Over 4.5 + L Remates Over 12.5",
+        "tipo": "COMBINADA",
+        "p": 0.5212,
+        "cuota_justa": 1.88,
+        "cuota_segura": 2.18,
+        "acierto_hist": 53.1,
+        "n_hist": 177,
+        "cotizada": true
+      },
+      {
+        "mercado": "under45+over05_local",
+        "etiqueta": "Under 4.5 + Over 0.5 L",
+        "tipo": "COMBINADA",
+        "p": 0.5064,
+        "cuota_justa": 1.84,
+        "cuota_segura": 2.13,
+        "acierto_hist": 54.4,
+        "n_hist": 171,
+        "cotizada": true
+      },
+      {
+        "mercado": "local_corners_equipo_over3.5+local_remates_puerta_over3.5",
+        "etiqueta": "L Corners Over 3.5 + L Remates a puerta Over 3.5",
+        "tipo": "COMBINADA",
+        "p": 0.6462,
+        "cuota_justa": 1.6,
+        "cuota_segura": 1.82,
+        "acierto_hist": 62.7,
+        "n_hist": 166,
+        "cotizada": true
+      },
+      {
+        "mercado": "visit_corners_equipo_over3.5+visit_remates_over7.5",
+        "etiqueta": "V Corners Over 3.5 + V Remates Over 7.5",
+        "tipo": "COMBINADA",
+        "p": 0.6135,
+        "cuota_justa": 1.62,
+        "cuota_segura": 1.85,
+        "acierto_hist": 61.9,
+        "n_hist": 160,
+        "cotizada": false
+      },
+      {
+        "mercado": "over05_visit+hcp2_visit",
+        "etiqueta": "Over 0.5 V + HCP +2 V",
+        "tipo": "COMBINADA",
+        "p": 0.7954,
+        "cuota_justa": 1.26,
+        "cuota_segura": 1.38,
+        "acierto_hist": 79.6,
+        "n_hist": 152,
+        "cotizada": true
+      }
+    ]
   }
 ];
