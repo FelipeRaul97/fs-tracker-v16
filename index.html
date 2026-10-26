@@ -637,6 +637,20 @@
         <div id="seg-remate"></div>
       </div>
     </div>
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
+        <div class="card-title">Elección de partidos — ¿qué partidos rinden y en cuáles acierta más el modelo?</div>
+        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">
+          Criterio en prueba (2026-10-26): elegir partidos con <b>|λ local − λ visita| ≥ 0.4</b> (favorito claro) y, como
+          <b>grupo de control</b>, sumar cada jornada 2–3 partidos de equipos fuera de la zona alta (mejor puesto ≥ 9).
+          En el backtest de 3.803 partidos el modelo predice mejor cuanto mayor es el desnivel (mejora sobre la tasa base de
+          +2.6% con diferencia &lt; 0.4 a +17.4% con &gt; 1.2), pero las apuestas EV+ con cuotas reales no ganaban en ningún grupo:
+          acertar más no es lo mismo que rendir más. Esta tabla mide eso con <b>tus</b> apuestas y se llena sola al cerrar partidos
+          (la λ y el puesto quedan guardados en cada entrada). <b>Unidades</b> = PICK + COMBO + REMATE de cada partido;
+          <b>Brier</b> = error del modelo en sus 18 mercados de goles (menor es mejor).</p>
+        <div id="seg-eleccion"></div>
+      </div>
+    </div>
     <p style="font-size:12px;color:var(--text3);margin:0 0 12px">
       Hipótesis abiertas sobre las reglas de selección. Todo es <b>teórico</b>: 1 unidad por
       línea, cuota−1 si acertó y −1 si no, sobre el <code>watchlist</code> y las apuestas de
@@ -4093,9 +4107,66 @@ function _segRemate(){
     +'. Pasan el mismo filtro que un PICK (EV&gt;0 y cruzar la cuota justa, o EV ≥ '+SEG_MIN_EV+'% si no hay historial), sin tope de cuota. '
     +'Si el ROI depende de la banda de cuota ≥ 3 o de sus 3 mejores apuestas, el resultado es frágil.</p>';
 }
+// ── Elección de partidos (2026-10-26): qué partidos rinden y en cuáles acierta más el modelo ──────────
+// Todo sale de lo ya guardado: λ finales, puesto en la tabla (variables.v2.detalle_*), confianza, apuestas y
+// los 60 resultados del snapshot. Sin campos nuevos: se llena sola al cerrar partidos.
+const _SEG_GOLES_BRIER=['victoria_local','empate','victoria_visit','do1x','dox2','over15','over25','under25','over35','under35',
+  'under45','btts','over05_local','over05_visit','hcp2_des','hcp3_des','corners65','corners75'];
+const SEG_CONTROL_META=40;   // partidos de control (mejor puesto >= 9) a acumular antes de concluir
+function _segPartidoFicha(p){
+  const v=(p.variables||{}).v2||{};
+  const rk=t=>{const m=/Rank (\d+)/.exec(t||''); return m?+m[1]:null;};
+  const rl=rk(v.detalle_local), rv=rk(v.detalle_visit);
+  const ap=(p.apuestas||[]).filter(a=>a.estado==='GANADA'||a.estado==='PERDIDA');
+  const sn=p.mercados_snapshot||{}, rs=p.snapshot_resultados||{};
+  const br=_SEG_GOLES_BRIER.filter(k=>sn[k]!=null&&rs[k]!=null).map(k=>(sn[k]/100-(rs[k]?1:0))**2);
+  return {id:p.id,liga:p.liga,conf:p.confianza,
+    ldiff:(p.lambda_final_l!=null&&p.lambda_final_v!=null)?Math.abs(p.lambda_final_l-p.lambda_final_v):null,
+    rmin:(rl!=null&&rv!=null)?Math.min(rl,rv):null,
+    u:ap.reduce((t,a)=>t+(a.pl||0),0), nap:ap.length,
+    brier:br.length?br.reduce((t,x)=>t+x,0)/br.length:null};
+}
+function _segEleccion(){
+  const el=document.getElementById('seg-eleccion'); if(!el) return;
+  const fichas=_DATA.filter(p=>p.resultado_partido&&p.snapshot_resultados).map(_segPartidoFicha);
+  if(!fichas.length){ el.innerHTML='<p class="empty">Sin partidos cerrados todavía.</p>'; return; }
+  const f2=n=>(n>=0?'+':'')+n.toFixed(2), cl=n=>n>=0?'pl-pos':'pl-neg';
+  const fila=(lbl,a,fuerte)=>{
+    if(!a.length) return '<tr><td style="text-align:left">'+lbl+'</td><td class="num">0</td><td colspan="6" style="color:var(--text3);text-align:center">sin casos</td></tr>';
+    const n=a.length, u=a.reduce((t,x)=>t+x.u,0), nap=a.reduce((t,x)=>t+x.nap,0), m=u/n;
+    const sd=n>1?Math.sqrt(a.reduce((t,x)=>t+(x.u-m)*(x.u-m),0)/(n-1)):0, moe=1.645*sd/Math.sqrt(n);
+    const bs=a.filter(x=>x.brier!=null), br=bs.length?bs.reduce((t,x)=>t+x.brier,0)/bs.length:null;
+    return '<tr'+(fuerte?' style="background:var(--surface2);font-weight:600"':'')+(n<15?' style="opacity:.6"':'')+'><td style="text-align:left">'+lbl+'</td>'
+      +'<td class="num">'+n+'</td><td class="num">'+nap+'</td>'
+      +'<td class="num '+cl(u)+'">'+f2(u)+'u</td>'
+      +'<td class="num '+cl(m)+'"><b>'+f2(m)+'</b> <span style="color:var(--text3);font-weight:400;font-size:11px">±'+moe.toFixed(2)+'</span></td>'
+      +'<td class="num '+cl(nap?u/nap:0)+'">'+(nap?(u/nap*100>=0?'+':'')+(u/nap*100).toFixed(0)+'%':'—')+'</td>'
+      +'<td class="num">'+(br==null?'—':br.toFixed(3))+'</td></tr>';
+  };
+  const tabla=(prim,filas)=>'<div class="table-wrap"><table class="hm-table"><thead><tr><th style="text-align:left">'+prim+'</th>'
+    +'<th class="num">Partidos</th><th class="num">Apuestas</th><th class="num">Unidades</th><th class="num">u / partido (±90%)</th>'
+    +'<th class="num">ROI</th><th class="num">Brier</th></tr></thead><tbody>'+filas+'</tbody></table></div>';
+  const titulo=t=>'<div style="font-size:12px;color:var(--text3);margin:14px 0 4px;font-weight:600">'+t+'</div>';
+  const con=fichas.filter(x=>x.ldiff!=null), pu=fichas.filter(x=>x.rmin!=null);
+  const dBand=[['< 0.4',x=>x.ldiff<0.4],['0.4 – 0.8',x=>x.ldiff>=0.4&&x.ldiff<0.8],['0.8 – 1.2',x=>x.ldiff>=0.8&&x.ldiff<1.2],['> 1.2',x=>x.ldiff>=1.2]];
+  const A=fila('FILTRO: diferencia ≥ 0.4',con.filter(x=>x.ldiff>=0.4),true)+fila('Fuera del filtro: diferencia < 0.4',con.filter(x=>x.ldiff<0.4),true)
+    +dBand.map(([l,f])=>fila('&nbsp;&nbsp;↳ '+l,con.filter(f))).join('');
+  const rBand=[['Top 4',x=>x.rmin<=4],['5 – 8',x=>x.rmin>=5&&x.rmin<=8],['9 – 12 (control)',x=>x.rmin>=9&&x.rmin<=12],['13 o peor (control)',x=>x.rmin>=13]];
+  const B=rBand.map(([l,f])=>fila(l,pu.filter(f))).join('');
+  const nCtrl=pu.filter(x=>x.rmin>=9).length;
+  const C=['ALTA','MEDIA'].map(c=>fila('Confianza '+c,fichas.filter(x=>x.conf===c))).join('');
+  el.innerHTML=titulo('Por diferencia de λ (|λ local − λ visita|)')+tabla('Grupo',A)
+    +titulo('Por el mejor puesto de los dos equipos en la tabla')+tabla('Mejor puesto',B)
+    +'<p style="font-size:12px;margin:6px 0 0"><b>Grupo de control</b> (mejor puesto ≥ 9): <b>'+nCtrl+'</b> de '+SEG_CONTROL_META+' partidos acumulados'
+      +(nCtrl>=SEG_CONTROL_META?' — muestra suficiente para comparar.':' — todavía no alcanza para concluir; el objetivo es sumar 2–3 por jornada.')+'</p>'
+    +titulo('Por confianza')+tabla('Confianza',C)
+    +'<p style="font-size:12px;color:var(--text3);margin-top:8px">Filas atenuadas = menos de 15 partidos. u / partido ± es el margen aproximado al 90%: si es mayor que el promedio, '
+    +'la muestra todavía no separa ese grupo de cero. ROI = unidades ÷ apuestas.</p>';
+}
 function renderSeguimiento(){
   _segReglasNuevas();
   _segRemate();
+  _segEleccion();
   const wl=_DATA.flatMap(p=>(p.watchlist||[]).map(w=>({...w,partido:p})));
   const simples=wl.filter(w=>!w.tipo);
   const mini=document.getElementById('seg-minev'); if(mini) mini.textContent=SEG_MIN_EV;
