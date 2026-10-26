@@ -348,6 +348,16 @@
       <div style="overflow-x:auto" id="hm-mercado-cuota"></div>
       <div class="chart-note">Celdas coloreadas por ROI%. Verde = rentable, rojo = negativo. Solo celdas con N >= 1. Un PICK no pasa de cuota 2.00 (tope vigente), por eso el último rango es 1.60-2.00.</div>
     </div>
+    <div class="card card-full" style="margin-bottom:16px">
+      <div class="card-title">REMATE — lado × rango de cuota — WR% y ROI% (remates totales de un equipo)</div>
+      <div style="overflow-x:auto" id="hm-remate-cuota"></div>
+      <div class="chart-note">Una apuesta REMATE por partido (línea de mayor EV×prob, lado de mayor P%). A diferencia del PICK
+        <b>no tiene tope de cuota</b>, por eso hay rangos 2.00-3.00 y 3.00+. Celdas coloreadas por ROI%.</div>
+      <div style="font-size:12px;color:var(--text3);margin:16px 0 4px;font-weight:600">Por línea — ¿el modelo acierta lo que dice en cada línea?</div>
+      <div style="overflow-x:auto" id="remate-lineas"></div>
+      <div class="chart-note">P modelo = probabilidad media que el engine daba a esa línea; Acierto = lo que pasó. Las líneas largas
+        (cuota alta) son donde se concentra el retorno y donde la muestra es más frágil.</div>
+    </div>
     <div class="grid2">
       <div class="card"><div class="card-title">Rendimiento por tipo</div><div id="tipo-stats"></div></div>
       <div class="card"><div class="card-title">Mercados más frecuentes</div><div id="mercado-freq"></div></div>
@@ -1973,6 +1983,52 @@ function renderMercadoCuotaHeatmap(){
   html+=_hmFilaTotal(bets,bands.map(b=>({label:b.l,test:a=>a.cuota>=b.min&&a.cuota<b.max})));
   html+='</tbody></table>';
   el.innerHTML=html;
+}
+
+// REMATE (2026-10-26, a pedido): mismo heatmap que el de PICKs pero para la apuesta REMATE
+// (remates totales de un equipo). Filas = lado, columnas = rango de cuota (sin tope: hay 2.00-3.00 y 3.00+),
+// y debajo una tabla por linea con P modelo vs acierto real.
+function renderRemateMercados(){
+  const el=document.getElementById('hm-remate-cuota'), el2=document.getElementById('remate-lineas');
+  if(!el) return;
+  const bets=flatBets().filter(a=>a.tipo==='REMATE'&&(a.estado==='GANADA'||a.estado==='PERDIDA'));
+  if(bets.length<3){ el.innerHTML='<p class="empty">Mínimo 3 apuestas REMATE confirmadas</p>'; if(el2) el2.innerHTML=''; return; }
+  const bands=[{l:'< 1.40',min:0,max:1.40},{l:'1.40-1.60',min:1.40,max:1.60},{l:'1.60-2.00',min:1.60,max:2.00},
+    {l:'2.00-3.00',min:2.00,max:3.00},{l:'3.00+',min:3.00,max:999}];
+  const filas=[['local_remates','Remates · local'],['visit_remates','Remates · visita']];
+  const celda=(en,tit)=>{
+    if(!en.length) return '<td style="background:var(--surface2);color:var(--text3);text-align:center">--</td>';
+    const cs=calcStats(en), roi=cs.roi||0, pl=cs.pl||0, wr=cs.wr||0;
+    const roiC=roi>=0?'var(--green)':'var(--red)', plC=pl>=0?'var(--green)':'var(--red)';
+    return `<td style="background:${_hmBgRoi(roi,en.length)};text-align:center;line-height:1.3" title="${tit}\nN=${en.length} WR=${wr.toFixed(0)}% ROI=${roi>=0?'+':''}${roi.toFixed(0)}% P&L=${fmtL(pl)}">
+      <div style="font-weight:500;color:${roiC}">${roi>=0?'+':''}${roi.toFixed(0)}%</div>
+      <div style="font-size:10px;color:${plC}">${fmtL(pl)}</div>
+      <div style="font-size:10px;color:var(--text3)">${wr.toFixed(0)}%WR · ${en.length}</div></td>`;
+  };
+  let html='<table class="hm-table"><thead><tr><th>Mercado</th><th>N</th>'+bands.map(b=>`<th>${b.l}</th>`).join('')+'<th>Total</th></tr></thead><tbody>';
+  filas.forEach(([m,lbl])=>{
+    const all=bets.filter(a=>a.mercado===m);
+    html+=`<tr><td>${lbl}</td><td style="color:var(--text3)">${all.length}</td>`;
+    bands.forEach(b=>{ html+=celda(all.filter(a=>a.cuota>=b.min&&a.cuota<b.max),lbl+' @ '+b.l); });
+    html+=celda(all,lbl+' total')+'</tr>';
+  });
+  html+=_hmFilaTotal(bets,bands.map(b=>({label:b.l,test:a=>a.cuota>=b.min&&a.cuota<b.max})));
+  html+='</tbody></table>';
+  el.innerHTML=html;
+
+  if(!el2) return;
+  const porLinea={}; bets.forEach(a=>{ if(a.linea==null) return; (porLinea[a.linea]=porLinea[a.linea]||[]).push(a); });
+  const lineas=Object.keys(porLinea).map(Number).sort((a,b)=>a-b);
+  let h2='<table class="hm-table"><thead><tr><th>Línea (Over)</th><th>N</th><th>P modelo</th><th>Acierto</th><th>Cuota media</th><th>ROI</th><th>Unidades</th></tr></thead><tbody>';
+  lineas.forEach(L=>{
+    const en=porLinea[L], cs=calcStats(en), n=en.length;
+    const pm=en.reduce((t,a)=>t+(a.prob||0),0)/n, cm=en.reduce((t,a)=>t+a.cuota,0)/n, roi=cs.roi||0, pl=cs.pl||0;
+    h2+=`<tr${n<5?' style="opacity:.55"':''}><td>${L}</td><td style="color:var(--text3)">${n}</td><td>${pm.toFixed(0)}%</td><td>${(cs.wr||0).toFixed(0)}%</td>`
+      +`<td>${cm.toFixed(2)}</td><td style="color:${roi>=0?'var(--green)':'var(--red)'};font-weight:500">${roi>=0?'+':''}${roi.toFixed(0)}%</td>`
+      +`<td style="color:${pl>=0?'var(--green)':'var(--red)'}">${fmtL(pl)}</td></tr>`;
+  });
+  h2+='</tbody></table>';
+  el2.innerHTML=h2;
 }
 
 // Mercado x Liga (2026-09-21, a pedido -- "cuales son los mercados que mas me
@@ -4145,7 +4201,7 @@ function renderAll(){
   const active=document.querySelector('.tab.active')?.dataset.tab;
   if(active==='tendencias'){renderPLChart();renderPLDist();renderHighEVLost();renderRacha();}
   if(active==='calibracion'){renderEVScatter();renderCalibBands();renderCalibByMarket();}
-  if(active==='mercados'){renderCuotaROI();renderMercadoCuotaHeatmap();renderTipoStats();renderMercadoFreq();renderCombosPorPar();}
+  if(active==='mercados'){renderCuotaROI();renderMercadoCuotaHeatmap();renderRemateMercados();renderTipoStats();renderMercadoFreq();renderCombosPorPar();}
   if(active==='ligas'){renderLigaTipo();renderLigaRollingROI();renderMercadoLigaHeatmap();renderLigaCards();}
   if(active==='variables'){renderVariablesHeatmap();}
   if(active==='watchlist'){renderWatchlist();renderCrucesValidados();}
