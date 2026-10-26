@@ -884,7 +884,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "002",
@@ -1828,7 +1829,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "003",
@@ -2716,7 +2718,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": true,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "004",
@@ -2804,17 +2807,6 @@ const TRACKER_DATA = [
     "resultado_partido": "4-1",
     "goles_esperados": "3.28",
     "apuestas": [
-      {
-        "tipo": "PICK",
-        "mercado": "under35",
-        "linea": null,
-        "etiqueta": "Under 3.5",
-        "cuota": 2.15,
-        "prob": 58.5,
-        "ev_pct": 25.8,
-        "estado": "PERDIDA",
-        "pl": -1
-      },
       {
         "tipo": "PICK",
         "mercado": "btts",
@@ -2953,6 +2945,16 @@ const TRACKER_DATA = [
         "prob": 76.6,
         "ev_pct": 16.4,
         "regla_unicidad_totales": "cede ante under35 (score EV/prob 15.1)",
+        "acerto": false
+      },
+      {
+        "mercado": "under35",
+        "linea": null,
+        "etiqueta": "Under 3.5",
+        "cuota": 2.15,
+        "prob": 58.5,
+        "ev_pct": 25.8,
+        "regla_cuota_max_pick": "cuota 2.15 > tope 2.00",
         "acerto": false
       }
     ],
@@ -3223,7 +3225,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "005",
@@ -3712,7 +3715,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "006",
@@ -3825,17 +3829,6 @@ const TRACKER_DATA = [
         "cuota_segura": 1.51,
         "acierto_hist": 72.3,
         "n_hist": 238
-      },
-      {
-        "tipo": "PICK",
-        "mercado": "over05_visit",
-        "linea": null,
-        "etiqueta": "Over 0.5 Deportivo La Coruna",
-        "cuota": 1.65,
-        "prob": 66.7,
-        "ev_pct": 10.1,
-        "estado": "GANADA",
-        "pl": 0.65
       },
       {
         "tipo": "COMBO",
@@ -4036,6 +4029,16 @@ const TRACKER_DATA = [
         "ev_pct": 32.4,
         "regla_unicidad_totales": "cede ante over15 (score EV/prob 16.6)",
         "acerto": false
+      },
+      {
+        "mercado": "over05_visit",
+        "linea": null,
+        "etiqueta": "Over 0.5 Deportivo La Coruna",
+        "cuota": 1.65,
+        "prob": 66.7,
+        "ev_pct": 10.1,
+        "regla_max_picks": "3 PICKs; se quedan los 2 de mayor P% (esta tenia 66.7%)",
+        "acerto": true
       }
     ],
     "mercados_snapshot": {
@@ -4591,7 +4594,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": true,
       "visit_corners_equipo_over6.5": true,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "007",
@@ -4692,17 +4696,6 @@ const TRACKER_DATA = [
       },
       {
         "tipo": "PICK",
-        "mercado": "over35",
-        "linea": null,
-        "etiqueta": "Over 3.5",
-        "cuota": 2.45,
-        "prob": 44,
-        "ev_pct": 7.8,
-        "estado": "PERDIDA",
-        "pl": -1
-      },
-      {
-        "tipo": "PICK",
         "mercado": "over05_local",
         "linea": null,
         "etiqueta": "Over 0.5 Villarreal",
@@ -4711,6 +4704,21 @@ const TRACKER_DATA = [
         "ev_pct": 3.6,
         "estado": "GANADA",
         "pl": 0.15
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "local_remates",
+        "linea": 13.5,
+        "etiqueta": "Villarreal Remates Over 13.5",
+        "lado": "local",
+        "cuota": 1.53,
+        "prob": 81.1,
+        "ev_pct": 24.1,
+        "estado": "GANADA",
+        "pl": 0.53,
+        "lineas_pasan": 1,
+        "cruzaron_ambos": false,
+        "retroactiva": true
       }
     ],
     "watchlist": [
@@ -4745,7 +4753,8 @@ const TRACKER_DATA = [
         "prob": 81.1,
         "ev_pct": 24.1,
         "tipo": "POR_EQUIPO",
-        "acerto": true
+        "acerto": true,
+        "es_remate": true
       },
       {
         "mercado": "local_corners_equipo",
@@ -4882,6 +4891,16 @@ const TRACKER_DATA = [
         "ev_pct": 4.5,
         "regla_unicidad_totales": "cede ante over35 (score EV/prob 3.4)",
         "acerto": true
+      },
+      {
+        "mercado": "over35",
+        "linea": null,
+        "etiqueta": "Over 3.5",
+        "cuota": 2.45,
+        "prob": 44,
+        "ev_pct": 7.8,
+        "regla_cuota_max_pick": "cuota 2.45 > tope 2.00",
+        "acerto": false
       }
     ],
     "mercados_snapshot": {
@@ -5223,7 +5242,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "008",
@@ -6346,7 +6366,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "010",
@@ -6479,6 +6500,25 @@ const TRACKER_DATA = [
         "cuota_segura": 1.91,
         "acierto_hist": 58.1,
         "n_hist": 296
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "local_remates",
+        "linea": 8.5,
+        "etiqueta": "Elche Remates Over 8.5",
+        "lado": "local",
+        "cuota": 1.45,
+        "prob": 75.3,
+        "ev_pct": 9.2,
+        "estado": "GANADA",
+        "pl": 0.45,
+        "lineas_pasan": 2,
+        "cruzaron_ambos": false,
+        "retroactiva": true,
+        "cuota_justa": 1.32,
+        "cuota_segura": 1.44,
+        "acierto_hist": 76,
+        "n_hist": 183
       }
     ],
     "watchlist": [
@@ -6585,7 +6625,8 @@ const TRACKER_DATA = [
         "cuota_segura": 1.44,
         "acierto_hist": 76,
         "n_hist": 183,
-        "acerto": true
+        "acerto": true,
+        "es_remate": true
       },
       {
         "mercado": "under45+over05_visit",
@@ -6977,7 +7018,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "011",
@@ -7877,7 +7919,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "012",
@@ -7975,21 +8018,6 @@ const TRACKER_DATA = [
         "cuota_segura": 1.35,
         "acierto_hist": 77.7,
         "n_hist": 556
-      },
-      {
-        "tipo": "PICK",
-        "mercado": "btts",
-        "linea": null,
-        "etiqueta": "BTTS",
-        "cuota": 1.87,
-        "prob": 55.6,
-        "ev_pct": 4,
-        "estado": "PERDIDA",
-        "pl": -1.0,
-        "cuota_justa": 1.7,
-        "cuota_segura": 1.83,
-        "acierto_hist": 58.7,
-        "n_hist": 606
       },
       {
         "tipo": "PICK",
@@ -8268,6 +8296,20 @@ const TRACKER_DATA = [
         "prob": 25.7,
         "ev_pct": 5.4,
         "regla_unicidad_totales": "cede ante over15 (score EV/prob 6.3)",
+        "acerto": false
+      },
+      {
+        "mercado": "btts",
+        "linea": null,
+        "etiqueta": "BTTS",
+        "cuota": 1.87,
+        "prob": 55.6,
+        "ev_pct": 4,
+        "cuota_justa": 1.7,
+        "cuota_segura": 1.83,
+        "acierto_hist": 58.7,
+        "n_hist": 606,
+        "regla_max_picks": "3 PICKs; se quedan los 2 de mayor P% (esta tenia 55.6%)",
         "acerto": false
       }
     ],
@@ -8896,7 +8938,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "013",
@@ -9417,7 +9460,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "014",
@@ -9535,6 +9579,21 @@ const TRACKER_DATA = [
         "cuota_segura": 1.91,
         "acierto_hist": 58.4,
         "n_hist": 269
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "visit_remates",
+        "linea": 7.5,
+        "etiqueta": "Getafe Remates Over 7.5",
+        "lado": "visit",
+        "cuota": 1.67,
+        "prob": 81.1,
+        "ev_pct": 35.4,
+        "estado": "GANADA",
+        "pl": 0.67,
+        "lineas_pasan": 2,
+        "cruzaron_ambos": false,
+        "retroactiva": true
       }
     ],
     "watchlist": [
@@ -9643,7 +9702,8 @@ const TRACKER_DATA = [
         "prob": 81.1,
         "ev_pct": 35.4,
         "tipo": "POR_EQUIPO",
-        "acerto": true
+        "acerto": true,
+        "es_remate": true
       },
       {
         "mercado": "local_remates",
@@ -10318,7 +10378,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "016",
@@ -10436,6 +10497,21 @@ const TRACKER_DATA = [
         "cuota_segura": 1.83,
         "acierto_hist": 60.1,
         "n_hist": 308
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "visit_remates",
+        "linea": 11.5,
+        "etiqueta": "Lens Remates Over 11.5",
+        "lado": "visit",
+        "cuota": 1.45,
+        "prob": 73.2,
+        "ev_pct": 6.1,
+        "estado": "GANADA",
+        "pl": 0.45,
+        "lineas_pasan": 1,
+        "cruzaron_ambos": false,
+        "retroactiva": true
       }
     ],
     "watchlist": [
@@ -10576,7 +10652,8 @@ const TRACKER_DATA = [
         "prob": 73.2,
         "ev_pct": 6.1,
         "tipo": "POR_EQUIPO",
-        "acerto": true
+        "acerto": true,
+        "es_remate": true
       },
       {
         "mercado": "btts+hcp2_local",
@@ -11390,7 +11467,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": true,
       "visit_corners_equipo_over6.5": true,
       "visit_corners_equipo_over7.5": true
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "017",
@@ -11491,17 +11569,6 @@ const TRACKER_DATA = [
       },
       {
         "tipo": "PICK",
-        "mercado": "over35",
-        "linea": null,
-        "etiqueta": "Over 3.5",
-        "cuota": 2.18,
-        "prob": 47.8,
-        "ev_pct": 4.2,
-        "estado": "PERDIDA",
-        "pl": -1.0
-      },
-      {
-        "tipo": "PICK",
         "mercado": "over05_local",
         "linea": null,
         "etiqueta": "Over 0.5 Brentford",
@@ -11530,6 +11597,21 @@ const TRACKER_DATA = [
         "cuota_segura": 1.39,
         "acierto_hist": 78.6,
         "n_hist": 182
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "local_remates",
+        "linea": 13.5,
+        "etiqueta": "Brentford Remates Over 13.5",
+        "lado": "local",
+        "cuota": 2.47,
+        "prob": 76.5,
+        "ev_pct": 89,
+        "estado": "PERDIDA",
+        "pl": -1.0,
+        "lineas_pasan": 2,
+        "cruzaron_ambos": false,
+        "retroactiva": true
       }
     ],
     "watchlist": [
@@ -11610,7 +11692,8 @@ const TRACKER_DATA = [
         "prob": 76.5,
         "ev_pct": 89,
         "tipo": "POR_EQUIPO",
-        "acerto": false
+        "acerto": false,
+        "es_remate": true
       },
       {
         "mercado": "under45+over05_local",
@@ -11678,6 +11761,16 @@ const TRACKER_DATA = [
         "ev_pct": 2.3,
         "regla_unicidad_totales": "cede ante over35 (score EV/prob 2.0)",
         "acerto": true
+      },
+      {
+        "mercado": "over35",
+        "linea": null,
+        "etiqueta": "Over 3.5",
+        "cuota": 2.18,
+        "prob": 47.8,
+        "ev_pct": 4.2,
+        "regla_cuota_max_pick": "cuota 2.18 > tope 2.00",
+        "acerto": false
       }
     ],
     "mercados_snapshot": {
@@ -12091,7 +12184,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": true,
       "visit_corners_equipo_over6.5": true,
       "visit_corners_equipo_over7.5": true
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "018",
@@ -13315,7 +13409,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "019",
@@ -13405,36 +13500,6 @@ const TRACKER_DATA = [
     "apuestas": [
       {
         "tipo": "PICK",
-        "mercado": "over25",
-        "linea": null,
-        "etiqueta": "Over 2.5",
-        "cuota": 2.18,
-        "prob": 54,
-        "ev_pct": 17.7,
-        "estado": "PERDIDA",
-        "pl": -1.0,
-        "cuota_justa": 1.95,
-        "cuota_segura": 2.17,
-        "acierto_hist": 51.3,
-        "n_hist": 359
-      },
-      {
-        "tipo": "PICK",
-        "mercado": "btts",
-        "linea": null,
-        "etiqueta": "BTTS",
-        "cuota": 1.85,
-        "prob": 58.3,
-        "ev_pct": 7.9,
-        "estado": "PERDIDA",
-        "pl": -1.0,
-        "cuota_justa": 1.7,
-        "cuota_segura": 1.83,
-        "acierto_hist": 58.7,
-        "n_hist": 606
-      },
-      {
-        "tipo": "PICK",
         "mercado": "over05_local",
         "linea": null,
         "etiqueta": "Over 0.5 Udinese",
@@ -13474,6 +13539,21 @@ const TRACKER_DATA = [
         "cuota_segura": 1.94,
         "acierto_hist": 56.6,
         "n_hist": 362
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "local_remates",
+        "linea": 12.5,
+        "etiqueta": "Udinese Remates Over 12.5",
+        "lado": "local",
+        "cuota": 1.44,
+        "prob": 72.8,
+        "ev_pct": 4.8,
+        "estado": "GANADA",
+        "pl": 0.44,
+        "lineas_pasan": 1,
+        "cruzaron_ambos": true,
+        "retroactiva": true
       }
     ],
     "watchlist": [
@@ -13576,7 +13656,8 @@ const TRACKER_DATA = [
         "prob": 72.8,
         "ev_pct": 4.8,
         "tipo": "POR_EQUIPO",
-        "acerto": true
+        "acerto": true,
+        "es_remate": true
       },
       {
         "mercado": "visit_remates",
@@ -13686,6 +13767,34 @@ const TRACKER_DATA = [
         "prob": 30.8,
         "ev_pct": 18.6,
         "regla_unicidad_totales": "cede ante over25 (score EV/prob 9.6)",
+        "acerto": false
+      },
+      {
+        "mercado": "over25",
+        "linea": null,
+        "etiqueta": "Over 2.5",
+        "cuota": 2.18,
+        "prob": 54,
+        "ev_pct": 17.7,
+        "cuota_justa": 1.95,
+        "cuota_segura": 2.17,
+        "acierto_hist": 51.3,
+        "n_hist": 359,
+        "regla_cuota_max_pick": "cuota 2.18 > tope 2.00",
+        "acerto": false
+      },
+      {
+        "mercado": "btts",
+        "linea": null,
+        "etiqueta": "BTTS",
+        "cuota": 1.85,
+        "prob": 58.3,
+        "ev_pct": 7.9,
+        "cuota_justa": 1.7,
+        "cuota_segura": 1.83,
+        "acierto_hist": 58.7,
+        "n_hist": 606,
+        "regla_max_picks": "3 PICKs; se quedan los 2 de mayor P% (esta tenia 58.3%)",
         "acerto": false
       }
     ],
@@ -14412,7 +14521,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "020",
@@ -14513,21 +14623,6 @@ const TRACKER_DATA = [
       },
       {
         "tipo": "PICK",
-        "mercado": "btts",
-        "linea": null,
-        "etiqueta": "BTTS",
-        "cuota": 1.7,
-        "prob": 59.6,
-        "ev_pct": 1.3,
-        "estado": "PERDIDA",
-        "pl": -1.0,
-        "cuota_justa": 1.7,
-        "cuota_segura": 1.83,
-        "acierto_hist": 58.7,
-        "n_hist": 606
-      },
-      {
-        "tipo": "PICK",
         "mercado": "over05_local",
         "linea": null,
         "etiqueta": "Over 0.5 Brighton",
@@ -14560,6 +14655,21 @@ const TRACKER_DATA = [
         "cuota_segura": 1.44,
         "acierto_hist": 74.9,
         "n_hist": 267
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "local_remates",
+        "linea": 12.5,
+        "etiqueta": "Brighton Remates Over 12.5",
+        "lado": "local",
+        "cuota": 2.65,
+        "prob": 74.1,
+        "ev_pct": 96.4,
+        "estado": "GANADA",
+        "pl": 1.65,
+        "lineas_pasan": 2,
+        "cruzaron_ambos": false,
+        "retroactiva": true
       }
     ],
     "watchlist": [
@@ -14693,7 +14803,8 @@ const TRACKER_DATA = [
         "prob": 74.1,
         "ev_pct": 96.4,
         "tipo": "POR_EQUIPO",
-        "acerto": true
+        "acerto": true,
+        "es_remate": true
       },
       {
         "mercado": "visit_remates_puerta",
@@ -14798,6 +14909,20 @@ const TRACKER_DATA = [
         "cuota_segura": 1.84,
         "acierto_hist": 60.3,
         "n_hist": 267,
+        "acerto": false
+      },
+      {
+        "mercado": "btts",
+        "linea": null,
+        "etiqueta": "BTTS",
+        "cuota": 1.7,
+        "prob": 59.6,
+        "ev_pct": 1.3,
+        "cuota_justa": 1.7,
+        "cuota_segura": 1.83,
+        "acierto_hist": 58.7,
+        "n_hist": 606,
+        "regla_max_picks": "3 PICKs; se quedan los 2 de mayor P% (esta tenia 59.6%)",
         "acerto": false
       }
     ],
@@ -15464,7 +15589,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": true,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "021",
@@ -16431,7 +16557,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "022",
@@ -16536,17 +16663,6 @@ const TRACKER_DATA = [
       },
       {
         "tipo": "PICK",
-        "mercado": "over05_visit",
-        "linea": null,
-        "etiqueta": "Over 0.5 Hull",
-        "cuota": 1.5,
-        "prob": 67.7,
-        "ev_pct": 1.6,
-        "estado": "GANADA",
-        "pl": 0.5
-      },
-      {
-        "tipo": "PICK",
         "mercado": "hcp2_des",
         "linea": null,
         "etiqueta": "HCP +2 Hull",
@@ -16575,6 +16691,25 @@ const TRACKER_DATA = [
         "cuota_segura": 1.54,
         "acierto_hist": 70.2,
         "n_hist": 332
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "visit_remates",
+        "linea": 9.5,
+        "etiqueta": "Hull Remates Over 9.5",
+        "lado": "visit",
+        "cuota": 1.52,
+        "prob": 73.4,
+        "ev_pct": 11.6,
+        "estado": "GANADA",
+        "pl": 0.52,
+        "lineas_pasan": 2,
+        "cruzaron_ambos": false,
+        "retroactiva": true,
+        "cuota_justa": 1.4,
+        "cuota_segura": 1.57,
+        "acierto_hist": 71.3,
+        "n_hist": 157
       }
     ],
     "watchlist": [
@@ -16674,7 +16809,8 @@ const TRACKER_DATA = [
         "cuota_segura": 1.57,
         "acierto_hist": 71.3,
         "n_hist": 157,
-        "acerto": true
+        "acerto": true,
+        "es_remate": true
       },
       {
         "mercado": "visit_corners_equipo",
@@ -16733,6 +16869,16 @@ const TRACKER_DATA = [
         "prob": 88.6,
         "ev_pct": 5.4,
         "regla_unicidad_handicap": "cede ante hcp2_des (EV 11.6%)",
+        "acerto": true
+      },
+      {
+        "mercado": "over05_visit",
+        "linea": null,
+        "etiqueta": "Over 0.5 Hull",
+        "cuota": 1.5,
+        "prob": 67.7,
+        "ev_pct": 1.6,
+        "regla_max_picks": "3 PICKs; se quedan los 2 de mayor P% (esta tenia 67.7%)",
         "acerto": true
       }
     ],
@@ -17397,7 +17543,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": true,
       "visit_corners_equipo_over6.5": true,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "023",
@@ -17502,21 +17649,6 @@ const TRACKER_DATA = [
       },
       {
         "tipo": "PICK",
-        "mercado": "over05_visit",
-        "linea": null,
-        "etiqueta": "Over 0.5 Alaves",
-        "cuota": 1.62,
-        "prob": 62.4,
-        "ev_pct": 1.1,
-        "estado": "PERDIDA",
-        "pl": -1.0,
-        "cuota_justa": 1.59,
-        "cuota_segura": 1.77,
-        "acierto_hist": 62.9,
-        "n_hist": 224
-      },
-      {
-        "tipo": "PICK",
         "mercado": "hcp2_des",
         "linea": null,
         "etiqueta": "HCP +2 Alaves",
@@ -17545,6 +17677,21 @@ const TRACKER_DATA = [
         "cuota_segura": 1.46,
         "acierto_hist": 73.8,
         "n_hist": 298
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "visit_remates",
+        "linea": 8.5,
+        "etiqueta": "Alaves Remates Over 8.5",
+        "lado": "visit",
+        "cuota": 1.44,
+        "prob": 72,
+        "ev_pct": 3.7,
+        "estado": "PERDIDA",
+        "pl": -1.0,
+        "lineas_pasan": 1,
+        "cruzaron_ambos": false,
+        "retroactiva": true
       }
     ],
     "watchlist": [
@@ -17639,7 +17786,8 @@ const TRACKER_DATA = [
         "prob": 72,
         "ev_pct": 3.7,
         "tipo": "POR_EQUIPO",
-        "acerto": false
+        "acerto": false,
+        "es_remate": true
       },
       {
         "mercado": "visit_remates_puerta",
@@ -17769,6 +17917,20 @@ const TRACKER_DATA = [
         "ev_pct": 4.4,
         "regla_unicidad_handicap": "cede ante hcp2_des (EV 10.0%)",
         "acerto": true
+      },
+      {
+        "mercado": "over05_visit",
+        "linea": null,
+        "etiqueta": "Over 0.5 Alaves",
+        "cuota": 1.62,
+        "prob": 62.4,
+        "ev_pct": 1.1,
+        "cuota_justa": 1.59,
+        "cuota_segura": 1.77,
+        "acierto_hist": 62.9,
+        "n_hist": 224,
+        "regla_max_picks": "3 PICKs; se quedan los 2 de mayor P% (esta tenia 62.4%)",
+        "acerto": false
       }
     ],
     "mercados_snapshot": {
@@ -18445,7 +18607,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "024",
@@ -18552,6 +18715,21 @@ const TRACKER_DATA = [
         "cuota_segura": 1.65,
         "acierto_hist": 65.1,
         "n_hist": 498
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "local_remates",
+        "linea": 15.5,
+        "etiqueta": "Paris FC Remates Over 15.5",
+        "lado": "local",
+        "cuota": 2.4,
+        "prob": 71.2,
+        "ev_pct": 70.9,
+        "estado": "GANADA",
+        "pl": 1.4,
+        "lineas_pasan": 3,
+        "cruzaron_ambos": false,
+        "retroactiva": true
       }
     ],
     "watchlist": [
@@ -18728,7 +18906,8 @@ const TRACKER_DATA = [
         "prob": 71.2,
         "ev_pct": 70.9,
         "tipo": "POR_EQUIPO",
-        "acerto": true
+        "acerto": true,
+        "es_remate": true
       },
       {
         "mercado": "visit_corners_equipo",
@@ -19436,7 +19615,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "025",
@@ -19526,17 +19706,6 @@ const TRACKER_DATA = [
     "apuestas": [
       {
         "tipo": "PICK",
-        "mercado": "over35",
-        "linea": null,
-        "etiqueta": "Over 3.5",
-        "cuota": 2.47,
-        "prob": 47,
-        "ev_pct": 16.1,
-        "estado": "GANADA",
-        "pl": 1.47
-      },
-      {
-        "tipo": "PICK",
         "mercado": "over05_local",
         "linea": null,
         "etiqueta": "Over 0.5 Roma",
@@ -19576,6 +19745,21 @@ const TRACKER_DATA = [
         "cuota_segura": 1.39,
         "acierto_hist": 78.6,
         "n_hist": 182
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "local_remates",
+        "linea": 14.5,
+        "etiqueta": "Roma Remates Over 14.5",
+        "lado": "local",
+        "cuota": 2.65,
+        "prob": 77.4,
+        "ev_pct": 105.1,
+        "estado": "GANADA",
+        "pl": 1.65,
+        "lineas_pasan": 2,
+        "cruzaron_ambos": false,
+        "retroactiva": true
       }
     ],
     "watchlist": [
@@ -19649,7 +19833,8 @@ const TRACKER_DATA = [
         "prob": 77.4,
         "ev_pct": 105.1,
         "tipo": "POR_EQUIPO",
-        "acerto": true
+        "acerto": true,
+        "es_remate": true
       },
       {
         "mercado": "visit_corners_equipo",
@@ -19766,6 +19951,16 @@ const TRACKER_DATA = [
         "prob": 67.7,
         "ev_pct": 9.7,
         "regla_unicidad_totales": "cede ante over35 (score EV/prob 7.6)",
+        "acerto": true
+      },
+      {
+        "mercado": "over35",
+        "linea": null,
+        "etiqueta": "Over 3.5",
+        "cuota": 2.47,
+        "prob": 47,
+        "ev_pct": 16.1,
+        "regla_cuota_max_pick": "cuota 2.47 > tope 2.00",
         "acerto": true
       }
     ],
@@ -20120,7 +20315,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "026",
@@ -20253,6 +20449,21 @@ const TRACKER_DATA = [
         "cuota_segura": 1.64,
         "acierto_hist": 67.1,
         "n_hist": 246
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "local_remates",
+        "linea": 14.5,
+        "etiqueta": "Nott'm Forest Remates Over 14.5",
+        "lado": "local",
+        "cuota": 1.6,
+        "prob": 63.7,
+        "ev_pct": 1.9,
+        "estado": "GANADA",
+        "pl": 0.6,
+        "lineas_pasan": 1,
+        "cruzaron_ambos": false,
+        "retroactiva": true
       }
     ],
     "watchlist": [
@@ -20350,7 +20561,8 @@ const TRACKER_DATA = [
         "prob": 63.7,
         "ev_pct": 1.9,
         "tipo": "POR_EQUIPO",
-        "acerto": true
+        "acerto": true,
+        "es_remate": true
       },
       {
         "mercado": "visit_corners_equipo",
@@ -21120,7 +21332,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "027",
@@ -21989,7 +22202,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": true,
       "visit_corners_equipo_over6.5": true,
       "visit_corners_equipo_over7.5": true
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "028",
@@ -22096,6 +22310,21 @@ const TRACKER_DATA = [
         "cuota_segura": 2.2,
         "acierto_hist": 51.7,
         "n_hist": 242
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "local_remates",
+        "linea": 10.5,
+        "etiqueta": "Venezia Remates Over 10.5",
+        "lado": "local",
+        "cuota": 1.47,
+        "prob": 71.1,
+        "ev_pct": 4.5,
+        "estado": "GANADA",
+        "pl": 0.47,
+        "lineas_pasan": 1,
+        "cruzaron_ambos": false,
+        "retroactiva": true
       }
     ],
     "watchlist": [
@@ -22375,7 +22604,8 @@ const TRACKER_DATA = [
         "prob": 71.1,
         "ev_pct": 4.5,
         "tipo": "POR_EQUIPO",
-        "acerto": true
+        "acerto": true,
+        "es_remate": true
       }
     ],
     "mercados_snapshot": {
@@ -22945,7 +23175,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "029",
@@ -23033,17 +23264,6 @@ const TRACKER_DATA = [
     "resultado_partido": "1-3",
     "goles_esperados": "3.43",
     "apuestas": [
-      {
-        "tipo": "PICK",
-        "mercado": "under35",
-        "linea": null,
-        "etiqueta": "Under 3.5",
-        "cuota": 2.22,
-        "prob": 55.2,
-        "ev_pct": 22.5,
-        "estado": "PERDIDA",
-        "pl": -1.0
-      },
       {
         "tipo": "COMBO",
         "mercado": "dox2+hcp3_local",
@@ -23175,6 +23395,16 @@ const TRACKER_DATA = [
         "ev_pct": 18.1,
         "regla_no_elegible": true,
         "acerto": true
+      },
+      {
+        "mercado": "under35",
+        "linea": null,
+        "etiqueta": "Under 3.5",
+        "cuota": 2.22,
+        "prob": 55.2,
+        "ev_pct": 22.5,
+        "regla_cuota_max_pick": "cuota 2.22 > tope 2.00",
+        "acerto": false
       }
     ],
     "mercados_snapshot": {
@@ -23432,7 +23662,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "030",
@@ -23564,6 +23795,21 @@ const TRACKER_DATA = [
         "cuota_segura": 1.44,
         "acierto_hist": 74.9,
         "n_hist": 267
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "local_remates",
+        "linea": 12.5,
+        "etiqueta": "Fiorentina Remates Over 12.5",
+        "lado": "local",
+        "cuota": 1.83,
+        "prob": 77.5,
+        "ev_pct": 41.8,
+        "estado": "GANADA",
+        "pl": 0.83,
+        "lineas_pasan": 2,
+        "cruzaron_ambos": false,
+        "retroactiva": true
       }
     ],
     "watchlist": [
@@ -23683,7 +23929,8 @@ const TRACKER_DATA = [
         "prob": 77.5,
         "ev_pct": 41.8,
         "tipo": "POR_EQUIPO",
-        "acerto": true
+        "acerto": true,
+        "es_remate": true
       },
       {
         "mercado": "local_corners_equipo",
@@ -24490,7 +24737,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "hora": "10:30"
+    "hora": "10:30",
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "031",
@@ -25701,7 +25949,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "032",
@@ -25834,6 +26083,21 @@ const TRACKER_DATA = [
         "cuota_segura": 1.65,
         "acierto_hist": 65.1,
         "n_hist": 498
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "visit_remates",
+        "linea": 7.5,
+        "etiqueta": "Sunderland Remates Over 7.5",
+        "lado": "visit",
+        "cuota": 1.5,
+        "prob": 72.5,
+        "ev_pct": 8.7,
+        "estado": "GANADA",
+        "pl": 0.5,
+        "lineas_pasan": 1,
+        "cruzaron_ambos": false,
+        "retroactiva": true
       }
     ],
     "watchlist": [
@@ -25950,7 +26214,8 @@ const TRACKER_DATA = [
         "prob": 72.5,
         "ev_pct": 8.7,
         "tipo": "POR_EQUIPO",
-        "acerto": true
+        "acerto": true,
+        "es_remate": true
       },
       {
         "mercado": "visit_corners_equipo",
@@ -26624,7 +26889,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "033",
@@ -26746,6 +27012,21 @@ const TRACKER_DATA = [
         "cuota_segura": 1.46,
         "acierto_hist": 74.9,
         "n_hist": 207
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "local_remates",
+        "linea": 11.5,
+        "etiqueta": "Frosinone Remates Over 11.5",
+        "lado": "local",
+        "cuota": 1.8,
+        "prob": 77.2,
+        "ev_pct": 39,
+        "estado": "GANADA",
+        "pl": 0.8,
+        "lineas_pasan": 2,
+        "cruzaron_ambos": false,
+        "retroactiva": true
       }
     ],
     "watchlist": [
@@ -26849,7 +27130,8 @@ const TRACKER_DATA = [
         "prob": 77.2,
         "ev_pct": 39,
         "tipo": "POR_EQUIPO",
-        "acerto": true
+        "acerto": true,
+        "es_remate": true
       },
       {
         "mercado": "btts+local_remates_puerta_over2.5",
@@ -27447,7 +27729,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": true,
       "visit_corners_equipo_over6.5": true,
       "visit_corners_equipo_over7.5": true
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "034",
@@ -27552,36 +27835,6 @@ const TRACKER_DATA = [
       },
       {
         "tipo": "PICK",
-        "mercado": "btts",
-        "linea": null,
-        "etiqueta": "BTTS",
-        "cuota": 1.75,
-        "prob": 57.8,
-        "ev_pct": 1.1,
-        "estado": "GANADA",
-        "pl": 0.75,
-        "cuota_justa": 1.7,
-        "cuota_segura": 1.83,
-        "acierto_hist": 58.7,
-        "n_hist": 606
-      },
-      {
-        "tipo": "PICK",
-        "mercado": "over05_local",
-        "linea": null,
-        "etiqueta": "Over 0.5 Nice",
-        "cuota": 1.42,
-        "prob": 74.6,
-        "ev_pct": 5.9,
-        "estado": "GANADA",
-        "pl": 0.42,
-        "cuota_justa": 1.38,
-        "cuota_segura": 1.51,
-        "acierto_hist": 72.3,
-        "n_hist": 238
-      },
-      {
-        "tipo": "PICK",
         "mercado": "hcp2_des",
         "linea": null,
         "etiqueta": "HCP +2 Nice",
@@ -27610,6 +27863,21 @@ const TRACKER_DATA = [
         "cuota_segura": 1.94,
         "acierto_hist": 56.6,
         "n_hist": 362
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "local_remates",
+        "linea": 14.5,
+        "etiqueta": "Nice Remates Over 14.5",
+        "lado": "local",
+        "cuota": 4.9,
+        "prob": 67.4,
+        "ev_pct": 230.3,
+        "estado": "PERDIDA",
+        "pl": -1.0,
+        "lineas_pasan": 3,
+        "cruzaron_ambos": false,
+        "retroactiva": true
       }
     ],
     "watchlist": [
@@ -27744,7 +28012,8 @@ const TRACKER_DATA = [
         "prob": 67.4,
         "ev_pct": 230.3,
         "tipo": "POR_EQUIPO",
-        "acerto": false
+        "acerto": false,
+        "es_remate": true
       },
       {
         "mercado": "over05_visit+hcp2_local",
@@ -27839,6 +28108,34 @@ const TRACKER_DATA = [
         "cuota_segura": 1.72,
         "acierto_hist": 63.9,
         "n_hist": 299,
+        "acerto": true
+      },
+      {
+        "mercado": "over05_local",
+        "linea": null,
+        "etiqueta": "Over 0.5 Nice",
+        "cuota": 1.42,
+        "prob": 74.6,
+        "ev_pct": 5.9,
+        "cuota_justa": 1.38,
+        "cuota_segura": 1.51,
+        "acierto_hist": 72.3,
+        "n_hist": 238,
+        "regla_max_picks": "4 PICKs; se quedan los 2 de mayor P% (esta tenia 74.6%)",
+        "acerto": true
+      },
+      {
+        "mercado": "btts",
+        "linea": null,
+        "etiqueta": "BTTS",
+        "cuota": 1.75,
+        "prob": 57.8,
+        "ev_pct": 1.1,
+        "cuota_justa": 1.7,
+        "cuota_segura": 1.83,
+        "acierto_hist": 58.7,
+        "n_hist": 606,
+        "regla_max_picks": "4 PICKs; se quedan los 2 de mayor P% (esta tenia 57.8%)",
         "acerto": true
       }
     ],
@@ -28555,7 +28852,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": true,
       "visit_corners_equipo_over6.5": true,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "035",
@@ -29266,7 +29564,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "036",
@@ -30386,7 +30685,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": true,
       "visit_corners_equipo_over6.5": true,
       "visit_corners_equipo_over7.5": true
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "037",
@@ -30484,21 +30784,6 @@ const TRACKER_DATA = [
         "ev_pct": 4.4,
         "estado": "GANADA",
         "pl": 0.2
-      },
-      {
-        "tipo": "PICK",
-        "mercado": "over15",
-        "linea": null,
-        "etiqueta": "Over 1.5",
-        "cuota": 1.3,
-        "prob": 78.3,
-        "ev_pct": 1.8,
-        "estado": "GANADA",
-        "pl": 0.3,
-        "cuota_justa": 1.29,
-        "cuota_segura": 1.35,
-        "acierto_hist": 77.7,
-        "n_hist": 556
       },
       {
         "tipo": "PICK",
@@ -30737,6 +31022,20 @@ const TRACKER_DATA = [
         "cuota_segura": 1.57,
         "acierto_hist": 71.2,
         "n_hist": 153,
+        "acerto": true
+      },
+      {
+        "mercado": "over15",
+        "linea": null,
+        "etiqueta": "Over 1.5",
+        "cuota": 1.3,
+        "prob": 78.3,
+        "ev_pct": 1.8,
+        "cuota_justa": 1.29,
+        "cuota_segura": 1.35,
+        "acierto_hist": 77.7,
+        "n_hist": 556,
+        "regla_max_picks": "3 PICKs; se quedan los 2 de mayor P% (esta tenia 78.3%)",
         "acerto": true
       }
     ],
@@ -31093,7 +31392,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "038",
@@ -31179,21 +31479,6 @@ const TRACKER_DATA = [
     "apuestas": [
       {
         "tipo": "PICK",
-        "mercado": "over25",
-        "linea": null,
-        "etiqueta": "Over 2.5",
-        "cuota": 1.85,
-        "prob": 55.6,
-        "ev_pct": 2.9,
-        "estado": "PERDIDA",
-        "pl": -1.0,
-        "cuota_justa": 1.82,
-        "cuota_segura": 2.0,
-        "acierto_hist": 55.1,
-        "n_hist": 354
-      },
-      {
-        "tipo": "PICK",
         "mercado": "btts",
         "linea": null,
         "etiqueta": "BTTS",
@@ -31241,6 +31526,25 @@ const TRACKER_DATA = [
         "cuota_segura": 1.8,
         "acierto_hist": 59.6,
         "n_hist": 582
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "local_remates",
+        "linea": 9.5,
+        "etiqueta": "La Coruna Remates Over 9.5",
+        "lado": "local",
+        "cuota": 1.44,
+        "prob": 76.8,
+        "ev_pct": 10.6,
+        "estado": "GANADA",
+        "pl": 0.44,
+        "lineas_pasan": 2,
+        "cruzaron_ambos": false,
+        "retroactiva": true,
+        "cuota_justa": 1.29,
+        "cuota_segura": 1.39,
+        "acierto_hist": 77.2,
+        "n_hist": 268
       }
     ],
     "watchlist": [
@@ -31421,7 +31725,8 @@ const TRACKER_DATA = [
         "cuota_segura": 1.39,
         "acierto_hist": 77.2,
         "n_hist": 268,
-        "acerto": true
+        "acerto": true,
+        "es_remate": true
       },
       {
         "mercado": "visit_remates_puerta",
@@ -31527,6 +31832,20 @@ const TRACKER_DATA = [
         "acierto_hist": 53.9,
         "n_hist": 297,
         "acerto": true
+      },
+      {
+        "mercado": "over25",
+        "linea": null,
+        "etiqueta": "Over 2.5",
+        "cuota": 1.85,
+        "prob": 55.6,
+        "ev_pct": 2.9,
+        "cuota_justa": 1.82,
+        "cuota_segura": 2.0,
+        "acierto_hist": 55.1,
+        "n_hist": 354,
+        "regla_max_picks": "3 PICKs; se quedan los 2 de mayor P% (esta tenia 55.6%)",
+        "acerto": false
       }
     ],
     "mercados_snapshot": {
@@ -32254,7 +32573,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "039",
@@ -32344,32 +32664,6 @@ const TRACKER_DATA = [
     "apuestas": [
       {
         "tipo": "PICK",
-        "mercado": "over35",
-        "linea": null,
-        "etiqueta": "Over 3.5",
-        "cuota": 2.6,
-        "prob": 40.5,
-        "ev_pct": 5.3,
-        "estado": "PERDIDA",
-        "pl": -1.0
-      },
-      {
-        "tipo": "PICK",
-        "mercado": "btts",
-        "linea": null,
-        "etiqueta": "BTTS",
-        "cuota": 2.12,
-        "prob": 55.3,
-        "ev_pct": 17.2,
-        "estado": "PERDIDA",
-        "pl": -1.0,
-        "cuota_justa": 1.7,
-        "cuota_segura": 1.83,
-        "acierto_hist": 58.7,
-        "n_hist": 606
-      },
-      {
-        "tipo": "PICK",
         "mercado": "over05_visit",
         "linea": null,
         "etiqueta": "Over 0.5 Lecce",
@@ -32398,6 +32692,21 @@ const TRACKER_DATA = [
         "cuota_segura": 2.18,
         "acierto_hist": 52.5,
         "n_hist": 223
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "local_remates",
+        "linea": 15.5,
+        "etiqueta": "Milan Remates Over 15.5",
+        "lado": "local",
+        "cuota": 2.62,
+        "prob": 72.6,
+        "ev_pct": 90.2,
+        "estado": "PERDIDA",
+        "pl": -1.0,
+        "lineas_pasan": 3,
+        "cruzaron_ambos": false,
+        "retroactiva": true
       }
     ],
     "watchlist": [
@@ -32515,7 +32824,8 @@ const TRACKER_DATA = [
         "prob": 72.6,
         "ev_pct": 90.2,
         "tipo": "POR_EQUIPO",
-        "acerto": false
+        "acerto": false,
+        "es_remate": true
       },
       {
         "mercado": "local_remates_puerta",
@@ -32588,6 +32898,30 @@ const TRACKER_DATA = [
         "n_hist": 206,
         "regla_unicidad_totales": "cede ante over35 (score EV/prob 2.1)",
         "acerto": true
+      },
+      {
+        "mercado": "over35",
+        "linea": null,
+        "etiqueta": "Over 3.5",
+        "cuota": 2.6,
+        "prob": 40.5,
+        "ev_pct": 5.3,
+        "regla_cuota_max_pick": "cuota 2.60 > tope 2.00",
+        "acerto": false
+      },
+      {
+        "mercado": "btts",
+        "linea": null,
+        "etiqueta": "BTTS",
+        "cuota": 2.12,
+        "prob": 55.3,
+        "ev_pct": 17.2,
+        "cuota_justa": 1.7,
+        "cuota_segura": 1.83,
+        "acierto_hist": 58.7,
+        "n_hist": 606,
+        "regla_cuota_max_pick": "cuota 2.12 > tope 2.00",
+        "acerto": false
       }
     ],
     "mercados_snapshot": {
@@ -32871,7 +33205,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "040",
@@ -32962,17 +33297,6 @@ const TRACKER_DATA = [
     "apuestas": [
       {
         "tipo": "PICK",
-        "mercado": "under35",
-        "linea": null,
-        "etiqueta": "Under 3.5",
-        "cuota": 1.87,
-        "prob": 58.2,
-        "ev_pct": 8.8,
-        "estado": "GANADA",
-        "pl": 0.87
-      },
-      {
-        "tipo": "PICK",
         "mercado": "over05_local",
         "linea": null,
         "etiqueta": "Over 0.5 Marseille",
@@ -33012,6 +33336,21 @@ const TRACKER_DATA = [
         "cuota_segura": 1.45,
         "acierto_hist": 74.0,
         "n_hist": 335
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "local_remates",
+        "linea": 9.5,
+        "etiqueta": "Marseille Remates Over 9.5",
+        "lado": "local",
+        "cuota": 1.57,
+        "prob": 74.2,
+        "ev_pct": 16.5,
+        "estado": "GANADA",
+        "pl": 0.57,
+        "lineas_pasan": 2,
+        "cruzaron_ambos": false,
+        "retroactiva": true
       }
     ],
     "watchlist": [
@@ -33084,7 +33423,8 @@ const TRACKER_DATA = [
         "prob": 74.2,
         "ev_pct": 16.5,
         "tipo": "POR_EQUIPO",
-        "acerto": true
+        "acerto": true,
+        "es_remate": true
       },
       {
         "mercado": "local_corners_equipo",
@@ -33239,6 +33579,16 @@ const TRACKER_DATA = [
         "prob": 86.8,
         "ev_pct": 16.3,
         "regla_unicidad_handicap": "cede ante hcp2_des (EV 30.5%)",
+        "acerto": true
+      },
+      {
+        "mercado": "under35",
+        "linea": null,
+        "etiqueta": "Under 3.5",
+        "cuota": 1.87,
+        "prob": 58.2,
+        "ev_pct": 8.8,
+        "regla_max_picks": "3 PICKs; se quedan los 2 de mayor P% (esta tenia 58.2%)",
         "acerto": true
       }
     ],
@@ -33751,7 +34101,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": true,
       "visit_corners_equipo_over6.5": true,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "041",
@@ -33872,6 +34223,21 @@ const TRACKER_DATA = [
         "cuota_segura": 1.65,
         "acierto_hist": 65.1,
         "n_hist": 498
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "visit_remates",
+        "linea": 10.5,
+        "etiqueta": "Werder Bremen Remates Over 10.5",
+        "lado": "visit",
+        "cuota": 2.15,
+        "prob": 48.9,
+        "ev_pct": 5.1,
+        "estado": "GANADA",
+        "pl": 1.15,
+        "lineas_pasan": 1,
+        "cruzaron_ambos": false,
+        "retroactiva": true
       }
     ],
     "watchlist": [
@@ -34034,7 +34400,8 @@ const TRACKER_DATA = [
         "prob": 48.9,
         "ev_pct": 5.1,
         "tipo": "POR_EQUIPO",
-        "acerto": true
+        "acerto": true,
+        "es_remate": true
       },
       {
         "mercado": "local_remates_puerta",
@@ -34711,7 +35078,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "042",
@@ -36186,7 +36554,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "043",
@@ -36303,6 +36672,21 @@ const TRACKER_DATA = [
         "cuota_segura": 2.18,
         "acierto_hist": 52.5,
         "n_hist": 223
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "visit_remates",
+        "linea": 9.5,
+        "etiqueta": "Leeds Remates Over 9.5",
+        "lado": "visit",
+        "cuota": 2.27,
+        "prob": 52.5,
+        "ev_pct": 19.2,
+        "estado": "GANADA",
+        "pl": 1.27,
+        "lineas_pasan": 3,
+        "cruzaron_ambos": false,
+        "retroactiva": true
       }
     ],
     "watchlist": [
@@ -36524,7 +36908,8 @@ const TRACKER_DATA = [
         "prob": 52.5,
         "ev_pct": 19.2,
         "tipo": "POR_EQUIPO",
-        "acerto": true
+        "acerto": true,
+        "es_remate": true
       },
       {
         "mercado": "local_remates_puerta",
@@ -37088,7 +37473,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "044",
@@ -37852,7 +38238,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": true,
       "visit_corners_equipo_over6.5": true,
       "visit_corners_equipo_over7.5": true
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "046",
@@ -37949,6 +38336,21 @@ const TRACKER_DATA = [
         "ev_pct": 2.0,
         "estado": "GANADA",
         "pl": 0.44
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "visit_remates",
+        "linea": 14.5,
+        "etiqueta": "Leverkusen Remates Over 14.5",
+        "lado": "visit",
+        "cuota": 2.2,
+        "prob": 58.6,
+        "ev_pct": 28.9,
+        "estado": "GANADA",
+        "pl": 1.2,
+        "lineas_pasan": 3,
+        "cruzaron_ambos": true,
+        "retroactiva": true
       }
     ],
     "watchlist": [
@@ -38204,7 +38606,8 @@ const TRACKER_DATA = [
         "prob": 58.6,
         "ev_pct": 28.9,
         "tipo": "POR_EQUIPO",
-        "acerto": true
+        "acerto": true,
+        "es_remate": true
       },
       {
         "mercado": "local_remates_puerta",
@@ -39059,7 +39462,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "048",
@@ -39195,6 +39599,21 @@ const TRACKER_DATA = [
         "cuota_segura": 1.7,
         "acierto_hist": 64.2,
         "n_hist": 327
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "visit_remates",
+        "linea": 13.5,
+        "etiqueta": "Brentford Remates Over 13.5",
+        "lado": "visit",
+        "cuota": 2.45,
+        "prob": 61.0,
+        "ev_pct": 49.5,
+        "estado": "GANADA",
+        "pl": 1.45,
+        "lineas_pasan": 3,
+        "cruzaron_ambos": false,
+        "retroactiva": true
       }
     ],
     "watchlist": [
@@ -39424,7 +39843,8 @@ const TRACKER_DATA = [
         "prob": 61.0,
         "ev_pct": 49.5,
         "tipo": "POR_EQUIPO",
-        "acerto": true
+        "acerto": true,
+        "es_remate": true
       },
       {
         "mercado": "local_remates_puerta",
@@ -40231,7 +40651,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "049",
@@ -40363,6 +40784,21 @@ const TRACKER_DATA = [
         "cuota_segura": 1.97,
         "acierto_hist": 57.6,
         "n_hist": 210
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "visit_remates",
+        "linea": 12.5,
+        "etiqueta": "Bournemouth Remates Over 12.5",
+        "lado": "visit",
+        "cuota": 2.67,
+        "prob": 44.3,
+        "ev_pct": 18.3,
+        "estado": "PERDIDA",
+        "pl": -1.0,
+        "lineas_pasan": 3,
+        "cruzaron_ambos": false,
+        "retroactiva": true
       }
     ],
     "watchlist": [
@@ -40605,7 +41041,8 @@ const TRACKER_DATA = [
         "prob": 44.3,
         "ev_pct": 18.3,
         "tipo": "POR_EQUIPO",
-        "acerto": false
+        "acerto": false,
+        "es_remate": true
       },
       {
         "mercado": "local_remates_puerta",
@@ -41527,7 +41964,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": true,
       "visit_corners_equipo_over6.5": true,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "050",
@@ -41644,6 +42082,21 @@ const TRACKER_DATA = [
         "cuota_segura": 1.45,
         "acierto_hist": 74.0,
         "n_hist": 335
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "local_remates",
+        "linea": 13.5,
+        "etiqueta": "Sunderland Remates Over 13.5",
+        "lado": "local",
+        "cuota": 2.32,
+        "prob": 49.9,
+        "ev_pct": 15.8,
+        "estado": "PERDIDA",
+        "pl": -1.0,
+        "lineas_pasan": 3,
+        "cruzaron_ambos": true,
+        "retroactiva": true
       }
     ],
     "watchlist": [
@@ -41879,7 +42332,8 @@ const TRACKER_DATA = [
         "prob": 49.9,
         "ev_pct": 15.8,
         "tipo": "POR_EQUIPO",
-        "acerto": false
+        "acerto": false,
+        "es_remate": true
       },
       {
         "mercado": "visit_remates",
@@ -42800,7 +43254,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "051",
@@ -43997,7 +44452,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": true,
       "visit_corners_equipo_over6.5": true,
       "visit_corners_equipo_over7.5": true
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "052",
@@ -44118,6 +44574,21 @@ const TRACKER_DATA = [
         "cuota_segura": 1.49,
         "acierto_hist": 74.1,
         "n_hist": 185
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "visit_remates",
+        "linea": 12.5,
+        "etiqueta": "Le Havre Remates Over 12.5",
+        "lado": "visit",
+        "cuota": 5.1,
+        "prob": 55.7,
+        "ev_pct": 184.1,
+        "estado": "GANADA",
+        "pl": 4.1,
+        "lineas_pasan": 4,
+        "cruzaron_ambos": false,
+        "retroactiva": true
       }
     ],
     "watchlist": [
@@ -44384,7 +44855,8 @@ const TRACKER_DATA = [
         "prob": 55.7,
         "ev_pct": 184.1,
         "tipo": "POR_EQUIPO",
-        "acerto": true
+        "acerto": true,
+        "es_remate": true
       },
       {
         "mercado": "local_remates_puerta",
@@ -45223,7 +45695,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "053",
@@ -45329,6 +45802,21 @@ const TRACKER_DATA = [
         "cuota_segura": 1.92,
         "acierto_hist": 57.7,
         "n_hist": 310
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "visit_remates",
+        "linea": 10.5,
+        "etiqueta": "Parma Remates Over 10.5",
+        "lado": "visit",
+        "cuota": 4.3,
+        "prob": 29.5,
+        "ev_pct": 26.8,
+        "estado": "PERDIDA",
+        "pl": -1.0,
+        "lineas_pasan": 5,
+        "cruzaron_ambos": false,
+        "retroactiva": true
       }
     ],
     "watchlist": [
@@ -45531,7 +46019,8 @@ const TRACKER_DATA = [
         "prob": 29.5,
         "ev_pct": 26.8,
         "tipo": "POR_EQUIPO",
-        "acerto": false
+        "acerto": false,
+        "es_remate": true
       },
       {
         "mercado": "visit_remates",
@@ -45820,7 +46309,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "054",
@@ -45926,6 +46416,21 @@ const TRACKER_DATA = [
         "cuota_segura": 1.7,
         "acierto_hist": 66.1,
         "n_hist": 180
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "local_remates",
+        "linea": 15.5,
+        "etiqueta": "RB Leipzig Remates Over 15.5",
+        "lado": "local",
+        "cuota": 1.44,
+        "prob": 81.3,
+        "ev_pct": 17.1,
+        "estado": "GANADA",
+        "pl": 0.44,
+        "lineas_pasan": 1,
+        "cruzaron_ambos": true,
+        "retroactiva": true
       }
     ],
     "watchlist": [
@@ -46161,7 +46666,8 @@ const TRACKER_DATA = [
         "prob": 81.3,
         "ev_pct": 17.1,
         "tipo": "POR_EQUIPO",
-        "acerto": true
+        "acerto": true,
+        "es_remate": true
       },
       {
         "mercado": "visit_remates",
@@ -46832,7 +47338,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": true,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "055",
@@ -46920,17 +47427,6 @@ const TRACKER_DATA = [
     "goles_esperados": "3.44",
     "apuestas": [
       {
-        "tipo": "PICK",
-        "mercado": "under35",
-        "linea": null,
-        "etiqueta": "Under 3.5",
-        "cuota": 2.12,
-        "prob": 55.0,
-        "ev_pct": 16.6,
-        "estado": "GANADA",
-        "pl": 1.12
-      },
-      {
         "tipo": "COMBO",
         "mercado": "do1x+hcp3_visit",
         "etiqueta": "DO L o Empate + HCP +3 V",
@@ -46949,6 +47445,21 @@ const TRACKER_DATA = [
         "cuota_segura": 2.22,
         "acierto_hist": 52.1,
         "n_hist": 188
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "visit_remates",
+        "linea": 9.5,
+        "etiqueta": "Getafe Remates Over 9.5",
+        "lado": "visit",
+        "cuota": 4.25,
+        "prob": 30.7,
+        "ev_pct": 30.5,
+        "estado": "PERDIDA",
+        "pl": -1.0,
+        "lineas_pasan": 4,
+        "cruzaron_ambos": false,
+        "retroactiva": true
       }
     ],
     "watchlist": [
@@ -47136,7 +47647,8 @@ const TRACKER_DATA = [
         "prob": 30.7,
         "ev_pct": 30.5,
         "tipo": "POR_EQUIPO",
-        "acerto": false
+        "acerto": false,
+        "es_remate": true
       },
       {
         "mercado": "visit_remates",
@@ -47195,6 +47707,16 @@ const TRACKER_DATA = [
         "cuota_segura": 2.24,
         "acierto_hist": 50.5,
         "n_hist": 277,
+        "acerto": true
+      },
+      {
+        "mercado": "under35",
+        "linea": null,
+        "etiqueta": "Under 3.5",
+        "cuota": 2.12,
+        "prob": 55.0,
+        "ev_pct": 16.6,
+        "regla_cuota_max_pick": "cuota 2.12 > tope 2.00",
         "acerto": true
       }
     ],
@@ -47395,7 +47917,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "056",
@@ -47516,6 +48039,21 @@ const TRACKER_DATA = [
         "cuota_segura": 1.58,
         "acierto_hist": 68.3,
         "n_hist": 338
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "visit_remates",
+        "linea": 15.5,
+        "etiqueta": "Paris FC Remates Over 15.5",
+        "lado": "visit",
+        "cuota": 4.5,
+        "prob": 23.4,
+        "ev_pct": 5.3,
+        "estado": "GANADA",
+        "pl": 3.5,
+        "lineas_pasan": 2,
+        "cruzaron_ambos": false,
+        "retroactiva": true
       }
     ],
     "watchlist": [
@@ -47853,7 +48391,8 @@ const TRACKER_DATA = [
         "prob": 23.4,
         "ev_pct": 5.3,
         "tipo": "POR_EQUIPO",
-        "acerto": true
+        "acerto": true,
+        "es_remate": true
       },
       {
         "mercado": "local_remates_puerta",
@@ -48640,7 +49179,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": true,
       "visit_corners_equipo_over6.5": true,
       "visit_corners_equipo_over7.5": true
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "057",
@@ -48729,21 +49269,6 @@ const TRACKER_DATA = [
     "apuestas": [
       {
         "tipo": "PICK",
-        "mercado": "under35",
-        "linea": null,
-        "etiqueta": "Under 3.5",
-        "cuota": 1.57,
-        "prob": 65.8,
-        "ev_pct": 3.3,
-        "estado": "PERDIDA",
-        "pl": -1.0,
-        "cuota_justa": 1.51,
-        "cuota_segura": 1.64,
-        "acierto_hist": 66.3,
-        "n_hist": 341
-      },
-      {
-        "tipo": "PICK",
         "mercado": "over05_visit",
         "linea": null,
         "etiqueta": "Over 0.5 Toulouse",
@@ -48783,6 +49308,21 @@ const TRACKER_DATA = [
         "cuota_segura": 1.54,
         "acierto_hist": 70.2,
         "n_hist": 332
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "visit_remates",
+        "linea": 13.5,
+        "etiqueta": "Toulouse Remates Over 13.5",
+        "lado": "visit",
+        "cuota": 3.7,
+        "prob": 48.3,
+        "ev_pct": 78.7,
+        "estado": "PERDIDA",
+        "pl": -1.0,
+        "lineas_pasan": 5,
+        "cruzaron_ambos": false,
+        "retroactiva": true
       }
     ],
     "watchlist": [
@@ -49052,7 +49592,8 @@ const TRACKER_DATA = [
         "prob": 48.3,
         "ev_pct": 78.7,
         "tipo": "POR_EQUIPO",
-        "acerto": false
+        "acerto": false,
+        "es_remate": true
       },
       {
         "mercado": "local_remates_puerta",
@@ -49232,6 +49773,20 @@ const TRACKER_DATA = [
         "ev_pct": 5.2,
         "regla_unicidad_handicap": "cede ante hcp2_des (EV 11.7%)",
         "acerto": true
+      },
+      {
+        "mercado": "under35",
+        "linea": null,
+        "etiqueta": "Under 3.5",
+        "cuota": 1.57,
+        "prob": 65.8,
+        "ev_pct": 3.3,
+        "cuota_justa": 1.51,
+        "cuota_segura": 1.64,
+        "acierto_hist": 66.3,
+        "n_hist": 341,
+        "regla_max_picks": "3 PICKs; se quedan los 2 de mayor P% (esta tenia 65.8%)",
+        "acerto": false
       }
     ],
     "mercados_snapshot": {
@@ -49947,7 +50502,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "058",
@@ -50079,6 +50635,21 @@ const TRACKER_DATA = [
         "cuota_segura": 1.81,
         "acierto_hist": 60.4,
         "n_hist": 364
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "visit_remates",
+        "linea": 9.5,
+        "etiqueta": "Le Mans Remates Over 9.5",
+        "lado": "visit",
+        "cuota": 3.6,
+        "prob": 40.4,
+        "ev_pct": 45.4,
+        "estado": "GANADA",
+        "pl": 2.6,
+        "lineas_pasan": 4,
+        "cruzaron_ambos": false,
+        "retroactiva": true
       }
     ],
     "watchlist": [
@@ -50286,7 +50857,8 @@ const TRACKER_DATA = [
         "prob": 40.4,
         "ev_pct": 45.4,
         "tipo": "POR_EQUIPO",
-        "acerto": true
+        "acerto": true,
+        "es_remate": true
       },
       {
         "mercado": "visit_remates",
@@ -50629,7 +51201,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "059",
@@ -50750,6 +51323,21 @@ const TRACKER_DATA = [
         "cuota_segura": 1.65,
         "acierto_hist": 65.1,
         "n_hist": 498
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "visit_remates",
+        "linea": 13.5,
+        "etiqueta": "Frosinone Remates Over 13.5",
+        "lado": "visit",
+        "cuota": 2.35,
+        "prob": 56.6,
+        "ev_pct": 33.0,
+        "estado": "GANADA",
+        "pl": 1.35,
+        "lineas_pasan": 4,
+        "cruzaron_ambos": false,
+        "retroactiva": true
       }
     ],
     "watchlist": [
@@ -50948,7 +51536,8 @@ const TRACKER_DATA = [
         "prob": 56.6,
         "ev_pct": 33.0,
         "tipo": "POR_EQUIPO",
-        "acerto": true
+        "acerto": true,
+        "es_remate": true
       },
       {
         "mercado": "local_remates_puerta",
@@ -51489,7 +52078,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "060",
@@ -51610,6 +52200,21 @@ const TRACKER_DATA = [
         "cuota_segura": 1.54,
         "acierto_hist": 70.2,
         "n_hist": 332
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "visit_remates",
+        "linea": 12.5,
+        "etiqueta": "Villarreal Remates Over 12.5",
+        "lado": "visit",
+        "cuota": 2.07,
+        "prob": 57.0,
+        "ev_pct": 18.0,
+        "estado": "GANADA",
+        "pl": 1.07,
+        "lineas_pasan": 4,
+        "cruzaron_ambos": false,
+        "retroactiva": true
       }
     ],
     "watchlist": [
@@ -51852,7 +52457,8 @@ const TRACKER_DATA = [
         "prob": 57.0,
         "ev_pct": 18.0,
         "tipo": "POR_EQUIPO",
-        "acerto": true
+        "acerto": true,
+        "es_remate": true
       },
       {
         "mercado": "local_remates_puerta",
@@ -52317,7 +52923,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "061",
@@ -52418,6 +53025,21 @@ const TRACKER_DATA = [
         "cuota_segura": 1.74,
         "acierto_hist": 64.1,
         "n_hist": 206
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "visit_remates",
+        "linea": 15.5,
+        "etiqueta": "Roma Remates Over 15.5",
+        "lado": "visit",
+        "cuota": 3.3,
+        "prob": 69.0,
+        "ev_pct": 127.7,
+        "estado": "PERDIDA",
+        "pl": -1.0,
+        "lineas_pasan": 3,
+        "cruzaron_ambos": true,
+        "retroactiva": true
       }
     ],
     "watchlist": [
@@ -52656,7 +53278,8 @@ const TRACKER_DATA = [
         "prob": 69.0,
         "ev_pct": 127.7,
         "tipo": "POR_EQUIPO",
-        "acerto": false
+        "acerto": false,
+        "es_remate": true
       },
       {
         "mercado": "local_remates_puerta",
@@ -53381,7 +54004,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "062",
@@ -53485,21 +54109,6 @@ const TRACKER_DATA = [
       },
       {
         "tipo": "PICK",
-        "mercado": "btts",
-        "linea": null,
-        "etiqueta": "BTTS",
-        "cuota": 1.85,
-        "prob": 55.7,
-        "ev_pct": 3.0,
-        "estado": "GANADA",
-        "pl": 0.85,
-        "cuota_justa": 1.7,
-        "cuota_segura": 1.83,
-        "acierto_hist": 58.7,
-        "n_hist": 606
-      },
-      {
-        "tipo": "PICK",
         "mercado": "over05_visit",
         "linea": null,
         "etiqueta": "Over 0.5 Monza",
@@ -53532,6 +54141,21 @@ const TRACKER_DATA = [
         "cuota_segura": 1.68,
         "acierto_hist": 64.5,
         "n_hist": 375
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "visit_remates",
+        "linea": 11.5,
+        "etiqueta": "Monza Remates Over 11.5",
+        "lado": "visit",
+        "cuota": 2.67,
+        "prob": 41.9,
+        "ev_pct": 11.9,
+        "estado": "GANADA",
+        "pl": 1.67,
+        "lineas_pasan": 2,
+        "cruzaron_ambos": false,
+        "retroactiva": true
       }
     ],
     "watchlist": [
@@ -53817,7 +54441,8 @@ const TRACKER_DATA = [
         "prob": 41.9,
         "ev_pct": 11.9,
         "tipo": "POR_EQUIPO",
-        "acerto": true
+        "acerto": true,
+        "es_remate": true
       },
       {
         "mercado": "local_remates_puerta",
@@ -53974,6 +54599,20 @@ const TRACKER_DATA = [
         "cuota_segura": 2.08,
         "acierto_hist": 53.9,
         "n_hist": 297,
+        "acerto": true
+      },
+      {
+        "mercado": "btts",
+        "linea": null,
+        "etiqueta": "BTTS",
+        "cuota": 1.85,
+        "prob": 55.7,
+        "ev_pct": 3.0,
+        "cuota_justa": 1.7,
+        "cuota_segura": 1.83,
+        "acierto_hist": 58.7,
+        "n_hist": 606,
+        "regla_max_picks": "3 PICKs; se quedan los 2 de mayor P% (esta tenia 55.7%)",
         "acerto": true
       }
     ],
@@ -54762,7 +55401,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": true,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "063",
@@ -54851,21 +55491,6 @@ const TRACKER_DATA = [
     "apuestas": [
       {
         "tipo": "PICK",
-        "mercado": "btts",
-        "linea": null,
-        "etiqueta": "BTTS",
-        "cuota": 1.78,
-        "prob": 56.8,
-        "ev_pct": 1.1,
-        "estado": "GANADA",
-        "pl": 0.78,
-        "cuota_justa": 1.7,
-        "cuota_segura": 1.83,
-        "acierto_hist": 58.7,
-        "n_hist": 606
-      },
-      {
-        "tipo": "PICK",
         "mercado": "over05_visit",
         "linea": null,
         "etiqueta": "Over 0.5 Deportivo La Coruna",
@@ -54905,6 +55530,21 @@ const TRACKER_DATA = [
         "cuota_segura": 1.81,
         "acierto_hist": 60.4,
         "n_hist": 364
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "visit_remates",
+        "linea": 10.5,
+        "etiqueta": "Deportivo La Coruna Remates Over 10.5",
+        "lado": "visit",
+        "cuota": 2.57,
+        "prob": 62.0,
+        "ev_pct": 59.3,
+        "estado": "GANADA",
+        "pl": 1.57,
+        "lineas_pasan": 3,
+        "cruzaron_ambos": false,
+        "retroactiva": true
       }
     ],
     "watchlist": [
@@ -55152,7 +55792,8 @@ const TRACKER_DATA = [
         "prob": 62.0,
         "ev_pct": 59.3,
         "tipo": "POR_EQUIPO",
-        "acerto": true
+        "acerto": true,
+        "es_remate": true
       },
       {
         "mercado": "local_remates_puerta",
@@ -55319,6 +55960,20 @@ const TRACKER_DATA = [
         "prob": 88.7,
         "ev_pct": 3.8,
         "regla_unicidad_handicap": "cede ante hcp2_des (EV 7.9%)",
+        "acerto": true
+      },
+      {
+        "mercado": "btts",
+        "linea": null,
+        "etiqueta": "BTTS",
+        "cuota": 1.78,
+        "prob": 56.8,
+        "ev_pct": 1.1,
+        "cuota_justa": 1.7,
+        "cuota_segura": 1.83,
+        "acierto_hist": 58.7,
+        "n_hist": 606,
+        "regla_max_picks": "3 PICKs; se quedan los 2 de mayor P% (esta tenia 56.8%)",
         "acerto": true
       }
     ],
@@ -56227,7 +56882,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": true,
       "visit_corners_equipo_over6.5": true,
       "visit_corners_equipo_over7.5": true
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "064",
@@ -56316,21 +56972,6 @@ const TRACKER_DATA = [
     "apuestas": [
       {
         "tipo": "PICK",
-        "mercado": "under35",
-        "linea": null,
-        "etiqueta": "Under 3.5",
-        "cuota": 1.72,
-        "prob": 65.3,
-        "ev_pct": 12.3,
-        "estado": "PERDIDA",
-        "pl": -1.0,
-        "cuota_justa": 1.51,
-        "cuota_segura": 1.64,
-        "acierto_hist": 66.3,
-        "n_hist": 341
-      },
-      {
-        "tipo": "PICK",
         "mercado": "over05_visit",
         "linea": null,
         "etiqueta": "Over 0.5 Auxerre",
@@ -56370,6 +57011,25 @@ const TRACKER_DATA = [
         "cuota_segura": 1.54,
         "acierto_hist": 70.2,
         "n_hist": 332
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "visit_remates",
+        "linea": 10.5,
+        "etiqueta": "Auxerre Remates Over 10.5",
+        "lado": "visit",
+        "cuota": 2.12,
+        "prob": 52.3,
+        "ev_pct": 10.9,
+        "estado": "GANADA",
+        "pl": 1.12,
+        "lineas_pasan": 2,
+        "cruzaron_ambos": false,
+        "retroactiva": true,
+        "cuota_justa": 1.96,
+        "cuota_segura": 2.28,
+        "acierto_hist": 51.1,
+        "n_hist": 178
       }
     ],
     "watchlist": [
@@ -56578,7 +57238,8 @@ const TRACKER_DATA = [
         "cuota_segura": 2.28,
         "acierto_hist": 51.1,
         "n_hist": 178,
-        "acerto": true
+        "acerto": true,
+        "es_remate": true
       },
       {
         "mercado": "do1x+hcp3_visit",
@@ -56693,6 +57354,20 @@ const TRACKER_DATA = [
         "prob": 82.0,
         "ev_pct": 7.4,
         "regla_unicidad_totales": "cede ante under35 (score EV/prob 8.0)",
+        "acerto": false
+      },
+      {
+        "mercado": "under35",
+        "linea": null,
+        "etiqueta": "Under 3.5",
+        "cuota": 1.72,
+        "prob": 65.3,
+        "ev_pct": 12.3,
+        "cuota_justa": 1.51,
+        "cuota_segura": 1.64,
+        "acierto_hist": 66.3,
+        "n_hist": 341,
+        "regla_max_picks": "3 PICKs; se quedan los 2 de mayor P% (esta tenia 65.3%)",
         "acerto": false
       }
     ],
@@ -57301,7 +57976,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "065",
@@ -57398,17 +58074,6 @@ const TRACKER_DATA = [
         "ev_pct": 4.8,
         "estado": "GANADA",
         "pl": 0.21
-      },
-      {
-        "tipo": "PICK",
-        "mercado": "over35",
-        "linea": null,
-        "etiqueta": "Over 3.5",
-        "cuota": 2.55,
-        "prob": 47.7,
-        "ev_pct": 21.6,
-        "estado": "PERDIDA",
-        "pl": -1.0
       },
       {
         "tipo": "PICK",
@@ -57638,6 +58303,16 @@ const TRACKER_DATA = [
         "ev_pct": 12.5,
         "regla_unicidad_totales": "cede ante over35 (score EV/prob 10.3)",
         "acerto": true
+      },
+      {
+        "mercado": "over35",
+        "linea": null,
+        "etiqueta": "Over 3.5",
+        "cuota": 2.55,
+        "prob": 47.7,
+        "ev_pct": 21.6,
+        "regla_cuota_max_pick": "cuota 2.55 > tope 2.00",
+        "acerto": false
       }
     ],
     "mercados_snapshot": {
@@ -57921,7 +58596,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "066",
@@ -58049,6 +58725,21 @@ const TRACKER_DATA = [
         "cuota_segura": 1.91,
         "acierto_hist": 58.4,
         "n_hist": 269
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "local_remates",
+        "linea": 13.5,
+        "etiqueta": "Liverpool Remates Over 13.5",
+        "lado": "local",
+        "cuota": 1.9,
+        "prob": 58.2,
+        "ev_pct": 10.6,
+        "estado": "PERDIDA",
+        "pl": -1.0,
+        "lineas_pasan": 2,
+        "cruzaron_ambos": false,
+        "retroactiva": true
       }
     ],
     "watchlist": [
@@ -58264,7 +58955,8 @@ const TRACKER_DATA = [
         "prob": 58.2,
         "ev_pct": 10.6,
         "tipo": "POR_EQUIPO",
-        "acerto": false
+        "acerto": false,
+        "es_remate": true
       },
       {
         "mercado": "local_remates_puerta",
@@ -59179,7 +59871,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": true,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "067",
@@ -59311,6 +60004,21 @@ const TRACKER_DATA = [
         "cuota_segura": 1.67,
         "acierto_hist": 66.7,
         "n_hist": 204
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "local_remates",
+        "linea": 10.5,
+        "etiqueta": "Sassuolo Remates Over 10.5",
+        "lado": "local",
+        "cuota": 1.6,
+        "prob": 66.5,
+        "ev_pct": 6.4,
+        "estado": "PERDIDA",
+        "pl": -1.0,
+        "lineas_pasan": 1,
+        "cruzaron_ambos": false,
+        "retroactiva": true
       }
     ],
     "watchlist": [
@@ -59490,7 +60198,8 @@ const TRACKER_DATA = [
         "prob": 66.5,
         "ev_pct": 6.4,
         "tipo": "POR_EQUIPO",
-        "acerto": false
+        "acerto": false,
+        "es_remate": true
       },
       {
         "mercado": "local_corners_equipo",
@@ -60313,7 +61022,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "068",
@@ -60434,6 +61144,21 @@ const TRACKER_DATA = [
         "cuota_segura": 1.81,
         "acierto_hist": 60.4,
         "n_hist": 364
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "visit_remates",
+        "linea": 9.5,
+        "etiqueta": "Osasuna Remates Over 9.5",
+        "lado": "visit",
+        "cuota": 1.88,
+        "prob": 58.3,
+        "ev_pct": 9.6,
+        "estado": "GANADA",
+        "pl": 0.88,
+        "lineas_pasan": 2,
+        "cruzaron_ambos": false,
+        "retroactiva": true
       }
     ],
     "watchlist": [
@@ -60619,7 +61344,8 @@ const TRACKER_DATA = [
         "prob": 58.3,
         "ev_pct": 9.6,
         "tipo": "POR_EQUIPO",
-        "acerto": true
+        "acerto": true,
+        "es_remate": true
       },
       {
         "mercado": "local_remates_puerta",
@@ -61382,7 +62108,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "069",
@@ -61468,7 +62195,23 @@ const TRACKER_DATA = [
     "notas": "",
     "resultado_partido": "1-1",
     "goles_esperados": "2.49",
-    "apuestas": [],
+    "apuestas": [
+      {
+        "tipo": "REMATE",
+        "mercado": "visit_remates",
+        "linea": 15.5,
+        "etiqueta": "Juventus Remates Over 15.5",
+        "lado": "visit",
+        "cuota": 1.7,
+        "prob": 70.0,
+        "ev_pct": 19.0,
+        "estado": "GANADA",
+        "pl": 0.7,
+        "lineas_pasan": 3,
+        "cruzaron_ambos": false,
+        "retroactiva": true
+      }
+    ],
     "watchlist": [
       {
         "mercado": "victoria_visit",
@@ -61639,7 +62382,8 @@ const TRACKER_DATA = [
         "prob": 70.0,
         "ev_pct": 19.0,
         "tipo": "POR_EQUIPO",
-        "acerto": true
+        "acerto": true,
+        "es_remate": true
       },
       {
         "mercado": "local_remates_puerta",
@@ -61964,7 +62708,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": true,
       "visit_corners_equipo_over6.5": true,
       "visit_corners_equipo_over7.5": true
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "070",
@@ -62096,6 +62841,21 @@ const TRACKER_DATA = [
         "cuota_segura": 1.46,
         "acierto_hist": 75.0,
         "n_hist": 184
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "local_remates",
+        "linea": 12.5,
+        "etiqueta": "Everton Remates Over 12.5",
+        "lado": "local",
+        "cuota": 1.67,
+        "prob": 74.8,
+        "ev_pct": 24.9,
+        "estado": "PERDIDA",
+        "pl": -1.0,
+        "lineas_pasan": 2,
+        "cruzaron_ambos": false,
+        "retroactiva": true
       }
     ],
     "watchlist": [
@@ -62205,7 +62965,8 @@ const TRACKER_DATA = [
         "prob": 74.8,
         "ev_pct": 24.9,
         "tipo": "POR_EQUIPO",
-        "acerto": false
+        "acerto": false,
+        "es_remate": true
       },
       {
         "mercado": "local_corners_equipo",
@@ -63588,7 +64349,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": true,
       "visit_corners_equipo_over6.5": true,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "071",
@@ -64730,7 +65492,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": true,
       "visit_corners_equipo_over6.5": true,
       "visit_corners_equipo_over7.5": true
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "072",
@@ -64836,6 +65599,21 @@ const TRACKER_DATA = [
         "cuota_segura": 1.44,
         "acierto_hist": 74.9,
         "n_hist": 267
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "local_remates",
+        "linea": 12.5,
+        "etiqueta": "Venezia Remates Over 12.5",
+        "lado": "local",
+        "cuota": 2.15,
+        "prob": 76.0,
+        "ev_pct": 63.4,
+        "estado": "PERDIDA",
+        "pl": -1.0,
+        "lineas_pasan": 2,
+        "cruzaron_ambos": false,
+        "retroactiva": true
       }
     ],
     "watchlist": [
@@ -64978,7 +65756,8 @@ const TRACKER_DATA = [
         "prob": 76.0,
         "ev_pct": 63.4,
         "tipo": "POR_EQUIPO",
-        "acerto": false
+        "acerto": false,
+        "es_remate": true
       },
       {
         "mercado": "local_remates_puerta",
@@ -66227,7 +67006,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": true,
       "visit_corners_equipo_over6.5": true,
       "visit_corners_equipo_over7.5": true
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "073",
@@ -66329,6 +67109,21 @@ const TRACKER_DATA = [
         "cuota_segura": 1.7,
         "acierto_hist": 66.7,
         "n_hist": 150
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "local_remates",
+        "linea": 15.5,
+        "etiqueta": "Elversberg Remates Over 15.5",
+        "lado": "local",
+        "cuota": 2.25,
+        "prob": 79.5,
+        "ev_pct": 78.9,
+        "estado": "GANADA",
+        "pl": 1.25,
+        "lineas_pasan": 2,
+        "cruzaron_ambos": false,
+        "retroactiva": true
       }
     ],
     "watchlist": [
@@ -66451,7 +67246,8 @@ const TRACKER_DATA = [
         "prob": 79.5,
         "ev_pct": 78.9,
         "tipo": "POR_EQUIPO",
-        "acerto": true
+        "acerto": true,
+        "es_remate": true
       },
       {
         "mercado": "local_remates_puerta",
@@ -67077,7 +67873,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": true,
       "visit_corners_equipo_over6.5": true,
       "visit_corners_equipo_over7.5": true
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "074",
@@ -67198,6 +67995,21 @@ const TRACKER_DATA = [
         "cuota_segura": 2.18,
         "acierto_hist": 52.4,
         "n_hist": 233
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "visit_remates",
+        "linea": 12.5,
+        "etiqueta": "Dortmund Remates Over 12.5",
+        "lado": "visit",
+        "cuota": 1.31,
+        "prob": 78.5,
+        "ev_pct": 2.8,
+        "estado": "PERDIDA",
+        "pl": -1.0,
+        "lineas_pasan": 1,
+        "cruzaron_ambos": false,
+        "retroactiva": true
       }
     ],
     "watchlist": [
@@ -67255,7 +68067,8 @@ const TRACKER_DATA = [
         "prob": 78.5,
         "ev_pct": 2.8,
         "tipo": "POR_EQUIPO",
-        "acerto": false
+        "acerto": false,
+        "es_remate": true
       },
       {
         "mercado": "visit_corners_equipo",
@@ -67853,7 +68666,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "075",
@@ -69258,7 +70072,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "076",
@@ -69364,6 +70179,21 @@ const TRACKER_DATA = [
         "cuota_segura": 1.5,
         "acierto_hist": 73.5,
         "n_hist": 185
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "local_remates",
+        "linea": 11.5,
+        "etiqueta": "Brentford Remates Over 11.5",
+        "lado": "local",
+        "cuota": 1.34,
+        "prob": 77.6,
+        "ev_pct": 4.0,
+        "estado": "PERDIDA",
+        "pl": -1.0,
+        "lineas_pasan": 1,
+        "cruzaron_ambos": false,
+        "retroactiva": true
       }
     ],
     "watchlist": [
@@ -69522,7 +70352,8 @@ const TRACKER_DATA = [
         "prob": 77.6,
         "ev_pct": 4.0,
         "tipo": "POR_EQUIPO",
-        "acerto": false
+        "acerto": false,
+        "es_remate": true
       },
       {
         "mercado": "local_corners_equipo",
@@ -71352,7 +72183,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": true,
       "visit_corners_equipo_over6.5": true,
       "visit_corners_equipo_over7.5": true
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "077",
@@ -71916,7 +72748,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "078",
@@ -72576,7 +73409,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": true,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "079",
@@ -72682,6 +73516,25 @@ const TRACKER_DATA = [
         "cuota_segura": 2.1,
         "acierto_hist": 55.1,
         "n_hist": 167
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "local_remates",
+        "linea": 9.5,
+        "etiqueta": "Bologna Remates Over 9.5",
+        "lado": "local",
+        "cuota": 1.31,
+        "prob": 76.5,
+        "ev_pct": 0.2,
+        "estado": "GANADA",
+        "pl": 0.31,
+        "lineas_pasan": 1,
+        "cruzaron_ambos": false,
+        "retroactiva": true,
+        "cuota_justa": 1.29,
+        "cuota_segura": 1.39,
+        "acierto_hist": 77.2,
+        "n_hist": 268
       }
     ],
     "watchlist": [
@@ -72866,7 +73719,8 @@ const TRACKER_DATA = [
         "cuota_segura": 1.39,
         "acierto_hist": 77.2,
         "n_hist": 268,
-        "acerto": true
+        "acerto": true,
+        "es_remate": true
       },
       {
         "mercado": "visit_remates",
@@ -73442,7 +74296,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": true,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "080",
@@ -73528,7 +74383,27 @@ const TRACKER_DATA = [
     "notas": "",
     "resultado_partido": "6-1",
     "goles_esperados": "4.50",
-    "apuestas": [],
+    "apuestas": [
+      {
+        "tipo": "REMATE",
+        "mercado": "visit_remates",
+        "linea": 10.5,
+        "etiqueta": "RB Leipzig Remates Over 10.5",
+        "lado": "visit",
+        "cuota": 2.12,
+        "prob": 53.9,
+        "ev_pct": 14.3,
+        "estado": "GANADA",
+        "pl": 1.12,
+        "lineas_pasan": 3,
+        "cruzaron_ambos": false,
+        "retroactiva": true,
+        "cuota_justa": 1.96,
+        "cuota_segura": 2.28,
+        "acierto_hist": 51.1,
+        "n_hist": 178
+      }
+    ],
     "watchlist": [
       {
         "mercado": "do1x",
@@ -73699,7 +74574,8 @@ const TRACKER_DATA = [
         "cuota_segura": 2.28,
         "acierto_hist": 51.1,
         "n_hist": 178,
-        "acerto": true
+        "acerto": true,
+        "es_remate": true
       },
       {
         "mercado": "visit_remates_puerta",
@@ -73949,7 +74825,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "081",
@@ -74669,7 +75546,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "082",
@@ -74786,6 +75664,21 @@ const TRACKER_DATA = [
         "cuota_segura": 1.54,
         "acierto_hist": 70.2,
         "n_hist": 332
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "visit_remates",
+        "linea": 11.5,
+        "etiqueta": "Brest Remates Over 11.5",
+        "lado": "visit",
+        "cuota": 1.91,
+        "prob": 76.9,
+        "ev_pct": 46.9,
+        "estado": "PERDIDA",
+        "pl": -1.0,
+        "lineas_pasan": 2,
+        "cruzaron_ambos": false,
+        "retroactiva": true
       }
     ],
     "watchlist": [
@@ -74950,7 +75843,8 @@ const TRACKER_DATA = [
         "prob": 76.9,
         "ev_pct": 46.9,
         "tipo": "POR_EQUIPO",
-        "acerto": false
+        "acerto": false,
+        "es_remate": true
       },
       {
         "mercado": "visit_remates_puerta",
@@ -76275,7 +77169,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "083",
@@ -76911,7 +77806,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "084",
@@ -77708,7 +78604,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "085",
@@ -79168,7 +80065,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "086",
@@ -79274,6 +80172,21 @@ const TRACKER_DATA = [
         "cuota_segura": 1.82,
         "acierto_hist": 62.1,
         "n_hist": 190
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "local_remates",
+        "linea": 11.5,
+        "etiqueta": "Fiorentina Remates Over 11.5",
+        "lado": "local",
+        "cuota": 1.45,
+        "prob": 73.6,
+        "ev_pct": 6.7,
+        "estado": "GANADA",
+        "pl": 0.45,
+        "lineas_pasan": 1,
+        "cruzaron_ambos": false,
+        "retroactiva": true
       }
     ],
     "watchlist": [
@@ -79427,7 +80340,8 @@ const TRACKER_DATA = [
         "prob": 73.6,
         "ev_pct": 6.7,
         "tipo": "POR_EQUIPO",
-        "acerto": true
+        "acerto": true,
+        "es_remate": true
       },
       {
         "mercado": "local_remates_puerta",
@@ -80384,7 +81298,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "087",
@@ -80501,6 +81416,25 @@ const TRACKER_DATA = [
         "cuota_segura": 1.7,
         "acierto_hist": 66.1,
         "n_hist": 180
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "visit_remates",
+        "linea": 9.5,
+        "etiqueta": "Freiburg Remates Over 9.5",
+        "lado": "visit",
+        "cuota": 1.42,
+        "prob": 71.4,
+        "ev_pct": 1.4,
+        "estado": "GANADA",
+        "pl": 0.42,
+        "lineas_pasan": 1,
+        "cruzaron_ambos": false,
+        "retroactiva": true,
+        "cuota_justa": 1.4,
+        "cuota_segura": 1.57,
+        "acierto_hist": 71.3,
+        "n_hist": 157
       }
     ],
     "watchlist": [
@@ -80630,7 +81564,8 @@ const TRACKER_DATA = [
         "cuota_segura": 1.57,
         "acierto_hist": 71.3,
         "n_hist": 157,
-        "acerto": true
+        "acerto": true,
+        "es_remate": true
       },
       {
         "mercado": "local_remates",
@@ -81320,7 +82255,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "088",
@@ -82467,7 +83403,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "089",
@@ -84221,7 +85158,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "090",
@@ -84327,6 +85265,21 @@ const TRACKER_DATA = [
         "cuota_segura": 1.65,
         "acierto_hist": 65.1,
         "n_hist": 498
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "local_remates",
+        "linea": 12.5,
+        "etiqueta": "Paris FC Remates Over 12.5",
+        "lado": "local",
+        "cuota": 1.39,
+        "prob": 79.0,
+        "ev_pct": 9.8,
+        "estado": "GANADA",
+        "pl": 0.39,
+        "lineas_pasan": 2,
+        "cruzaron_ambos": false,
+        "retroactiva": true
       }
     ],
     "watchlist": [
@@ -84450,7 +85403,8 @@ const TRACKER_DATA = [
         "prob": 79.0,
         "ev_pct": 9.8,
         "tipo": "POR_EQUIPO",
-        "acerto": true
+        "acerto": true,
+        "es_remate": true
       },
       {
         "mercado": "visit_corners_equipo",
@@ -85561,7 +86515,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "091",
@@ -85665,21 +86620,6 @@ const TRACKER_DATA = [
       },
       {
         "tipo": "PICK",
-        "mercado": "btts",
-        "linea": null,
-        "etiqueta": "BTTS",
-        "cuota": 1.9,
-        "prob": 55.7,
-        "ev_pct": 5.8,
-        "estado": "PERDIDA",
-        "pl": -1.0,
-        "cuota_justa": 1.7,
-        "cuota_segura": 1.83,
-        "acierto_hist": 58.7,
-        "n_hist": 606
-      },
-      {
-        "tipo": "PICK",
         "mercado": "over05_local",
         "linea": null,
         "etiqueta": "Over 0.5 Nottingham Forest",
@@ -85708,6 +86648,25 @@ const TRACKER_DATA = [
         "cuota_segura": 1.45,
         "acierto_hist": 75.2,
         "n_hist": 202
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "local_remates",
+        "linea": 13.5,
+        "etiqueta": "Nottingham Forest Remates Over 13.5",
+        "lado": "local",
+        "cuota": 4.1,
+        "prob": 53.6,
+        "ev_pct": 119.8,
+        "estado": "GANADA",
+        "pl": 3.1,
+        "lineas_pasan": 4,
+        "cruzaron_ambos": false,
+        "retroactiva": true,
+        "cuota_justa": 1.98,
+        "cuota_segura": 2.32,
+        "acierto_hist": 50.6,
+        "n_hist": 166
       }
     ],
     "watchlist": [
@@ -86153,7 +87112,8 @@ const TRACKER_DATA = [
         "cuota_segura": 2.32,
         "acierto_hist": 50.6,
         "n_hist": 166,
-        "acerto": true
+        "acerto": true,
+        "es_remate": true
       },
       {
         "mercado": "visit_remates_puerta",
@@ -86187,6 +87147,20 @@ const TRACKER_DATA = [
         "acierto_hist": 59.7,
         "n_hist": 159,
         "acerto": true
+      },
+      {
+        "mercado": "btts",
+        "linea": null,
+        "etiqueta": "BTTS",
+        "cuota": 1.9,
+        "prob": 55.7,
+        "ev_pct": 5.8,
+        "cuota_justa": 1.7,
+        "cuota_segura": 1.83,
+        "acierto_hist": 58.7,
+        "n_hist": 606,
+        "regla_max_picks": "3 PICKs; se quedan los 2 de mayor P% (esta tenia 55.7%)",
+        "acerto": false
       }
     ],
     "mercados_snapshot": {
@@ -87010,7 +87984,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": true,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "092",
@@ -87099,21 +88074,6 @@ const TRACKER_DATA = [
     "apuestas": [
       {
         "tipo": "PICK",
-        "mercado": "over25",
-        "linea": null,
-        "etiqueta": "Over 2.5",
-        "cuota": 1.75,
-        "prob": 60.7,
-        "ev_pct": 6.2,
-        "estado": "GANADA",
-        "pl": 0.75,
-        "cuota_justa": 1.56,
-        "cuota_segura": 1.74,
-        "acierto_hist": 64.1,
-        "n_hist": 206
-      },
-      {
-        "tipo": "PICK",
         "mercado": "btts",
         "linea": null,
         "etiqueta": "BTTS",
@@ -87157,6 +88117,21 @@ const TRACKER_DATA = [
         "cuota_segura": 1.39,
         "acierto_hist": 78.6,
         "n_hist": 182
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "local_remates",
+        "linea": 15.5,
+        "etiqueta": "Milan Remates Over 15.5",
+        "lado": "local",
+        "cuota": 1.93,
+        "prob": 73.4,
+        "ev_pct": 41.7,
+        "estado": "PERDIDA",
+        "pl": -1.0,
+        "lineas_pasan": 3,
+        "cruzaron_ambos": false,
+        "retroactiva": true
       }
     ],
     "watchlist": [
@@ -87286,7 +88261,8 @@ const TRACKER_DATA = [
         "prob": 73.4,
         "ev_pct": 41.7,
         "tipo": "POR_EQUIPO",
-        "acerto": false
+        "acerto": false,
+        "es_remate": true
       },
       {
         "mercado": "local_corners_equipo",
@@ -87530,6 +88506,20 @@ const TRACKER_DATA = [
         "prob": 38.4,
         "ev_pct": 8.3,
         "regla_unicidad_totales": "cede ante over25 (score EV/prob 3.8)",
+        "acerto": true
+      },
+      {
+        "mercado": "over25",
+        "linea": null,
+        "etiqueta": "Over 2.5",
+        "cuota": 1.75,
+        "prob": 60.7,
+        "ev_pct": 6.2,
+        "cuota_justa": 1.56,
+        "cuota_segura": 1.74,
+        "acierto_hist": 64.1,
+        "n_hist": 206,
+        "regla_max_picks": "3 PICKs; se quedan los 2 de mayor P% (esta tenia 60.7%)",
         "acerto": true
       }
     ],
@@ -88054,7 +89044,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "093",
@@ -88182,6 +89173,25 @@ const TRACKER_DATA = [
         "cuota_segura": 1.57,
         "acierto_hist": 71.2,
         "n_hist": 156
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "local_remates",
+        "linea": 13.5,
+        "etiqueta": "Malaga Remates Over 13.5",
+        "lado": "local",
+        "cuota": 2.02,
+        "prob": 54.5,
+        "ev_pct": 10.1,
+        "estado": "GANADA",
+        "pl": 1.02,
+        "lineas_pasan": 1,
+        "cruzaron_ambos": false,
+        "retroactiva": true,
+        "cuota_justa": 1.98,
+        "cuota_segura": 2.32,
+        "acierto_hist": 50.6,
+        "n_hist": 166
       }
     ],
     "watchlist": [
@@ -88507,7 +89517,8 @@ const TRACKER_DATA = [
         "cuota_segura": 2.32,
         "acierto_hist": 50.6,
         "n_hist": 166,
-        "acerto": true
+        "acerto": true,
+        "es_remate": true
       },
       {
         "mercado": "under25+hcp2_visit",
@@ -89380,7 +90391,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "094",
@@ -91096,7 +92108,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": true,
       "visit_corners_equipo_over6.5": true,
       "visit_corners_equipo_over7.5": true
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "095",
@@ -91991,7 +93004,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": true,
       "visit_corners_equipo_over6.5": true,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "096",
@@ -92753,7 +93767,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "097",
@@ -93644,7 +94659,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "098",
@@ -94525,7 +95541,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": true,
       "visit_corners_equipo_over6.5": true,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "099",
@@ -95274,7 +96291,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "100",
@@ -96104,7 +97122,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": true,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "101",
@@ -96221,6 +97240,25 @@ const TRACKER_DATA = [
         "cuota_segura": 1.49,
         "acierto_hist": 74.1,
         "n_hist": 185
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "visit_remates",
+        "linea": 9.5,
+        "etiqueta": "Elversberg Remates Over 9.5",
+        "lado": "visit",
+        "cuota": 1.65,
+        "prob": 74.6,
+        "ev_pct": 23.1,
+        "estado": "PERDIDA",
+        "pl": -1.0,
+        "lineas_pasan": 2,
+        "cruzaron_ambos": false,
+        "retroactiva": true,
+        "cuota_justa": 1.4,
+        "cuota_segura": 1.57,
+        "acierto_hist": 71.3,
+        "n_hist": 157
       }
     ],
     "watchlist": [
@@ -96368,7 +97406,8 @@ const TRACKER_DATA = [
         "cuota_segura": 1.57,
         "acierto_hist": 71.3,
         "n_hist": 157,
-        "acerto": false
+        "acerto": false,
+        "es_remate": true
       },
       {
         "mercado": "local_remates_puerta",
@@ -96932,7 +97971,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": true,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "102",
@@ -97053,6 +98093,25 @@ const TRACKER_DATA = [
         "cuota_segura": 1.39,
         "acierto_hist": 78.6,
         "n_hist": 182
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "visit_remates",
+        "linea": 7.5,
+        "etiqueta": "Everton Remates Over 7.5",
+        "lado": "visit",
+        "cuota": 1.6,
+        "prob": 77.8,
+        "ev_pct": 24.5,
+        "estado": "GANADA",
+        "pl": 0.6,
+        "lineas_pasan": 1,
+        "cruzaron_ambos": false,
+        "retroactiva": true,
+        "cuota_justa": 1.25,
+        "cuota_segura": 1.34,
+        "acierto_hist": 79.9,
+        "n_hist": 264
       }
     ],
     "watchlist": [
@@ -97203,7 +98262,8 @@ const TRACKER_DATA = [
         "cuota_segura": 1.34,
         "acierto_hist": 79.9,
         "n_hist": 264,
-        "acerto": true
+        "acerto": true,
+        "es_remate": true
       },
       {
         "mercado": "visit_remates_puerta",
@@ -97911,7 +98971,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "103",
@@ -97997,7 +99058,23 @@ const TRACKER_DATA = [
     "notas": "",
     "resultado_partido": "0-2",
     "goles_esperados": "3.33",
-    "apuestas": [],
+    "apuestas": [
+      {
+        "tipo": "REMATE",
+        "mercado": "visit_remates",
+        "linea": 8.5,
+        "etiqueta": "Tottenham Remates Over 8.5",
+        "lado": "visit",
+        "cuota": 1.38,
+        "prob": 75.4,
+        "ev_pct": 4.1,
+        "estado": "GANADA",
+        "pl": 0.38,
+        "lineas_pasan": 1,
+        "cruzaron_ambos": false,
+        "retroactiva": true
+      }
+    ],
     "watchlist": [
       {
         "mercado": "victoria_local",
@@ -98171,7 +99248,8 @@ const TRACKER_DATA = [
         "prob": 75.4,
         "ev_pct": 4.1,
         "tipo": "POR_EQUIPO",
-        "acerto": true
+        "acerto": true,
+        "es_remate": true
       },
       {
         "mercado": "visit_remates_puerta",
@@ -99074,7 +100152,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": true,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "104",
@@ -99163,17 +100242,6 @@ const TRACKER_DATA = [
     "apuestas": [
       {
         "tipo": "PICK",
-        "mercado": "do1x",
-        "linea": null,
-        "etiqueta": "DO Napoli o Empate",
-        "cuota": 1.55,
-        "prob": 67.1,
-        "ev_pct": 4.0,
-        "estado": "GANADA",
-        "pl": 0.55
-      },
-      {
-        "tipo": "PICK",
         "mercado": "over15",
         "linea": null,
         "etiqueta": "Over 1.5",
@@ -99217,6 +100285,21 @@ const TRACKER_DATA = [
         "cuota_segura": 1.46,
         "acierto_hist": 75.0,
         "n_hist": 184
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "visit_remates",
+        "linea": 12.5,
+        "etiqueta": "Roma Remates Over 12.5",
+        "lado": "visit",
+        "cuota": 1.47,
+        "prob": 79.1,
+        "ev_pct": 16.3,
+        "estado": "GANADA",
+        "pl": 0.47,
+        "lineas_pasan": 2,
+        "cruzaron_ambos": false,
+        "retroactiva": true
       }
     ],
     "watchlist": [
@@ -99360,7 +100443,8 @@ const TRACKER_DATA = [
         "prob": 79.1,
         "ev_pct": 16.3,
         "tipo": "POR_EQUIPO",
-        "acerto": true
+        "acerto": true,
+        "es_remate": true
       },
       {
         "mercado": "local_remates_puerta",
@@ -99746,6 +100830,16 @@ const TRACKER_DATA = [
         "acierto_hist": 66.5,
         "n_hist": 155,
         "acerto": false
+      },
+      {
+        "mercado": "do1x",
+        "linea": null,
+        "etiqueta": "DO Napoli o Empate",
+        "cuota": 1.55,
+        "prob": 67.1,
+        "ev_pct": 4.0,
+        "regla_max_picks": "3 PICKs; se quedan los 2 de mayor P% (esta tenia 67.1%)",
+        "acerto": true
       }
     ],
     "mercados_snapshot": {
@@ -100545,7 +101639,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": true,
       "visit_corners_equipo_over6.5": true,
       "visit_corners_equipo_over7.5": true
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "105",
@@ -100651,6 +101746,21 @@ const TRACKER_DATA = [
         "cuota_segura": 1.54,
         "acierto_hist": 70.2,
         "n_hist": 332
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "local_remates",
+        "linea": 15.5,
+        "etiqueta": "Dortmund Remates Over 15.5",
+        "lado": "local",
+        "cuota": 1.4,
+        "prob": 74.8,
+        "ev_pct": 4.7,
+        "estado": "GANADA",
+        "pl": 0.4,
+        "lineas_pasan": 1,
+        "cruzaron_ambos": false,
+        "retroactiva": true
       }
     ],
     "watchlist": [
@@ -100824,7 +101934,8 @@ const TRACKER_DATA = [
         "prob": 74.8,
         "ev_pct": 4.7,
         "tipo": "POR_EQUIPO",
-        "acerto": true
+        "acerto": true,
+        "es_remate": true
       },
       {
         "mercado": "visit_corners_equipo",
@@ -101412,7 +102523,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "106",
@@ -103172,7 +104284,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "107",
@@ -104060,7 +105173,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "108",
@@ -104805,7 +105919,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "109",
@@ -104937,6 +106052,21 @@ const TRACKER_DATA = [
         "cuota_segura": 1.7,
         "acierto_hist": 66.7,
         "n_hist": 150
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "local_remates",
+        "linea": 13.5,
+        "etiqueta": "Paderborn Remates Over 13.5",
+        "lado": "local",
+        "cuota": 1.31,
+        "prob": 78.3,
+        "ev_pct": 2.6,
+        "estado": "GANADA",
+        "pl": 0.31,
+        "lineas_pasan": 1,
+        "cruzaron_ambos": false,
+        "retroactiva": true
       }
     ],
     "watchlist": [
@@ -105046,7 +106176,8 @@ const TRACKER_DATA = [
         "prob": 78.3,
         "ev_pct": 2.6,
         "tipo": "POR_EQUIPO",
-        "acerto": true
+        "acerto": true,
+        "es_remate": true
       },
       {
         "mercado": "visit_remates_puerta",
@@ -106215,7 +107346,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "110",
@@ -107041,7 +108173,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "111",
@@ -107147,6 +108280,21 @@ const TRACKER_DATA = [
         "cuota_segura": 1.58,
         "acierto_hist": 70.2,
         "n_hist": 188
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "local_remates",
+        "linea": 15.5,
+        "etiqueta": "Monaco Remates Over 15.5",
+        "lado": "local",
+        "cuota": 3.1,
+        "prob": 46.0,
+        "ev_pct": 42.6,
+        "estado": "GANADA",
+        "pl": 2.1,
+        "lineas_pasan": 6,
+        "cruzaron_ambos": true,
+        "retroactiva": true
       }
     ],
     "watchlist": [
@@ -107537,7 +108685,8 @@ const TRACKER_DATA = [
         "prob": 46.0,
         "ev_pct": 42.6,
         "tipo": "POR_EQUIPO",
-        "acerto": true
+        "acerto": true,
+        "es_remate": true
       },
       {
         "mercado": "visit_remates_puerta",
@@ -109087,7 +110236,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "112",
@@ -109215,6 +110365,21 @@ const TRACKER_DATA = [
         "cuota_segura": 1.44,
         "acierto_hist": 76.6,
         "n_hist": 167
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "local_remates",
+        "linea": 14.5,
+        "etiqueta": "Hull Remates Over 14.5",
+        "lado": "local",
+        "cuota": 5.0,
+        "prob": 49.6,
+        "ev_pct": 148.0,
+        "estado": "PERDIDA",
+        "pl": -1.0,
+        "lineas_pasan": 5,
+        "cruzaron_ambos": false,
+        "retroactiva": true
       }
     ],
     "watchlist": [
@@ -109495,7 +110660,8 @@ const TRACKER_DATA = [
         "prob": 49.6,
         "ev_pct": 148.0,
         "tipo": "POR_EQUIPO",
-        "acerto": false
+        "acerto": false,
+        "es_remate": true
       },
       {
         "mercado": "local_remates_puerta",
@@ -110998,7 +112164,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": true,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "113",
@@ -111104,6 +112271,21 @@ const TRACKER_DATA = [
         "cuota_segura": 1.47,
         "acierto_hist": 74.9,
         "n_hist": 171
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "visit_remates",
+        "linea": 15.5,
+        "etiqueta": "Brighton Remates Over 15.5",
+        "lado": "visit",
+        "cuota": 3.65,
+        "prob": 37.1,
+        "ev_pct": 35.4,
+        "estado": "GANADA",
+        "pl": 2.65,
+        "lineas_pasan": 6,
+        "cruzaron_ambos": false,
+        "retroactiva": true
       }
     ],
     "watchlist": [
@@ -111513,7 +112695,8 @@ const TRACKER_DATA = [
         "prob": 37.1,
         "ev_pct": 35.4,
         "tipo": "POR_EQUIPO",
-        "acerto": true
+        "acerto": true,
+        "es_remate": true
       },
       {
         "mercado": "visit_corners_equipo",
@@ -112733,7 +113916,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "114",
@@ -112841,6 +114025,21 @@ const TRACKER_DATA = [
         "ev_pct": 1.8,
         "estado": "GANADA",
         "pl": 0.11
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "visit_remates",
+        "linea": 15.5,
+        "etiqueta": "Frosinone Remates Over 15.5",
+        "lado": "visit",
+        "cuota": 2.12,
+        "prob": 48.3,
+        "ev_pct": 2.4,
+        "estado": "GANADA",
+        "pl": 1.12,
+        "lineas_pasan": 1,
+        "cruzaron_ambos": false,
+        "retroactiva": true
       }
     ],
     "watchlist": [
@@ -113095,7 +114294,8 @@ const TRACKER_DATA = [
         "prob": 48.3,
         "ev_pct": 2.4,
         "tipo": "POR_EQUIPO",
-        "acerto": true
+        "acerto": true,
+        "es_remate": true
       },
       {
         "mercado": "local_remates_puerta",
@@ -113674,7 +114874,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": true,
       "visit_corners_equipo_over6.5": true,
       "visit_corners_equipo_over7.5": true
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "115",
@@ -115053,7 +116254,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "116",
@@ -115181,6 +116383,21 @@ const TRACKER_DATA = [
         "cuota_segura": 1.49,
         "acierto_hist": 73.0,
         "n_hist": 230
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "local_remates",
+        "linea": 15.5,
+        "etiqueta": "Celta Vigo Remates Over 15.5",
+        "lado": "local",
+        "cuota": 3.35,
+        "prob": 38.9,
+        "ev_pct": 30.3,
+        "estado": "PERDIDA",
+        "pl": -1.0,
+        "lineas_pasan": 5,
+        "cruzaron_ambos": false,
+        "retroactiva": true
       }
     ],
     "watchlist": [
@@ -115482,7 +116699,8 @@ const TRACKER_DATA = [
         "prob": 38.9,
         "ev_pct": 30.3,
         "tipo": "POR_EQUIPO",
-        "acerto": false
+        "acerto": false,
+        "es_remate": true
       },
       {
         "mercado": "local_corners_equipo",
@@ -116742,7 +117960,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "117",
@@ -116863,6 +118082,21 @@ const TRACKER_DATA = [
         "cuota_segura": 1.46,
         "acierto_hist": 74.9,
         "n_hist": 207
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "local_remates",
+        "linea": 15.5,
+        "etiqueta": "Angers Remates Over 15.5",
+        "lado": "local",
+        "cuota": 4.75,
+        "prob": 33.8,
+        "ev_pct": 60.5,
+        "estado": "PERDIDA",
+        "pl": -1.0,
+        "lineas_pasan": 7,
+        "cruzaron_ambos": false,
+        "retroactiva": true
       }
     ],
     "watchlist": [
@@ -117227,7 +118461,8 @@ const TRACKER_DATA = [
         "prob": 33.8,
         "ev_pct": 60.5,
         "tipo": "POR_EQUIPO",
-        "acerto": false
+        "acerto": false,
+        "es_remate": true
       },
       {
         "mercado": "visit_remates",
@@ -118416,7 +119651,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": true,
       "visit_corners_equipo_over6.5": true,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "118",
@@ -118537,6 +119773,21 @@ const TRACKER_DATA = [
         "cuota_segura": 1.81,
         "acierto_hist": 63.1,
         "n_hist": 157
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "visit_remates",
+        "linea": 13.5,
+        "etiqueta": "Le Havre Remates Over 13.5",
+        "lado": "visit",
+        "cuota": 3.95,
+        "prob": 44.3,
+        "ev_pct": 75.0,
+        "estado": "GANADA",
+        "pl": 2.95,
+        "lineas_pasan": 6,
+        "cruzaron_ambos": false,
+        "retroactiva": true
       }
     ],
     "watchlist": [
@@ -118867,7 +120118,8 @@ const TRACKER_DATA = [
         "prob": 44.3,
         "ev_pct": 75.0,
         "tipo": "POR_EQUIPO",
-        "acerto": true
+        "acerto": true,
+        "es_remate": true
       },
       {
         "mercado": "visit_remates_puerta",
@@ -119916,7 +121168,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "119",
@@ -120048,6 +121301,21 @@ const TRACKER_DATA = [
         "cuota_segura": 1.72,
         "acierto_hist": 65.2,
         "n_hist": 198
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "local_remates",
+        "linea": 15.5,
+        "etiqueta": "Rennes Remates Over 15.5",
+        "lado": "local",
+        "cuota": 1.67,
+        "prob": 69.6,
+        "ev_pct": 16.2,
+        "estado": "PERDIDA",
+        "pl": -1.0,
+        "lineas_pasan": 3,
+        "cruzaron_ambos": false,
+        "retroactiva": true
       }
     ],
     "watchlist": [
@@ -120209,7 +121477,8 @@ const TRACKER_DATA = [
         "prob": 69.6,
         "ev_pct": 16.2,
         "tipo": "POR_EQUIPO",
-        "acerto": false
+        "acerto": false,
+        "es_remate": true
       },
       {
         "mercado": "visit_remates",
@@ -121505,7 +122774,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "120",
@@ -121611,6 +122881,21 @@ const TRACKER_DATA = [
         "cuota_segura": 1.7,
         "acierto_hist": 64.2,
         "n_hist": 327
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "local_remates",
+        "linea": 14.5,
+        "etiqueta": "Freiburg Remates Over 14.5",
+        "lado": "local",
+        "cuota": 4.7,
+        "prob": 30.4,
+        "ev_pct": 42.9,
+        "estado": "GANADA",
+        "pl": 3.7,
+        "lineas_pasan": 5,
+        "cruzaron_ambos": false,
+        "retroactiva": true
       }
     ],
     "watchlist": [
@@ -121897,7 +123182,8 @@ const TRACKER_DATA = [
         "prob": 30.4,
         "ev_pct": 42.9,
         "tipo": "POR_EQUIPO",
-        "acerto": true
+        "acerto": true,
+        "es_remate": true
       },
       {
         "mercado": "local_corners_equipo",
@@ -122481,7 +123767,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": true,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "121",
@@ -122570,21 +123857,6 @@ const TRACKER_DATA = [
     "apuestas": [
       {
         "tipo": "PICK",
-        "mercado": "over25",
-        "linea": null,
-        "etiqueta": "Over 2.5",
-        "cuota": 2.18,
-        "prob": 51.1,
-        "ev_pct": 11.4,
-        "estado": "PERDIDA",
-        "pl": -1.0,
-        "cuota_justa": 1.95,
-        "cuota_segura": 2.17,
-        "acierto_hist": 51.3,
-        "n_hist": 359
-      },
-      {
-        "tipo": "PICK",
         "mercado": "btts",
         "linea": null,
         "etiqueta": "BTTS",
@@ -122632,6 +123904,21 @@ const TRACKER_DATA = [
         "cuota_segura": 1.56,
         "acierto_hist": 69.9,
         "n_hist": 269
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "local_remates",
+        "linea": 15.5,
+        "etiqueta": "Sunderland Remates Over 15.5",
+        "lado": "local",
+        "cuota": 3.2,
+        "prob": 31.8,
+        "ev_pct": 1.8,
+        "estado": "PERDIDA",
+        "pl": -1.0,
+        "lineas_pasan": 1,
+        "cruzaron_ambos": false,
+        "retroactiva": true
       }
     ],
     "watchlist": [
@@ -122942,7 +124229,8 @@ const TRACKER_DATA = [
         "prob": 31.8,
         "ev_pct": 1.8,
         "tipo": "POR_EQUIPO",
-        "acerto": false
+        "acerto": false,
+        "es_remate": true
       },
       {
         "mercado": "local_remates_puerta",
@@ -123359,6 +124647,20 @@ const TRACKER_DATA = [
         "prob": 27.8,
         "ev_pct": 7.0,
         "regla_unicidad_totales": "cede ante over25 (score EV/prob 5.8)",
+        "acerto": false
+      },
+      {
+        "mercado": "over25",
+        "linea": null,
+        "etiqueta": "Over 2.5",
+        "cuota": 2.18,
+        "prob": 51.1,
+        "ev_pct": 11.4,
+        "cuota_justa": 1.95,
+        "cuota_segura": 2.17,
+        "acierto_hist": 51.3,
+        "n_hist": 359,
+        "regla_cuota_max_pick": "cuota 2.18 > tope 2.00",
         "acerto": false
       }
     ],
@@ -124291,7 +125593,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "122",
@@ -124419,6 +125722,21 @@ const TRACKER_DATA = [
         "cuota_segura": 1.49,
         "acierto_hist": 72.9,
         "n_hist": 255
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "visit_remates",
+        "linea": 14.5,
+        "etiqueta": "Levante Remates Over 14.5",
+        "lado": "visit",
+        "cuota": 3.95,
+        "prob": 31.4,
+        "ev_pct": 24.0,
+        "estado": "PERDIDA",
+        "pl": -1.0,
+        "lineas_pasan": 4,
+        "cruzaron_ambos": false,
+        "retroactiva": true
       }
     ],
     "watchlist": [
@@ -124780,7 +126098,8 @@ const TRACKER_DATA = [
         "prob": 31.4,
         "ev_pct": 24.0,
         "tipo": "POR_EQUIPO",
-        "acerto": false
+        "acerto": false,
+        "es_remate": true
       },
       {
         "mercado": "visit_remates_puerta",
@@ -125676,7 +126995,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "123",
@@ -125763,21 +127083,6 @@ const TRACKER_DATA = [
     "resultado_partido": "0-2",
     "goles_esperados": "2.95",
     "apuestas": [
-      {
-        "tipo": "PICK",
-        "mercado": "over25",
-        "linea": null,
-        "etiqueta": "Over 2.5",
-        "cuota": 1.93,
-        "prob": 57.0,
-        "ev_pct": 10.0,
-        "estado": "PERDIDA",
-        "pl": -1.0,
-        "cuota_justa": 1.82,
-        "cuota_segura": 2.0,
-        "acierto_hist": 55.1,
-        "n_hist": 354
-      },
       {
         "tipo": "PICK",
         "mercado": "btts",
@@ -126341,6 +127646,20 @@ const TRACKER_DATA = [
         "ev_pct": 10.8,
         "regla_unicidad_totales": "cede ante over25 (score EV/prob 5.7)",
         "acerto": false
+      },
+      {
+        "mercado": "over25",
+        "linea": null,
+        "etiqueta": "Over 2.5",
+        "cuota": 1.93,
+        "prob": 57.0,
+        "ev_pct": 10.0,
+        "cuota_justa": 1.82,
+        "cuota_segura": 2.0,
+        "acierto_hist": 55.1,
+        "n_hist": 354,
+        "regla_max_picks": "3 PICKs; se quedan los 2 de mayor P% (esta tenia 57.0%)",
+        "acerto": false
       }
     ],
     "mercados_snapshot": {
@@ -126864,7 +128183,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   },
   {
     "id": "124",
@@ -127821,6 +129141,7 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": true,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "reglas_retro": "2026-10-25"
   }
 ];

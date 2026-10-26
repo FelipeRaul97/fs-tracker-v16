@@ -146,6 +146,7 @@
   .badge-media{background:var(--amber-bg);color:var(--amber)}
   .badge-pick{background:var(--blue-bg);color:var(--blue)}
   .badge-combo{background:var(--amber-bg);color:var(--amber)}
+  .badge-remate{background:var(--green-bg);color:var(--green)}
   .badge-liga{background:var(--surface2);color:var(--text2)}
   .pl-pos{color:var(--green-mid);font-weight:500}
   .pl-neg{color:var(--red-mid);font-weight:500}
@@ -287,7 +288,7 @@
         <option value="PENDIENTE">Pendiente</option><option value="GANADA">Ganada</option>
         <option value="PERDIDA">Perdida</option><option value="VOID">Void</option></select>
       <select id="f-tipo"><option value="">Todos los tipos</option>
-        <option value="PICK">PICK</option><option value="COMBO">COMBO</option></select>
+        <option value="PICK">PICK</option><option value="COMBO">COMBO</option><option value="REMATE">REMATE</option></select>
       <select id="f-conf"><option value="">Toda confianza</option>
         <option value="ALTA">Alta</option><option value="MEDIA">Media</option></select>
       <button type="button" class="btn btn-sm" onclick="limpiarFiltrosApuestas()">Limpiar filtros</button>
@@ -597,6 +598,35 @@
 
   <!-- Seguimiento: hipotesis abiertas sobre reglas de seleccion (se llena solo al cerrar partidos) -->
   <div class="tab-panel" id="tab-seguimiento">
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
+        <div class="card-title">Reglas de selección vigentes (2026-10-25) — PICK máx. 2 · cuota ≤ 2 · apuesta REMATE</div>
+        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">
+          <b>PICK</b>: como máximo 2 por partido (los de mayor P%) y ninguno con cuota &gt; 2.00.
+          <b>REMATE</b>: una sola apuesta de remates totales de un equipo (local o visita) por partido;
+          pasa los mismos filtros que un PICK, <b>sin tope de cuota</b>; dentro de cada lado se elige la
+          línea de mayor EV×prob y, si pasan los dos lados, el de mayor P%. Las entradas nuevas las aplican (<code>add_bet.py</code>) y <b>el histórico completo fue reescrito con ellas desde el primer partido</b>. COMBO no cambia.</p>
+        <div id="seg-reglas-nuevas"></div>
+      </div>
+    </div>
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
+        <div class="card-title">REMATE — rendimiento de los remates totales por equipo (todo el histórico)</div>
+        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">
+          Cada partido cerrado cuenta como si la regla hubiera existido desde el inicio. Cambia el criterio de
+          línea y el lado para ver cómo responde el mercado; las bandas de cuota muestran de dónde sale el ROI.</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;font-size:12px;margin-bottom:10px;align-items:center">
+          <label>Línea por
+            <select id="seg-rem-crit" onchange="_segRemate()" style="font-size:12px">
+              <option value="evp">Mayor EV×prob (regla)</option><option value="p">Mayor probabilidad</option></select></label>
+          <label>Lado
+            <select id="seg-rem-lado" onchange="_segRemate()" style="font-size:12px">
+              <option value="regla">Un lado por partido (mayor P%)</option><option value="local">Solo local</option>
+              <option value="visita">Solo visita</option><option value="ambos">Los dos lados</option></select></label>
+        </div>
+        <div id="seg-remate"></div>
+      </div>
+    </div>
     <p style="font-size:12px;color:var(--text3);margin:0 0 12px">
       Hipótesis abiertas sobre las reglas de selección. Todo es <b>teórico</b>: 1 unidad por
       línea, cuota−1 si acertó y −1 si no, sobre el <code>watchlist</code> y las apuestas de
@@ -942,7 +972,7 @@ const fmtL=n=>n==null?'—':(n>=0?'+':'')+Number(n).toFixed(2)+'u';
 function badge(text,cls){return`<span class="badge badge-${cls.toLowerCase()}">${text}</span>`;}
 function estadoBadge(e){return badge(e,{GANADA:'ganada',PERDIDA:'perdida',PENDIENTE:'pendiente',VOID:'void'}[e]||'void');}
 function confBadge(c){if(!c)return'—';const t=c==='ALTA'?'🟢 Alta':'🟡 Media';return badge(t,c.toLowerCase());}
-function tipoBadge(t){return badge(t,{PICK:'pick',COMBO:'combo'}[t]||'pick');}
+function tipoBadge(t){return badge(t,{PICK:'pick',COMBO:'combo',REMATE:'remate'}[t]||'pick');}
 
 function calcStats(apuestas){
   const settled=apuestas.filter(a=>a.estado==='GANADA'||a.estado==='PERDIDA');
@@ -1171,11 +1201,13 @@ function renderBets(){
     const safeGid=gid.replace(/[^\w-]/g,'')||('g'+(gi++));
     const nPick=items.filter(r=>r.a.tipo==='PICK').length;
     const nCombo=items.filter(r=>r.a.tipo==='COMBO').length;
+    const nRemate=items.filter(r=>r.a.tipo==='REMATE').length;
     const cerr=items.filter(r=>r.a.estado==='GANADA'||r.a.estado==='PERDIDA');
     const plGrupo=cerr.length?cerr.reduce((s,r)=>s+(r.a.pl||0),0):null;
     const resumen=[items.length+' apuesta'+(items.length>1?'s':'')];
     if(nPick) resumen.push(nPick+' PICK');
     if(nCombo) resumen.push(nCombo+' COMBO');
+    if(nRemate) resumen.push(nRemate+' REMATE');
     if(plGrupo!=null) resumen.push('<b class="'+(plGrupo>=0?'pl-pos':'pl-neg')+'">'+(plGrupo>=0?'+':'')+plGrupo.toFixed(2)+'u</b>');
     let html='<tr class="bets-group" data-bgid="'+safeGid+'" onclick="toggleBetsGroup(\''+safeGid+'\')" style="cursor:pointer;background:var(--surface2)">'
       +'<td class="bets-caret" style="color:var(--text3);font-weight:700">▶</td>'
@@ -1688,7 +1720,7 @@ function renderCalibBands(){
 }
 
 function renderCalibTipo(settled){
-  const tipos=['PICK','COMBO'];
+  const tipos=['PICK','COMBO','REMATE'];
   document.getElementById('calib-tipo').innerHTML=tipos.map(tipo=>{
     const en=settled.filter(a=>a.tipo===tipo);
     if(!en.length) return`<div class="stat-row"><span class="stat-label">${tipo}</span><span style="color:var(--text3)">Sin datos</span></div>`;
@@ -1979,8 +2011,8 @@ function renderMercadoLigaHeatmap(){
 
 function renderLigaTipo(){
   const ligas=Object.keys(LIGA_NAMES);
-  const tipos=['PICK','COMBO'];
-  const cols={PICK:'var(--blue-mid)',COMBO:'var(--amber-mid)'};
+  const tipos=['PICK','COMBO','REMATE'];
+  const cols={PICK:'var(--blue-mid)',COMBO:'var(--amber-mid)',REMATE:'var(--green-mid)'};
   const el=document.getElementById('chart-liga-tipo');
   if(!ligas.length){el.innerHTML='<p class="empty">Sin datos</p>';return;}
   const W=700,H=230,PL=50,PR=80,PT=20,PB=45;
@@ -2097,7 +2129,7 @@ function renderLigaCards(){
 }
 
 function renderTipoStats(){
-  document.getElementById('tipo-stats').innerHTML=['PICK','COMBO'].map(tipo=>{
+  document.getElementById('tipo-stats').innerHTML=['PICK','COMBO','REMATE'].map(tipo=>{
     const s=calcStats(flatBets({tipo}).filter(a=>a.estado==='GANADA'||a.estado==='PERDIDA'));
     const plC=s.pl>=0?'pl-pos':'pl-neg';
     return`<div class="stat-row"><span>${tipoBadge(tipo)}</span>
@@ -2631,7 +2663,9 @@ const _REGLAS_SEL=[
   {k:'regla_no_elegible',    n:'No elegible (bajo su piso / magnitud de λ)'},
   {k:'regla_do_desfavorito', n:'DO del desfavorecido'},
   {k:'regla_do_favorito',    n:'DO contra el favorito (1X y X2 juntos)'},
-  {k:'regla_unicidad_handicap', n:'Unicidad de hándicap (cede ante el otro)'}
+  {k:'regla_unicidad_handicap', n:'Unicidad de hándicap (cede ante el otro)'},
+  {k:'regla_cuota_max_pick', n:'Tope de cuota del PICK (cuota > 2.00)'},
+  {k:'regla_max_picks',      n:'Máximo 2 PICK por partido (cede el de menor P%)'}
 ];
 function renderReglasSeleccion(){
   const el=document.getElementById('wl-reglas'); if(!el) return;
@@ -3179,7 +3213,7 @@ function _tablaRoi(obs,orden,titulo,colN){
   orden.forEach(b=>{
     const arr=obs.filter(o=>o.b===b).map(o=>o.a);
     if(!arr.length) return;
-    const tipos=[['Todas',arr],['PICK',arr.filter(a=>a.tipo==='PICK')],['COMBO',arr.filter(a=>a.tipo==='COMBO')]]
+    const tipos=[['Todas',arr],['PICK',arr.filter(a=>a.tipo==='PICK')],['COMBO',arr.filter(a=>a.tipo==='COMBO')],['REMATE',arr.filter(a=>a.tipo==='REMATE')]]
       .filter(([,x])=>x.length);
     // Si hay un solo tipo, "Todas" repetiría la misma fila.
     const vis=tipos.length===2?tipos.slice(1):tipos;
@@ -3765,7 +3799,130 @@ function segToggle(k){
   if(d) d.style.display=window._segAbierto[k]?'table-row':'none';
   if(c) c.textContent=window._segAbierto[k]?'▾':'▸';
 }
+// Reglas de seleccion 2026-10-25 (config.seleccion.max_picks / pick_cuota_max / remate).
+// Todo se calcula sobre el historico CERRADO COMPLETO, como si las reglas hubieran regido
+// desde el primer partido (sin corte antes/despues). 1 unidad por apuesta. Mitad 1/2 = primera
+// y segunda mitad cronologica de los partidos cerrados. El REMATE se simula desde el watchlist
+// con la misma logica que add_bet.py; las entradas nuevas ya lo traen en apuestas[] y ademas
+// dejan la linea elegida en watchlist (es_remate), asi que la simulacion las incluye igual.
+const SEG_PICK_CUOTA_MAX=2.0, SEG_MAX_PICKS=2;
+function _segCtx(){
+  const cerr=_DATA.filter(p=>p.resultado_partido).slice().sort((a,b)=>_pFechaHora(a)-_pFechaHora(b));
+  return {cerr,orden:new Map(cerr.map((p,i)=>[p.id,i])),mitad:Math.floor(cerr.length/2)};
+}
+function _segBet(ctx,p,cuota,win,prob,ev){ return {id:p.id,cuota,win,prob:prob||0,ev:ev||0,o:ctx.orden.get(p.id)}; }
+function _segSt(ctx,a){
+  if(!a.length) return null;
+  const n=a.length, x=a.map(b=>b.win?b.cuota-1:-1), u=x.reduce((s,v)=>s+v,0), m=u/n;
+  const sd=n>1?Math.sqrt(x.reduce((s,v)=>s+(v-m)*(v-m),0)/(n-1)):0;
+  const uh=f=>a.reduce((s,b,i)=>f(b)?s+x[i]:s,0);
+  return {n,ac:a.filter(b=>b.win).length/n*100,cuota:a.reduce((s,b)=>s+b.cuota,0)/n,roi:m*100,u,
+          moe:1.645*sd/Math.sqrt(n)*100,uA:uh(b=>b.o<ctx.mitad),uB:uh(b=>b.o>=ctx.mitad),partidos:new Set(a.map(b=>b.id)).size};
+}
+const _segF2=n=>(n>=0?'+':'')+n.toFixed(2)+'u', _segCl=n=>n>=0?'pl-pos':'pl-neg';
+function _segCabBets(primera){
+  return '<thead><tr><th style="text-align:left">'+primera+'</th><th class="num">Apuestas</th><th class="num">Partidos</th>'
+    +'<th class="num">Acierto</th><th class="num">Cuota</th><th class="num">ROI</th><th class="num">±90%</th>'
+    +'<th class="num">Unidades</th><th class="num">1ª mitad</th><th class="num">2ª mitad</th></tr></thead>';
+}
+function _segFilaBets(ctx,lbl,a,fuerte){
+  const s=_segSt(ctx,a);
+  if(!s) return '<tr><td style="text-align:left">'+lbl+'</td><td class="num">0</td><td colspan="8" style="color:var(--text3);text-align:center">sin casos</td></tr>';
+  return '<tr'+(fuerte?' style="background:var(--surface2);font-weight:600"':'')+'><td style="text-align:left">'+lbl+'</td>'
+    +'<td class="num">'+s.n+'</td><td class="num">'+s.partidos+'</td><td class="num">'+s.ac.toFixed(0)+'%</td>'
+    +'<td class="num">'+s.cuota.toFixed(2)+'</td>'
+    +'<td class="num '+_segCl(s.roi)+'"><b>'+(s.roi>=0?'+':'')+s.roi.toFixed(1)+'%</b></td>'
+    +'<td class="num" style="color:var(--text3)">±'+s.moe.toFixed(0)+'</td>'
+    +'<td class="num '+_segCl(s.u)+'">'+_segF2(s.u)+'</td>'
+    +'<td class="num '+_segCl(s.uA)+'">'+_segF2(s.uA)+'</td><td class="num '+_segCl(s.uB)+'">'+_segF2(s.uB)+'</td></tr>';
+}
+// Remates TOTALES de un equipo que pasan el filtro de PICK en un partido, por lado.
+// crit: 'evp' (mayor EV%xprob, la regla) o 'p' (mayor probabilidad). Devuelve {L,V} (o null).
+function _segRemateLados(p,crit){
+  const c=(p.watchlist||[]).filter(w=>w.tipo==='POR_EQUIPO'&&(w.mercado==='local_remates'||w.mercado==='visit_remates')
+    &&w.acerto!=null&&w.cuota&&_segPasaPick(w));
+  const k=w=>crit==='p'?(w.prob||0):(w.ev_pct||0)*(w.prob||0)/100;
+  const best=m=>c.filter(w=>w.mercado===m).reduce((b,w)=>(!b||k(w)>k(b)||(k(w)===k(b)&&(w.prob||0)>(b.prob||0)))?w:b,null);
+  return {L:best('local_remates'),V:best('visit_remates')};
+}
+// modo: 'regla' (un lado por partido: el de mayor P%), 'local', 'visita', 'ambos' (se apuestan los dos).
+function _segRemateBets(ctx,crit,modo){
+  const out=[];
+  ctx.cerr.forEach(p=>{
+    const {L,V}=_segRemateLados(p,crit);
+    let sel;
+    if(modo==='local') sel=[L]; else if(modo==='visita') sel=[V]; else if(modo==='ambos') sel=[L,V];
+    else sel=(L&&V)?[(V.prob||0)>(L.prob||0)?V:L]:[L||V];
+    sel.filter(Boolean).forEach(w=>out.push(_segBet(ctx,p,w.cuota,!!w.acerto,w.prob,w.ev_pct)));
+  });
+  return out;
+}
+function _segReglasNuevas(){
+  const el=document.getElementById('seg-reglas-nuevas'); if(!el) return;
+  const ctx=_segCtx(); if(!ctx.cerr.length){ el.innerHTML='<p class="empty">Sin partidos cerrados todavía.</p>'; return; }
+  // El tracker esta reescrito con las reglas desde el primer partido (2026-10-25): las apuestas
+  // guardadas YA las cumplen; lo que las reglas sacaron de PICK esta en el watchlist con su marca.
+  const pick=[],combo=[],rem=[],fuera=[];
+  ctx.cerr.forEach(p=>{
+    (p.apuestas||[]).filter(a=>a.estado==='GANADA'||a.estado==='PERDIDA').forEach(a=>{
+      const b=_segBet(ctx,p,a.cuota,a.estado==='GANADA',a.prob,a.ev_pct);
+      if(a.tipo==='PICK') pick.push(b); else if(a.tipo==='COMBO') combo.push(b); else if(a.tipo==='REMATE') rem.push(b);
+    });
+    (p.watchlist||[]).filter(w=>(w.regla_cuota_max_pick||w.regla_max_picks)&&w.acerto!=null&&w.cuota)
+      .forEach(w=>fuera.push(_segBet(ctx,p,w.cuota,!!w.acerto,w.prob,w.ev_pct)));
+  });
+  const F=(l,a,f)=>_segFilaBets(ctx,l,a,f);
+  const vigente=pick.concat(rem,combo), sinReglas=pick.concat(fuera,combo);
+  const sF=_segSt(ctx,fuera);
+  el.innerHTML='<div class="table-wrap"><table class="hm-table">'+_segCabBets('Apuestas del tracker')+'<tbody>'
+    +F('PICK (máx. 2, cuota ≤ 2)',pick)+F('COMBO',combo)+F('REMATE',rem)
+    +F('TOTAL = PICK + COMBO + REMATE',vigente,true)
+    +F('Referencia: lo que las reglas sacaron de PICK (están en el watchlist)',fuera)
+    +F('Referencia: sin las reglas (PICK + sacados + COMBO)',sinReglas)
+    +'</tbody></table></div>'
+    +'<p style="font-size:12px;color:var(--text3);margin-top:8px">'+ctx.cerr.length+' partidos cerrados. El histórico se reescribió el '
+    +'2026-10-25 como si las reglas hubieran regido desde el primer partido: los PICK que no cumplían quedaron en el watchlist con '
+    +'<code>regla_cuota_max_pick</code> o <code>regla_max_picks</code>, y los REMATE se agregaron con <code>retroactiva: true</code>. '
+    +'Las reglas se eligieron mirando este mismo histórico, así que la prueba real es la 2ª mitad y lo que acumulen los partidos nuevos.</p>';
+}
+// Rendimiento del mercado de REMATES (remates totales por equipo) sobre TODO el historico cerrado.
+function _segRemate(){
+  const el=document.getElementById('seg-remate'); if(!el) return;
+  const crit=(document.getElementById('seg-rem-crit')||{}).value||'evp';
+  const modo=(document.getElementById('seg-rem-lado')||{}).value||'regla';
+  const ctx=_segCtx(); if(!ctx.cerr.length){ el.innerHTML='<p class="empty">Sin partidos cerrados todavía.</p>'; return; }
+  const bets=_segRemateBets(ctx,crit,modo);
+  if(!bets.length){ el.innerHTML='<p class="empty">Ninguna línea de remates pasa el filtro de PICK todavía.</p>'; return; }
+  const F=(l,a,f)=>_segFilaBets(ctx,l,a,f);
+  const bandas=[['Cuota &lt; 2',b=>b.cuota<2],['Cuota 2 – 3',b=>b.cuota>=2&&b.cuota<3],['Cuota ≥ 3',b=>b.cuota>=3]];
+  const top3=bets.slice().sort((a,b)=>(b.win?b.cuota-1:-1)-(a.win?a.cuota-1:-1)).slice(0,3);
+  const sin3=bets.filter(b=>!top3.includes(b));
+  // Partidos donde pasan los DOS lados: que habria dado cada decision.
+  const cruces=[];
+  ctx.cerr.forEach(p=>{
+    const {L,V}=_segRemateLados(p,crit);
+    if(L&&V){ const alto=(V.prob||0)>(L.prob||0)?V:L, bajo=alto===V?L:V; cruces.push({p,alto,bajo}); }
+  });
+  const pl=w=>w.acerto?w.cuota-1:-1, sum=(a,f)=>a.reduce((t,x)=>t+f(x),0);
+  const crucesHtml=cruces.length
+    ? '<p style="font-size:12px;margin:10px 0 0"><b>Cruces</b> (pasan los dos lados): '+cruces.length+' de '+ctx.cerr.length+' partidos. '
+      +'Lado de mayor P%: <b class="'+_segCl(sum(cruces,c=>pl(c.alto)))+'">'+_segF2(sum(cruces,c=>pl(c.alto)))+'</b> · '
+      +'lado de menor P%: <b class="'+_segCl(sum(cruces,c=>pl(c.bajo)))+'">'+_segF2(sum(cruces,c=>pl(c.bajo)))+'</b> · '
+      +'los dos: <b class="'+_segCl(sum(cruces,c=>pl(c.alto)+pl(c.bajo)))+'">'+_segF2(sum(cruces,c=>pl(c.alto)+pl(c.bajo)))+'</b>. '
+      +'<span style="color:var(--text3)">Con tan pocos cruces no alcanza para decidir entre criterios.</span></p>'
+    : '<p style="font-size:12px;color:var(--text3);margin:10px 0 0">Todavía no hubo partidos donde pasen los dos lados.</p>';
+  el.innerHTML='<div class="table-wrap"><table class="hm-table">'+_segCabBets('Selección')+'<tbody>'
+    +F('REMATE — '+({regla:'regla (un lado por partido, mayor P%)',local:'solo local',visita:'solo visita',ambos:'los dos lados'}[modo]),bets,true)
+    +bandas.map(([l,f])=>F('&nbsp;&nbsp;↳ '+l,bets.filter(f))).join('')
+    +F('&nbsp;&nbsp;↳ sin sus 3 mejores apuestas',sin3)
+    +'</tbody></table></div>'+crucesHtml
+    +'<p style="font-size:12px;color:var(--text3);margin-top:8px">Línea por '+(crit==='evp'?'mayor EV%×prob (regla vigente)':'mayor probabilidad')
+    +'. Pasan el mismo filtro que un PICK (EV&gt;0 y cruzar la cuota justa, o EV ≥ '+SEG_MIN_EV+'% si no hay historial), sin tope de cuota. '
+    +'Si el ROI depende de la banda de cuota ≥ 3 o de sus 3 mejores apuestas, el resultado es frágil.</p>';
+}
 function renderSeguimiento(){
+  _segReglasNuevas();
+  _segRemate();
   const wl=_DATA.flatMap(p=>(p.watchlist||[]).map(w=>({...w,partido:p})));
   const simples=wl.filter(w=>!w.tipo);
   const mini=document.getElementById('seg-minev'); if(mini) mini.textContent=SEG_MIN_EV;
