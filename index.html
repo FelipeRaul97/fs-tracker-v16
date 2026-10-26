@@ -732,6 +732,27 @@
       </div>
     </div>
     <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
+        <div class="card-title">Esperado vs real — remates, remates a puerta y córners por equipo</div>
+        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">
+          La <b>media esperada</b> es la que calcula el engine para cada equipo antes del partido
+          (la media de la Binomial Negativa de la que salen todas las líneas por equipo); "real" es
+          lo que pasó (<code>stats_reales</code>). <b>Sesgo = esperado − real</b>: &gt; 0 el modelo
+          sobreestima, &lt; 0 subestima. <b>±</b> es el margen aproximado al 90% del sesgo: si el sesgo
+          es menor que el ±, la muestra todavía no lo distingue de cero. Las entradas anteriores a
+          2026-10-26 traen la media recuperada desde las probabilidades guardadas (exacta a ±0.01);
+          las nuevas la guardan directo del engine.</p>
+        <div class="filters" style="margin-bottom:10px">
+          <span class="filter-label">Filtrar:</span>
+          <select id="f-mu-liga" onchange="_renderDiagMu()"><option value="">Todas las ligas</option>
+            <option value="D1">Bundesliga</option><option value="E0">Premier</option>
+            <option value="F1">Ligue 1</option><option value="I1">Serie A</option>
+            <option value="SP1">La Liga</option></select>
+        </div>
+        <div id="diag-mu"></div>
+      </div>
+    </div>
+    <div class="grid2" style="margin-bottom:16px">
       <div class="card"><div class="card-title">Por liga</div>
         <p style="font-size:11px;color:var(--text3);margin:0 0 8px">N = predicciones de mercado acumuladas en esa liga.</p>
         <div id="diag-ligas"></div></div>
@@ -3040,9 +3061,103 @@ function _tablaSesgoDual(rows){
 // delegado de la fila expandible, ver mas abajo junto a los demas listeners.
 let _diagTeamData={obsAmbos:[],obsIndiv:[]};
 
+// ── Esperado vs real: media esperada de remates / a puerta / corners por equipo ────────────
+// mu_equipo (por entrada) = media de la Binomial Negativa del engine; real = stats_reales.
+const _MU_MERC=[['remates','Remates','S'],['remates_puerta','Remates a puerta','ST'],['corners_equipo','Córners','C']];
+function _muObs(){
+  const o=[];
+  _DATA.forEach(p=>{
+    const mu=p.mu_equipo, st=p.stats_reales; if(!mu||!st) return;
+    const [loc,vis]=(p.partido||' vs ').split(' vs ').map(x=>_normEquipo(x.trim()));
+    [['local',loc],['visit',vis]].forEach(([lado,eq])=>{
+      _MU_MERC.forEach(([m,nom,campo])=>{
+        const e=(mu[lado]||{})[m], r=st[lado+'_'+campo];
+        if(e==null||r==null) return;
+        o.push({liga:p.liga,lado,eq,m,mu:e,real:r,id:p.id,fecha:p.fecha});
+      });
+    });
+  });
+  return o;
+}
+function _muSt(a){
+  const n=a.length; if(!n) return null;
+  const mean=f=>a.reduce((t,x)=>t+f(x),0)/n;
+  const mu=mean(x=>x.mu), re=mean(x=>x.real), er=a.map(x=>x.mu-x.real), sesgo=mu-re;
+  const sd=n>1?Math.sqrt(er.reduce((t,v)=>t+(v-sesgo)*(v-sesgo),0)/(n-1)):0;
+  const mae=er.reduce((t,v)=>t+Math.abs(v),0)/n;
+  let cov=0,vm=0,vr=0; a.forEach(x=>{cov+=(x.mu-mu)*(x.real-re); vm+=(x.mu-mu)**2; vr+=(x.real-re)**2;});
+  return {n,partidos:new Set(a.map(x=>x.id)).size,mu,real:re,sesgo,moe:1.645*sd/Math.sqrt(n),mae,corr:(vm>0&&vr>0)?cov/Math.sqrt(vm*vr):null};
+}
+function _muSesgoCel(s){
+  if(!s) return '<td class="num" style="color:var(--text3)">—</td>';
+  const sig=Math.abs(s.sesgo)>s.moe;
+  const col=!sig?'var(--text3)':(s.sesgo>0?'var(--red-mid)':'var(--blue-mid)');
+  return '<td class="num" style="color:'+col+';font-weight:'+(sig?700:400)+'">'+(s.sesgo>=0?'+':'')+s.sesgo.toFixed(2)
+    +' <span style="font-weight:400;color:var(--text3);font-size:11px">±'+s.moe.toFixed(2)+'</span></td>';
+}
+function _renderDiagMu(){
+  const el=document.getElementById('diag-mu'); if(!el) return;
+  const todas=_muObs();
+  if(!todas.length){ el.innerHTML='<p class="empty">Todavía no hay partidos cerrados con media esperada y estadísticas reales.</p>'; return; }
+  const fl=document.getElementById('f-mu-liga'), liga=fl?fl.value:'';
+  const obs=liga?todas.filter(o=>o.liga===liga):todas;
+  if(!obs.length){ el.innerHTML='<p class="empty">Sin partidos cerrados de esta liga.</p>'; return; }
+  const f2=n=>n.toFixed(2), tenue=s=>s&&s.partidos<15?' style="opacity:.55"':'';
+  const cab=(prim,extra)=>'<thead><tr><th style="text-align:left">'+prim+'</th>'+(extra||'')
+    +'<th class="num">Obs.</th><th class="num">Partidos</th><th class="num">Esperado</th><th class="num">Real</th>'
+    +'<th class="num">Sesgo (esp − real)</th><th class="num">Error abs.</th><th class="num">Corr.</th></tr></thead>';
+  const fila=(lbl,s,pre)=>!s?'<tr><td style="text-align:left">'+lbl+'</td><td colspan="7" style="color:var(--text3);text-align:center">sin casos</td></tr>'
+    :'<tr'+tenue(s)+'><td style="text-align:left">'+lbl+'</td>'+(pre||'')+'<td class="num">'+s.n+'</td><td class="num">'+s.partidos+'</td>'
+      +'<td class="num">'+f2(s.mu)+'</td><td class="num">'+f2(s.real)+'</td>'+_muSesgoCel(s)
+      +'<td class="num">'+f2(s.mae)+'</td><td class="num">'+(s.corr==null?'—':s.corr.toFixed(2))+'</td></tr>';
+  const tabla=(prim,filas,extra)=>'<div class="table-wrap"><table class="hm-table">'+cab(prim,extra)+'<tbody>'+filas+'</tbody></table></div>';
+  const titulo=t=>'<div style="font-size:12px;color:var(--text3);margin:16px 0 4px;font-weight:600">'+t+'</div>';
+
+  // A) por mercado
+  const A=_MU_MERC.map(([m,nom])=>fila(nom,_muSt(obs.filter(o=>o.m===m)))).join('');
+  // B) local vs visita
+  const B=_MU_MERC.flatMap(([m,nom])=>[['local','local'],['visit','visita']]
+    .map(([l,ln])=>fila(nom+' · '+ln,_muSt(obs.filter(o=>o.m===m&&o.lado===l))))).join('');
+  // C) por liga (ignora el filtro: es el comparativo)
+  const ligas=Object.keys(LIGA_NOMBRE);
+  const C='<div class="table-wrap"><table class="hm-table"><thead><tr><th style="text-align:left">Liga</th><th class="num">Partidos</th>'
+    +_MU_MERC.map(([m,nom])=>'<th class="num">'+nom+' (esp − real)</th>').join('')+'</tr></thead><tbody>'
+    +ligas.map(L=>{
+      const a=todas.filter(o=>o.liga===L); const np=new Set(a.map(o=>o.id)).size;
+      return '<tr'+(L===liga?' style="background:var(--surface2)"':'')+(np&&np<15?' style="opacity:.55"':'')+'><td style="text-align:left">'+LIGA_NOMBRE[L]+'</td><td class="num">'+np+'</td>'
+        +_MU_MERC.map(([m])=>_muSesgoCel(_muSt(a.filter(o=>o.m===m)))).join('')+'</tr>';
+    }).join('')+'</tbody></table></div>';
+  // D) calibracion por tramo de la media esperada (cuartiles, por mercado)
+  const D=_MU_MERC.map(([m,nom])=>{
+    const a=obs.filter(o=>o.m===m).slice().sort((x,y)=>x.mu-y.mu); if(a.length<8) return '';
+    const q=[0,.25,.5,.75,1].map(t=>a[Math.min(a.length-1,Math.floor(t*a.length))].mu);
+    const tr=[0,1,2,3].map(i=>a.filter((o,j)=>j>=Math.floor(i*a.length/4)&&j<Math.floor((i+1)*a.length/4)));
+    return tr.map((x,i)=>fila(nom+' · '+f2(x[0].mu)+' – '+f2(x[x.length-1].mu),_muSt(x))).join('');
+  }).join('');
+  // E) por equipo (>= 4 partidos), ordenado por |sesgo de remates|
+  const porEq={}; obs.forEach(o=>{(porEq[o.eq]=porEq[o.eq]||[]).push(o);});
+  const eqs=Object.entries(porEq).map(([eq,a])=>({eq,np:new Set(a.map(o=>o.id)).size,
+    s:Object.fromEntries(_MU_MERC.map(([m])=>[m,_muSt(a.filter(o=>o.m===m))]))}))
+    .filter(x=>x.np>=4).sort((a,b)=>Math.abs((b.s.remates||{sesgo:0}).sesgo)-Math.abs((a.s.remates||{sesgo:0}).sesgo));
+  const E='<div class="table-wrap table-wrap-scroll" style="max-height:340px;overflow-y:auto"><table class="hm-table">'
+    +'<thead style="position:sticky;top:0;background:var(--bg2)"><tr><th style="text-align:left">Equipo</th><th class="num">Partidos</th>'
+    +_MU_MERC.map(([m,nom])=>'<th class="num">'+nom+' (esp − real)</th>').join('')+'</tr></thead><tbody>'
+    +(eqs.map(x=>'<tr><td style="text-align:left">'+x.eq+'</td><td class="num">'+x.np+'</td>'+_MU_MERC.map(([m])=>_muSesgoCel(x.s[m])).join('')+'</tr>').join('')
+      ||'<tr><td colspan="5" class="empty">Ningún equipo llega a 4 partidos con este filtro.</td></tr>')+'</tbody></table></div>';
+
+  el.innerHTML=titulo('Por mercado ('+(liga?LIGA_NOMBRE[liga]:'todas las ligas')+')')+tabla('Mercado',A)
+    +titulo('Local vs visita — ¿el modelo da de más a uno de los dos lados?')+tabla('Mercado · lado',B)
+    +titulo('Por liga (comparativo, ignora el filtro)')+C
+    +titulo('Calibración por tramo de la media esperada (cuartiles) — ¿cuando espera mucho, pasa mucho?')+tabla('Mercado · tramo',D)
+    +titulo('Por equipo (≥ 4 partidos, ordenado por |sesgo| de remates)')+E
+    +'<p style="font-size:12px;color:var(--text3);margin-top:8px">Filas atenuadas = menos de 15 partidos. En rojo el sesgo '
+    +'significativo hacia sobreestimar, en azul hacia subestimar.</p>';
+}
+
 function renderDiagnostico(){
   const eq=document.getElementById('diag-equipos');
   if(!eq) return;
+  _renderDiagMu();
   const obs=_diagObs();
 
   // Mercados CONJUNTOS (goles totales, 1X2, corners totales -- ninguno de los

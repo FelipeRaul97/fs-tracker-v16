@@ -885,7 +885,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 14.68,
+        "remates_puerta": 4.54,
+        "corners_equipo": 4.97
+      },
+      "visit": {
+        "remates": 8.64,
+        "remates_puerta": 2.94,
+        "corners_equipo": 3.14
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "002",
@@ -1830,7 +1843,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 13.05,
+        "remates_puerta": 4.87,
+        "corners_equipo": 4.94
+      },
+      "visit": {
+        "remates": 11.35,
+        "remates_puerta": 4.1,
+        "corners_equipo": 5.06
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "003",
@@ -2719,7 +2745,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 11.66,
+        "remates_puerta": 3.89,
+        "corners_equipo": 5.48
+      },
+      "visit": {
+        "remates": 13.02,
+        "remates_puerta": 4.13,
+        "corners_equipo": 5.49
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "004",
@@ -3226,7 +3265,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 24.65,
+        "remates_puerta": 9.88,
+        "corners_equipo": 9.23
+      },
+      "visit": {
+        "remates": 8.44,
+        "remates_puerta": 2.9,
+        "corners_equipo": 3.86
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "005",
@@ -3716,7 +3768,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 9.97,
+        "remates_puerta": 3.32,
+        "corners_equipo": 3.89
+      },
+      "visit": {
+        "remates": 19.89,
+        "remates_puerta": 8.56,
+        "corners_equipo": 7.4
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "006",
@@ -4595,7 +4660,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": true,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 12.87,
+        "remates_puerta": 3.71,
+        "corners_equipo": 5.17
+      },
+      "visit": {
+        "remates": 9.62,
+        "remates_puerta": 3.56,
+        "corners_equipo": 3.64
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "007",
@@ -5243,7 +5321,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 18.9,
+        "remates_puerta": 8.08,
+        "corners_equipo": 9.11
+      },
+      "visit": {
+        "remates": 12.79,
+        "remates_puerta": 4.34,
+        "corners_equipo": 4.44
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "008",
@@ -6367,7 +6458,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 13.08,
+        "remates_puerta": 4.8,
+        "corners_equipo": 4.94
+      },
+      "visit": {
+        "remates": 13.89,
+        "remates_puerta": 4.94,
+        "corners_equipo": 4.79
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "010",
@@ -7019,7 +7123,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 11.59,
+        "remates_puerta": 4.16,
+        "corners_equipo": 4.91
+      },
+      "visit": {
+        "remates": 16.6,
+        "remates_puerta": 7.55,
+        "corners_equipo": 6.17
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "011",
@@ -7920,7 +8037,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 12.24,
+        "remates_puerta": 4.34,
+        "corners_equipo": 4.7
+      },
+      "visit": {
+        "remates": 9.54,
+        "remates_puerta": 3.23,
+        "corners_equipo": 3.47
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "012",
@@ -8939,7 +9069,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 11.2,
+        "remates_puerta": 4.0,
+        "corners_equipo": 4.36
+      },
+      "visit": {
+        "remates": 11.26,
+        "remates_puerta": 3.58,
+        "corners_equipo": 4.21
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "013",
@@ -9461,7 +9604,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 23.41,
+        "remates_puerta": 9.76,
+        "corners_equipo": 10.11
+      },
+      "visit": {
+        "remates": 8.3,
+        "remates_puerta": 2.95,
+        "corners_equipo": 3.57
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "014",
@@ -10379,7 +10535,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 15.32,
+        "remates_puerta": 5.81,
+        "corners_equipo": 5.53
+      },
+      "visit": {
+        "remates": 11.23,
+        "remates_puerta": 3.6,
+        "corners_equipo": 4.31
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "016",
@@ -11468,7 +11637,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": true,
       "visit_corners_equipo_over7.5": true
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 13.25,
+        "remates_puerta": 4.68,
+        "corners_equipo": 4.7
+      },
+      "visit": {
+        "remates": 14.88,
+        "remates_puerta": 5.44,
+        "corners_equipo": 5.76
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "017",
@@ -12185,7 +12367,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": true,
       "visit_corners_equipo_over7.5": true
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 17.89,
+        "remates_puerta": 5.9,
+        "corners_equipo": 6.41
+      },
+      "visit": {
+        "remates": 12.27,
+        "remates_puerta": 4.62,
+        "corners_equipo": 4.57
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "018",
@@ -13410,7 +13605,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 15.97,
+        "remates_puerta": 5.09,
+        "corners_equipo": 5.68
+      },
+      "visit": {
+        "remates": 10.48,
+        "remates_puerta": 3.28,
+        "corners_equipo": 3.99
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "019",
@@ -14522,7 +14730,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 16.0,
+        "remates_puerta": 5.47,
+        "corners_equipo": 5.3
+      },
+      "visit": {
+        "remates": 14.65,
+        "remates_puerta": 5.3,
+        "corners_equipo": 4.91
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "020",
@@ -15590,7 +15811,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 16.23,
+        "remates_puerta": 5.23,
+        "corners_equipo": 5.36
+      },
+      "visit": {
+        "remates": 13.16,
+        "remates_puerta": 5.12,
+        "corners_equipo": 4.77
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "021",
@@ -16558,7 +16792,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 17.15,
+        "remates_puerta": 6.18,
+        "corners_equipo": 6.06
+      },
+      "visit": {
+        "remates": 10.86,
+        "remates_puerta": 3.69,
+        "corners_equipo": 4.18
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "022",
@@ -17544,7 +17791,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": true,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 13.39,
+        "remates_puerta": 4.25,
+        "corners_equipo": 5.85
+      },
+      "visit": {
+        "remates": 12.51,
+        "remates_puerta": 4.41,
+        "corners_equipo": 4.0
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "023",
@@ -18608,7 +18868,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 13.39,
+        "remates_puerta": 4.49,
+        "corners_equipo": 5.41
+      },
+      "visit": {
+        "remates": 11.14,
+        "remates_puerta": 3.6,
+        "corners_equipo": 4.22
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "024",
@@ -19616,7 +19889,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 19.23,
+        "remates_puerta": 6.49,
+        "corners_equipo": 6.72
+      },
+      "visit": {
+        "remates": 10.38,
+        "remates_puerta": 3.65,
+        "corners_equipo": 3.88
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "025",
@@ -20316,7 +20602,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 19.3,
+        "remates_puerta": 7.73,
+        "corners_equipo": 6.98
+      },
+      "visit": {
+        "remates": 14.19,
+        "remates_puerta": 5.6,
+        "corners_equipo": 4.68
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "026",
@@ -21333,7 +21632,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 16.83,
+        "remates_puerta": 5.26,
+        "corners_equipo": 5.52
+      },
+      "visit": {
+        "remates": 7.93,
+        "remates_puerta": 2.75,
+        "corners_equipo": 3.32
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "027",
@@ -22203,7 +22515,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": true,
       "visit_corners_equipo_over7.5": true
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 16.27,
+        "remates_puerta": 5.8,
+        "corners_equipo": 6.71
+      },
+      "visit": {
+        "remates": 13.6,
+        "remates_puerta": 4.8,
+        "corners_equipo": 5.02
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "028",
@@ -23176,7 +23501,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 13.37,
+        "remates_puerta": 4.31,
+        "corners_equipo": 5.16
+      },
+      "visit": {
+        "remates": 13.61,
+        "remates_puerta": 5.14,
+        "corners_equipo": 4.64
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "029",
@@ -23663,7 +24001,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 10.39,
+        "remates_puerta": 3.59,
+        "corners_equipo": 3.94
+      },
+      "visit": {
+        "remates": 15.21,
+        "remates_puerta": 6.41,
+        "corners_equipo": 6.04
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "030",
@@ -24738,7 +25089,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over7.5": false
     },
     "hora": "10:30",
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 16.87,
+        "remates_puerta": 5.69,
+        "corners_equipo": 5.64
+      },
+      "visit": {
+        "remates": 11.6,
+        "remates_puerta": 4.46,
+        "corners_equipo": 4.3
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "031",
@@ -25950,7 +26314,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 14.17,
+        "remates_puerta": 4.91,
+        "corners_equipo": 5.7
+      },
+      "visit": {
+        "remates": 12.09,
+        "remates_puerta": 3.83,
+        "corners_equipo": 4.19
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "032",
@@ -26890,7 +27267,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 14.81,
+        "remates_puerta": 5.25,
+        "corners_equipo": 5.67
+      },
+      "visit": {
+        "remates": 10.0,
+        "remates_puerta": 3.33,
+        "corners_equipo": 3.71
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "033",
@@ -27730,7 +28120,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": true,
       "visit_corners_equipo_over7.5": true
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 15.58,
+        "remates_puerta": 4.83,
+        "corners_equipo": 4.91
+      },
+      "visit": {
+        "remates": 20.86,
+        "remates_puerta": 7.33,
+        "corners_equipo": 6.89
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "034",
@@ -28853,7 +29256,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": true,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 17.41,
+        "remates_puerta": 5.47,
+        "corners_equipo": 6.3
+      },
+      "visit": {
+        "remates": 10.16,
+        "remates_puerta": 4.13,
+        "corners_equipo": 3.26
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "035",
@@ -29565,7 +29981,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 15.61,
+        "remates_puerta": 5.57,
+        "corners_equipo": 4.78
+      },
+      "visit": {
+        "remates": 14.36,
+        "remates_puerta": 6.05,
+        "corners_equipo": 5.34
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "036",
@@ -30686,7 +31115,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": true,
       "visit_corners_equipo_over7.5": true
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 13.33,
+        "remates_puerta": 4.95,
+        "corners_equipo": 5.18
+      },
+      "visit": {
+        "remates": 14.5,
+        "remates_puerta": 5.04,
+        "corners_equipo": 4.32
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "037",
@@ -31393,7 +31835,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 23.76,
+        "remates_puerta": 8.36,
+        "corners_equipo": 8.24
+      },
+      "visit": {
+        "remates": 8.13,
+        "remates_puerta": 2.83,
+        "corners_equipo": 2.69
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "038",
@@ -32574,7 +33029,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 13.04,
+        "remates_puerta": 4.73,
+        "corners_equipo": 4.84
+      },
+      "visit": {
+        "remates": 14.43,
+        "remates_puerta": 5.21,
+        "corners_equipo": 5.13
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "039",
@@ -33206,7 +33674,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 19.51,
+        "remates_puerta": 7.42,
+        "corners_equipo": 6.37
+      },
+      "visit": {
+        "remates": 8.34,
+        "remates_puerta": 2.94,
+        "corners_equipo": 3.3
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "040",
@@ -34102,7 +34583,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": true,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 12.64,
+        "remates_puerta": 4.64,
+        "corners_equipo": 4.13
+      },
+      "visit": {
+        "remates": 14.53,
+        "remates_puerta": 5.52,
+        "corners_equipo": 4.73
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "041",
@@ -35079,7 +35573,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 17.93,
+        "remates_puerta": 6.01,
+        "corners_equipo": 6.06
+      },
+      "visit": {
+        "remates": 10.74,
+        "remates_puerta": 4.0,
+        "corners_equipo": 3.97
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "042",
@@ -36555,7 +37062,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 14.15,
+        "remates_puerta": 5.26,
+        "corners_equipo": 5.8
+      },
+      "visit": {
+        "remates": 12.29,
+        "remates_puerta": 4.55,
+        "corners_equipo": 4.31
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "043",
@@ -37474,7 +37994,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 16.48,
+        "remates_puerta": 6.14,
+        "corners_equipo": 6.66
+      },
+      "visit": {
+        "remates": 10.08,
+        "remates_puerta": 3.15,
+        "corners_equipo": 3.24
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "044",
@@ -38239,7 +38772,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": true,
       "visit_corners_equipo_over7.5": true
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 10.24,
+        "remates_puerta": 4.12,
+        "corners_equipo": 3.17
+      },
+      "visit": {
+        "remates": 29.2,
+        "remates_puerta": 12.21,
+        "corners_equipo": 10.37
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "046",
@@ -39463,7 +40009,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 14.16,
+        "remates_puerta": 4.95,
+        "corners_equipo": 4.48
+      },
+      "visit": {
+        "remates": 16.07,
+        "remates_puerta": 5.83,
+        "corners_equipo": 6.22
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "048",
@@ -40652,7 +41211,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 12.62,
+        "remates_puerta": 4.0,
+        "corners_equipo": 4.7
+      },
+      "visit": {
+        "remates": 15.32,
+        "remates_puerta": 4.97,
+        "corners_equipo": 5.1
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "049",
@@ -41965,7 +42537,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": true,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 13.55,
+        "remates_puerta": 4.79,
+        "corners_equipo": 6.08
+      },
+      "visit": {
+        "remates": 12.23,
+        "remates_puerta": 4.52,
+        "corners_equipo": 4.18
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "050",
@@ -43255,7 +43840,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 13.89,
+        "remates_puerta": 4.74,
+        "corners_equipo": 5.59
+      },
+      "visit": {
+        "remates": 14.8,
+        "remates_puerta": 4.86,
+        "corners_equipo": 4.6
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "051",
@@ -44453,7 +45051,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": true,
       "visit_corners_equipo_over7.5": true
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 12.06,
+        "remates_puerta": 3.84,
+        "corners_equipo": 3.99
+      },
+      "visit": {
+        "remates": 13.03,
+        "remates_puerta": 4.73,
+        "corners_equipo": 5.26
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "052",
@@ -45696,7 +46307,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 15.35,
+        "remates_puerta": 6.16,
+        "corners_equipo": 5.31
+      },
+      "visit": {
+        "remates": 13.56,
+        "remates_puerta": 4.32,
+        "corners_equipo": 4.53
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "053",
@@ -46310,7 +46934,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 26.96,
+        "remates_puerta": 10.1,
+        "corners_equipo": 9.05
+      },
+      "visit": {
+        "remates": 8.82,
+        "remates_puerta": 3.03,
+        "corners_equipo": 3.01
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "054",
@@ -47339,7 +47976,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 21.49,
+        "remates_puerta": 8.21,
+        "corners_equipo": 6.43
+      },
+      "visit": {
+        "remates": 11.96,
+        "remates_puerta": 4.36,
+        "corners_equipo": 4.88
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "055",
@@ -47918,7 +48568,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 22.34,
+        "remates_puerta": 8.96,
+        "corners_equipo": 9.28
+      },
+      "visit": {
+        "remates": 8.05,
+        "remates_puerta": 2.57,
+        "corners_equipo": 2.58
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "056",
@@ -49180,7 +49843,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": true,
       "visit_corners_equipo_over7.5": true
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 11.33,
+        "remates_puerta": 3.64,
+        "corners_equipo": 4.1
+      },
+      "visit": {
+        "remates": 12.45,
+        "remates_puerta": 4.3,
+        "corners_equipo": 4.33
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "057",
@@ -50503,7 +51179,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 15.01,
+        "remates_puerta": 5.48,
+        "corners_equipo": 5.0
+      },
+      "visit": {
+        "remates": 13.69,
+        "remates_puerta": 4.56,
+        "corners_equipo": 5.2
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "058",
@@ -51202,7 +51891,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 21.58,
+        "remates_puerta": 8.61,
+        "corners_equipo": 8.08
+      },
+      "visit": {
+        "remates": 8.93,
+        "remates_puerta": 3.22,
+        "corners_equipo": 2.69
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "059",
@@ -52079,7 +52781,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 21.76,
+        "remates_puerta": 7.5,
+        "corners_equipo": 8.05
+      },
+      "visit": {
+        "remates": 14.73,
+        "remates_puerta": 4.59,
+        "corners_equipo": 4.44
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "060",
@@ -52924,7 +53639,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 18.76,
+        "remates_puerta": 7.51,
+        "corners_equipo": 5.93
+      },
+      "visit": {
+        "remates": 13.73,
+        "remates_puerta": 5.53,
+        "corners_equipo": 5.09
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "061",
@@ -54005,7 +54733,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 16.83,
+        "remates_puerta": 6.17,
+        "corners_equipo": 5.23
+      },
+      "visit": {
+        "remates": 18.84,
+        "remates_puerta": 6.89,
+        "corners_equipo": 5.42
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "062",
@@ -55402,7 +56143,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 14.61,
+        "remates_puerta": 5.01,
+        "corners_equipo": 5.61
+      },
+      "visit": {
+        "remates": 11.0,
+        "remates_puerta": 3.98,
+        "corners_equipo": 4.01
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "063",
@@ -56883,7 +57637,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": true,
       "visit_corners_equipo_over7.5": true
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 14.14,
+        "remates_puerta": 4.94,
+        "corners_equipo": 6.09
+      },
+      "visit": {
+        "remates": 12.17,
+        "remates_puerta": 4.22,
+        "corners_equipo": 4.19
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "064",
@@ -57977,7 +58744,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 16.76,
+        "remates_puerta": 5.75,
+        "corners_equipo": 6.88
+      },
+      "visit": {
+        "remates": 11.09,
+        "remates_puerta": 3.97,
+        "corners_equipo": 4.45
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "065",
@@ -58597,7 +59377,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 23.05,
+        "remates_puerta": 7.59,
+        "corners_equipo": 7.55
+      },
+      "visit": {
+        "remates": 9.23,
+        "remates_puerta": 3.22,
+        "corners_equipo": 3.39
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "066",
@@ -59872,7 +60665,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 14.94,
+        "remates_puerta": 4.9,
+        "corners_equipo": 4.81
+      },
+      "visit": {
+        "remates": 12.2,
+        "remates_puerta": 4.38,
+        "corners_equipo": 5.04
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "067",
@@ -61023,7 +61829,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 12.73,
+        "remates_puerta": 5.01,
+        "corners_equipo": 4.77
+      },
+      "visit": {
+        "remates": 13.6,
+        "remates_puerta": 4.78,
+        "corners_equipo": 4.51
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "068",
@@ -62109,7 +62928,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 16.84,
+        "remates_puerta": 6.18,
+        "corners_equipo": 6.28
+      },
+      "visit": {
+        "remates": 10.67,
+        "remates_puerta": 3.78,
+        "corners_equipo": 3.74
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "069",
@@ -62709,7 +63541,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": true,
       "visit_corners_equipo_over7.5": true
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 10.09,
+        "remates_puerta": 3.41,
+        "corners_equipo": 3.49
+      },
+      "visit": {
+        "remates": 19.0,
+        "remates_puerta": 6.2,
+        "corners_equipo": 6.97
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "070",
@@ -64350,7 +65195,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": true,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 16.34,
+        "remates_puerta": 5.87,
+        "corners_equipo": 5.61
+      },
+      "visit": {
+        "remates": 11.45,
+        "remates_puerta": 4.12,
+        "corners_equipo": 4.62
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "071",
@@ -65493,7 +66351,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": true,
       "visit_corners_equipo_over7.5": true
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 12.11,
+        "remates_puerta": 4.0,
+        "corners_equipo": 3.94
+      },
+      "visit": {
+        "remates": 13.37,
+        "remates_puerta": 5.03,
+        "corners_equipo": 4.82
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "072",
@@ -67007,7 +67878,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": true,
       "visit_corners_equipo_over7.5": true
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 16.57,
+        "remates_puerta": 5.03,
+        "corners_equipo": 5.37
+      },
+      "visit": {
+        "remates": 14.48,
+        "remates_puerta": 5.74,
+        "corners_equipo": 5.22
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "073",
@@ -67874,7 +68758,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": true,
       "visit_corners_equipo_over7.5": true
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 21.02,
+        "remates_puerta": 6.89,
+        "corners_equipo": 7.16
+      },
+      "visit": {
+        "remates": 16.05,
+        "remates_puerta": 6.02,
+        "corners_equipo": 5.49
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "074",
@@ -68667,7 +69564,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 11.58,
+        "remates_puerta": 3.98,
+        "corners_equipo": 4.43
+      },
+      "visit": {
+        "remates": 17.07,
+        "remates_puerta": 6.41,
+        "corners_equipo": 5.99
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "075",
@@ -70073,7 +70983,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 18.18,
+        "remates_puerta": 6.29,
+        "corners_equipo": 6.14
+      },
+      "visit": {
+        "remates": 13.14,
+        "remates_puerta": 4.02,
+        "corners_equipo": 4.59
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "076",
@@ -72184,7 +73107,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": true,
       "visit_corners_equipo_over7.5": true
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 15.64,
+        "remates_puerta": 4.86,
+        "corners_equipo": 5.78
+      },
+      "visit": {
+        "remates": 13.43,
+        "remates_puerta": 4.23,
+        "corners_equipo": 4.32
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "077",
@@ -72749,7 +73685,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 18.81,
+        "remates_puerta": 6.86,
+        "corners_equipo": 7.14
+      },
+      "visit": {
+        "remates": 9.96,
+        "remates_puerta": 3.55,
+        "corners_equipo": 3.55
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "078",
@@ -73410,7 +74359,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 11.51,
+        "remates_puerta": 4.2,
+        "corners_equipo": 3.62
+      },
+      "visit": {
+        "remates": 18.56,
+        "remates_puerta": 6.88,
+        "corners_equipo": 5.9
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "079",
@@ -74297,7 +75259,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 12.99,
+        "remates_puerta": 4.25,
+        "corners_equipo": 4.07
+      },
+      "visit": {
+        "remates": 17.15,
+        "remates_puerta": 6.23,
+        "corners_equipo": 6.4
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "080",
@@ -74826,7 +75801,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 26.41,
+        "remates_puerta": 11.71,
+        "corners_equipo": 9.86
+      },
+      "visit": {
+        "remates": 11.26,
+        "remates_puerta": 4.22,
+        "corners_equipo": 3.34
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "081",
@@ -75547,7 +76535,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 12.68,
+        "remates_puerta": 4.71,
+        "corners_equipo": 4.15
+      },
+      "visit": {
+        "remates": 19.39,
+        "remates_puerta": 7.97,
+        "corners_equipo": 6.93
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "082",
@@ -77170,7 +78171,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 13.22,
+        "remates_puerta": 4.83,
+        "corners_equipo": 4.79
+      },
+      "visit": {
+        "remates": 15.52,
+        "remates_puerta": 4.98,
+        "corners_equipo": 5.02
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "083",
@@ -77807,7 +78821,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 23.31,
+        "remates_puerta": 7.83,
+        "corners_equipo": 8.24
+      },
+      "visit": {
+        "remates": 9.03,
+        "remates_puerta": 2.92,
+        "corners_equipo": 2.96
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "084",
@@ -78605,7 +79632,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 23.83,
+        "remates_puerta": 7.61,
+        "corners_equipo": 7.24
+      },
+      "visit": {
+        "remates": 10.05,
+        "remates_puerta": 3.46,
+        "corners_equipo": 3.95
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "085",
@@ -80066,7 +81106,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 12.56,
+        "remates_puerta": 4.17,
+        "corners_equipo": 4.24
+      },
+      "visit": {
+        "remates": 14.77,
+        "remates_puerta": 4.98,
+        "corners_equipo": 5.39
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "086",
@@ -81299,7 +82352,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 14.94,
+        "remates_puerta": 4.98,
+        "corners_equipo": 4.86
+      },
+      "visit": {
+        "remates": 15.16,
+        "remates_puerta": 5.6,
+        "corners_equipo": 4.98
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "087",
@@ -82256,7 +83322,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 16.36,
+        "remates_puerta": 5.75,
+        "corners_equipo": 6.95
+      },
+      "visit": {
+        "remates": 12.24,
+        "remates_puerta": 4.22,
+        "corners_equipo": 3.54
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "088",
@@ -83404,7 +84483,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 13.52,
+        "remates_puerta": 4.5,
+        "corners_equipo": 5.41
+      },
+      "visit": {
+        "remates": 10.1,
+        "remates_puerta": 3.32,
+        "corners_equipo": 3.63
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "089",
@@ -85159,7 +86251,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 12.91,
+        "remates_puerta": 4.5,
+        "corners_equipo": 4.65
+      },
+      "visit": {
+        "remates": 11.23,
+        "remates_puerta": 3.85,
+        "corners_equipo": 4.19
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "090",
@@ -86516,7 +87621,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 17.17,
+        "remates_puerta": 6.23,
+        "corners_equipo": 5.58
+      },
+      "visit": {
+        "remates": 11.36,
+        "remates_puerta": 3.93,
+        "corners_equipo": 4.47
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "091",
@@ -87985,7 +89103,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 14.34,
+        "remates_puerta": 4.42,
+        "corners_equipo": 4.57
+      },
+      "visit": {
+        "remates": 11.29,
+        "remates_puerta": 4.34,
+        "corners_equipo": 4.47
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "092",
@@ -89045,7 +90176,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 19.66,
+        "remates_puerta": 6.9,
+        "corners_equipo": 6.33
+      },
+      "visit": {
+        "remates": 9.13,
+        "remates_puerta": 3.35,
+        "corners_equipo": 3.21
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "093",
@@ -90392,7 +91536,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 14.46,
+        "remates_puerta": 4.62,
+        "corners_equipo": 5.16
+      },
+      "visit": {
+        "remates": 12.02,
+        "remates_puerta": 4.27,
+        "corners_equipo": 5.06
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "094",
@@ -92109,7 +93266,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": true,
       "visit_corners_equipo_over7.5": true
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 15.63,
+        "remates_puerta": 5.67,
+        "corners_equipo": 5.53
+      },
+      "visit": {
+        "remates": 10.57,
+        "remates_puerta": 3.68,
+        "corners_equipo": 4.02
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "095",
@@ -93005,7 +94175,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": true,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 17.73,
+        "remates_puerta": 6.66,
+        "corners_equipo": 6.63
+      },
+      "visit": {
+        "remates": 9.58,
+        "remates_puerta": 3.31,
+        "corners_equipo": 3.45
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "096",
@@ -93768,7 +94951,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 17.49,
+        "remates_puerta": 7.36,
+        "corners_equipo": 6.9
+      },
+      "visit": {
+        "remates": 10.63,
+        "remates_puerta": 3.54,
+        "corners_equipo": 3.26
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "097",
@@ -94660,7 +95856,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 15.35,
+        "remates_puerta": 4.99,
+        "corners_equipo": 5.32
+      },
+      "visit": {
+        "remates": 9.62,
+        "remates_puerta": 3.11,
+        "corners_equipo": 4.17
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "098",
@@ -95542,7 +96751,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": true,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 12.14,
+        "remates_puerta": 4.11,
+        "corners_equipo": 4.33
+      },
+      "visit": {
+        "remates": 15.41,
+        "remates_puerta": 5.41,
+        "corners_equipo": 5.45
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "099",
@@ -96292,7 +97514,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 21.79,
+        "remates_puerta": 7.94,
+        "corners_equipo": 7.34
+      },
+      "visit": {
+        "remates": 12.6,
+        "remates_puerta": 4.69,
+        "corners_equipo": 4.02
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "100",
@@ -97123,7 +98358,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 18.77,
+        "remates_puerta": 6.2,
+        "corners_equipo": 6.34
+      },
+      "visit": {
+        "remates": 11.07,
+        "remates_puerta": 4.23,
+        "corners_equipo": 3.98
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "101",
@@ -97972,7 +99220,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 24.96,
+        "remates_puerta": 8.67,
+        "corners_equipo": 8.57
+      },
+      "visit": {
+        "remates": 12.7,
+        "remates_puerta": 4.68,
+        "corners_equipo": 4.47
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "102",
@@ -98972,7 +100233,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 16.45,
+        "remates_puerta": 5.93,
+        "corners_equipo": 6.37
+      },
+      "visit": {
+        "remates": 10.71,
+        "remates_puerta": 3.69,
+        "corners_equipo": 3.59
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "103",
@@ -100153,7 +101427,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 15.71,
+        "remates_puerta": 5.46,
+        "corners_equipo": 6.0
+      },
+      "visit": {
+        "remates": 11.6,
+        "remates_puerta": 4.01,
+        "corners_equipo": 4.42
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "104",
@@ -101640,7 +102927,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": true,
       "visit_corners_equipo_over7.5": true
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 14.9,
+        "remates_puerta": 5.48,
+        "corners_equipo": 5.04
+      },
+      "visit": {
+        "remates": 17.19,
+        "remates_puerta": 6.03,
+        "corners_equipo": 5.08
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "105",
@@ -102524,7 +103824,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 19.95,
+        "remates_puerta": 7.8,
+        "corners_equipo": 6.06
+      },
+      "visit": {
+        "remates": 10.5,
+        "remates_puerta": 3.88,
+        "corners_equipo": 4.25
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "106",
@@ -104285,7 +105598,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 13.29,
+        "remates_puerta": 4.72,
+        "corners_equipo": 5.15
+      },
+      "visit": {
+        "remates": 12.21,
+        "remates_puerta": 4.54,
+        "corners_equipo": 4.11
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "107",
@@ -105174,7 +106500,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 18.21,
+        "remates_puerta": 6.29,
+        "corners_equipo": 6.32
+      },
+      "visit": {
+        "remates": 9.6,
+        "remates_puerta": 3.3,
+        "corners_equipo": 3.59
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "108",
@@ -105920,7 +107259,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 17.47,
+        "remates_puerta": 6.24,
+        "corners_equipo": 6.91
+      },
+      "visit": {
+        "remates": 9.07,
+        "remates_puerta": 3.09,
+        "corners_equipo": 3.18
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "109",
@@ -107347,7 +108699,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 18.26,
+        "remates_puerta": 5.68,
+        "corners_equipo": 6.35
+      },
+      "visit": {
+        "remates": 12.98,
+        "remates_puerta": 4.08,
+        "corners_equipo": 4.62
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "110",
@@ -108174,7 +109539,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 20.38,
+        "remates_puerta": 8.32,
+        "corners_equipo": 6.73
+      },
+      "visit": {
+        "remates": 10.47,
+        "remates_puerta": 3.71,
+        "corners_equipo": 3.54
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "111",
@@ -110237,7 +111615,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 15.4,
+        "remates_puerta": 5.19,
+        "corners_equipo": 5.12
+      },
+      "visit": {
+        "remates": 11.91,
+        "remates_puerta": 4.32,
+        "corners_equipo": 4.23
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "112",
@@ -112165,7 +113556,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 14.86,
+        "remates_puerta": 4.64,
+        "corners_equipo": 5.06
+      },
+      "visit": {
+        "remates": 13.74,
+        "remates_puerta": 4.29,
+        "corners_equipo": 5.21
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "113",
@@ -113917,7 +115321,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 14.45,
+        "remates_puerta": 4.63,
+        "corners_equipo": 5.46
+      },
+      "visit": {
+        "remates": 14.26,
+        "remates_puerta": 4.64,
+        "corners_equipo": 4.76
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "114",
@@ -114875,7 +116292,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": true,
       "visit_corners_equipo_over7.5": true
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 18.48,
+        "remates_puerta": 6.4,
+        "corners_equipo": 5.86
+      },
+      "visit": {
+        "remates": 15.7,
+        "remates_puerta": 5.18,
+        "corners_equipo": 5.13
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "115",
@@ -116255,7 +117685,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 15.75,
+        "remates_puerta": 5.76,
+        "corners_equipo": 5.65
+      },
+      "visit": {
+        "remates": 14.62,
+        "remates_puerta": 5.83,
+        "corners_equipo": 4.72
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "116",
@@ -117961,7 +119404,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 14.48,
+        "remates_puerta": 5.17,
+        "corners_equipo": 4.96
+      },
+      "visit": {
+        "remates": 11.96,
+        "remates_puerta": 4.56,
+        "corners_equipo": 4.36
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "117",
@@ -119652,7 +121108,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": true,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 13.83,
+        "remates_puerta": 4.17,
+        "corners_equipo": 5.74
+      },
+      "visit": {
+        "remates": 11.82,
+        "remates_puerta": 4.42,
+        "corners_equipo": 3.97
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "118",
@@ -121169,7 +122638,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 14.61,
+        "remates_puerta": 5.47,
+        "corners_equipo": 5.58
+      },
+      "visit": {
+        "remates": 13.21,
+        "remates_puerta": 4.31,
+        "corners_equipo": 4.31
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "119",
@@ -122775,7 +124257,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 18.94,
+        "remates_puerta": 6.65,
+        "corners_equipo": 6.89
+      },
+      "visit": {
+        "remates": 11.85,
+        "remates_puerta": 4.38,
+        "corners_equipo": 4.04
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "120",
@@ -123768,7 +125263,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 12.49,
+        "remates_puerta": 4.25,
+        "corners_equipo": 3.57
+      },
+      "visit": {
+        "remates": 17.6,
+        "remates_puerta": 7.77,
+        "corners_equipo": 7.31
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "121",
@@ -125594,7 +127102,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 13.57,
+        "remates_puerta": 4.56,
+        "corners_equipo": 5.5
+      },
+      "visit": {
+        "remates": 12.09,
+        "remates_puerta": 3.91,
+        "corners_equipo": 4.05
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "122",
@@ -126996,7 +128517,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 16.25,
+        "remates_puerta": 5.9,
+        "corners_equipo": 6.46
+      },
+      "visit": {
+        "remates": 12.62,
+        "remates_puerta": 4.36,
+        "corners_equipo": 4.27
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "123",
@@ -128184,7 +129718,20 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 11.53,
+        "remates_puerta": 3.98,
+        "corners_equipo": 4.3
+      },
+      "visit": {
+        "remates": 13.65,
+        "remates_puerta": 5.28,
+        "corners_equipo": 4.52
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   },
   {
     "id": "124",
@@ -129142,6 +130689,19 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "reglas_retro": "2026-10-25"
+    "reglas_retro": "2026-10-25",
+    "mu_equipo": {
+      "local": {
+        "remates": 22.05,
+        "remates_puerta": 8.62,
+        "corners_equipo": 7.02
+      },
+      "visit": {
+        "remates": 10.82,
+        "remates_puerta": 4.57,
+        "corners_equipo": 3.85
+      }
+    },
+    "mu_equipo_fuente": "recuperada_snapshot"
   }
 ];
