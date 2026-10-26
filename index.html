@@ -635,6 +635,17 @@
               <option value="visita">Solo visita</option><option value="ambos">Los dos lados</option></select></label>
         </div>
         <div id="seg-remate"></div>
+        <div style="font-size:12px;color:var(--text3);margin:18px 0 4px;font-weight:600">
+          Por distancia a la media del modelo — ¿qué líneas pagan según lo lejos que están de lo que el modelo espera?</div>
+        <p style="font-size:12px;color:var(--text3);margin:0 0 8px">
+          Cada fila agrupa <b>todas las líneas de remates totales que pasan el filtro de PICK</b> (se apuesten o no), según
+          <b>línea − media esperada de remates de ese equipo</b>. Negativo = línea por debajo de lo que espera el modelo (cuota baja,
+          probabilidad alta); positivo = por encima. Hipótesis en observación (2026-10-26): las líneas muy por debajo de la media
+          (&lt; −4) no pagan porque el modelo las sobreestima, y las cercanas a la media (±2) o algo por encima son las que rinden.</p>
+        <div style="margin-bottom:8px;font-size:12px"><label>Partidos
+          <select id="seg-dist-cob" onchange="_segRemateDist()" style="font-size:12px">
+            <option value="todos">Todos</option><option value="completa">Solo con 5 o más líneas de remates cotizadas</option></select></label></div>
+        <div id="seg-remate-dist"></div>
       </div>
     </div>
     <div class="grid2" style="margin-bottom:16px">
@@ -4044,6 +4055,40 @@ function _segRemateBets(ctx,crit,modo){
   });
   return out;
 }
+// Distancia entre la linea de remates y la media esperada del modelo (mu_equipo). Candidatas = lineas que pasan el
+// filtro de PICK (_segPasaPick), apostadas o no. Cuota baja/probabilidad alta lejos por debajo de la media; cuota alta cerca o encima.
+function _segRemateDist(){
+  const el=document.getElementById('seg-remate-dist'); if(!el) return;
+  const cob=(document.getElementById('seg-dist-cob')||{}).value||'todos';
+  const filas=[];
+  _DATA.filter(p=>p.resultado_partido&&p.mu_equipo).forEach(p=>{
+    const lin=(p.watchlist||[]).filter(w=>w.tipo==='POR_EQUIPO'&&(w.mercado==='local_remates'||w.mercado==='visit_remates')&&w.cuota&&w.acerto!=null);
+    if(cob==='completa'&&lin.length<5) return;
+    lin.filter(_segPasaPick).forEach(w=>{
+      const lado=w.mercado==='local_remates'?'local':'visit', mu=(p.mu_equipo[lado]||{}).remates;
+      if(mu==null||w.linea==null) return;
+      filas.push({id:p.id,d:w.linea-mu,p:(w.prob||0),cu:w.cuota,win:!!w.acerto});
+    });
+  });
+  if(!filas.length){ el.innerHTML='<p class="empty">Todavía no hay líneas candidatas cerradas con media esperada.</p>'; return; }
+  const bandas=[['< −4',x=>x.d<-4],['−4 a −2',x=>x.d>=-4&&x.d<-2],['−2 a 0',x=>x.d>=-2&&x.d<0],['0 a +2',x=>x.d>=0&&x.d<2],['+2 o más',x=>x.d>=2]];
+  const f2=n=>(n>=0?'+':'')+n.toFixed(2)+'u', cl=n=>n>=0?'pl-pos':'pl-neg';
+  const fila=(lbl,a)=>{
+    if(!a.length) return '<tr><td style="text-align:left">'+lbl+'</td><td class="num">0</td><td colspan="6" style="color:var(--text3);text-align:center">sin líneas</td></tr>';
+    const n=a.length, x=a.map(b=>b.win?b.cu-1:-1), u=x.reduce((t,v)=>t+v,0), m=u/n;
+    const sd=n>1?Math.sqrt(x.reduce((t,v)=>t+(v-m)*(v-m),0)/(n-1)):0, moe=1.645*sd/Math.sqrt(n)*100;
+    const pm=a.reduce((t,b)=>t+b.p,0)/n, ac=a.filter(b=>b.win).length/n*100, cm=a.reduce((t,b)=>t+b.cu,0)/n;
+    return '<tr'+(n<15?' style="opacity:.6"':'')+'><td style="text-align:left">'+lbl+'</td><td class="num">'+n+'</td><td class="num">'+new Set(a.map(b=>b.id)).size+'</td>'
+      +'<td class="num">'+pm.toFixed(0)+'%</td><td class="num">'+ac.toFixed(0)+'%</td><td class="num">'+cm.toFixed(2)+'</td>'
+      +'<td class="num '+cl(m)+'"><b>'+(m>=0?'+':'')+(m*100).toFixed(0)+'%</b> <span style="color:var(--text3);font-weight:400;font-size:11px">±'+moe.toFixed(0)+'</span></td>'
+      +'<td class="num '+cl(u)+'">'+f2(u)+'</td></tr>';
+  };
+  el.innerHTML='<div class="table-wrap"><table class="hm-table"><thead><tr><th style="text-align:left">Línea − media del modelo</th><th class="num">Líneas</th>'
+    +'<th class="num">Partidos</th><th class="num">P modelo</th><th class="num">Acierto real</th><th class="num">Cuota media</th><th class="num">ROI ±90%</th><th class="num">Unidades</th></tr></thead><tbody>'
+    +bandas.map(([l,f])=>fila(l,filas.filter(f))).join('')+fila('Todas',filas).replace('<tr','<tr style="background:var(--surface2);font-weight:600"')
+    +'</tbody></table></div><p style="font-size:12px;color:var(--text3);margin-top:8px">Filas atenuadas = menos de 15 líneas. Las líneas de un mismo partido '
+    +'están correlacionadas, así que el ± es más optimista de lo que parece. P modelo muy por encima del acierto real = el modelo sobreestima ese tramo.</p>';
+}
 function _segReglasNuevas(){
   const el=document.getElementById('seg-reglas-nuevas'); if(!el) return;
   const ctx=_segCtx(); if(!ctx.cerr.length){ el.innerHTML='<p class="empty">Sin partidos cerrados todavía.</p>'; return; }
@@ -4166,6 +4211,7 @@ function _segEleccion(){
 function renderSeguimiento(){
   _segReglasNuevas();
   _segRemate();
+  _segRemateDist();
   _segEleccion();
   const wl=_DATA.flatMap(p=>(p.watchlist||[]).map(w=>({...w,partido:p})));
   const simples=wl.filter(w=>!w.tipo);
