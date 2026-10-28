@@ -140756,5 +140756,1120 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": true,
       "visit_corners_equipo_over7.5": true
     }
+  },
+  {
+    "id": "133",
+    "fecha": "2026-10-29",
+    "jornada": 9,
+    "liga": "I1",
+    "partido": "Frosinone vs Lecce",
+    "lambda_forma_l": 2.1627,
+    "lambda_forma_v": 1.7717,
+    "lambda_reg_l": 1.852,
+    "lambda_reg_v": 1.3443,
+    "lambda_base_l": 1.9452,
+    "lambda_base_v": 1.4725,
+    "lambda_final_l": 1.9925,
+    "lambda_final_v": 1.4252,
+    "lambda_shadow_l": 2.0224,
+    "lambda_shadow_v": 1.4252,
+    "lambda_corners": 11.109,
+    "ratio": 1.398049396575919,
+    "visit_dominante": "False",
+    "variables_activas": "V#3(L:1.01)",
+    "variables": {
+      "v1": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa": false,
+        "activa_local": false,
+        "activa_visit": false,
+        "detalle_local": "--",
+        "detalle_visit": "--",
+        "detalle": "Ambos necesitan >=20 PJ (local:8, visit:8)"
+      },
+      "v2": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa_local": false,
+        "activa_visit": false,
+        "detalle_local": "Rank 7, margen 9pts -- fuera de riesgo",
+        "detalle_visit": "Rank 14, margen 4pts -- fuera de riesgo"
+      },
+      "v3": {
+        "factor_local": 1.015,
+        "activa": true,
+        "n_partidos": 20,
+        "GpG_casa": 1.5,
+        "GpG_liga": 1.35,
+        "hs": 0.15,
+        "muestra_completa": true,
+        "detalle": "hs=+0.15 (20 ptdos)"
+      },
+      "v4": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa_local": false,
+        "activa_visit": false,
+        "bajas_local": 0,
+        "bajas_visit": 0
+      },
+      "v5": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa_local": false,
+        "activa_visit": false
+      },
+      "v6": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa": false
+      },
+      "v7": {
+        "skip": false,
+        "activa_local": false,
+        "activa_visit": false,
+        "detalle": "Sin DT nuevo"
+      },
+      "v8": {
+        "activa": false,
+        "anulado_derby": false,
+        "detalle": "Inactiva"
+      }
+    },
+    "confianza": "ALTA",
+    "notas": "",
+    "resultado_partido": null,
+    "goles_esperados": "3.42",
+    "apuestas": [
+      {
+        "tipo": "PICK",
+        "mercado": "hcp2_des",
+        "linea": null,
+        "etiqueta": "HCP +2 Lecce",
+        "cuota": 1.47,
+        "prob": 70.6,
+        "ev_pct": 3.8,
+        "estado": "PENDIENTE",
+        "pl": null
+      },
+      {
+        "tipo": "COMBO",
+        "mercado": "over05_visit+hcp2_visit",
+        "etiqueta": "Over 0.5 V + HCP +2 V",
+        "cuota": 1.7,
+        "prob": 60.8,
+        "ev_pct": 3.4,
+        "estado": "PENDIENTE",
+        "pl": null,
+        "patas": [
+          "over05_visit",
+          "hcp2_visit"
+        ],
+        "promovida_combinada": true,
+        "nivel_cruce": "justa",
+        "cuota_justa": 1.64,
+        "cuota_segura": 1.85,
+        "acierto_hist": 60.8,
+        "n_hist": 212
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "visit_remates",
+        "linea": 15.5,
+        "etiqueta": "Lecce Remates Over 15.5",
+        "lado": "visit",
+        "cuota": 3.85,
+        "prob": 40.3,
+        "ev_pct": 55.2,
+        "estado": "PENDIENTE",
+        "pl": null,
+        "lineas_pasan": 6,
+        "cruzaron_ambos": false
+      }
+    ],
+    "watchlist": [
+      {
+        "mercado": "empate",
+        "linea": null,
+        "etiqueta": "Empate",
+        "cuota": 4.0,
+        "prob": 23.8,
+        "ev_pct": -4.8
+      },
+      {
+        "mercado": "victoria_visit",
+        "linea": null,
+        "etiqueta": "Victoria Lecce",
+        "cuota": 4.9,
+        "prob": 25.7,
+        "ev_pct": 25.9,
+        "regla_1x2_no_pick": true
+      },
+      {
+        "mercado": "dox2",
+        "linea": null,
+        "etiqueta": "DO Empate o Lecce",
+        "cuota": 2.25,
+        "prob": 49.2,
+        "ev_pct": 10.7,
+        "regla_no_elegible": true
+      },
+      {
+        "mercado": "over15",
+        "linea": null,
+        "etiqueta": "Over 1.5",
+        "cuota": 1.14,
+        "prob": 85.5,
+        "ev_pct": -2.5
+      },
+      {
+        "mercado": "under25",
+        "linea": null,
+        "etiqueta": "Under 2.5",
+        "cuota": 2.82,
+        "prob": 34.3,
+        "ev_pct": -3.3
+      },
+      {
+        "mercado": "under35",
+        "linea": null,
+        "etiqueta": "Under 3.5",
+        "cuota": 1.8,
+        "prob": 55.5,
+        "ev_pct": -0.1
+      },
+      {
+        "mercado": "under45",
+        "linea": null,
+        "etiqueta": "Under 4.5",
+        "cuota": 1.35,
+        "prob": 74.1,
+        "ev_pct": 0.0
+      },
+      {
+        "mercado": "over05_local",
+        "linea": null,
+        "etiqueta": "Over 0.5 Frosinone",
+        "cuota": 1.1,
+        "prob": 88.2,
+        "ev_pct": -3.0
+      },
+      {
+        "mercado": "over05_visit",
+        "linea": null,
+        "etiqueta": "Over 0.5 Lecce",
+        "cuota": 1.3,
+        "prob": 75.9,
+        "ev_pct": -1.3,
+        "cuota_justa": 1.29,
+        "cuota_segura": 1.39,
+        "acierto_hist": 77.7,
+        "n_hist": 233
+      },
+      {
+        "mercado": "corners65",
+        "linea": null,
+        "etiqueta": "Over 6.5 corners",
+        "cuota": 1.11,
+        "prob": 91.1,
+        "ev_pct": 1.1
+      },
+      {
+        "mercado": "corners75",
+        "linea": null,
+        "etiqueta": "Over 7.5 corners",
+        "cuota": 1.21,
+        "prob": 82.9,
+        "ev_pct": 0.3
+      },
+      {
+        "mercado": "local_remates_puerta",
+        "linea": 3.5,
+        "etiqueta": "Frosinone Remates a puerta Over 3.5",
+        "cuota": 1.12,
+        "prob": 83.4,
+        "ev_pct": -6.6,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 2.5,
+        "etiqueta": "Lecce Corners equipo Over 2.5",
+        "cuota": 1.26,
+        "prob": 81.7,
+        "ev_pct": 2.9,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_corners_equipo",
+        "linea": 3.5,
+        "etiqueta": "Frosinone Corners equipo Over 3.5",
+        "cuota": 1.14,
+        "prob": 79.7,
+        "ev_pct": -9.1,
+        "tipo": "POR_EQUIPO",
+        "cuota_justa": 1.26,
+        "cuota_segura": 1.35,
+        "acierto_hist": 79.4,
+        "n_hist": 257
+      },
+      {
+        "mercado": "visit_remates",
+        "linea": 10.5,
+        "etiqueta": "Lecce Remates Over 10.5",
+        "cuota": 1.33,
+        "prob": 79.0,
+        "ev_pct": 5.1,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates",
+        "linea": 11.5,
+        "etiqueta": "Lecce Remates Over 11.5",
+        "cuota": 1.53,
+        "prob": 71.9,
+        "ev_pct": 10.0,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates_puerta",
+        "linea": 3.5,
+        "etiqueta": "Lecce Remates a puerta Over 3.5",
+        "cuota": 1.5,
+        "prob": 71.9,
+        "ev_pct": 7.9,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates_puerta",
+        "linea": 4.5,
+        "etiqueta": "Frosinone Remates a puerta Over 4.5",
+        "cuota": 1.28,
+        "prob": 70.2,
+        "ev_pct": -10.1,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 3.5,
+        "etiqueta": "Lecce Corners equipo Over 3.5",
+        "cuota": 1.65,
+        "prob": 67.4,
+        "ev_pct": 11.2,
+        "tipo": "POR_EQUIPO",
+        "cuota_justa": 1.49,
+        "cuota_segura": 1.68,
+        "acierto_hist": 67.3,
+        "n_hist": 159
+      },
+      {
+        "mercado": "local_corners_equipo",
+        "linea": 4.5,
+        "etiqueta": "Frosinone Corners equipo Over 4.5",
+        "cuota": 1.32,
+        "prob": 67.2,
+        "ev_pct": -11.3,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates",
+        "linea": 14.5,
+        "etiqueta": "Frosinone Remates Over 14.5",
+        "cuota": 1.28,
+        "prob": 65.5,
+        "ev_pct": -16.2,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates",
+        "linea": 12.5,
+        "etiqueta": "Lecce Remates Over 12.5",
+        "cuota": 1.83,
+        "prob": 64.2,
+        "ev_pct": 17.5,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates",
+        "linea": 15.5,
+        "etiqueta": "Frosinone Remates Over 15.5",
+        "cuota": 1.44,
+        "prob": 58.4,
+        "ev_pct": -15.9,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates",
+        "linea": 13.5,
+        "etiqueta": "Lecce Remates Over 13.5",
+        "cuota": 2.3,
+        "prob": 56.1,
+        "ev_pct": 29.0,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates_puerta",
+        "linea": 5.5,
+        "etiqueta": "Frosinone Remates a puerta Over 5.5",
+        "cuota": 1.57,
+        "prob": 55.0,
+        "ev_pct": -13.6,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates_puerta",
+        "linea": 4.5,
+        "etiqueta": "Lecce Remates a puerta Over 4.5",
+        "cuota": 2.05,
+        "prob": 55.0,
+        "ev_pct": 12.7,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_corners_equipo",
+        "linea": 5.5,
+        "etiqueta": "Frosinone Corners equipo Over 5.5",
+        "cuota": 1.65,
+        "prob": 53.8,
+        "ev_pct": -11.2,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 4.5,
+        "etiqueta": "Lecce Corners equipo Over 4.5",
+        "cuota": 2.37,
+        "prob": 51.9,
+        "ev_pct": 23.0,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates",
+        "linea": 14.5,
+        "etiqueta": "Lecce Remates Over 14.5",
+        "cuota": 2.92,
+        "prob": 48.0,
+        "ev_pct": 40.2,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_corners_equipo",
+        "linea": 6.5,
+        "etiqueta": "Frosinone Corners equipo Over 6.5",
+        "cuota": 2.22,
+        "prob": 41.1,
+        "ev_pct": -8.8,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates",
+        "linea": 15.5,
+        "etiqueta": "Lecce Remates Over 15.5",
+        "cuota": 3.85,
+        "prob": 40.3,
+        "ev_pct": 55.2,
+        "tipo": "POR_EQUIPO",
+        "es_remate": true
+      },
+      {
+        "mercado": "local_remates_puerta",
+        "linea": 6.5,
+        "etiqueta": "Frosinone Remates a puerta Over 6.5",
+        "cuota": 2.07,
+        "prob": 40.0,
+        "ev_pct": -17.2,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates_puerta",
+        "linea": 5.5,
+        "etiqueta": "Lecce Remates a puerta Over 5.5",
+        "cuota": 3.1,
+        "prob": 38.5,
+        "ev_pct": 19.4,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 5.5,
+        "etiqueta": "Lecce Corners equipo Over 5.5",
+        "cuota": 3.7,
+        "prob": 37.5,
+        "ev_pct": 38.8,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_corners_equipo",
+        "linea": 7.5,
+        "etiqueta": "Frosinone Corners equipo Over 7.5",
+        "cuota": 3.2,
+        "prob": 29.9,
+        "ev_pct": -4.3,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 6.5,
+        "etiqueta": "Lecce Corners equipo Over 6.5",
+        "cuota": 5.8,
+        "prob": 25.6,
+        "ev_pct": 48.5,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates_puerta",
+        "linea": 6.5,
+        "etiqueta": "Lecce Remates a puerta Over 6.5",
+        "cuota": 4.9,
+        "prob": 24.7,
+        "ev_pct": 21.0,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 7.5,
+        "etiqueta": "Lecce Corners equipo Over 7.5",
+        "cuota": 9.0,
+        "prob": 16.6,
+        "ev_pct": 49.4,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "over05_local+hcp2_visit",
+        "linea": null,
+        "etiqueta": "Over 0.5 L + HCP +2 V",
+        "cuota": 1.7,
+        "prob": 57.0,
+        "ev_pct": -3.1,
+        "tipo": "COMBINADA",
+        "patas": [
+          "over05_local",
+          "hcp2_visit"
+        ],
+        "lift": 0.922,
+        "cuota_justa": 1.75,
+        "cuota_segura": 1.89,
+        "acierto_hist": 57.2,
+        "n_hist": 512
+      },
+      {
+        "mercado": "over15+hcp3_visit",
+        "linea": null,
+        "etiqueta": "Over 1.5 + HCP +3 V",
+        "cuota": 1.4,
+        "prob": 71.5,
+        "ev_pct": 0.0,
+        "tipo": "COMBINADA",
+        "patas": [
+          "over15",
+          "hcp3_visit"
+        ],
+        "lift": 0.962,
+        "cuota_justa": 1.44,
+        "cuota_segura": 1.56,
+        "acierto_hist": 69.6,
+        "n_hist": 283
+      },
+      {
+        "mercado": "over05_local+hcp3_visit",
+        "linea": null,
+        "etiqueta": "Over 0.5 L + HCP +3 V",
+        "cuota": 1.33,
+        "prob": 72.3,
+        "ev_pct": -3.8,
+        "tipo": "COMBINADA",
+        "patas": [
+          "over05_local",
+          "hcp3_visit"
+        ],
+        "lift": 0.974,
+        "cuota_justa": 1.37,
+        "cuota_segura": 1.49,
+        "acierto_hist": 72.9,
+        "n_hist": 255
+      },
+      {
+        "mercado": "btts+hcp2_visit",
+        "linea": null,
+        "etiqueta": "BTTS + HCP +2 V",
+        "cuota": 1.93,
+        "prob": 50.4,
+        "ev_pct": -2.6,
+        "tipo": "COMBINADA",
+        "patas": [
+          "btts",
+          "hcp2_visit"
+        ],
+        "lift": 1.098,
+        "cuota_justa": 1.93,
+        "cuota_segura": 2.2,
+        "acierto_hist": 51.9,
+        "n_hist": 231
+      },
+      {
+        "mercado": "do1x+under45",
+        "linea": null,
+        "etiqueta": "DO L o Empate + Under 4.5",
+        "cuota": 1.65,
+        "prob": 54.1,
+        "ev_pct": -10.7,
+        "tipo": "COMBINADA",
+        "patas": [
+          "do1x",
+          "under45"
+        ],
+        "lift": 1.021,
+        "cuota_justa": 1.83,
+        "cuota_segura": 2.1,
+        "acierto_hist": 54.7,
+        "n_hist": 192
+      },
+      {
+        "mercado": "over15+over05_local",
+        "linea": null,
+        "etiqueta": "Over 1.5 + Over 0.5 L",
+        "cuota": 1.17,
+        "prob": 79.8,
+        "ev_pct": -6.6,
+        "tipo": "COMBINADA",
+        "patas": [
+          "over15",
+          "over05_local"
+        ],
+        "lift": 1.158,
+        "cuota_justa": 1.27,
+        "cuota_segura": 1.39,
+        "acierto_hist": 78.6,
+        "n_hist": 182
+      },
+      {
+        "mercado": "do1x+over15",
+        "linea": null,
+        "etiqueta": "DO L o Empate + Over 1.5",
+        "cuota": 1.34,
+        "prob": 62.7,
+        "ev_pct": -16.0,
+        "tipo": "COMBINADA",
+        "patas": [
+          "do1x",
+          "over15"
+        ],
+        "lift": 0.995,
+        "cuota_justa": 1.63,
+        "cuota_segura": 1.86,
+        "acierto_hist": 61.3,
+        "n_hist": 173
+      },
+      {
+        "mercado": "over25+hcp3_visit",
+        "linea": null,
+        "etiqueta": "Over 2.5 + HCP +3 V",
+        "cuota": 1.87,
+        "prob": 52.3,
+        "ev_pct": -2.2,
+        "tipo": "COMBINADA",
+        "patas": [
+          "over25",
+          "hcp3_visit"
+        ],
+        "lift": 0.888,
+        "cuota_justa": 1.92,
+        "cuota_segura": 2.25,
+        "acierto_hist": 52.2,
+        "n_hist": 161
+      },
+      {
+        "mercado": "local_remates",
+        "linea": 11.5,
+        "etiqueta": "Frosinone Remates Over 11.5",
+        "cuota": 1.09,
+        "prob": 84.3,
+        "ev_pct": -8.1,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates",
+        "linea": 13.5,
+        "etiqueta": "Frosinone Remates Over 13.5",
+        "cuota": 1.24,
+        "prob": 72.4,
+        "ev_pct": -10.2,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "hcp3_des",
+        "linea": null,
+        "etiqueta": "HCP +3 Lecce",
+        "cuota": 1.19,
+        "prob": 86.0,
+        "ev_pct": 2.3,
+        "regla_unicidad_handicap": "cede ante hcp2_des (EV 3.8%)"
+      }
+    ],
+    "mercados_snapshot": {
+      "victoria_local": 50.8,
+      "empate": 23.8,
+      "victoria_visit": 25.7,
+      "do1x": 74.3,
+      "dox2": 49.2,
+      "over15": 85.5,
+      "over25": 65.8,
+      "under25": 34.3,
+      "over35": 44.5,
+      "under35": 55.5,
+      "under45": 74.1,
+      "btts": 64.1,
+      "over05_local": 88.2,
+      "over05_visit": 75.9,
+      "hcp2_des": 70.6,
+      "hcp3_des": 86.0,
+      "corners65": 91.1,
+      "corners75": 82.9,
+      "local_remates_over7.5": 97.4,
+      "local_remates_over8.5": 95.5,
+      "local_remates_over9.5": 92.7,
+      "local_remates_over10.5": 88.9,
+      "local_remates_over11.5": 84.3,
+      "local_remates_over12.5": 78.7,
+      "local_remates_over13.5": 72.4,
+      "local_remates_over14.5": 65.5,
+      "local_remates_over15.5": 58.4,
+      "local_remates_puerta_over1.5": 97.8,
+      "local_remates_puerta_over2.5": 92.7,
+      "local_remates_puerta_over3.5": 83.4,
+      "local_remates_puerta_over4.5": 70.2,
+      "local_remates_puerta_over5.5": 55.0,
+      "local_remates_puerta_over6.5": 40.0,
+      "local_corners_equipo_over2.5": 89.7,
+      "local_corners_equipo_over3.5": 79.7,
+      "local_corners_equipo_over4.5": 67.2,
+      "local_corners_equipo_over5.5": 53.8,
+      "local_corners_equipo_over6.5": 41.1,
+      "local_corners_equipo_over7.5": 29.9,
+      "visit_remates_over7.5": 93.9,
+      "visit_remates_over8.5": 90.1,
+      "visit_remates_over9.5": 85.1,
+      "visit_remates_over10.5": 79.0,
+      "visit_remates_over11.5": 71.9,
+      "visit_remates_over12.5": 64.2,
+      "visit_remates_over13.5": 56.1,
+      "visit_remates_over14.5": 48.0,
+      "visit_remates_over15.5": 40.3,
+      "visit_remates_puerta_over1.5": 95.1,
+      "visit_remates_puerta_over2.5": 86.1,
+      "visit_remates_puerta_over3.5": 71.9,
+      "visit_remates_puerta_over4.5": 55.0,
+      "visit_remates_puerta_over5.5": 38.5,
+      "visit_remates_puerta_over6.5": 24.7,
+      "visit_corners_equipo_over2.5": 81.7,
+      "visit_corners_equipo_over3.5": 67.4,
+      "visit_corners_equipo_over4.5": 51.9,
+      "visit_corners_equipo_over5.5": 37.5,
+      "visit_corners_equipo_over6.5": 25.6,
+      "visit_corners_equipo_over7.5": 16.6
+    },
+    "mu_equipo": {
+      "local": {
+        "remates": 17.11,
+        "remates_puerta": 6.05,
+        "corners_equipo": 6.16
+      },
+      "visit": {
+        "remates": 14.67,
+        "remates_puerta": 5.01,
+        "corners_equipo": 4.95
+      }
+    },
+    "mu_equipo_fuente": "engine",
+    "cruces_validados": [
+      {
+        "mercado": "do1x",
+        "etiqueta": "DO L o Empate",
+        "cuota": 1.2,
+        "justa": 1.42,
+        "segura": 1.57,
+        "hist": 70.6,
+        "n": 194,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "btts",
+        "etiqueta": "BTTS",
+        "cuota": 1.44,
+        "justa": 1.6,
+        "segura": 1.76,
+        "hist": 62.7,
+        "n": 260,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "over05_visit",
+        "etiqueta": "Over 0.5 V",
+        "cuota": 1.3,
+        "justa": 1.29,
+        "segura": 1.39,
+        "hist": 77.7,
+        "n": 233,
+        "cruza": true,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "local_corners_equipo_over3.5",
+        "etiqueta": "Frosinone Corners Over 3.5",
+        "cuota": 1.14,
+        "justa": 1.26,
+        "segura": 1.35,
+        "hist": 79.4,
+        "n": 257,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "visit_corners_equipo_over3.5",
+        "etiqueta": "Lecce Corners Over 3.5",
+        "cuota": 1.65,
+        "justa": 1.49,
+        "segura": 1.68,
+        "hist": 67.3,
+        "n": 159,
+        "cruza": true,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "over05_local+hcp2_visit",
+        "etiqueta": "Over 0.5 L + HCP +2 V",
+        "cuota": 1.7,
+        "justa": 1.75,
+        "segura": 1.89,
+        "hist": 57.2,
+        "n": 512,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "over15+hcp3_visit",
+        "etiqueta": "Over 1.5 + HCP +3 V",
+        "cuota": 1.4,
+        "justa": 1.44,
+        "segura": 1.56,
+        "hist": 69.6,
+        "n": 283,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "over05_local+hcp3_visit",
+        "etiqueta": "Over 0.5 L + HCP +3 V",
+        "cuota": 1.33,
+        "justa": 1.37,
+        "segura": 1.49,
+        "hist": 72.9,
+        "n": 255,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "btts+hcp2_visit",
+        "etiqueta": "BTTS + HCP +2 V",
+        "cuota": 1.93,
+        "justa": 1.93,
+        "segura": 2.2,
+        "hist": 51.9,
+        "n": 231,
+        "cruza": true,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "over05_visit+hcp2_visit",
+        "etiqueta": "Over 0.5 V + HCP +2 V",
+        "cuota": 1.7,
+        "justa": 1.64,
+        "segura": 1.85,
+        "hist": 60.8,
+        "n": 212,
+        "cruza": true,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "do1x+under45",
+        "etiqueta": "DO L o Empate + Under 4.5",
+        "cuota": 1.65,
+        "justa": 1.83,
+        "segura": 2.1,
+        "hist": 54.7,
+        "n": 192,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "over15+over05_local",
+        "etiqueta": "Over 1.5 + Over 0.5 L",
+        "cuota": 1.17,
+        "justa": 1.27,
+        "segura": 1.39,
+        "hist": 78.6,
+        "n": 182,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "do1x+over15",
+        "etiqueta": "DO L o Empate + Over 1.5",
+        "cuota": 1.34,
+        "justa": 1.63,
+        "segura": 1.86,
+        "hist": 61.3,
+        "n": 173,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "over25+hcp3_visit",
+        "etiqueta": "Over 2.5 + HCP +3 V",
+        "cuota": 1.87,
+        "justa": 1.92,
+        "segura": 2.25,
+        "hist": 52.2,
+        "n": 161,
+        "cruza": false,
+        "cruza_segura": false
+      }
+    ],
+    "validadas": [
+      {
+        "mercado": "over05_local+hcp2_visit",
+        "etiqueta": "Over 0.5 L + HCP +2 V",
+        "tipo": "COMBINADA",
+        "p": 0.5699,
+        "cuota_justa": 1.75,
+        "cuota_segura": 1.89,
+        "acierto_hist": 57.2,
+        "n_hist": 512,
+        "cotizada": true
+      },
+      {
+        "mercado": "local_corners_equipo_over3.5+local_remates_over8.5",
+        "etiqueta": "L Corners Over 3.5 + L Remates Over 8.5",
+        "tipo": "COMBINADA",
+        "p": 0.7884,
+        "cuota_justa": 1.31,
+        "cuota_segura": 1.41,
+        "acierto_hist": 76.2,
+        "n_hist": 303,
+        "cotizada": false
+      },
+      {
+        "mercado": "over15+hcp3_visit",
+        "etiqueta": "Over 1.5 + HCP +3 V",
+        "tipo": "COMBINADA",
+        "p": 0.7146,
+        "cuota_justa": 1.44,
+        "cuota_segura": 1.56,
+        "acierto_hist": 69.6,
+        "n_hist": 283,
+        "cotizada": true
+      },
+      {
+        "mercado": "btts",
+        "etiqueta": "BTTS",
+        "tipo": "simple",
+        "p": 0.6406,
+        "cuota_justa": 1.6,
+        "cuota_segura": 1.76,
+        "acierto_hist": 62.7,
+        "n_hist": 260,
+        "cotizada": true
+      },
+      {
+        "mercado": "local_corners_equipo_over3.5",
+        "etiqueta": "Frosinone Corners Over 3.5",
+        "tipo": "por equipo",
+        "p": 0.7968,
+        "cuota_justa": 1.26,
+        "cuota_segura": 1.35,
+        "acierto_hist": 79.4,
+        "n_hist": 257,
+        "cotizada": true
+      },
+      {
+        "mercado": "over05_local+hcp3_visit",
+        "etiqueta": "Over 0.5 L + HCP +3 V",
+        "tipo": "COMBINADA",
+        "p": 0.7231,
+        "cuota_justa": 1.37,
+        "cuota_segura": 1.49,
+        "acierto_hist": 72.9,
+        "n_hist": 255,
+        "cotizada": true
+      },
+      {
+        "mercado": "over05_visit",
+        "etiqueta": "Over 0.5 V",
+        "tipo": "simple",
+        "p": 0.7595,
+        "cuota_justa": 1.29,
+        "cuota_segura": 1.39,
+        "acierto_hist": 77.7,
+        "n_hist": 233,
+        "cotizada": true
+      },
+      {
+        "mercado": "btts+hcp2_visit",
+        "etiqueta": "BTTS + HCP +2 V",
+        "tipo": "COMBINADA",
+        "p": 0.5045,
+        "cuota_justa": 1.93,
+        "cuota_segura": 2.2,
+        "acierto_hist": 51.9,
+        "n_hist": 231,
+        "cotizada": true
+      },
+      {
+        "mercado": "local_corners_equipo_over4.5+local_remates_over9.5",
+        "etiqueta": "L Corners Over 4.5 + L Remates Over 9.5",
+        "tipo": "COMBINADA",
+        "p": 0.6305,
+        "cuota_justa": 1.55,
+        "cuota_segura": 1.73,
+        "acierto_hist": 64.3,
+        "n_hist": 227,
+        "cotizada": false
+      },
+      {
+        "mercado": "over05_visit+hcp2_visit",
+        "etiqueta": "Over 0.5 V + HCP +2 V",
+        "tipo": "COMBINADA",
+        "p": 0.6081,
+        "cuota_justa": 1.64,
+        "cuota_segura": 1.85,
+        "acierto_hist": 60.8,
+        "n_hist": 212,
+        "cotizada": true
+      },
+      {
+        "mercado": "do1x",
+        "etiqueta": "DO L o Empate",
+        "tipo": "simple",
+        "p": 0.7434,
+        "cuota_justa": 1.42,
+        "cuota_segura": 1.57,
+        "acierto_hist": 70.6,
+        "n_hist": 194,
+        "cotizada": true
+      },
+      {
+        "mercado": "do1x+under45",
+        "etiqueta": "DO L o Empate + Under 4.5",
+        "tipo": "COMBINADA",
+        "p": 0.5415,
+        "cuota_justa": 1.83,
+        "cuota_segura": 2.1,
+        "acierto_hist": 54.7,
+        "n_hist": 192,
+        "cotizada": true
+      },
+      {
+        "mercado": "local_corners_equipo_over3.5+local_remates_over10.5",
+        "etiqueta": "L Corners Over 3.5 + L Remates Over 10.5",
+        "tipo": "COMBINADA",
+        "p": 0.7364,
+        "cuota_justa": 1.36,
+        "cuota_segura": 1.5,
+        "acierto_hist": 73.5,
+        "n_hist": 185,
+        "cotizada": false
+      },
+      {
+        "mercado": "local_corners_equipo_over4.5+local_remates_over11.5",
+        "etiqueta": "L Corners Over 4.5 + L Remates Over 11.5",
+        "tipo": "COMBINADA",
+        "p": 0.5789,
+        "cuota_justa": 1.71,
+        "cuota_segura": 1.95,
+        "acierto_hist": 58.5,
+        "n_hist": 183,
+        "cotizada": false
+      },
+      {
+        "mercado": "over15+over05_local",
+        "etiqueta": "Over 1.5 + Over 0.5 L",
+        "tipo": "COMBINADA",
+        "p": 0.7983,
+        "cuota_justa": 1.27,
+        "cuota_segura": 1.39,
+        "acierto_hist": 78.6,
+        "n_hist": 182,
+        "cotizada": true
+      },
+      {
+        "mercado": "local_corners_equipo_over3.5+local_remates_over9.5",
+        "etiqueta": "L Corners Over 3.5 + L Remates Over 9.5",
+        "tipo": "COMBINADA",
+        "p": 0.7682,
+        "cuota_justa": 1.27,
+        "cuota_segura": 1.39,
+        "acierto_hist": 78.5,
+        "n_hist": 181,
+        "cotizada": false
+      },
+      {
+        "mercado": "do1x+over15",
+        "etiqueta": "DO L o Empate + Over 1.5",
+        "tipo": "COMBINADA",
+        "p": 0.6266,
+        "cuota_justa": 1.63,
+        "cuota_segura": 1.86,
+        "acierto_hist": 61.3,
+        "n_hist": 173,
+        "cotizada": true
+      },
+      {
+        "mercado": "over15+hcp2_local",
+        "etiqueta": "Over 1.5 + HCP +2 L",
+        "tipo": "COMBINADA",
+        "p": 0.733,
+        "cuota_justa": 1.34,
+        "cuota_segura": 1.47,
+        "acierto_hist": 74.9,
+        "n_hist": 171,
+        "cotizada": false
+      },
+      {
+        "mercado": "over25+hcp3_visit",
+        "etiqueta": "Over 2.5 + HCP +3 V",
+        "tipo": "COMBINADA",
+        "p": 0.5231,
+        "cuota_justa": 1.92,
+        "cuota_segura": 2.25,
+        "acierto_hist": 52.2,
+        "n_hist": 161,
+        "cotizada": true
+      },
+      {
+        "mercado": "visit_corners_equipo_over3.5+visit_remates_over7.5",
+        "etiqueta": "V Corners Over 3.5 + V Remates Over 7.5",
+        "tipo": "COMBINADA",
+        "p": 0.6429,
+        "cuota_justa": 1.62,
+        "cuota_segura": 1.85,
+        "acierto_hist": 61.9,
+        "n_hist": 160,
+        "cotizada": false
+      },
+      {
+        "mercado": "visit_corners_equipo_over3.5",
+        "etiqueta": "Lecce Corners Over 3.5",
+        "tipo": "por equipo",
+        "p": 0.6742,
+        "cuota_justa": 1.49,
+        "cuota_segura": 1.68,
+        "acierto_hist": 67.3,
+        "n_hist": 159,
+        "cotizada": true
+      }
+    ]
   }
 ];
