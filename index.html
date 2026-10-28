@@ -273,7 +273,7 @@
     <div class="tab" data-tab="watchlist">Watchlist</div>
     <div class="tab" data-tab="confianza">Confianza</div>
     <div class="tab" data-tab="diagnostico">Diagnóstico</div>
-    <div class="tab" data-tab="seguimiento">Seguimiento</div>
+    <div class="tab" data-tab="mejoras">Mejoras</div>
   </div>
 
   <!-- Apuestas -->
@@ -527,16 +527,6 @@
     </div>
     <div class="grid2" style="margin-bottom:16px">
       <div class="card card-full">
-        <div class="card-title">Cruce de línea validada — ¿sirve el criterio?</div>
-        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">
-          "Cruza" = la cuota ofrecida supera la que justifica el acierto histórico de su banda.
-          Si el criterio vale, las que cruzaban deben salir más que las que no.</p>
-        <div id="cruces-resumen"></div>
-        <div id="cruces-detalle" style="margin-top:14px"></div>
-      </div>
-    </div>
-    <div class="grid2" style="margin-bottom:16px">
-      <div class="card card-full">
         <div class="card-title">Capa 1X2 — rendimiento de lo que bloqueó</div>
         <p style="font-size:12px;color:var(--text3);margin:0 0 10px">
           Empates y victorias del equipo de menor λ que <em>habrían sido PICK</em> (EV+) y
@@ -581,20 +571,6 @@
         <div id="wl-reglas"></div>
       </div>
     </div>
-    <div class="grid2" style="margin-bottom:16px">
-      <div class="card card-full">
-        <div class="card-title">Por equipo y combinadas — ¿las que pasan el filtro rinden mejor?</div>
-        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">
-          Estas nunca son PICK por política (no por un filtro de calidad puntual —
-          ver <em>Mercados por equipo — NUNCA son PICK</em> en CLAUDE.md), así que
-          quedan todas mezcladas en watchlist: las de buena pinta junto a las que
-          solo se registran para acumular muestra. Acá se separan en dos grupos —
-          <strong>pasan el filtro</strong> (EV≥0, o si tienen línea validada, la
-          cruzan) vs <strong>no pasan</strong> — para ver si de verdad hay una
-          señal en el EV/cruce de estos mercados o es ruido igual en los dos lados.</p>
-        <div id="wl-porequipo-ev"></div>
-      </div>
-    </div>
     <div class="grid2">
       <div class="card"><div class="card-title">Watchlist por mercado</div><div id="wl-by-market"></div></div>
       <div class="card"><div class="card-title">Distribución EV% watchlist</div><div id="wl-ev-dist"></div></div>
@@ -606,17 +582,61 @@
     <div class="grid2" id="conf-cards"></div>
   </div>
 
-  <!-- Seguimiento: hipotesis abiertas sobre reglas de seleccion (se llena solo al cerrar partidos) -->
-  <div class="tab-panel" id="tab-seguimiento">
+  <!-- Mejoras: reglas candidatas de seleccion de PICK (Over y Under), medidas con el historico y con partidos nuevos -->
+  <div class="tab-panel" id="tab-mejoras">
     <div class="grid2" style="margin-bottom:16px">
       <div class="card card-full">
-        <div class="card-title">Reglas de selección vigentes (2026-10-25) — PICK máx. 2 · cuota ≤ 2 · apuesta REMATE</div>
+        <div class="card-title">Alimentación de datos — de dónde sale este tab</div>
         <p style="font-size:12px;color:var(--text3);margin:0 0 10px">
-          <b>PICK</b>: como máximo 2 por partido (los de mayor P%) y ninguno con cuota &gt; 2.00.
-          <b>REMATE</b>: una sola apuesta de remates totales de un equipo (local o visita) por partido;
-          pasa los mismos filtros que un PICK, <b>sin tope de cuota</b>; dentro de cada lado se elige la
-          línea de mayor EV×prob y, si pasan los dos lados, el de mayor P%. Las entradas nuevas las aplican (<code>add_bet.py</code>) y <b>el histórico completo fue reescrito con ellas desde el primer partido</b>. COMBO no cambia.</p>
-        <div id="seg-reglas-nuevas"></div>
+          Este tab no guarda nada propio: se recalcula entero desde <code>data.js</code>. Cada partido que cargas con <code>add_bet.py --nuevo</code>
+          y cierras con <code>--cerrar</code> entra solo a «Nuevos» y a los demás cuadros. Aquí se ve si cada partido trae lo necesario
+          (cuotas, líneas por equipo, media esperada del engine, λ) y qué falta para poder cerrarlo bien.</p>
+        <div id="mej-salud"></div>
+        <p style="font-size:12px;color:var(--text3);margin:10px 0 0">
+          <b>No se captura hoy</b> (por decisión, ver CLAUDE.md): el movimiento de la cuota entre el análisis y el saque, y de qué casa salió cada cuota.
+          Sin eso no se puede medir si el mercado corrige a favor o en contra del modelo.</p>
+      </div>
+    </div>
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
+        <div class="card-title">Posibles mejoras de selección — Over y Under (registradas 2026-10-27)</div>
+        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">
+          Cada fila es una regla <b>candidata</b> para elegir PICKs de goles. Ninguna está activa: se calculan solas desde
+          <code>watchlist</code> y <code>apuestas</code> (no requieren capturar nada extra). Columnas <b>Histórico</b> = los partidos
+          cerrados hasta el <b>#<span id="mej-corte"></span></b>, sobre los que se <b>encontraron</b> las reglas, así que son optimistas.
+          Columnas <b>Nuevos</b> = partidos cerrados después, la única prueba real. Con <b>40 partidos nuevos</b> la tabla señala cuál
+          confirmar. 1 unidad por apuesta; ±90% es aproximado e ignora que las apuestas de un mismo partido se correlacionan.</p>
+        <div id="mej-progreso" style="margin-bottom:10px"></div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;font-size:12px;margin-bottom:10px;align-items:center">
+          <label>λ total mínimo (Over)
+            <select id="mej-ol" onchange="renderMejoras()" style="font-size:12px">
+              <option value="2.8">2.8</option><option value="3" selected>3.0</option><option value="3.2">3.2</option><option value="3.3">3.3</option></select></label>
+          <label>λ total máximo (Under)
+            <select id="mej-ul" onchange="renderMejoras()" style="font-size:12px">
+              <option value="2.5">2.5</option><option value="2.7" selected>2.7</option><option value="2.9">2.9</option></select></label>
+          <label>λ total máximo (Hándicap)
+            <select id="mej-hl" onchange="renderMejoras()" style="font-size:12px">
+              <option value="3">3.0</option><option value="3.25" selected>3.25</option><option value="3.5">3.5</option></select></label>
+          <label>Máx. apuestas por partido
+            <select id="mej-max" onchange="renderMejoras()" style="font-size:12px">
+              <option value="1">1</option><option value="2" selected>2</option><option value="0">sin tope</option></select></label>
+          <label><input type="checkbox" id="mej-uni" checked onchange="renderMejoras()"> un solo total de goles por partido</label>
+        </div>
+        <div id="mej-reglas"></div>
+      </div>
+    </div>
+    <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">REMATE y mercados por equipo</div>
+    <p style="font-size:12px;color:var(--text3);margin:0 0 10px">Reglas candidatas, detalle de la regla vigente y qué mercados por equipo rinden si pasaran el filtro de PICK.</p>
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
+        <div class="card-title">REMATE y mercados por equipo — reglas candidatas</div>
+        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">
+          Misma lectura que la tabla de arriba (Histórico optimista / Nuevos = prueba real). Cada regla parte de las líneas Over de los remates totales
+          de un equipo. Es el único mercado donde el EV separó ganadores de perdedores en los tres tercios del histórico, y donde la elección de línea
+          por EV×P le ganó al azar entre candidatas con EV &gt; 0. «Línea − media» usa <code>mu_equipo</code>, la media de remates que espera el modelo.
+          Los controles no deberían pagar: si lo hacen, la hipótesis correspondiente se debilita. La simulación usa solo el filtro de EV &gt; 0
+          (no las Vías A/B de <code>add_bet.py</code>), por eso difiere un poco del REMATE real.</p>
+        <div id="mej-reglas-eq"></div>
       </div>
     </div>
     <div class="grid2" style="margin-bottom:16px">
@@ -650,18 +670,44 @@
     </div>
     <div class="grid2" style="margin-bottom:16px">
       <div class="card card-full">
-        <div class="card-title">Elección de partidos — ¿qué partidos rinden y en cuáles acierta más el modelo?</div>
+        <div class="card-title">Mercados por equipo — ¿cuáles rinden si pasaran los filtros de PICK?</div>
         <p style="font-size:12px;color:var(--text3);margin:0 0 10px">
-          Criterio en prueba (2026-10-26): elegir partidos con <b>|λ local − λ visita| ≥ 0.4</b> (favorito claro) y, como
-          <b>grupo de control</b>, sumar cada jornada 2–3 partidos de equipos fuera de la zona alta (mejor puesto ≥ 9).
-          En el backtest de 3.803 partidos el modelo predice mejor cuanto mayor es el desnivel (mejora sobre la tasa base de
-          +2.6% con diferencia &lt; 0.4 a +17.4% con &gt; 1.2), pero las apuestas EV+ con cuotas reales no ganaban en ningún grupo:
-          acertar más no es lo mismo que rendir más. Esta tabla mide eso con <b>tus</b> apuestas y se llena sola al cerrar partidos
-          (la λ y el puesto quedan guardados en cada entrada). <b>Unidades</b> = PICK + COMBO + REMATE de cada partido;
-          <b>Brier</b> = error del modelo en sus 18 mercados de goles (menor es mejor).</p>
-        <div id="seg-eleccion"></div>
+          Los mercados por equipo nunca se apuestan (siempre van a watchlist). Esta tabla simula
+          qué habría pasado si se hubiera podido apostar los que pasan el mismo filtro de un PICK:
+          EV&gt;0 y, si tienen línea validada, cruzar su <code>cuota_justa</code>; si no la tienen,
+          EV ≥ <span id="seg-minev"></span>%. Se cuenta <b>una sola línea por partido y mercado</b>
+          (la de mayor EV×prob), como en un PICK. "Sin filtro" = la mejor línea por partido y mercado
+          sin exigir el filtro.</p>
+        <div id="seg-equipo"></div>
+        <div style="margin-top:18px;display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+          <b style="font-size:13px">Local vs Visita, favorito vs no favorito</b>
+          <select id="seg-lambda-modo" onchange="renderSegLambda()" style="font-size:12px">
+            <option value="filtro">Solo las que pasan el filtro de PICK</option>
+            <option value="todas">Sin filtro (más muestra)</option></select>
+        </div>
+        <p style="font-size:12px;color:var(--text3);margin:6px 0 8px">
+          Las mismas líneas de arriba, partidas según si el equipo del mercado jugaba de local o de visita y si era el
+          <b>favorito</b> (su <code>lambda_final</code> es mayor que la del rival en ese partido). <b>λ equipo</b> y <b>λ rival</b> son
+          los promedios de cada grupo. Atenuadas: menos de 10 casos, no concluyen.</p>
+        <div id="seg-equipo-lambda"></div>
       </div>
     </div>
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
+        <div class="card-title">Por equipo y combinadas — ¿las que pasan el filtro rinden mejor?</div>
+        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">
+          Estas nunca son PICK por política (no por un filtro de calidad puntual —
+          ver <em>Mercados por equipo — NUNCA son PICK</em> en CLAUDE.md), así que
+          quedan todas mezcladas en watchlist: las de buena pinta junto a las que
+          solo se registran para acumular muestra. Acá se separan en dos grupos —
+          <strong>pasan el filtro</strong> (EV≥0, o si tienen línea validada, la
+          cruzan) vs <strong>no pasan</strong> — para ver si de verdad hay una
+          señal en el EV/cruce de estos mercados o es ruido igual en los dos lados.</p>
+        <div id="wl-porequipo-ev"></div>
+      </div>
+    </div>
+    <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">Reglas vigentes, escenarios e hipótesis abiertas</div>
+    <p style="font-size:12px;color:var(--text3);margin:0 0 10px">Antes en la pestaña Seguimiento (se unificó aquí). Mide el rendimiento de las reglas actuales y de variantes de criterio.</p>
     <p style="font-size:12px;color:var(--text3);margin:0 0 12px">
       Hipótesis abiertas sobre las reglas de selección. Todo es <b>teórico</b>: 1 unidad por
       línea, cuota−1 si acertó y −1 si no, sobre el <code>watchlist</code> y las apuestas de
@@ -669,6 +715,17 @@
       cerraron: es lo que va a alimentar la muestra. <b>±</b> es el margen aproximado al 90%
       (normal): si el ROI es menor que el ±, la muestra todavía no distingue el resultado de cero.
       Contexto (2026-10-17): sobre 65 partidos cerrados el ROI de los PICK reales fue +8.0%.</p>
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
+        <div class="card-title">Reglas de selección vigentes (2026-10-25) — PICK máx. 2 · cuota ≤ 2 · apuesta REMATE</div>
+        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">
+          <b>PICK</b>: como máximo 2 por partido (los de mayor P%) y ninguno con cuota &gt; 2.00.
+          <b>REMATE</b>: una sola apuesta de remates totales de un equipo (local o visita) por partido;
+          pasa los mismos filtros que un PICK, <b>sin tope de cuota</b>; dentro de cada lado se elige la
+          línea de mayor EV×prob y, si pasan los dos lados, el de mayor P%. Las entradas nuevas las aplican (<code>add_bet.py</code>) y <b>el histórico completo fue reescrito con ellas desde el primer partido</b>. COMBO no cambia.</p>
+        <div id="seg-reglas-nuevas"></div>
+      </div>
+    </div>
     <div class="grid2" style="margin-bottom:16px">
       <div class="card card-full">
         <div class="card-title">Escenarios de reglas — ¿qué habría pasado con otro criterio?</div>
@@ -698,30 +755,6 @@
     </div>
     <div class="grid2" style="margin-bottom:16px">
       <div class="card card-full">
-        <div class="card-title">Mercados por equipo — ¿cuáles rinden si pasaran los filtros de PICK?</div>
-        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">
-          Los mercados por equipo nunca se apuestan (siempre van a watchlist). Esta tabla simula
-          qué habría pasado si se hubiera podido apostar los que pasan el mismo filtro de un PICK:
-          EV&gt;0 y, si tienen línea validada, cruzar su <code>cuota_justa</code>; si no la tienen,
-          EV ≥ <span id="seg-minev"></span>%. Se cuenta <b>una sola línea por partido y mercado</b>
-          (la de mayor EV×prob), como en un PICK. "Sin filtro" = la mejor línea por partido y mercado
-          sin exigir el filtro.</p>
-        <div id="seg-equipo"></div>
-        <div style="margin-top:18px;display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-          <b style="font-size:13px">Local vs Visita, favorito vs no favorito</b>
-          <select id="seg-lambda-modo" onchange="renderSegLambda()" style="font-size:12px">
-            <option value="filtro">Solo las que pasan el filtro de PICK</option>
-            <option value="todas">Sin filtro (más muestra)</option></select>
-        </div>
-        <p style="font-size:12px;color:var(--text3);margin:6px 0 8px">
-          Las mismas líneas de arriba, partidas según si el equipo del mercado jugaba de local o de visita y si era el
-          <b>favorito</b> (su <code>lambda_final</code> es mayor que la del rival en ese partido). <b>λ equipo</b> y <b>λ rival</b> son
-          los promedios de cada grupo. Atenuadas: menos de 10 casos, no concluyen.</p>
-        <div id="seg-equipo-lambda"></div>
-      </div>
-    </div>
-    <div class="grid2" style="margin-bottom:16px">
-      <div class="card card-full">
         <div class="card-title">EV entre −5% y 0% que cruzan su línea validada</div>
         <p style="font-size:12px;color:var(--text3);margin:0 0 10px">
           Simples de goles que hoy <b>no</b> pueden ser PICK por tener EV ≤ 0, pero cuya cuota
@@ -737,9 +770,88 @@
         </div>
       </div>
     </div>
+    <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">Elección de partidos</div>
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
+        <div class="card-title">Elección de partidos — ¿qué partidos rinden y en cuáles acierta más el modelo?</div>
+        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">
+          Criterio en prueba (2026-10-26): elegir partidos con <b>|λ local − λ visita| ≥ 0.4</b> (favorito claro) y, como
+          <b>grupo de control</b>, sumar cada jornada 2–3 partidos de equipos fuera de la zona alta (mejor puesto ≥ 9).
+          En el backtest de 3.803 partidos el modelo predice mejor cuanto mayor es el desnivel (mejora sobre la tasa base de
+          +2.6% con diferencia &lt; 0.4 a +17.4% con &gt; 1.2), pero las apuestas EV+ con cuotas reales no ganaban en ningún grupo:
+          acertar más no es lo mismo que rendir más. Esta tabla mide eso con <b>tus</b> apuestas y se llena sola al cerrar partidos
+          (la λ y el puesto quedan guardados en cada entrada). <b>Unidades</b> = PICK + COMBO + REMATE de cada partido;
+          <b>Brier</b> = error del modelo en sus 18 mercados de goles (menor es mejor).</p>
+        <div id="seg-eleccion"></div>
+      </div>
+    </div>
+    <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">Explorador</div>
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
+        <div class="card-title">Explorador por mercado — ¿qué variable de λ ordena el ROI de este mercado?</div>
+        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">
+          Sirve para cualquier mercado (hándicap, doble oportunidad, Over 0.5 de cada equipo, córners totales, 1X2 del favorito):
+          parte los partidos en cuartiles de la variable elegida y muestra acierto, probabilidad del modelo y ROI de cada tramo.
+          <b>t</b> mide si la variable explica el acierto <i>más allá de lo que ya dice la cuota</i>: |t| ≥ 2 es señal; menos, ruido.
+          Con pocas apuestas por tramo (&lt; 15) no concluye. Usa cuota ≤ 2, salvo en «1X2 favorito» y en los mercados por equipo (todas las líneas).
+          Para éstos hay variables propias de cada línea: «Línea − media del modelo», EV, cuota. Se recalcula con cada partido cerrado.</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;font-size:12px;margin-bottom:10px;align-items:center">
+          <label>Mercado <select id="mej-x-mk" onchange="renderMejoras()" style="font-size:12px"></select></label>
+          <label>Variable <select id="mej-x-var" onchange="renderMejoras()" style="font-size:12px"></select></label>
+          <label>Selecciones <select id="mej-x-ev" onchange="renderMejoras()" style="font-size:12px">
+            <option value="todos">Todas</option><option value="pos">Solo EV &gt; 0</option><option value="neg">Solo EV ≤ 0</option></select></label>
+          <label>Muestra <select id="mej-x-sm" onchange="renderMejoras()" style="font-size:12px">
+            <option value="todos">Todos los partidos</option><option value="nuevos">Solo nuevos (&gt; #129)</option></select></label>
+        </div>
+        <div id="mej-x"></div>
+        <div style="font-size:12px;color:var(--text3);margin:18px 0 4px;font-weight:600">Umbral de λ total — cómo cambia el ROI al mover el corte (misma muestra de arriba)</div>
+        <div id="mej-umbral"></div>
+      </div>
+    </div>
+    <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">Evidencia — ¿qué criterios discriminan?</div>
+    <p style="font-size:12px;color:var(--text3);margin:0 0 10px">EV, cruce de línea validada, cuota y λ contra el resultado de todas las selecciones cotizadas.</p>
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
+        <div class="card-title">¿El EV discrimina? — ROI según el signo del EV, por familia de mercado</div>
+        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">Si el EV sirviera, la columna EV &gt; 0 rendiría claramente más que EV ≤ 0. Al 2026-10-27 solo lo hacía en remates totales.</p>
+        <div id="mej-ev"></div>
+        <div style="font-size:12px;color:var(--text3);margin:16px 0 4px;font-weight:600">Goles elegibles por tramo de EV</div>
+        <div id="mej-evbins"></div>
+      </div>
+    </div>
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
+        <div class="card-title">Cruce de línea validada — ¿sirve el criterio?</div>
+        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">
+          "Cruza" = la cuota ofrecida supera la que justifica el acierto histórico de su banda.
+          Si el criterio vale, las que cruzaban deben salir más que las que no.</p>
+        <div id="cruces-resumen"></div>
+        <div id="cruces-detalle" style="margin-top:14px"></div>
+      </div>
+    </div>
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
+        <div class="card-title">ROI por tramo de cuota — todas las selecciones de goles cotizadas (no solo las apostadas)</div>
+        <div id="mej-cuota"></div>
+      </div>
+    </div>
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
+        <div class="card-title">Mercado × λ total — ROI (n) de goles elegibles con cuota ≤ 2</div>
+        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">Los Over deberían rendir más hacia la derecha (λ alta) y los Under hacia la izquierda. Celdas con menos de 10 apuestas, atenuadas.</p>
+        <div id="mej-lambda"></div>
+      </div>
+    </div>
+    <div class="grid2">
+      <div class="card card-full">
+        <div class="card-title">¿La λ total del engine está comprimida? — goles reales vs esperados</div>
+        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">Si el modelo estuviera calibrado, los goles reales seguirían a la λ total con pendiente 1.0. Una pendiente mayor significa que en partidos de λ alta salen más goles de los previstos y en los de λ baja, menos: es la causa que explicaría la regla de Over y su espejo en Under.</p>
+        <div id="mej-calib"></div>
+      </div>
+    </div>
+
   </div>
 
-  <!-- Diagnostico: donde acierta el modelo y donde no -->
   <div class="tab-panel" id="tab-diagnostico">
     <div class="grid2" style="margin-bottom:16px">
       <div class="card card-full">
@@ -830,9 +942,8 @@
         <div style="font-size:12px;color:var(--text3);margin:18px 0 4px;font-weight:600">
           ③ Estimación de goles por banda — ¿la λ misma sub/sobreestima en algún tramo?</div>
         <p style="font-size:11px;color:var(--text3);margin:0 0 6px">
-          Compara λ_total proyectada contra los goles que de verdad se marcaron. Un sesgo
-          consistente aquí es lo único que justificaría un ajuste manual de λ por tramo.</p>
-        <div id="diag-lam-goles"></div>
+          Esta tabla se movió a la pestaña <b>Mejoras</b> (sección «Evidencia»), junto con la pendiente de goles reales contra λ
+          y las reglas de Over/Under que dependen de ella.</p>
         <div style="font-size:12px;color:var(--text3);margin:18px 0 4px;font-weight:600">
           ④ Over 0.5 por equipo vs λ del equipo — cada partido aporta 2 observaciones</div>
         <p style="font-size:11px;color:var(--text3);margin:0 0 6px">
@@ -2630,7 +2741,6 @@ function renderWatchlist(){
   renderFiltroEdge();
   renderUnicidadTotales();
   renderReglasSeleccion();
-  renderPorEquipoEV();
 }
 
 // Por equipo / combinadas: nunca son PICK por politica (no por filtro de calidad),
@@ -2639,7 +2749,7 @@ function renderWatchlist(){
 // "no pasan", para ver si el EV/cruce de estos mercados predice algo o es ruido.
 function renderPorEquipoEV(){
   const el=document.getElementById('wl-porequipo-ev'); if(!el) return;
-  const items=_dataWLLiga().flatMap(p=>(p.watchlist||[])
+  const items=_DATA.flatMap(p=>(p.watchlist||[])
     .filter(w=>w.tipo==='POR_EQUIPO'||w.tipo==='COMBINADA')
     .map(w=>({...w,partido:p})));
   if(!items.length){ el.innerHTML='<p class="empty">Sin mercados por equipo/combinadas registrados todavía.</p>'; return; }
@@ -2860,7 +2970,7 @@ function renderCrucesValidados(){
   // apostado: hubo una entrada en p.apuestas (PICK/COMBO) para ese mismo mercado.
   // cruces_validados guarda TODA cuota pegada que cae en banda validada, apostada
   // o no -- este flag es lo que permite separar las dos poblaciones despues.
-  const todos=_dataLiga().flatMap(p=>{
+  const todos=_DATA.flatMap(p=>{
     const apostados=new Set((p.apuestas||[]).map(a=>a.mercado));
     return (p.cruces_validados||[]).map(c=>({...c,partido:p,apostado:apostados.has(c.mercado)}));
   });
@@ -3479,10 +3589,8 @@ function renderLambdaBandas(){
   const cer=_dataLiga().filter(p=>p.resultado_partido&&p.lambda_final_l!=null
     &&p.lambda_final_v!=null&&p.mercados_snapshot);
   const ou=document.getElementById('diag-lam-ou25');
-  const gl=document.getElementById('diag-lam-goles');
   if(!cer.length){
-    const v='<p class="empty">Sin partidos cerrados con λ todavía.</p>';
-    ou.innerHTML=v; gl.innerHTML=v; return;
+    ou.innerHTML='<p class="empty">Sin partidos cerrados con λ todavía.</p>'; return;
   }
 
   // (2) Over/Under 2.5: P(O2.5) del modelo vs acierto real, por banda. "Cruza 50%"
@@ -3522,22 +3630,7 @@ function renderLambdaBandas(){
       +'<p style="font-size:11px;color:var(--text3);margin-top:6px">Filas atenuadas: menos de 15 partidos, todavía ruido.</p>';
   }
 
-  // (3) sesgo de la estimacion de goles: lambda_total proyectada vs goles reales.
-  gl.innerHTML='<table class="hm-table"><thead><tr><th style="text-align:left">Banda λ_total</th>'
-    +'<th title="Cantidad de partidos cerrados en esa banda de λ_total">N</th><th>λ_total media</th><th>Goles reales media</th><th>Sesgo</th><th>Error abs medio</th></tr></thead><tbody>'
-    +bandas.map(({b,arr})=>{
-      let sl=0,sr=0,se=0;
-      arr.forEach(p=>{const lt=p.lambda_final_l+p.lambda_final_v;const tot=_golesReales(p).tot;
-        sl+=lt;sr+=tot;se+=Math.abs(lt-tot);});
-      const lt=sl/arr.length, gr=sr/arr.length, err=se/arr.length, sg=lt-gr, poco=arr.length<15;
-      const cs=Math.abs(sg)<0.15?'var(--text3)':(sg>0?'var(--red)':'var(--green)');
-      return '<tr style="background:'+(poco?'var(--surface2)':'transparent')+'"><td style="text-align:left">'+b+'</td>'
-        +'<td style="color:var(--text3)">'+arr.length+'</td>'
-        +'<td>'+lt.toFixed(2)+'</td><td>'+gr.toFixed(2)+'</td>'
-        +'<td style="color:'+cs+';font-weight:600">'+(sg>=0?'+':'')+sg.toFixed(2)+'</td>'
-        +'<td style="color:var(--text3)">'+err.toFixed(2)+'</td></tr>';
-    }).join('')+'</tbody></table>'
-    +'<p style="font-size:11px;color:var(--text3);margin-top:6px">Sesgo &gt; 0: el modelo proyectó más goles de los que cayeron en ese tramo.</p>';
+  // (3) la estimacion de goles por banda (lambda_total vs goles reales) se movio al tab Mejoras: _mejRenderCalib().
 
   // (4) Over 0.5 por equipo vs la λ de ESE equipo. Cada partido cerrado aporta dos
   // observaciones: el local con su λ y el visitante con la suya.
@@ -4311,6 +4404,391 @@ function renderSeguimiento(){
   }).join('')||'<tr><td colspan="9" class="empty">Sin registros todavía.</td></tr>';
 }
 
+// ── Mejoras (2026-10-27) ──────────────────────────────────────────────────────────────────
+// Reglas candidatas de seleccion de PICK de goles. Nada de esto modifica add_bet.py ni los PICK
+// reales: se recalcula entero desde _DATA cada vez, asi que mejora solo al cerrar partidos.
+// MEJ_CORTE_ID = ultimo partido cerrado cuando se encontraron las reglas (analisis del 2026-10-27,
+// 125 partidos). Todo lo posterior es muestra NUEVA; lo anterior es optimista porque las reglas
+// se buscaron sobre esos mismos partidos. Si se agregan reglas nuevas, no mover el corte.
+const MEJ_CORTE_ID=129, MEJ_N=40, MEJ_CUOTA_MAX=2.0;
+const MEJ_GOLES=['over15','over25','over35','under25','under35','under45','btts','over05_local','over05_visit','do1x','dox2','hcp2_des','hcp3_des'];
+const MEJ_NOELEG=['empate','victoria_local','victoria_visit','corners65','corners75'];
+const MEJ_OVER=['over15','over25','over35','btts'], MEJ_UNDER=['under25','under35','under45'];
+const MEJ_TOT=['over15','over25','over35','under25','under35','under45'];
+const MEJ_HCP=['hcp2_des','hcp3_des'], MEJ_COR=['corners65','corners75'], MEJ_X12=['victoria_local','victoria_visit','empate'];
+// Variables de lambda del explorador. fn(ctx) -> valor del partido.
+const MEJ_VARS=[['tot','λ total',c=>c.lt],['ll','λ local',c=>c.ll],['lv','λ visita',c=>c.lv],
+  ['sd','Diferencia firmada (λ local − λ visita)',c=>c.sd],['ld','|Diferencia| de λ',c=>c.ld],
+  ['ratio','Razón λ mayor / λ menor',c=>c.ratio],['lc','λ de córners',c=>c.lc],
+  // Variables propias de cada linea de un mercado por equipo (fn recibe partido e item)
+  ['gap','Línea − media del modelo (mercados por equipo)',(c,i)=>i.gap],['linea','Línea (mercados por equipo)',(c,i)=>i.linea],
+  ['ev','EV% de la selección',(c,i)=>i.ev],['cuota','Cuota de la selección',(c,i)=>i.cuota],['own','λ del propio equipo (mercados por equipo)',(c,i)=>i.own]];
+const MEJ_MKX=[...MEJ_GOLES.filter(m=>!MEJ_NOELEG.includes(m)),...MEJ_COR,'fav','rem','rempu','corn'];
+const MEJ_MKX_LBL={fav:'1X2 favorito (victoria del de mayor λ)',rem:'Remates totales por equipo (todas las líneas)',
+  rempu:'Remates a puerta por equipo (todas las líneas)',corn:'Córners por equipo (todas las líneas)'};
+const MEJ_BANDAS_L=[['≤ 2.7',x=>x<=2.7],['2.7 – 3.0',x=>x>2.7&&x<=3.0],['3.0 – 3.3',x=>x>3.0&&x<=3.3],['> 3.3',x=>x>3.3]];
+
+function _mejSt(a){
+  const c=a.filter(b=>b.win!=null), n=c.length; if(!n) return null;
+  const x=c.map(b=>b.win?b.cuota-1:-1), u=x.reduce((s,v)=>s+v,0), m=u/n;
+  const sd=n>1?Math.sqrt(x.reduce((s,v)=>s+(v-m)*(v-m),0)/(n-1)):0;
+  return {n,partidos:new Set(c.map(b=>b.id)).size,ac:c.filter(b=>b.win).length/n*100,
+          cuota:c.reduce((s,b)=>s+b.cuota,0)/n,u,roi:m*100,moe:n>1?1.645*sd/Math.sqrt(n)*100:null};
+}
+const _mejCl=v=>v>=0?'pl-pos':'pl-neg', _mejSg=(v,d)=>(v>=0?'+':'')+v.toFixed(d);
+function _mejRoi(s){ return s?'<span class="'+_mejCl(s.roi)+'"><b>'+_mejSg(s.roi,1)+'%</b></span>':'<span style="color:var(--text3)">—</span>'; }
+function _mejMoe(s){ return s&&s.moe!=null?'<span style="color:var(--text3)">±'+s.moe.toFixed(0)+'</span>':'<span style="color:var(--text3)">—</span>'; }
+function _mejU(v){ return '<span class="'+_mejCl(v)+'">'+_mejSg(v,1)+'u</span>'; }
+
+// Todas las selecciones cotizadas de un partido (apuestas + watchlist), sin duplicados.
+function _mejItems(p){
+  const out=[], vistos=new Set();
+  const push=(fam,o,win,pick)=>{
+    const k=o.mercado+'|'+(o.etiqueta||'');
+    if(vistos.has(k)||o.cuota==null) return; vistos.add(k);
+    out.push({m:o.mercado,fam,id:p.id,cuota:+o.cuota,prob:+o.prob||0,ev:+o.ev_pct||0,win,pick,
+      linea:o.linea!=null?+o.linea:null,remate:o.tipo==='REMATE',
+      justa:o.cuota_justa!=null?+o.cuota_justa:null,segura:o.cuota_segura!=null?+o.cuota_segura:null});
+  };
+  (p.apuestas||[]).forEach(a=>{
+    const win=a.estado==='GANADA'?true:(a.estado==='PERDIDA'?false:null);
+    if(a.tipo==='PICK'){ if(MEJ_GOLES.includes(a.mercado)) push('gol',a,win,true); }
+    else if(a.tipo==='COMBO') push('comb',a,win,false);
+    else if(a.tipo==='REMATE') push('rem',a,win,false);
+  });
+  (p.watchlist||[]).forEach(w=>{
+    let fam=null;
+    if(w.tipo==='COMBINADA') fam='comb';
+    else if(w.tipo==='POR_EQUIPO'){
+      fam=/_remates_puerta$/.test(w.mercado)?'rempu':(/_remates$/.test(w.mercado)?'rem':(/_corners_equipo$/.test(w.mercado)?'corn':null));
+    } else if(MEJ_GOLES.includes(w.mercado)) fam='gol';
+    else if(MEJ_COR.includes(w.mercado)) fam='cor';
+    else if(MEJ_X12.includes(w.mercado)) fam='x12';
+    if(fam) push(fam,w,w.acerto==null?null:!!w.acerto,false);
+  });
+  return out;
+}
+function _mejDatos(){
+  const cerr=_DATA.filter(p=>p.resultado_partido&&p.lambda_final_l!=null&&p.lambda_final_v!=null)
+    .slice().sort((a,b)=>_pFechaHora(a)-_pFechaHora(b));
+  const hist=cerr.filter(p=>+p.id<=MEJ_CORTE_ID), mitad=Math.floor(hist.length/2);
+  const ords=new Map(hist.map((p,i)=>[p.id,i]));
+  const ctxs=cerr.map(p=>{
+    const ll=+p.lambda_final_l, lv=+p.lambda_final_v, g=String(p.resultado_partido).split('-').map(Number);
+    const items=_mejItems(p), nuevo=+p.id>MEJ_CORTE_ID, ord=ords.get(p.id);
+    const mu=p.mu_equipo||{};
+    items.forEach(i=>{
+      i.nuevo=nuevo; i.ord=ord;
+      // mercados por equipo: media esperada del modelo (mu_equipo), distancia de la linea a esa media, y si el equipo es el favorito
+      const mm=/^(local|visit)_(remates_puerta|remates|corners_equipo)$/.exec(i.m);
+      if(mm){
+        const m0=(mu[mm[1]]||{})[mm[2]];
+        i.lado=mm[1]; i.mu=m0!=null?+m0:null; i.gap=(i.mu!=null&&i.linea!=null)?i.linea-i.mu:null;
+        i.own=mm[1]==='local'?ll:lv; i.fav=mm[1]==='local'?ll>lv:lv>ll;
+      }
+    });
+    const eleg=items.filter(i=>i.fam==='gol'&&!MEJ_NOELEG.includes(i.m)&&i.win!=null);
+    return {p,id:p.id,ll,lv,lt:ll+lv,sd:ll-lv,ld:Math.abs(ll-lv),ratio:Math.max(ll,lv)/Math.min(ll,lv),
+            lc:p.lambda_corners!=null?+p.lambda_corners:null,gt:g[0]+g[1],nuevo,items,eleg,
+            pool:eleg.filter(i=>i.cuota<=MEJ_CUOTA_MAX)};
+  });
+  return {ctxs,mitad,nNuevos:ctxs.filter(c=>c.nuevo).length,nHist:ctxs.length-ctxs.filter(c=>c.nuevo).length};
+}
+function _mejPar(){
+  const g=id=>document.getElementById(id);
+  return {oL:+g('mej-ol').value, uL:+g('mej-ul').value, hL:+g('mej-hl').value, max:+g('mej-max').value, uni:g('mej-uni').checked};
+}
+// Elige del pool de un partido: candidatos de la familia que cumplen cond, un solo total de goles
+// si par.uni (el de mayor P%, como la unicidad de totales del sistema), y como mucho par.max por P%.
+function _mejElige(c,par,fam,cond){
+  let r=c.pool.filter(i=>fam.includes(i.m)&&cond(i));
+  if(par.uni){
+    const tot=r.filter(i=>MEJ_TOT.includes(i.m));
+    if(tot.length>1){ const b=tot.reduce((x,i)=>i.prob>x.prob?i:x); r=r.filter(i=>!MEJ_TOT.includes(i.m)||i===b); }
+  }
+  r=r.slice().sort((a,b)=>b.prob-a.prob);
+  return par.max?r.slice(0,par.max):r;
+}
+function _mejReglas(par){
+  const OV=MEJ_OVER, OV05=[...MEJ_OVER,'over05_local'], UN=MEJ_UNDER, ALL=MEJ_GOLES.filter(m=>!MEJ_NOELEG.includes(m));
+  const enBanda=i=>i.cuota>=1.35&&i.cuota<=1.80;
+  return [
+    {k:'ref',ref:1,g:'Referencias',n:'PICK real (regla vigente)',f:c=>c.items.filter(i=>i.pick&&i.win!=null)},
+    {k:'pool',ref:1,n:'Todos los goles elegibles con cuota ≤ 2, sin seleccionar (lo que da el azar)',f:c=>c.pool},
+    {k:'u3',ref:1,n:'Todos los Under elegibles con cuota ≤ 2, sin seleccionar',f:c=>c.pool.filter(i=>UN.includes(i.m))},
+    {k:'o1',g:'Over — causa: la λ del engine está comprimida y subestima los Over cuando λ es alta',
+      n:`Over 1.5 / 2.5 / 3.5 y BTTS con λ total ≥ ${par.oL}`,f:c=>_mejElige(c,par,OV,()=>c.lt>=par.oL)},
+    {k:'o1p',n:'… y solo si EV &gt; 0',f:c=>_mejElige(c,par,OV,i=>c.lt>=par.oL&&i.ev>0)},
+    {k:'o1n',n:'… y solo si EV ≤ 0 (la regla ignora el EV)',f:c=>_mejElige(c,par,OV,i=>c.lt>=par.oL&&i.ev<=0)},
+    {k:'o2',n:'… más Over 0.5 local',f:c=>_mejElige(c,par,OV05,()=>c.lt>=par.oL)},
+    {k:'o3',n:'… con cuota entre 1.35 y 1.80',f:c=>_mejElige(c,par,OV,i=>c.lt>=par.oL&&enBanda(i))},
+    {k:'oh',n:`PICK real sin los Over de λ &lt; ${par.oL} (híbrido)`,
+      f:c=>c.items.filter(i=>i.pick&&i.win!=null&&!(OV05.concat(['over05_visit']).includes(i.m)&&c.lt<par.oL))},
+    {k:'o0',ctl:1,n:`Control (debería perder): los mismos Over con λ total &lt; ${par.oL}`,f:c=>_mejElige(c,par,OV,()=>c.lt<par.oL)},
+    {k:'u1',g:'Under — espejo: con λ baja el engine subestima los Under (hipótesis, evidencia débil al registrar)',
+      n:`Under 2.5 / 3.5 / 4.5 con λ total ≤ ${par.uL}`,f:c=>_mejElige(c,par,UN,()=>c.lt<=par.uL)},
+    {k:'u1t',n:'… todas las líneas Under, sin unicidad ni tope (la unicidad por P% deja casi solo Under 4.5, de cuota ~1.1)',
+      f:c=>_mejElige(c,{...par,uni:false,max:0},UN,()=>c.lt<=par.uL)},
+    {k:'u1p',n:'… y solo si EV &gt; 0 (como exige el PICK)',f:c=>_mejElige(c,par,UN,i=>c.lt<=par.uL&&i.ev>0)},
+    {k:'u1n',n:'… y solo si EV ≤ 0',f:c=>_mejElige(c,par,UN,i=>c.lt<=par.uL&&i.ev<=0)},
+    {k:'u2',n:'Under en partidos parejos (|λ local − λ visita| ≤ 0.7)',f:c=>_mejElige(c,par,UN,()=>c.ld<=0.7)},
+    {k:'u0',ctl:1,n:`Control: Under con λ total ≥ ${par.oL} (si gana, el espejo no se sostiene)`,f:c=>_mejElige(c,par,UN,()=>c.lt>=par.oL)},
+    {k:'hc',ref:1,g:'Hándicap +2 / +3 del desfavorecido — hipótesis: con λ alta hay más goleadas y pierde (misma causa que el Over)',
+      n:'Todos los hándicap elegibles con cuota ≤ 2, sin seleccionar',f:c=>c.pool.filter(i=>MEJ_HCP.includes(i.m))},
+    {k:'h1',n:`Un hándicap por partido (el de mayor EV) solo con λ total &lt; ${par.hL}`,
+      f:c=>{const r=c.pool.filter(i=>MEJ_HCP.includes(i.m)&&c.lt<par.hL); return r.length?[r.reduce((b,i)=>i.ev>b.ev?i:b)]:[];}},
+    {k:'h0',ctl:1,n:`Control (debería rendir peor): hándicap con λ total ≥ ${par.hL}`,
+      f:c=>c.pool.filter(i=>MEJ_HCP.includes(i.m)&&c.lt>=par.hL)},
+    {k:'g1',g:'General',n:'Cualquier gol elegible con cuota entre 1.35 y 1.80',f:c=>_mejElige(c,par,ALL,enBanda)}
+  ];
+}
+function _mejVeredicto(R,sN,sRef,nNuevos){
+  const gris=t=>'<span style="color:var(--text3)">'+t+'</span>';
+  if(R.ref) return gris('referencia');
+  if(nNuevos<MEJ_N) return gris('faltan '+(MEJ_N-nNuevos)+' partidos nuevos');
+  if(!sN||sN.n<20) return gris('pocas apuestas ('+(sN?sN.n:0)+')');
+  const ok=sN.roi-(sN.moe||0)>0, mal=sN.roi+(sN.moe||0)<0, mejor=!sRef||sN.roi>sRef.roi;
+  if(R.ctl) return mal?'<span class="pl-pos">pierde, como se esperaba</span>':(sN.roi>0?'<span class="pl-neg">NO pierde: la hipótesis se debilita</span>':gris('sin concluir'));
+  if(ok&&mejor) return '<span class="pl-pos"><b>Confirmada</b></span>';
+  if(mal) return '<span class="pl-neg">Descartada</span>';
+  return gris('sin concluir');
+}
+function _mejRenderReglas(D,R,elId,conProg){
+  const res=R.map(r=>{
+    const bets=D.ctxs.flatMap(c=>r.f(c));
+    const H=bets.filter(b=>!b.nuevo), N=bets.filter(b=>b.nuevo);
+    const x=b=>b.win?b.cuota-1:-1;
+    return {r,sH:_mejSt(H),sN:_mejSt(N),
+      uA:H.filter(b=>b.ord<D.mitad).reduce((s,b)=>s+x(b),0),uB:H.filter(b=>b.ord>=D.mitad).reduce((s,b)=>s+x(b),0)};
+  });
+  const refN=res[0].sN;
+  const filas=res.map(o=>{
+    const g=o.r.g?'<tr><td colspan="13" style="text-align:left;background:var(--surface2);font-size:11px;color:var(--text2);font-weight:600">'+o.r.g+'</td></tr>':'';
+    const fuerte=o.r.k==='ref'||o.r.k==='o1'||o.r.k==='u1'||o.r.fuerte;
+    const h=o.sH, n=o.sN;
+    return g+'<tr'+(fuerte?' style="font-weight:600"':'')+(o.r.ctl?' style="opacity:.8"':'')+'><td style="text-align:left">'+o.r.n+'</td>'
+      +(h?'<td class="num">'+h.n+'</td><td class="num">'+h.partidos+'</td><td class="num">'+_mejRoi(h)+'</td><td class="num">'+_mejMoe(h)+'</td>'
+         +'<td class="num">'+_mejU(h.u)+'</td><td class="num">'+_mejU(o.uA)+'</td><td class="num">'+_mejU(o.uB)+'</td>'
+        :'<td colspan="7" style="color:var(--text3);text-align:center">sin casos</td>')
+      +(n?'<td class="num">'+n.n+'</td><td class="num">'+_mejRoi(n)+'</td><td class="num">'+_mejMoe(n)+'</td><td class="num">'+_mejU(n.u)+'</td>'
+         :'<td class="num" style="color:var(--text3)">0</td><td colspan="3" style="color:var(--text3);text-align:center">—</td>')
+      +'<td style="text-align:left;font-size:11px">'+_mejVeredicto(o.r,n,refN,D.nNuevos)+'</td></tr>';
+  }).join('');
+  document.getElementById(elId).innerHTML='<div class="table-wrap table-wrap-scroll"><table class="hm-table"><thead>'
+    +'<tr><th></th><th colspan="7" style="text-align:center">Histórico (≤ #'+MEJ_CORTE_ID+', optimista)</th><th colspan="4" style="text-align:center">Nuevos (&gt; #'+MEJ_CORTE_ID+')</th><th></th></tr>'
+    +'<tr><th style="text-align:left">Regla</th><th class="num">Apuestas</th><th class="num">Partidos</th><th class="num">ROI</th><th class="num">±90%</th>'
+    +'<th class="num">Unidades</th><th class="num">1ª mitad</th><th class="num">2ª mitad</th>'
+    +'<th class="num">Apuestas</th><th class="num">ROI</th><th class="num">±90%</th><th class="num">Unidades</th><th style="text-align:left">Veredicto</th></tr>'
+    +'</thead><tbody>'+filas+'</tbody></table></div>';
+  if(!conProg) return;
+  // Recomendacion
+  const ok=res.filter(o=>!o.r.ref&&!o.r.ctl&&_mejVeredicto(o.r,o.sN,refN,D.nNuevos).indexOf('Confirmada')>=0)
+    .sort((a,b)=>b.sN.roi-a.sN.roi);
+  const pct=Math.min(100,D.nNuevos/MEJ_N*100);
+  let msg;
+  if(D.nNuevos<MEJ_N) msg='Faltan <b>'+(MEJ_N-D.nNuevos)+'</b> partidos nuevos cerrados para decidir. Hasta entonces, las cifras del histórico no prueban nada: las reglas se eligieron mirándolas.';
+  else if(ok.length) msg='<b class="pl-pos">Mejor opción con partidos nuevos:</b> '+ok[0].r.n+' — ROI '+_mejSg(ok[0].sN.roi,1)+'% en '+ok[0].sN.n+' apuestas'
+    +(refN?' (PICK real: '+_mejSg(refN.roi,1)+'%)':'')+'. Una regla se llama «Confirmada» si su ROI menos el margen ±90% sigue siendo positivo y supera al PICK real en los mismos partidos.';
+  else msg='<b>Ninguna regla se confirma</b> con '+D.nNuevos+' partidos nuevos: mantener la regla actual.';
+  document.getElementById('mej-progreso').innerHTML=
+    '<div style="display:flex;align-items:center;gap:10px;font-size:12px"><div style="flex:0 0 200px;height:8px;border-radius:4px;background:var(--surface2);overflow:hidden">'
+    +'<div style="width:'+pct+'%;height:100%;background:var(--accent,#378add)"></div></div>'
+    +'<span><b>'+D.nNuevos+'</b> de '+MEJ_N+' partidos nuevos cerrados · histórico: '+D.nHist+' partidos</span></div>'
+    +'<p style="font-size:12px;margin:8px 0 0">'+msg+'</p>';
+}
+// Reglas candidatas para REMATE (remates totales de un equipo) y seguimiento de los otros mercados por equipo.
+// Todas parten de las lineas Over de cada equipo; una linea por equipo-lado (la de mayor EV×P) y,
+// salvo 'ambos', un solo lado por partido (el de mayor P%), igual que la regla vigente de add_bet.py.
+function _mejReglasEq(){
+  const sel=(fam,cond,modo,score)=>c=>{
+    const e=c.items.filter(i=>i.fam===fam&&i.win!=null&&cond(i));
+    if(modo==='todas') return e;
+    const sc=score||(i=>i.ev*i.prob);
+    const best=l=>e.filter(i=>i.lado===l).reduce((b,i)=>(!b||sc(i)>sc(b))?i:b,null);
+    const L=best('local'), V=best('visit');
+    if(modo==='ambos') return [L,V].filter(Boolean);
+    return L&&V?[V.prob>L.prob?V:L]:[L||V].filter(Boolean);
+  };
+  const ev0=i=>i.ev>0, lejos=i=>i.gap!=null&&i.gap<=-4, cerca=i=>i.gap==null||i.gap>-4;
+  return [
+    {k:'ref',ref:1,g:'Remates totales por equipo — el EV sí discrimina aquí (único mercado donde pasó)',n:'REMATE real (regla vigente)',f:c=>c.items.filter(i=>i.remate&&i.win!=null)},
+    {k:'rall',ref:1,n:'Todas las líneas de remates totales, sin seleccionar (lo que da el azar)',f:sel('rem',()=>true,'todas')},
+    {k:'rev',ref:1,n:'Todas las líneas con EV &gt; 0 (sin elegir una)',f:sel('rem',ev0,'todas')},
+    {k:'ract',fuerte:1,n:'EV &gt; 0, mejor línea por EV×P de cada equipo, un lado por partido (regla vigente simulada)',f:sel('rem',ev0,'lado')},
+    {k:'rgap',fuerte:1,n:'… y línea no más de 4 por debajo de la media del modelo (hipótesis del 2026-10-26)',f:sel('rem',i=>ev0(i)&&cerca(i),'lado')},
+    {k:'rgap2',n:'… ídem, apostando los dos lados',f:sel('rem',i=>ev0(i)&&cerca(i),'ambos')},
+    {k:'rc2',n:'EV &gt; 0 con cuota ≤ 2 (la regla actual, pero con tope de cuota)',f:sel('rem',i=>ev0(i)&&i.cuota<=2,'lado')},
+    {k:'rprob',n:'EV &gt; 0, línea de mayor probabilidad (más segura)',f:sel('rem',ev0,'lado',i=>i.prob)},
+    {k:'rfar',ctl:1,n:'Control (no debería pagar): EV &gt; 0 con línea 4 o más por debajo de la media',f:sel('rem',i=>ev0(i)&&lejos(i),'lado')},
+    {k:'pu',g:'Remates a puerta — sin señal clara al registrar (EV &gt; 0 vs EV ≤ 0 cambiaba de signo entre tercios)',
+      n:'Misma regla que REMATE aplicada a remates a puerta',f:sel('rempu',ev0,'lado')},
+    {k:'co',g:'Córners por equipo — el modelo sobreestima (EV &gt; 0 acertaba 44% con prob. 60%)',ctl:1,
+      n:'Control (debería perder): misma regla aplicada a córners por equipo',f:sel('corn',ev0,'lado')}
+  ];
+}
+function _mejTabla(cab,filas){
+  return '<div class="table-wrap table-wrap-scroll"><table class="hm-table"><thead><tr>'+cab.map((c,i)=>'<th'+(i?' class="num"':' style="text-align:left"')+'>'+c+'</th>').join('')
+    +'</tr></thead><tbody>'+filas+'</tbody></table></div>';
+}
+function _mejCelda(s){ return s?'<td class="num">'+s.n+'</td><td class="num">'+_mejRoi(s)+'</td>':'<td class="num" style="color:var(--text3)">0</td><td class="num" style="color:var(--text3)">—</td>'; }
+function _mejLectura(a,b){ // a = EV<=0, b = EV>0
+  if(!a||!b||a.n<15||b.n<15) return '<span style="color:var(--text3)">muestra chica</span>';
+  const d=b.roi-a.roi, m=Math.sqrt((a.moe||0)**2+(b.moe||0)**2);
+  if(d>m) return '<span class="pl-pos">EV &gt; 0 rinde más</span>';
+  if(d<-m) return '<span class="pl-neg">EV &gt; 0 rinde menos</span>';
+  return '<span style="color:var(--text3)">sin diferencia clara</span>';
+}
+function _mejRenderEV(D){
+  const todos=D.ctxs.flatMap(c=>c.items.filter(i=>i.win!=null));
+  const fams=[['Goles elegibles',i=>i.fam==='gol'&&!MEJ_NOELEG.includes(i.m)],['Combinadas',i=>i.fam==='comb'],
+    ['Remates totales (equipo)',i=>i.fam==='rem'],['Remates a puerta (equipo)',i=>i.fam==='rempu'],['Córners (equipo)',i=>i.fam==='corn']];
+  const filas=fams.map(([l,f])=>{
+    const a=todos.filter(i=>f(i)&&i.ev<=0), b=todos.filter(i=>f(i)&&i.ev>0), sa=_mejSt(a), sb=_mejSt(b);
+    return '<tr><td style="text-align:left">'+l+'</td>'+_mejCelda(sa)+_mejCelda(sb)+'<td style="text-align:left;font-size:11px">'+_mejLectura(sa,sb)+'</td></tr>';
+  }).join('');
+  document.getElementById('mej-ev').innerHTML=_mejTabla(['Familia','EV ≤ 0 · n','ROI','EV &gt; 0 · n','ROI','Lectura'],filas);
+  const eleg=D.ctxs.flatMap(c=>c.eleg);
+  const bins=[['EV ≤ −5',i=>i.ev<=-5],['−5 a −2',i=>i.ev>-5&&i.ev<=-2],['−2 a 0',i=>i.ev>-2&&i.ev<=0],['0 a 1.5',i=>i.ev>0&&i.ev<=1.5],
+    ['1.5 a 3',i=>i.ev>1.5&&i.ev<=3],['3 a 5',i=>i.ev>3&&i.ev<=5],['EV &gt; 5',i=>i.ev>5]];
+  document.getElementById('mej-evbins').innerHTML=_mejTabla(['EV%','Apuestas','Acierto','Cuota media','ROI','±90%'],
+    bins.map(([l,f])=>{ const s=_mejSt(eleg.filter(f));
+      return '<tr><td style="text-align:left">'+l+'</td>'+(s?'<td class="num">'+s.n+'</td><td class="num">'+s.ac.toFixed(0)+'%</td><td class="num">'+s.cuota.toFixed(2)
+        +'</td><td class="num">'+_mejRoi(s)+'</td><td class="num">'+_mejMoe(s)+'</td>':'<td colspan="5" style="color:var(--text3);text-align:center">sin casos</td>')+'</tr>'; }).join(''));
+}
+// Alimentacion de datos: de donde sale lo que muestra este tab y si cada partido nuevo trae lo necesario.
+// Todo se calcula de _DATA: cerrar un partido con add_bet.py --cerrar lo suma solo a "Nuevos".
+function _mejRenderSalud(){
+  const el=document.getElementById('mej-salud'); if(!el) return;
+  const f=p=>{ const wl=p.watchlist||[];
+    return {id:p.id,cerr:!!p.resultado_partido,
+      gol:wl.filter(w=>!w.tipo&&MEJ_GOLES.includes(w.mercado)).length+(p.apuestas||[]).filter(a=>a.tipo==='PICK').length,
+      eq:wl.filter(w=>w.tipo==='POR_EQUIPO').length, comb:wl.filter(w=>w.tipo==='COMBINADA').length,
+      mu:p.mu_equipo_fuente==='engine', lam:p.lambda_final_l!=null&&p.lambda_final_v!=null, lc:p.lambda_corners!=null,
+      stats:!!p.stats_reales, eqSinRes:wl.filter(w=>w.tipo==='POR_EQUIPO'&&w.acerto==null).length};
+  };
+  const E=_DATA.map(f), H=E.filter(e=>e.cerr&&+e.id<=MEJ_CORTE_ID), N=E.filter(e=>e.cerr&&+e.id>MEJ_CORTE_ID), P=E.filter(e=>!e.cerr);
+  const med=(a,k)=>a.length?(a.reduce((s,e)=>s+e[k],0)/a.length).toFixed(1):'—';
+  const pct=(a,k)=>a.length?Math.round(a.filter(e=>e[k]).length/a.length*100)+'%':'—';
+  const fila=(l,a)=>'<tr><td style="text-align:left">'+l+'</td><td class="num">'+a.length+'</td><td class="num">'+med(a,'gol')+'</td><td class="num">'+med(a,'eq')
+    +'</td><td class="num">'+med(a,'comb')+'</td><td class="num">'+pct(a,'mu')+'</td><td class="num">'+pct(a,'lam')+'</td><td class="num">'+pct(a,'lc')+'</td></tr>';
+  const alertas=[];
+  const cerrSinStats=E.filter(e=>e.cerr&&!e.stats), cerrSinRes=E.filter(e=>e.cerr&&e.eqSinRes>0);
+  if(cerrSinStats.length) alertas.push('Cerrados sin <code>stats_reales</code> (sus mercados por equipo no se pueden validar): <b>'+cerrSinStats.map(e=>'#'+e.id).join(', ')+'</b>. Corre <code>update_data.py</code> y vuelve a cerrarlos.');
+  if(cerrSinRes.length) alertas.push('Cerrados con mercados por equipo sin resultado: <b>'+cerrSinRes.map(e=>'#'+e.id).join(', ')+'</b>.');
+  const sinLam=E.filter(e=>!e.lam); if(sinLam.length) alertas.push('Sin λ final guardada (no entran al análisis): <b>'+sinLam.map(e=>'#'+e.id).join(', ')+'</b>.');
+  const pobres=P.concat(N).filter(e=>e.gol<5); if(pobres.length) alertas.push('Pocas cuotas de goles cotizadas (&lt; 5): <b>'+pobres.map(e=>'#'+e.id+' ('+e.gol+')').join(', ')+'</b>. Con pocas cuotas las reglas tienen menos donde elegir.');
+  el.innerHTML='<div class="table-wrap"><table class="hm-table"><thead><tr><th style="text-align:left">Grupo</th><th class="num">Partidos</th>'
+    +'<th class="num">Cuotas de goles (media)</th><th class="num">Líneas por equipo (media)</th><th class="num">Combinadas (media)</th>'
+    +'<th class="num" title="Media esperada de remates/córners guardada por el engine al cargar. En los partidos viejos se recuperó del snapshot (misma cifra, error ≤ 0.01)">Con media del engine</th><th class="num">Con λ final</th><th class="num">Con λ córners</th></tr></thead><tbody>'
+    +fila('Histórico (≤ #'+MEJ_CORTE_ID+')',H)+fila('Nuevos cerrados (&gt; #'+MEJ_CORTE_ID+')',N)
+    +fila('Pendientes de cerrar'+(P.length?' ('+P.map(e=>'#'+e.id).join(', ')+')':''),P)+'</tbody></table></div>'
+    +(alertas.length?'<ul style="font-size:12px;margin:10px 0 0 18px;padding:0">'+alertas.map(a=>'<li>'+a+'</li>').join('')+'</ul>'
+      :'<p style="font-size:12px;margin:8px 0 0" class="pl-pos">Sin alertas: todos los partidos cerrados tienen resultado y estadísticas.</p>');
+}
+// El cruce de linea validada (antes aqui y en Watchlist) vive ahora en una sola tarjeta: renderCrucesValidados().
+function _mejRenderCuota(D){
+  const eleg=D.ctxs.flatMap(c=>c.eleg);
+  const bands=[['1.00 – 1.20',1,1.2],['1.20 – 1.35',1.2,1.35],['1.35 – 1.50',1.35,1.5],['1.50 – 1.80',1.5,1.8],['1.80 – 2.20',1.8,2.2],['&gt; 2.20',2.2,99]];
+  document.getElementById('mej-cuota').innerHTML=_mejTabla(['Cuota','Apuestas','Acierto','ROI','±90%'],bands.map(([l,lo,hi])=>{
+    const s=_mejSt(eleg.filter(i=>i.cuota>lo&&i.cuota<=hi||(lo===1&&i.cuota<=hi)));
+    return '<tr><td style="text-align:left">'+l+'</td>'+(s?'<td class="num">'+s.n+'</td><td class="num">'+s.ac.toFixed(0)+'%</td><td class="num">'+_mejRoi(s)+'</td><td class="num">'+_mejMoe(s)+'</td>'
+      :'<td colspan="4" style="color:var(--text3);text-align:center">sin casos</td>')+'</tr>'; }).join(''));
+}
+function _mejRenderLambda(D){
+  const mk=MEJ_GOLES.filter(m=>!MEJ_NOELEG.includes(m));
+  const cab=['Mercado',...MEJ_BANDAS_L.map(b=>'λ '+b[0]),'Todos'];
+  const celda=(arr)=>{ const s=_mejSt(arr);
+    if(!s) return '<td class="num" style="color:var(--text3)">—</td>';
+    return '<td class="num" style="'+(s.n<10?'opacity:.45':'')+'"><span class="'+_mejCl(s.roi)+'"><b>'+_mejSg(s.roi,0)+'%</b></span> <span style="color:var(--text3)">('+s.n+')</span></td>'; };
+  const filas=mk.map(m=>{
+    const its=D.ctxs.flatMap(c=>c.pool.filter(i=>i.m===m).map(i=>({...i,lt:c.lt})));
+    return '<tr><td style="text-align:left">'+m+'</td>'+MEJ_BANDAS_L.map(b=>celda(its.filter(i=>b[1](i.lt)))).join('')+celda(its)+'</tr>';
+  }).join('');
+  const todos=D.ctxs.flatMap(c=>c.pool.map(i=>({...i,lt:c.lt})));
+  const fam=(l,ms)=>{const its=todos.filter(i=>ms.includes(i.m));
+    return '<tr style="background:var(--surface2);font-weight:600"><td style="text-align:left">'+l+'</td>'+MEJ_BANDAS_L.map(b=>celda(its.filter(i=>b[1](i.lt)))).join('')+celda(its)+'</tr>'; };
+  document.getElementById('mej-lambda').innerHTML=_mejTabla(cab,fam('Familia Over (1.5/2.5/3.5/BTTS)',MEJ_OVER)+fam('Familia Under',MEJ_UNDER)+filas);
+}
+function _mejRenderCalib(D){
+  const cs=D.ctxs; if(cs.length<5){ document.getElementById('mej-calib').innerHTML='<p class="empty">Pocos partidos.</p>'; return; }
+  const filas=MEJ_BANDAS_L.map(([l,f])=>{ const a=cs.filter(c=>f(c.lt));
+    if(!a.length) return '<tr><td style="text-align:left">λ '+l+'</td><td colspan="5" style="color:var(--text3);text-align:center">—</td></tr>';
+    const pr=a.reduce((s,c)=>s+c.lt,0)/a.length, re=a.reduce((s,c)=>s+c.gt,0)/a.length, er=a.reduce((s,c)=>s+Math.abs(c.lt-c.gt),0)/a.length;
+    return '<tr style="'+(a.length<15?'opacity:.6':'')+'"><td style="text-align:left">λ '+l+'</td><td class="num">'+a.length+'</td><td class="num">'+pr.toFixed(2)+'</td><td class="num">'+re.toFixed(2)
+      +'</td><td class="num '+_mejCl(re-pr)+'">'+_mejSg(re-pr,2)+'</td><td class="num" style="color:var(--text3)">'+er.toFixed(2)+'</td></tr>'; }).join('');
+  const n=cs.length, mx=cs.reduce((s,c)=>s+c.lt,0)/n, my=cs.reduce((s,c)=>s+c.gt,0)/n;
+  const sxx=cs.reduce((s,c)=>s+(c.lt-mx)**2,0), sxy=cs.reduce((s,c)=>s+(c.lt-mx)*(c.gt-my),0), b=sxy/sxx;
+  const res=cs.reduce((s,c)=>s+(c.gt-(my+b*(c.lt-mx)))**2,0)/(n-2), se=Math.sqrt(res/sxx);
+  document.getElementById('mej-calib').innerHTML=_mejTabla(['λ total del engine','Partidos','Goles esperados','Goles reales','Real − esperado','Error abs. medio'],filas)
+    +'<p style="font-size:13px;margin:10px 0 0">Pendiente goles reales ~ λ total: <b>'+b.toFixed(2)+'</b> ± '+(1.645*se).toFixed(2)+' (90%). '
+    +(b-1.645*se>1?'<span class="pl-pos">Mayor que 1 con claridad: la λ está comprimida.</span>':(b+1.645*se<1?'<span class="pl-neg">Menor que 1 con claridad: la λ está estirada de más.</span>':'<span style="color:var(--text3)">Compatible con 1.0 (λ calibrada).</span>'))
+    +' Al 2026-10-27 (125 partidos) era 1.77 ± 0.61.</p>';
+}
+// Explorador: un mercado contra una variable de lambda, en cuartiles de esa variable.
+function _mejRenderExplora(D){
+  const gv=id=>document.getElementById(id), mkSel=gv('mej-x-mk'), vSel=gv('mej-x-var');
+  if(!mkSel.options.length){
+    mkSel.innerHTML=MEJ_MKX.map(m=>'<option value="'+m+'">'+(MEJ_MKX_LBL[m]||m)+'</option>').join('');
+    mkSel.value='hcp2_des';
+    vSel.innerHTML=MEJ_VARS.map(v=>'<option value="'+v[0]+'">'+v[1]+'</option>').join('');
+  }
+  const mk=mkSel.value, vf=MEJ_VARS.find(v=>v[0]===vSel.value)[2], solo=gv('mej-x-sm').value==='nuevos';
+  const evSel=gv('mej-x-ev').value, equipo=['rem','rempu','corn'].includes(mk), its=[];
+  D.ctxs.filter(c=>!solo||c.nuevo).forEach(c=>{
+    const cand=mk==='fav'?c.items.filter(i=>i.fam==='x12'&&i.m!=='empate'&&(i.m==='victoria_local')===(c.sd>0)&&c.sd!==0)
+      :(equipo?c.items.filter(i=>i.fam===mk):c.items.filter(i=>i.m===mk&&i.cuota<=MEJ_CUOTA_MAX));
+    cand.filter(i=>i.win!=null&&(evSel==='todos'||(evSel==='pos'?i.ev>0:i.ev<=0))).forEach(i=>{
+      const v=vf(c,i); if(v==null||isNaN(v)) return;
+      its.push({...i,v});
+    });
+  });
+  const el=gv('mej-x');
+  if(its.length<12){ el.innerHTML='<p class="empty">Muestra insuficiente ('+its.length+' apuestas).</p>'; gv('mej-umbral').innerHTML=''; _mejRenderUmbral(D,solo); return; }
+  const k=its.length>=48?4:2, vs=its.map(i=>i.v).sort((a,b)=>a-b);
+  const edges=[...Array(k+1).keys()].map(j=>j===0?-Infinity:(j===k?Infinity:vs[Math.floor(vs.length*j/k)]));
+  const filas=[...Array(k).keys()].map(j=>{
+    const a=its.filter(i=>i.v>edges[j]&&i.v<=edges[j+1]||(j===0&&i.v<=edges[1])), s=_mejSt(a);
+    const lo=j===0?vs[0]:edges[j], hi=j===k-1?vs[vs.length-1]:edges[j+1];
+    const pr=a.length?a.reduce((x,i)=>x+i.prob,0)/a.length:0;
+    return '<tr><td style="text-align:left">'+lo.toFixed(2)+' – '+hi.toFixed(2)+'</td>'
+      +(s?'<td class="num" style="'+(s.n<15?'opacity:.5':'')+'">'+s.n+'</td><td class="num">'+s.ac.toFixed(0)+'%</td><td class="num">'+pr.toFixed(0)+'%</td>'
+          +'<td class="num '+_mejCl(s.ac-pr)+'">'+_mejSg(s.ac-pr,0)+'</td><td class="num">'+s.cuota.toFixed(2)+'</td><td class="num">'+_mejRoi(s)+'</td><td class="num">'+_mejMoe(s)+'</td>'
+         :'<td colspan="7" style="color:var(--text3);text-align:center">—</td>')+'</tr>'; }).join('');
+  const x=its.map(i=>i.v), r=its.map(i=>(i.win?1:0)-1/i.cuota), n=its.length;
+  const mx=x.reduce((s,v)=>s+v,0)/n, mr=r.reduce((s,v)=>s+v,0)/n;
+  const sxy=x.reduce((s,v,j)=>s+(v-mx)*(r[j]-mr),0), sxx=x.reduce((s,v)=>s+(v-mx)**2,0), syy=r.reduce((s,v)=>s+(v-mr)**2,0);
+  const c=sxx>0&&syy>0?sxy/Math.sqrt(sxx*syy):0, t=c*Math.sqrt((n-2)/Math.max(1e-9,1-c*c));
+  const tot=_mejSt(its);
+  el.innerHTML=_mejTabla(['Tramo de la variable','Apuestas','Acierto','Prob. modelo','Real − modelo','Cuota media','ROI','±90%'],filas)
+    +'<p style="font-size:13px;margin:10px 0 0">'+n+' apuestas · ROI total '+_mejRoi(tot)+' · t = <b>'+_mejSg(t,1)+'</b> '
+    +(Math.abs(t)>=2?'<span class="pl-pos">señal: la variable explica el acierto más allá de la cuota.</span>':'<span style="color:var(--text3)">sin señal clara (|t| &lt; 2).</span>')
+    +' <span style="color:var(--text3)">«Real − modelo» positivo = el modelo se queda corto en ese tramo.</span></p>';
+  _mejRenderUmbral(D,solo);
+}
+// Cortes de λ total para Over (≥) y Under (≤), todas las líneas elegibles con cuota ≤ 2, sin unicidad ni tope.
+function _mejRenderUmbral(D,solo){
+  const base=D.ctxs.filter(c=>!solo||c.nuevo);
+  const fam=ms=>base.flatMap(c=>c.pool.filter(i=>ms.includes(i.m)).map(i=>({...i,lt:c.lt})));
+  const tab2=(arr,ths,ge)=>ths.map(t=>{
+    const a=arr.filter(i=>ge?i.lt>=t:i.lt<=t), b=arr.filter(i=>ge?i.lt<t:i.lt>t), sa=_mejSt(a), sb=_mejSt(b);
+    return '<tr><td style="text-align:left">λ total '+(ge?'≥ ':'≤ ')+t.toFixed(1)+'</td>'+_mejCelda(sa)+_mejCelda(sb)+'</tr>'; }).join('');
+  const T=(titulo,arr,ths,ge)=>'<div style="flex:1;min-width:300px"><div style="font-size:12px;font-weight:600;margin-bottom:4px">'+titulo+'</div>'
+    +_mejTabla(['Corte','Dentro · n','ROI','Fuera · n','ROI'],tab2(arr,ths,ge))+'</div>';
+  document.getElementById('mej-umbral').innerHTML='<div style="display:flex;gap:16px;flex-wrap:wrap">'
+    +T('Familia Over (1.5/2.5/3.5/BTTS): «dentro» = λ alta',fam(MEJ_OVER),[2.8,2.9,3.0,3.1,3.2,3.3,3.4],true)
+    +T('Familia Under: «dentro» = λ baja',fam(MEJ_UNDER),[2.4,2.5,2.6,2.7,2.8,2.9,3.0],false)+'</div>';
+}
+function renderMejoras(){
+  if(!document.getElementById('mej-reglas')) return;
+  document.getElementById('mej-corte').textContent=MEJ_CORTE_ID;
+  const D=_mejDatos(), par=_mejPar();
+  // Tarjetas que vivian en Seguimiento y Watchlist y se unificaron aqui (todas ignoran el filtro de liga).
+  renderSeguimiento(); renderCrucesValidados(); renderPorEquipoEV();
+  _mejRenderSalud();
+  _mejRenderExplora(D);
+  _mejRenderReglas(D,_mejReglas(par),'mej-reglas',true); _mejRenderReglas(D,_mejReglasEq(),'mej-reglas-eq',false); _mejRenderEV(D); _mejRenderCuota(D); _mejRenderLambda(D); _mejRenderCalib(D);
+}
+
 function renderAll(){
   renderMetrics();
   renderBets();
@@ -4321,9 +4799,9 @@ function renderAll(){
   if(active==='mercados'){renderCuotaROI();renderMercadoCuotaHeatmap();renderRemateMercados();renderTipoStats();renderMercadoFreq();renderCombosPorPar();}
   if(active==='ligas'){renderLigaTipo();renderLigaRollingROI();renderMercadoLigaHeatmap();renderLigaCards();}
   if(active==='variables'){renderVariablesHeatmap();}
-  if(active==='watchlist'){renderWatchlist();renderCrucesValidados();}
+  if(active==='watchlist'){renderWatchlist();}
     if(active==='diagnostico'){renderDiagnostico();}
-  if(active==='seguimiento'){renderSeguimiento();}
+  if(active==='mejoras'){renderMejoras();}
   if(active==='confianza'){renderConfianza();}
 }
 
