@@ -1329,6 +1329,19 @@ function renderMetrics(){
 }
 
 // ── Bets table ────────────────────────────────────────────
+// Media esperada de remates / remates a puerta / córners de cada equipo (mu_equipo, la guarda add_bet.py --nuevo;
+// en las entradas viejas se recuperó del snapshot) junto a lo que pasó de verdad (stats_reales) cuando el partido cerró.
+// Formato local–visita.
+function _muTexto(p){
+  const mu=p.mu_equipo; if(!mu||!mu.local||!mu.visit) return '';
+  const sr=p.stats_reales||null, f=v=>v!=null?Number(v).toFixed(1):'—';
+  const par=(k,kr,lbl)=>{
+    const real=(sr&&sr['local_'+kr]!=null&&sr['visit_'+kr]!=null)
+      ?' <span style="color:var(--text3)">(real '+sr['local_'+kr]+'–'+sr['visit_'+kr]+')</span>':'';
+    return lbl+' <b>'+f(mu.local[k])+'–'+f(mu.visit[k])+'</b>'+real;
+  };
+  return par('remates','S','Remates')+' · '+par('remates_puerta','ST','A puerta')+' · '+par('corners_equipo','C','Córners');
+}
 function renderBets(){
   const f={liga:document.getElementById('f-liga').value,estado:document.getElementById('f-estado').value,
     tipo:document.getElementById('f-tipo').value,conf:document.getElementById('f-conf').value};
@@ -1380,7 +1393,8 @@ function renderBets(){
       +'<td class="bets-caret" style="color:var(--text3);font-weight:700">▶</td>'
       +'<td style="font-weight:600">'+(p.resultado_partido?p.resultado_partido:'<span style="color:var(--text3);font-weight:400">—</span>')+'</td>'
       +'<td><div class="partido-cell">'+p.partido+'</div>'
-        +'<div class="partido-sub">'+(LIGA_NAMES[p.liga]||p.liga)+' · J'+p.jornada+' · '+p.fecha+(p.hora?' '+p.hora:'')+'</div></td>'
+        +'<div class="partido-sub">'+(LIGA_NAMES[p.liga]||p.liga)+' · J'+p.jornada+' · '+p.fecha+(p.hora?' '+p.hora:'')+'</div>'
+        +(_muTexto(p)?'<div class="partido-sub" title="Media esperada por el modelo, local–visita; entre paréntesis lo que pasó">Esperado: '+_muTexto(p)+'</div>':'')+'</td>'
       +'<td>'+badge(LIGA_NAMES[p.liga]||p.liga,'liga')+'</td>'
       +'<td colspan="9" style="color:var(--text3);font-size:12px">'+resumen.join(' · ')+'</td></tr>';
 
