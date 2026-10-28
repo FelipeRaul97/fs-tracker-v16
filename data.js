@@ -139674,5 +139674,654 @@ const TRACKER_DATA = [
         "cotizada": true
       }
     ]
+  },
+  {
+    "id": "132",
+    "fecha": "2026-10-28",
+    "jornada": 9,
+    "liga": "I1",
+    "partido": "Genoa vs Juventus",
+    "lambda_forma_l": 0.5064,
+    "lambda_forma_v": 1.7744,
+    "lambda_reg_l": 0.7131,
+    "lambda_reg_v": 1.4219,
+    "lambda_base_l": 0.6511,
+    "lambda_base_v": 1.5276,
+    "lambda_final_l": 0.5634,
+    "lambda_final_v": 1.6152,
+    "lambda_shadow_l": 0.5352,
+    "lambda_shadow_v": 1.6152,
+    "lambda_corners": 9.761,
+    "ratio": 0.34881129271916794,
+    "visit_dominante": "True",
+    "variables_activas": "V#2(L:0.95)",
+    "variables": {
+      "v1": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa": false,
+        "activa_local": false,
+        "activa_visit": false,
+        "detalle_local": "--",
+        "detalle_visit": "--",
+        "detalle": "Ambos necesitan >=20 PJ (local:8, visit:8)"
+      },
+      "v2": {
+        "factor_local": 0.95,
+        "factor_visit": 1.0,
+        "activa_local": true,
+        "activa_visit": false,
+        "detalle_local": "Rank 16, margen 3pts sobre zona desc",
+        "detalle_visit": "Rank 7, margen 10pts -- fuera de riesgo"
+      },
+      "v3": {
+        "factor_local": 1.0,
+        "activa": true,
+        "n_partidos": 20,
+        "GpG_casa": 1.35,
+        "GpG_liga": 1.35,
+        "hs": 0.0,
+        "muestra_completa": true,
+        "detalle": "hs=+0.00 (20 ptdos)"
+      },
+      "v4": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa_local": false,
+        "activa_visit": false,
+        "bajas_local": 0,
+        "bajas_visit": 0
+      },
+      "v5": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa_local": false,
+        "activa_visit": false
+      },
+      "v6": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa": false
+      },
+      "v7": {
+        "skip": false,
+        "activa_local": false,
+        "activa_visit": false,
+        "detalle": "Sin DT nuevo"
+      },
+      "v8": {
+        "activa": false,
+        "anulado_derby": false,
+        "detalle": "Inactiva"
+      }
+    },
+    "confianza": "MEDIA",
+    "notas": "Juventus Remates Over 10.5 @1.09 y 12.5 @1.24 dados por el usuario (otra casa); 11.5 y HCP+3 Juventus no existen; Betano no publica remates Juventus 10.5-12.5",
+    "resultado_partido": null,
+    "goles_esperados": "2.18",
+    "apuestas": [
+      {
+        "tipo": "PICK",
+        "mercado": "dox2",
+        "linea": null,
+        "etiqueta": "DO Empate o Juventus",
+        "cuota": 1.19,
+        "prob": 87.4,
+        "ev_pct": 4.0,
+        "estado": "PENDIENTE",
+        "pl": null
+      },
+      {
+        "tipo": "PICK",
+        "mercado": "under35",
+        "linea": null,
+        "etiqueta": "Under 3.5",
+        "cuota": 1.29,
+        "prob": 82.3,
+        "ev_pct": 6.2,
+        "estado": "PENDIENTE",
+        "pl": null
+      }
+    ],
+    "watchlist": [
+      {
+        "mercado": "empate",
+        "linea": null,
+        "etiqueta": "Empate",
+        "cuota": 3.6,
+        "prob": 26.9,
+        "ev_pct": -3.2
+      },
+      {
+        "mercado": "victoria_visit",
+        "linea": null,
+        "etiqueta": "Victoria Juventus",
+        "cuota": 1.72,
+        "prob": 66.4,
+        "ev_pct": 14.2,
+        "regla_1x2_no_pick": true
+      },
+      {
+        "mercado": "over05_visit",
+        "linea": null,
+        "etiqueta": "Over 0.5 Juventus",
+        "cuota": 1.2,
+        "prob": 80.1,
+        "ev_pct": -3.9
+      },
+      {
+        "mercado": "hcp3_des",
+        "linea": null,
+        "etiqueta": "HCP +3 Genoa",
+        "cuota": 1.13,
+        "prob": 84.6,
+        "ev_pct": -4.4
+      },
+      {
+        "mercado": "corners65",
+        "linea": null,
+        "etiqueta": "Over 6.5 corners",
+        "cuota": 1.22,
+        "prob": 83.5,
+        "ev_pct": 1.9
+      },
+      {
+        "mercado": "corners75",
+        "linea": null,
+        "etiqueta": "Over 7.5 corners",
+        "cuota": 1.42,
+        "prob": 73.3,
+        "ev_pct": 4.1
+      },
+      {
+        "mercado": "local_remates_puerta",
+        "linea": 1.5,
+        "etiqueta": "Genoa Remates a puerta Over 1.5",
+        "cuota": 1.17,
+        "prob": 81.3,
+        "ev_pct": -4.9,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 3.5,
+        "etiqueta": "Juventus Corners equipo Over 3.5",
+        "cuota": 1.23,
+        "prob": 78.3,
+        "ev_pct": -3.7,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates_puerta",
+        "linea": 3.5,
+        "etiqueta": "Juventus Remates a puerta Over 3.5",
+        "cuota": 1.23,
+        "prob": 73.9,
+        "ev_pct": -9.1,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates",
+        "linea": 7.5,
+        "etiqueta": "Genoa Remates Over 7.5",
+        "cuota": 1.17,
+        "prob": 73.1,
+        "ev_pct": -14.5,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_corners_equipo",
+        "linea": 2.5,
+        "etiqueta": "Genoa Corners equipo Over 2.5",
+        "cuota": 1.4,
+        "prob": 68.1,
+        "ev_pct": -4.7,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 4.5,
+        "etiqueta": "Juventus Corners equipo Over 4.5",
+        "cuota": 1.52,
+        "prob": 65.4,
+        "ev_pct": -0.6,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates",
+        "linea": 8.5,
+        "etiqueta": "Genoa Remates Over 8.5",
+        "cuota": 1.31,
+        "prob": 63.0,
+        "ev_pct": -17.5,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates",
+        "linea": 13.5,
+        "etiqueta": "Juventus Remates Over 13.5",
+        "cuota": 1.31,
+        "prob": 60.9,
+        "ev_pct": -20.2,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates_puerta",
+        "linea": 2.5,
+        "etiqueta": "Genoa Remates a puerta Over 2.5",
+        "cuota": 1.52,
+        "prob": 60.4,
+        "ev_pct": -8.2,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates_puerta",
+        "linea": 4.5,
+        "etiqueta": "Juventus Remates a puerta Over 4.5",
+        "cuota": 1.5,
+        "prob": 57.5,
+        "ev_pct": -13.8,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates",
+        "linea": 14.5,
+        "etiqueta": "Juventus Remates Over 14.5",
+        "cuota": 1.47,
+        "prob": 53.0,
+        "ev_pct": -22.1,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates",
+        "linea": 9.5,
+        "etiqueta": "Genoa Remates Over 9.5",
+        "cuota": 1.53,
+        "prob": 52.6,
+        "ev_pct": -19.5,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 5.5,
+        "etiqueta": "Juventus Corners equipo Over 5.5",
+        "cuota": 2.0,
+        "prob": 51.8,
+        "ev_pct": 3.6,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_corners_equipo",
+        "linea": 3.5,
+        "etiqueta": "Genoa Corners equipo Over 3.5",
+        "cuota": 1.98,
+        "prob": 49.6,
+        "ev_pct": -1.8,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates",
+        "linea": 15.5,
+        "etiqueta": "Juventus Remates Over 15.5",
+        "cuota": 1.72,
+        "prob": 45.3,
+        "ev_pct": -22.1,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates",
+        "linea": 10.5,
+        "etiqueta": "Genoa Remates Over 10.5",
+        "cuota": 1.88,
+        "prob": 42.4,
+        "ev_pct": -20.3,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates_puerta",
+        "linea": 5.5,
+        "etiqueta": "Juventus Remates a puerta Over 5.5",
+        "cuota": 2.02,
+        "prob": 41.0,
+        "ev_pct": -17.2,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 6.5,
+        "etiqueta": "Juventus Corners equipo Over 6.5",
+        "cuota": 2.85,
+        "prob": 39.0,
+        "ev_pct": 11.2,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates_puerta",
+        "linea": 3.5,
+        "etiqueta": "Genoa Remates a puerta Over 3.5",
+        "cuota": 2.25,
+        "prob": 38.8,
+        "ev_pct": -12.7,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_corners_equipo",
+        "linea": 4.5,
+        "etiqueta": "Genoa Corners equipo Over 4.5",
+        "cuota": 3.1,
+        "prob": 33.1,
+        "ev_pct": 2.6,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates",
+        "linea": 11.5,
+        "etiqueta": "Genoa Remates Over 11.5",
+        "cuota": 2.4,
+        "prob": 33.0,
+        "ev_pct": -20.8,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 7.5,
+        "etiqueta": "Juventus Corners equipo Over 7.5",
+        "cuota": 4.25,
+        "prob": 28.0,
+        "ev_pct": 19.0,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates_puerta",
+        "linea": 6.5,
+        "etiqueta": "Juventus Remates a puerta Over 6.5",
+        "cuota": 2.9,
+        "prob": 26.8,
+        "ev_pct": -22.3,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates",
+        "linea": 12.5,
+        "etiqueta": "Genoa Remates Over 12.5",
+        "cuota": 3.15,
+        "prob": 25.0,
+        "ev_pct": -21.3,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates_puerta",
+        "linea": 4.5,
+        "etiqueta": "Genoa Remates a puerta Over 4.5",
+        "cuota": 3.7,
+        "prob": 21.9,
+        "ev_pct": -19.0,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_corners_equipo",
+        "linea": 5.5,
+        "etiqueta": "Genoa Corners equipo Over 5.5",
+        "cuota": 5.1,
+        "prob": 20.5,
+        "ev_pct": 4.5,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates",
+        "linea": 13.5,
+        "etiqueta": "Genoa Remates Over 13.5",
+        "cuota": 4.25,
+        "prob": 18.3,
+        "ev_pct": -22.2,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "over15+visit_remates_puerta_over2.5",
+        "linea": null,
+        "etiqueta": "Over 1.5 + V Remates a puerta Over 2.5",
+        "cuota": 1.4,
+        "prob": 63.6,
+        "ev_pct": -10.9,
+        "tipo": "COMBINADA",
+        "patas": [
+          "over15",
+          "visit_remates_puerta_over2.5"
+        ],
+        "lift": 1.075,
+        "cuota_justa": 1.65,
+        "cuota_segura": 1.81,
+        "acierto_hist": 60.4,
+        "n_hist": 364
+      },
+      {
+        "mercado": "over15+hcp2_visit",
+        "linea": null,
+        "etiqueta": "Over 1.5 + HCP +2 V",
+        "cuota": 1.44,
+        "prob": 61.1,
+        "ev_pct": -12.0,
+        "tipo": "COMBINADA",
+        "patas": [
+          "over15",
+          "hcp2_visit"
+        ],
+        "lift": 0.893,
+        "cuota_justa": 1.58,
+        "cuota_segura": 1.79,
+        "acierto_hist": 63.1,
+        "n_hist": 179
+      },
+      {
+        "mercado": "over05_visit+hcp2_visit",
+        "linea": null,
+        "etiqueta": "Over 0.5 V + HCP +2 V",
+        "cuota": 1.21,
+        "prob": 79.4,
+        "ev_pct": -3.9,
+        "tipo": "COMBINADA",
+        "patas": [
+          "over05_visit",
+          "hcp2_visit"
+        ],
+        "lift": 1.142,
+        "cuota_justa": 1.26,
+        "cuota_segura": 1.38,
+        "acierto_hist": 79.6,
+        "n_hist": 152
+      },
+      {
+        "mercado": "visit_remates",
+        "linea": 10.5,
+        "etiqueta": "Juventus Remates Over 10.5",
+        "cuota": 1.09,
+        "prob": 82.2,
+        "ev_pct": -10.4,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates",
+        "linea": 12.5,
+        "etiqueta": "Juventus Remates Over 12.5",
+        "cuota": 1.24,
+        "prob": 68.6,
+        "ev_pct": -14.9,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "under25",
+        "linea": null,
+        "etiqueta": "Under 2.5",
+        "cuota": 1.75,
+        "prob": 60.1,
+        "ev_pct": 5.2,
+        "regla_unicidad_totales": "cede ante under35 (score EV/prob 5.1)"
+      },
+      {
+        "mercado": "under45",
+        "linea": null,
+        "etiqueta": "Under 4.5",
+        "cuota": 1.1,
+        "prob": 93.0,
+        "ev_pct": 2.3,
+        "regla_unicidad_totales": "cede ante under35 (score EV/prob 5.1)"
+      }
+    ],
+    "mercados_snapshot": {
+      "victoria_local": 12.7,
+      "empate": 26.9,
+      "victoria_visit": 66.4,
+      "do1x": 33.6,
+      "dox2": 87.4,
+      "over15": 68.7,
+      "over25": 39.9,
+      "under25": 60.1,
+      "over35": 17.6,
+      "under35": 82.3,
+      "under45": 93.0,
+      "btts": 44.7,
+      "over05_local": 42.3,
+      "over05_visit": 80.1,
+      "hcp2_des": 64.8,
+      "hcp3_des": 84.6,
+      "corners65": 83.5,
+      "corners75": 73.3,
+      "local_remates_over7.5": 73.1,
+      "local_remates_over8.5": 63.0,
+      "local_remates_over9.5": 52.6,
+      "local_remates_over10.5": 42.4,
+      "local_remates_over11.5": 33.0,
+      "local_remates_over12.5": 25.0,
+      "local_remates_over13.5": 18.3,
+      "local_remates_over14.5": 13.1,
+      "local_remates_over15.5": 9.0,
+      "local_remates_puerta_over1.5": 81.3,
+      "local_remates_puerta_over2.5": 60.4,
+      "local_remates_puerta_over3.5": 38.8,
+      "local_remates_puerta_over4.5": 21.9,
+      "local_remates_puerta_over5.5": 10.9,
+      "local_remates_puerta_over6.5": 4.9,
+      "local_corners_equipo_over2.5": 68.1,
+      "local_corners_equipo_over3.5": 49.6,
+      "local_corners_equipo_over4.5": 33.1,
+      "local_corners_equipo_over5.5": 20.5,
+      "local_corners_equipo_over6.5": 11.8,
+      "local_corners_equipo_over7.5": 6.5,
+      "visit_remates_over7.5": 95.1,
+      "visit_remates_over8.5": 91.9,
+      "visit_remates_over9.5": 87.6,
+      "visit_remates_over10.5": 82.2,
+      "visit_remates_over11.5": 75.8,
+      "visit_remates_over12.5": 68.6,
+      "visit_remates_over13.5": 60.9,
+      "visit_remates_over14.5": 53.0,
+      "visit_remates_over15.5": 45.3,
+      "visit_remates_puerta_over1.5": 95.6,
+      "visit_remates_puerta_over2.5": 87.3,
+      "visit_remates_puerta_over3.5": 73.9,
+      "visit_remates_puerta_over4.5": 57.5,
+      "visit_remates_puerta_over5.5": 41.0,
+      "visit_remates_puerta_over6.5": 26.8,
+      "visit_corners_equipo_over2.5": 88.8,
+      "visit_corners_equipo_over3.5": 78.3,
+      "visit_corners_equipo_over4.5": 65.4,
+      "visit_corners_equipo_over5.5": 51.8,
+      "visit_corners_equipo_over6.5": 39.0,
+      "visit_corners_equipo_over7.5": 28.0
+    },
+    "mu_equipo": {
+      "local": {
+        "remates": 10.08,
+        "remates_puerta": 3.17,
+        "corners_equipo": 3.77
+      },
+      "visit": {
+        "remates": 15.31,
+        "remates_puerta": 5.16,
+        "corners_equipo": 5.99
+      }
+    },
+    "mu_equipo_fuente": "engine",
+    "cruces_validados": [
+      {
+        "mercado": "over15+visit_remates_puerta_over2.5",
+        "etiqueta": "Over 1.5 + V Remates a puerta Over 2.5",
+        "cuota": 1.4,
+        "justa": 1.65,
+        "segura": 1.81,
+        "hist": 60.4,
+        "n": 364,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "over15+hcp2_visit",
+        "etiqueta": "Over 1.5 + HCP +2 V",
+        "cuota": 1.44,
+        "justa": 1.58,
+        "segura": 1.79,
+        "hist": 63.1,
+        "n": 179,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "over05_visit+hcp2_visit",
+        "etiqueta": "Over 0.5 V + HCP +2 V",
+        "cuota": 1.21,
+        "justa": 1.26,
+        "segura": 1.38,
+        "hist": 79.6,
+        "n": 152,
+        "cruza": false,
+        "cruza_segura": false
+      }
+    ],
+    "validadas": [
+      {
+        "mercado": "over15+hcp3_visit",
+        "etiqueta": "Over 1.5 + HCP +3 V",
+        "tipo": "COMBINADA",
+        "p": 0.6353,
+        "cuota_justa": 1.55,
+        "cuota_segura": 1.68,
+        "acierto_hist": 64.5,
+        "n_hist": 375,
+        "cotizada": false
+      },
+      {
+        "mercado": "over15+visit_remates_puerta_over2.5",
+        "etiqueta": "Over 1.5 + V Remates a puerta Over 2.5",
+        "tipo": "COMBINADA",
+        "p": 0.6362,
+        "cuota_justa": 1.65,
+        "cuota_segura": 1.81,
+        "acierto_hist": 60.4,
+        "n_hist": 364,
+        "cotizada": true
+      },
+      {
+        "mercado": "over15+hcp2_visit",
+        "etiqueta": "Over 1.5 + HCP +2 V",
+        "tipo": "COMBINADA",
+        "p": 0.6112,
+        "cuota_justa": 1.58,
+        "cuota_segura": 1.79,
+        "acierto_hist": 63.1,
+        "n_hist": 179,
+        "cotizada": true
+      },
+      {
+        "mercado": "over05_visit+hcp2_visit",
+        "etiqueta": "Over 0.5 V + HCP +2 V",
+        "tipo": "COMBINADA",
+        "p": 0.7941,
+        "cuota_justa": 1.26,
+        "cuota_segura": 1.38,
+        "acierto_hist": 79.6,
+        "n_hist": 152,
+        "cotizada": true
+      }
+    ]
   }
 ];
