@@ -138944,5 +138944,735 @@ const TRACKER_DATA = [
         "cotizada": true
       }
     ]
+  },
+  {
+    "id": "131",
+    "fecha": "2026-10-28",
+    "jornada": 9,
+    "liga": "I1",
+    "partido": "Venezia vs Inter",
+    "lambda_forma_l": 1.1924,
+    "lambda_forma_v": 2.8796,
+    "lambda_reg_l": 1.0424,
+    "lambda_reg_v": 2.3703,
+    "lambda_base_l": 1.0874,
+    "lambda_base_v": 2.5231,
+    "lambda_final_l": 0.9438,
+    "lambda_final_v": 2.6667,
+    "lambda_shadow_l": 0.8563,
+    "lambda_shadow_v": 2.6667,
+    "lambda_corners": 10.433,
+    "ratio": 0.3539205759928001,
+    "visit_dominante": "True",
+    "variables_activas": "V#2(L:0.95) - V#3(L:0.95)",
+    "variables": {
+      "v1": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa": false,
+        "activa_local": false,
+        "activa_visit": false,
+        "detalle_local": "--",
+        "detalle_visit": "--",
+        "detalle": "Ambos necesitan >=20 PJ (local:8, visit:8)"
+      },
+      "v2": {
+        "factor_local": 0.95,
+        "factor_visit": 1.0,
+        "activa_local": true,
+        "activa_visit": false,
+        "detalle_local": "Rank 20, margen -1pts sobre zona desc",
+        "detalle_visit": "Rank 2, margen 18pts -- fuera de riesgo"
+      },
+      "v3": {
+        "factor_local": 0.955,
+        "activa": true,
+        "n_partidos": 20,
+        "GpG_casa": 0.9,
+        "GpG_liga": 1.35,
+        "hs": -0.45,
+        "muestra_completa": true,
+        "detalle": "hs=-0.45 (20 ptdos)"
+      },
+      "v4": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa_local": false,
+        "activa_visit": false,
+        "bajas_local": 0,
+        "bajas_visit": 0
+      },
+      "v5": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa_local": false,
+        "activa_visit": false
+      },
+      "v6": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa": false
+      },
+      "v7": {
+        "skip": false,
+        "activa_local": false,
+        "activa_visit": false,
+        "detalle": "Sin DT nuevo"
+      },
+      "v8": {
+        "activa": false,
+        "anulado_derby": false,
+        "detalle": "Inactiva"
+      }
+    },
+    "confianza": "MEDIA",
+    "notas": "Inter Remates Over 14.5 @1.24 y 'no existe HCP +2 Inter' dados por el usuario (otra casa, no Betano); Betano no publica Inter 14.5, Venezia 15.5, HCP+2 Inter",
+    "resultado_partido": null,
+    "goles_esperados": "3.61",
+    "apuestas": [
+      {
+        "tipo": "COMBO",
+        "mercado": "under45+over05_visit",
+        "etiqueta": "Under 4.5 + Over 0.5 V",
+        "cuota": 1.57,
+        "prob": 63.5,
+        "ev_pct": -0.3,
+        "estado": "PENDIENTE",
+        "pl": null,
+        "patas": [
+          "under45",
+          "over05_visit"
+        ],
+        "promovida_combinada": true,
+        "nivel_cruce": "justa",
+        "cuota_justa": 1.56,
+        "cuota_segura": 1.7,
+        "acierto_hist": 64.2,
+        "n_hist": 327
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "local_remates",
+        "linea": 14.5,
+        "etiqueta": "Venezia Remates Over 14.5",
+        "lado": "local",
+        "cuota": 4.55,
+        "prob": 30.8,
+        "ev_pct": 40.1,
+        "estado": "PENDIENTE",
+        "pl": null,
+        "lineas_pasan": 6,
+        "cruzaron_ambos": false
+      }
+    ],
+    "watchlist": [
+      {
+        "mercado": "victoria_visit",
+        "linea": null,
+        "etiqueta": "Victoria Inter",
+        "cuota": 1.36,
+        "prob": 78.0,
+        "ev_pct": 6.1,
+        "regla_1x2_no_pick": true
+      },
+      {
+        "mercado": "dox2",
+        "linea": null,
+        "etiqueta": "DO Empate o Inter",
+        "cuota": 1.1,
+        "prob": 89.1,
+        "ev_pct": -2.0
+      },
+      {
+        "mercado": "over15",
+        "linea": null,
+        "etiqueta": "Over 1.5",
+        "cuota": 1.12,
+        "prob": 87.1,
+        "ev_pct": -2.4
+      },
+      {
+        "mercado": "under25",
+        "linea": null,
+        "etiqueta": "Under 2.5",
+        "cuota": 3.1,
+        "prob": 31.1,
+        "ev_pct": -3.6
+      },
+      {
+        "mercado": "under35",
+        "linea": null,
+        "etiqueta": "Under 3.5",
+        "cuota": 1.91,
+        "prob": 51.3,
+        "ev_pct": -2.0
+      },
+      {
+        "mercado": "under45",
+        "linea": null,
+        "etiqueta": "Under 4.5",
+        "cuota": 1.42,
+        "prob": 70.4,
+        "ev_pct": -0.0
+      },
+      {
+        "mercado": "over05_visit",
+        "linea": null,
+        "etiqueta": "Over 0.5 Inter",
+        "cuota": 1.06,
+        "prob": 93.0,
+        "ev_pct": -1.4
+      },
+      {
+        "mercado": "corners65",
+        "linea": null,
+        "etiqueta": "Over 6.5 corners",
+        "cuota": 1.22,
+        "prob": 87.7,
+        "ev_pct": 7.0
+      },
+      {
+        "mercado": "corners75",
+        "linea": null,
+        "etiqueta": "Over 7.5 corners",
+        "cuota": 1.42,
+        "prob": 78.4,
+        "ev_pct": 11.3
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 3.5,
+        "etiqueta": "Inter Corners equipo Over 3.5",
+        "cuota": 1.2,
+        "prob": 81.8,
+        "ev_pct": -1.8,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates",
+        "linea": 8.5,
+        "etiqueta": "Venezia Remates Over 8.5",
+        "cuota": 1.22,
+        "prob": 81.2,
+        "ev_pct": -0.9,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates_puerta",
+        "linea": 5.5,
+        "etiqueta": "Inter Remates a puerta Over 5.5",
+        "cuota": 1.28,
+        "prob": 80.6,
+        "ev_pct": 3.2,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates_puerta",
+        "linea": 2.5,
+        "etiqueta": "Venezia Remates a puerta Over 2.5",
+        "cuota": 1.42,
+        "prob": 77.0,
+        "ev_pct": 9.3,
+        "tipo": "POR_EQUIPO",
+        "cuota_justa": 1.28,
+        "cuota_segura": 1.37,
+        "acierto_hist": 78.2,
+        "n_hist": 293
+      },
+      {
+        "mercado": "visit_remates",
+        "linea": 15.5,
+        "etiqueta": "Inter Remates Over 15.5",
+        "cuota": 1.27,
+        "prob": 75.1,
+        "ev_pct": -4.6,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates",
+        "linea": 9.5,
+        "etiqueta": "Venezia Remates Over 9.5",
+        "cuota": 1.38,
+        "prob": 73.6,
+        "ev_pct": 1.6,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_corners_equipo",
+        "linea": 2.5,
+        "etiqueta": "Venezia Corners equipo Over 2.5",
+        "cuota": 1.5,
+        "prob": 71.3,
+        "ev_pct": 6.9,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 4.5,
+        "etiqueta": "Inter Corners equipo Over 4.5",
+        "cuota": 1.45,
+        "prob": 70.2,
+        "ev_pct": 1.8,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates_puerta",
+        "linea": 6.5,
+        "etiqueta": "Inter Remates a puerta Over 6.5",
+        "cuota": 1.53,
+        "prob": 69.4,
+        "ev_pct": 6.2,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates",
+        "linea": 10.5,
+        "etiqueta": "Venezia Remates Over 10.5",
+        "cuota": 1.62,
+        "prob": 65.0,
+        "ev_pct": 5.3,
+        "tipo": "POR_EQUIPO",
+        "cuota_justa": 1.62,
+        "cuota_segura": 1.85,
+        "acierto_hist": 61.7,
+        "n_hist": 162
+      },
+      {
+        "mercado": "local_remates_puerta",
+        "linea": 3.5,
+        "etiqueta": "Venezia Remates a puerta Over 3.5",
+        "cuota": 2.0,
+        "prob": 58.7,
+        "ev_pct": 17.4,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 5.5,
+        "etiqueta": "Inter Corners equipo Over 5.5",
+        "cuota": 1.88,
+        "prob": 57.2,
+        "ev_pct": 7.5,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates",
+        "linea": 11.5,
+        "etiqueta": "Venezia Remates Over 11.5",
+        "cuota": 2.0,
+        "prob": 56.0,
+        "ev_pct": 12.0,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_corners_equipo",
+        "linea": 3.5,
+        "etiqueta": "Venezia Corners equipo Over 3.5",
+        "cuota": 2.15,
+        "prob": 53.5,
+        "ev_pct": 15.0,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates",
+        "linea": 12.5,
+        "etiqueta": "Venezia Remates Over 12.5",
+        "cuota": 2.57,
+        "prob": 47.0,
+        "ev_pct": 20.8,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 6.5,
+        "etiqueta": "Inter Corners equipo Over 6.5",
+        "cuota": 2.62,
+        "prob": 44.6,
+        "ev_pct": 16.9,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates_puerta",
+        "linea": 4.5,
+        "etiqueta": "Venezia Remates a puerta Over 4.5",
+        "cuota": 3.15,
+        "prob": 40.1,
+        "ev_pct": 26.3,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates",
+        "linea": 13.5,
+        "etiqueta": "Venezia Remates Over 13.5",
+        "cuota": 3.4,
+        "prob": 38.5,
+        "ev_pct": 30.9,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_corners_equipo",
+        "linea": 4.5,
+        "etiqueta": "Venezia Corners equipo Over 4.5",
+        "cuota": 3.5,
+        "prob": 36.9,
+        "ev_pct": 29.2,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 7.5,
+        "etiqueta": "Inter Corners equipo Over 7.5",
+        "cuota": 3.9,
+        "prob": 33.2,
+        "ev_pct": 29.5,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates",
+        "linea": 14.5,
+        "etiqueta": "Venezia Remates Over 14.5",
+        "cuota": 4.55,
+        "prob": 30.8,
+        "ev_pct": 40.1,
+        "tipo": "POR_EQUIPO",
+        "es_remate": true
+      },
+      {
+        "mercado": "local_remates_puerta",
+        "linea": 5.5,
+        "etiqueta": "Venezia Remates a puerta Over 5.5",
+        "cuota": 5.2,
+        "prob": 24.7,
+        "ev_pct": 28.4,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_corners_equipo",
+        "linea": 5.5,
+        "etiqueta": "Venezia Corners equipo Over 5.5",
+        "cuota": 5.8,
+        "prob": 23.6,
+        "ev_pct": 36.9,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "dox2+hcp3_local",
+        "linea": null,
+        "etiqueta": "DO Empate o V + HCP +3 L",
+        "cuota": 1.57,
+        "prob": 56.9,
+        "ev_pct": -10.7,
+        "tipo": "COMBINADA",
+        "patas": [
+          "dox2",
+          "hcp3_local"
+        ],
+        "lift": 0.968,
+        "cuota_justa": 1.72,
+        "cuota_segura": 1.91,
+        "acierto_hist": 58.1,
+        "n_hist": 296
+      },
+      {
+        "mercado": "local_remates_puerta_over3.5+over15",
+        "linea": null,
+        "etiqueta": "L Remates a puerta Over 3.5 + Over 1.5",
+        "cuota": 2.1,
+        "prob": 55.6,
+        "ev_pct": 16.8,
+        "tipo": "COMBINADA",
+        "patas": [
+          "local_remates_puerta_over3.5",
+          "over15"
+        ],
+        "lift": 1.079,
+        "cuota_justa": 1.78,
+        "cuota_segura": 2.0,
+        "acierto_hist": 56.1,
+        "n_hist": 253
+      },
+      {
+        "mercado": "over15+over05_local",
+        "linea": null,
+        "etiqueta": "Over 1.5 + Over 0.5 L",
+        "cuota": 1.5,
+        "prob": 58.5,
+        "ev_pct": -12.2,
+        "tipo": "COMBINADA",
+        "patas": [
+          "over15",
+          "over05_local"
+        ],
+        "lift": 1.158,
+        "cuota_justa": 1.75,
+        "cuota_segura": 1.98,
+        "acierto_hist": 57.1,
+        "n_hist": 210
+      },
+      {
+        "mercado": "visit_remates",
+        "linea": 14.5,
+        "etiqueta": "Inter Remates Over 14.5",
+        "cuota": 1.24,
+        "prob": 80.5,
+        "ev_pct": -0.2,
+        "tipo": "POR_EQUIPO"
+      }
+    ],
+    "mercados_snapshot": {
+      "victoria_local": 10.9,
+      "empate": 16.2,
+      "victoria_visit": 78.0,
+      "do1x": 22.0,
+      "dox2": 89.1,
+      "over15": 87.1,
+      "over25": 68.9,
+      "under25": 31.1,
+      "over35": 48.7,
+      "under35": 51.3,
+      "under45": 70.4,
+      "btts": 58.7,
+      "over05_local": 62.0,
+      "over05_visit": 93.0,
+      "hcp2_des": 47.1,
+      "hcp3_des": 67.8,
+      "corners65": 87.7,
+      "corners75": 78.4,
+      "local_remates_over7.5": 87.6,
+      "local_remates_over8.5": 81.2,
+      "local_remates_over9.5": 73.6,
+      "local_remates_over10.5": 65.0,
+      "local_remates_over11.5": 56.0,
+      "local_remates_over12.5": 47.0,
+      "local_remates_over13.5": 38.5,
+      "local_remates_over14.5": 30.8,
+      "local_remates_over15.5": 24.1,
+      "local_remates_puerta_over1.5": 90.9,
+      "local_remates_puerta_over2.5": 77.0,
+      "local_remates_puerta_over3.5": 58.7,
+      "local_remates_puerta_over4.5": 40.1,
+      "local_remates_puerta_over5.5": 24.7,
+      "local_remates_puerta_over6.5": 13.8,
+      "local_corners_equipo_over2.5": 71.3,
+      "local_corners_equipo_over3.5": 53.5,
+      "local_corners_equipo_over4.5": 36.9,
+      "local_corners_equipo_over5.5": 23.6,
+      "local_corners_equipo_over6.5": 14.2,
+      "local_corners_equipo_over7.5": 8.0,
+      "visit_remates_over7.5": 99.1,
+      "visit_remates_over8.5": 98.2,
+      "visit_remates_over9.5": 96.9,
+      "visit_remates_over10.5": 95.1,
+      "visit_remates_over11.5": 92.5,
+      "visit_remates_over12.5": 89.3,
+      "visit_remates_over13.5": 85.2,
+      "visit_remates_over14.5": 80.5,
+      "visit_remates_over15.5": 75.1,
+      "visit_remates_puerta_over1.5": 99.6,
+      "visit_remates_puerta_over2.5": 98.3,
+      "visit_remates_puerta_over3.5": 95.1,
+      "visit_remates_puerta_over4.5": 89.3,
+      "visit_remates_puerta_over5.5": 80.6,
+      "visit_remates_puerta_over6.5": 69.4,
+      "visit_corners_equipo_over2.5": 91.0,
+      "visit_corners_equipo_over3.5": 81.8,
+      "visit_corners_equipo_over4.5": 70.2,
+      "visit_corners_equipo_over5.5": 57.2,
+      "visit_corners_equipo_over6.5": 44.6,
+      "visit_corners_equipo_over7.5": 33.2
+    },
+    "mu_equipo": {
+      "local": {
+        "remates": 12.54,
+        "remates_puerta": 4.16,
+        "corners_equipo": 4.0
+      },
+      "visit": {
+        "remates": 20.02,
+        "remates_puerta": 8.26,
+        "corners_equipo": 6.44
+      }
+    },
+    "mu_equipo_fuente": "engine",
+    "cruces_validados": [
+      {
+        "mercado": "btts",
+        "etiqueta": "BTTS",
+        "cuota": 1.55,
+        "justa": 1.7,
+        "segura": 1.83,
+        "hist": 58.7,
+        "n": 606,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "local_remates_puerta_over2.5",
+        "etiqueta": "Venezia Remates a puerta Over 2.5",
+        "cuota": 1.42,
+        "justa": 1.28,
+        "segura": 1.37,
+        "hist": 78.2,
+        "n": 293,
+        "cruza": true,
+        "cruza_segura": true
+      },
+      {
+        "mercado": "local_remates_over10.5",
+        "etiqueta": "Venezia Remates Over 10.5",
+        "cuota": 1.62,
+        "justa": 1.62,
+        "segura": 1.85,
+        "hist": 61.7,
+        "n": 162,
+        "cruza": true,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "under45+over05_visit",
+        "etiqueta": "Under 4.5 + Over 0.5 V",
+        "cuota": 1.57,
+        "justa": 1.56,
+        "segura": 1.7,
+        "hist": 64.2,
+        "n": 327,
+        "cruza": true,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "dox2+hcp3_local",
+        "etiqueta": "DO Empate o V + HCP +3 L",
+        "cuota": 1.57,
+        "justa": 1.72,
+        "segura": 1.91,
+        "hist": 58.1,
+        "n": 296,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "local_remates_puerta_over3.5+over15",
+        "etiqueta": "L Remates a puerta Over 3.5 + Over 1.5",
+        "cuota": 2.1,
+        "justa": 1.78,
+        "segura": 2.0,
+        "hist": 56.1,
+        "n": 253,
+        "cruza": true,
+        "cruza_segura": true
+      },
+      {
+        "mercado": "over15+over05_local",
+        "etiqueta": "Over 1.5 + Over 0.5 L",
+        "cuota": 1.5,
+        "justa": 1.75,
+        "segura": 1.98,
+        "hist": 57.1,
+        "n": 210,
+        "cruza": false,
+        "cruza_segura": false
+      }
+    ],
+    "validadas": [
+      {
+        "mercado": "btts",
+        "etiqueta": "BTTS",
+        "tipo": "simple",
+        "p": 0.5867,
+        "cuota_justa": 1.7,
+        "cuota_segura": 1.83,
+        "acierto_hist": 58.7,
+        "n_hist": 606,
+        "cotizada": true
+      },
+      {
+        "mercado": "over05_local+hcp2_visit",
+        "etiqueta": "Over 0.5 L + HCP +2 V",
+        "tipo": "COMBINADA",
+        "p": 0.576,
+        "cuota_justa": 1.75,
+        "cuota_segura": 1.89,
+        "acierto_hist": 57.2,
+        "n_hist": 512,
+        "cotizada": false
+      },
+      {
+        "mercado": "under45+over05_visit",
+        "etiqueta": "Under 4.5 + Over 0.5 V",
+        "tipo": "COMBINADA",
+        "p": 0.6351,
+        "cuota_justa": 1.56,
+        "cuota_segura": 1.7,
+        "acierto_hist": 64.2,
+        "n_hist": 327,
+        "cotizada": true
+      },
+      {
+        "mercado": "dox2+hcp3_local",
+        "etiqueta": "DO Empate o V + HCP +3 L",
+        "tipo": "COMBINADA",
+        "p": 0.5689,
+        "cuota_justa": 1.72,
+        "cuota_segura": 1.91,
+        "acierto_hist": 58.1,
+        "n_hist": 296,
+        "cotizada": true
+      },
+      {
+        "mercado": "local_remates_puerta_over2.5",
+        "etiqueta": "Venezia Remates a puerta Over 2.5",
+        "tipo": "por equipo",
+        "p": 0.7699,
+        "cuota_justa": 1.28,
+        "cuota_segura": 1.37,
+        "acierto_hist": 78.2,
+        "n_hist": 293,
+        "cotizada": true
+      },
+      {
+        "mercado": "local_remates_puerta_over3.5+over15",
+        "etiqueta": "L Remates a puerta Over 3.5 + Over 1.5",
+        "tipo": "COMBINADA",
+        "p": 0.5564,
+        "cuota_justa": 1.78,
+        "cuota_segura": 2.0,
+        "acierto_hist": 56.1,
+        "n_hist": 253,
+        "cotizada": true
+      },
+      {
+        "mercado": "under45+hcp2_visit",
+        "etiqueta": "Under 4.5 + HCP +2 V",
+        "tipo": "COMBINADA",
+        "p": 0.6776,
+        "cuota_justa": 1.49,
+        "cuota_segura": 1.64,
+        "acierto_hist": 67.1,
+        "n_hist": 246,
+        "cotizada": false
+      },
+      {
+        "mercado": "over15+over05_local",
+        "etiqueta": "Over 1.5 + Over 0.5 L",
+        "tipo": "COMBINADA",
+        "p": 0.5851,
+        "cuota_justa": 1.75,
+        "cuota_segura": 1.98,
+        "acierto_hist": 57.1,
+        "n_hist": 210,
+        "cotizada": true
+      },
+      {
+        "mercado": "local_remates_over10.5",
+        "etiqueta": "Venezia Remates Over 10.5",
+        "tipo": "por equipo",
+        "p": 0.6499,
+        "cuota_justa": 1.62,
+        "cuota_segura": 1.85,
+        "acierto_hist": 61.7,
+        "n_hist": 162,
+        "cotizada": true
+      }
+    ]
   }
 ];
