@@ -141871,5 +141871,800 @@ const TRACKER_DATA = [
         "cotizada": true
       }
     ]
+  },
+  {
+    "id": "134",
+    "fecha": "2026-10-30",
+    "jornada": 9,
+    "liga": "F1",
+    "partido": "Le Havre vs Paris SG",
+    "lambda_forma_l": 1.2539,
+    "lambda_forma_v": 2.3774,
+    "lambda_reg_l": 0.9441,
+    "lambda_reg_v": 2.2071,
+    "lambda_base_l": 1.037,
+    "lambda_base_v": 2.2582,
+    "lambda_final_l": 0.9149,
+    "lambda_final_v": 2.3803,
+    "lambda_shadow_l": 0.8257,
+    "lambda_shadow_v": 2.3803,
+    "lambda_corners": 9.376,
+    "ratio": 0.38436331554846026,
+    "visit_dominante": "True",
+    "variables_activas": "V#2(L:0.95) - V#3(L:0.95)",
+    "variables": {
+      "v1": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa": false,
+        "activa_local": false,
+        "activa_visit": false,
+        "detalle_local": "--",
+        "detalle_visit": "--",
+        "detalle": "Ambos necesitan >=20 PJ (local:8, visit:8)"
+      },
+      "v2": {
+        "factor_local": 0.95,
+        "factor_visit": 1.0,
+        "activa_local": true,
+        "activa_visit": false,
+        "detalle_local": "Rank 18, margen -5pts sobre zona desc",
+        "detalle_visit": "Rank 1, margen 10pts -- fuera de riesgo"
+      },
+      "v3": {
+        "factor_local": 0.95,
+        "activa": true,
+        "n_partidos": 20,
+        "GpG_casa": 1.05,
+        "GpG_liga": 1.55,
+        "hs": -0.5,
+        "muestra_completa": true,
+        "detalle": "hs=-0.50 (20 ptdos)"
+      },
+      "v4": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa_local": false,
+        "activa_visit": false,
+        "bajas_local": 0,
+        "bajas_visit": 0
+      },
+      "v5": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa_local": false,
+        "activa_visit": false
+      },
+      "v6": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa": false
+      },
+      "v7": {
+        "skip": false,
+        "activa_local": false,
+        "activa_visit": false,
+        "detalle": "Sin DT nuevo"
+      },
+      "v8": {
+        "activa": false,
+        "anulado_derby": false,
+        "detalle": "Inactiva"
+      }
+    },
+    "confianza": "MEDIA",
+    "notas": "",
+    "resultado_partido": null,
+    "goles_esperados": "3.30",
+    "apuestas": [
+      {
+        "tipo": "PICK",
+        "mercado": "under35",
+        "linea": null,
+        "etiqueta": "Under 3.5",
+        "cuota": 1.82,
+        "prob": 58.1,
+        "ev_pct": 5.7,
+        "estado": "PENDIENTE",
+        "pl": null
+      },
+      {
+        "tipo": "COMBO",
+        "mercado": "local_remates_puerta_over3.5+over15",
+        "etiqueta": "L Remates a puerta Over 3.5 + Over 1.5",
+        "cuota": 2.25,
+        "prob": 56.5,
+        "ev_pct": 27.1,
+        "estado": "PENDIENTE",
+        "pl": null,
+        "patas": [
+          "local_remates_puerta_over3.5",
+          "over15"
+        ],
+        "promovida_combinada": true,
+        "nivel_cruce": "segura",
+        "cuota_justa": 1.78,
+        "cuota_segura": 2.0,
+        "acierto_hist": 56.1,
+        "n_hist": 253
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "local_remates",
+        "linea": 13.5,
+        "etiqueta": "Le Havre Remates Over 13.5",
+        "lado": "local",
+        "cuota": 4.45,
+        "prob": 41.9,
+        "ev_pct": 86.5,
+        "estado": "PENDIENTE",
+        "pl": null,
+        "lineas_pasan": 6,
+        "cruzaron_ambos": false
+      }
+    ],
+    "watchlist": [
+      {
+        "mercado": "victoria_local",
+        "linea": null,
+        "etiqueta": "Victoria Le Havre",
+        "cuota": 8.75,
+        "prob": 12.7,
+        "ev_pct": 11.1,
+        "regla_1x2_no_pick": true
+      },
+      {
+        "mercado": "empate",
+        "linea": null,
+        "etiqueta": "Empate",
+        "cuota": 5.3,
+        "prob": 18.7,
+        "ev_pct": -0.9
+      },
+      {
+        "mercado": "victoria_visit",
+        "linea": null,
+        "etiqueta": "Victoria Paris SG",
+        "cuota": 1.34,
+        "prob": 73.8,
+        "ev_pct": -1.1
+      },
+      {
+        "mercado": "dox2",
+        "linea": null,
+        "etiqueta": "DO Empate o Paris SG",
+        "cuota": 1.09,
+        "prob": 87.3,
+        "ev_pct": -4.8
+      },
+      {
+        "mercado": "over15",
+        "linea": null,
+        "etiqueta": "Over 1.5",
+        "cuota": 1.13,
+        "prob": 84.3,
+        "ev_pct": -4.7
+      },
+      {
+        "mercado": "over05_visit",
+        "linea": null,
+        "etiqueta": "Over 0.5 Paris SG",
+        "cuota": 1.05,
+        "prob": 90.8,
+        "ev_pct": -4.7
+      },
+      {
+        "mercado": "hcp2_des",
+        "linea": null,
+        "etiqueta": "HCP +2 Le Havre",
+        "cuota": 1.93,
+        "prob": 52.7,
+        "ev_pct": 1.7,
+        "regla_no_elegible": true
+      },
+      {
+        "mercado": "hcp3_des",
+        "linea": null,
+        "etiqueta": "HCP +3 Le Havre",
+        "cuota": 1.38,
+        "prob": 73.3,
+        "ev_pct": 1.2,
+        "filtro_edge": "EV=+1.2% < 1.5"
+      },
+      {
+        "mercado": "corners65",
+        "linea": null,
+        "etiqueta": "Over 6.5 corners",
+        "cuota": 1.15,
+        "prob": 80.7,
+        "ev_pct": -7.2
+      },
+      {
+        "mercado": "corners75",
+        "linea": null,
+        "etiqueta": "Over 7.5 corners",
+        "cuota": 1.29,
+        "prob": 70.1,
+        "ev_pct": -9.6
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 2.5,
+        "etiqueta": "Paris SG Corners equipo Over 2.5",
+        "cuota": 1.04,
+        "prob": 84.1,
+        "ev_pct": -12.5,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates",
+        "linea": 8.5,
+        "etiqueta": "Le Havre Remates Over 8.5",
+        "cuota": 1.33,
+        "prob": 83.3,
+        "ev_pct": 10.8,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates_puerta",
+        "linea": 2.5,
+        "etiqueta": "Le Havre Remates a puerta Over 2.5",
+        "cuota": 1.47,
+        "prob": 79.1,
+        "ev_pct": 16.3,
+        "tipo": "POR_EQUIPO",
+        "cuota_justa": 1.28,
+        "cuota_segura": 1.37,
+        "acierto_hist": 78.2,
+        "n_hist": 293
+      },
+      {
+        "mercado": "local_remates",
+        "linea": 9.5,
+        "etiqueta": "Le Havre Remates Over 9.5",
+        "cuota": 1.57,
+        "prob": 76.1,
+        "ev_pct": 19.5,
+        "tipo": "POR_EQUIPO",
+        "cuota_justa": 1.29,
+        "cuota_segura": 1.39,
+        "acierto_hist": 77.2,
+        "n_hist": 268
+      },
+      {
+        "mercado": "local_corners_equipo",
+        "linea": 2.5,
+        "etiqueta": "Le Havre Corners equipo Over 2.5",
+        "cuota": 1.52,
+        "prob": 73.0,
+        "ev_pct": 11.0,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 3.5,
+        "etiqueta": "Paris SG Corners equipo Over 3.5",
+        "cuota": 1.11,
+        "prob": 71.0,
+        "ev_pct": -21.2,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates_puerta",
+        "linea": 4.5,
+        "etiqueta": "Paris SG Remates a puerta Over 4.5",
+        "cuota": 1.12,
+        "prob": 70.5,
+        "ev_pct": -21.0,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates",
+        "linea": 10.5,
+        "etiqueta": "Le Havre Remates Over 10.5",
+        "cuota": 1.93,
+        "prob": 68.0,
+        "ev_pct": 31.2,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates_puerta",
+        "linea": 3.5,
+        "etiqueta": "Le Havre Remates a puerta Over 3.5",
+        "cuota": 2.12,
+        "prob": 61.5,
+        "ev_pct": 30.4,
+        "tipo": "POR_EQUIPO",
+        "cuota_justa": 1.63,
+        "cuota_segura": 1.83,
+        "acierto_hist": 61.2,
+        "n_hist": 227
+      },
+      {
+        "mercado": "local_remates",
+        "linea": 11.5,
+        "etiqueta": "Le Havre Remates Over 11.5",
+        "cuota": 2.47,
+        "prob": 59.3,
+        "ev_pct": 46.5,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 4.5,
+        "etiqueta": "Paris SG Corners equipo Over 4.5",
+        "cuota": 1.28,
+        "prob": 56.1,
+        "ev_pct": -28.2,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_corners_equipo",
+        "linea": 3.5,
+        "etiqueta": "Le Havre Corners equipo Over 3.5",
+        "cuota": 2.22,
+        "prob": 55.6,
+        "ev_pct": 23.4,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates_puerta",
+        "linea": 5.5,
+        "etiqueta": "Paris SG Remates a puerta Over 5.5",
+        "cuota": 1.26,
+        "prob": 55.4,
+        "ev_pct": -30.2,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates",
+        "linea": 12.5,
+        "etiqueta": "Le Havre Remates Over 12.5",
+        "cuota": 3.25,
+        "prob": 50.5,
+        "ev_pct": 64.1,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates_puerta",
+        "linea": 4.5,
+        "etiqueta": "Le Havre Remates a puerta Over 4.5",
+        "cuota": 3.4,
+        "prob": 43.1,
+        "ev_pct": 46.5,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates",
+        "linea": 15.5,
+        "etiqueta": "Paris SG Remates Over 15.5",
+        "cuota": 1.26,
+        "prob": 43.0,
+        "ev_pct": -45.8,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates",
+        "linea": 13.5,
+        "etiqueta": "Le Havre Remates Over 13.5",
+        "cuota": 4.45,
+        "prob": 41.9,
+        "ev_pct": 86.5,
+        "tipo": "POR_EQUIPO",
+        "es_remate": true
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 5.5,
+        "etiqueta": "Paris SG Corners equipo Over 5.5",
+        "cuota": 1.53,
+        "prob": 41.8,
+        "ev_pct": -36.0,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates_puerta",
+        "linea": 6.5,
+        "etiqueta": "Paris SG Remates a puerta Over 6.5",
+        "cuota": 1.5,
+        "prob": 40.4,
+        "ev_pct": -39.4,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_corners_equipo",
+        "linea": 4.5,
+        "etiqueta": "Le Havre Corners equipo Over 4.5",
+        "cuota": 3.65,
+        "prob": 39.0,
+        "ev_pct": 42.4,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 6.5,
+        "etiqueta": "Paris SG Corners equipo Over 6.5",
+        "cuota": 2.02,
+        "prob": 29.4,
+        "ev_pct": -40.6,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates_puerta",
+        "linea": 5.5,
+        "etiqueta": "Le Havre Remates a puerta Over 5.5",
+        "cuota": 5.7,
+        "prob": 27.3,
+        "ev_pct": 55.6,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_corners_equipo",
+        "linea": 5.5,
+        "etiqueta": "Le Havre Corners equipo Over 5.5",
+        "cuota": 6.1,
+        "prob": 25.5,
+        "ev_pct": 55.5,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 7.5,
+        "etiqueta": "Paris SG Corners equipo Over 7.5",
+        "cuota": 2.82,
+        "prob": 19.7,
+        "ev_pct": -44.4,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates_puerta",
+        "linea": 6.5,
+        "etiqueta": "Le Havre Remates a puerta Over 6.5",
+        "cuota": 9.0,
+        "prob": 15.7,
+        "ev_pct": 41.3,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_corners_equipo",
+        "linea": 6.5,
+        "etiqueta": "Le Havre Corners equipo Over 6.5",
+        "cuota": 9.25,
+        "prob": 15.6,
+        "ev_pct": 44.3,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "over15+over05_local",
+        "linea": null,
+        "etiqueta": "Over 1.5 + Over 0.5 L",
+        "cuota": 1.57,
+        "prob": 56.5,
+        "ev_pct": -11.2,
+        "tipo": "COMBINADA",
+        "patas": [
+          "over15",
+          "over05_local"
+        ],
+        "lift": 1.158,
+        "cuota_justa": 1.75,
+        "cuota_segura": 1.98,
+        "acierto_hist": 57.1,
+        "n_hist": 210
+      },
+      {
+        "mercado": "visit_remates",
+        "linea": 12.5,
+        "etiqueta": "Paris SG Remates Over 12.5",
+        "cuota": 1.1,
+        "prob": 66.6,
+        "ev_pct": -26.7,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates",
+        "linea": 14.5,
+        "etiqueta": "Paris SG Remates Over 14.5",
+        "cuota": 1.24,
+        "prob": 50.8,
+        "ev_pct": -37.0,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "under25",
+        "linea": null,
+        "etiqueta": "Under 2.5",
+        "cuota": 2.92,
+        "prob": 36.4,
+        "ev_pct": 6.3,
+        "regla_cuota_max_pick": "cuota 2.92 > tope 2.00"
+      },
+      {
+        "mercado": "under45",
+        "linea": null,
+        "etiqueta": "Under 4.5",
+        "cuota": 1.35,
+        "prob": 76.3,
+        "ev_pct": 3.0,
+        "regla_unicidad_totales": "cede ante under35 (score EV/prob 3.3)"
+      }
+    ],
+    "mercados_snapshot": {
+      "victoria_local": 12.7,
+      "empate": 18.7,
+      "victoria_visit": 73.8,
+      "do1x": 26.2,
+      "dox2": 87.3,
+      "over15": 84.3,
+      "over25": 63.6,
+      "under25": 36.4,
+      "over35": 41.8,
+      "under35": 58.1,
+      "under45": 76.3,
+      "btts": 57.2,
+      "over05_local": 60.7,
+      "over05_visit": 90.8,
+      "hcp2_des": 52.7,
+      "hcp3_des": 73.3,
+      "corners65": 80.7,
+      "corners75": 70.1,
+      "local_remates_over7.5": 89.1,
+      "local_remates_over8.5": 83.3,
+      "local_remates_over9.5": 76.1,
+      "local_remates_over10.5": 68.0,
+      "local_remates_over11.5": 59.3,
+      "local_remates_over12.5": 50.5,
+      "local_remates_over13.5": 41.9,
+      "local_remates_over14.5": 34.0,
+      "local_remates_over15.5": 27.0,
+      "local_remates_puerta_over1.5": 91.9,
+      "local_remates_puerta_over2.5": 79.1,
+      "local_remates_puerta_over3.5": 61.5,
+      "local_remates_puerta_over4.5": 43.1,
+      "local_remates_puerta_over5.5": 27.3,
+      "local_remates_puerta_over6.5": 15.7,
+      "local_corners_equipo_over2.5": 73.0,
+      "local_corners_equipo_over3.5": 55.6,
+      "local_corners_equipo_over4.5": 39.0,
+      "local_corners_equipo_over5.5": 25.5,
+      "local_corners_equipo_over6.5": 15.6,
+      "local_corners_equipo_over7.5": 9.0,
+      "visit_remates_over7.5": 94.6,
+      "visit_remates_over8.5": 91.1,
+      "visit_remates_over9.5": 86.5,
+      "visit_remates_over10.5": 80.8,
+      "visit_remates_over11.5": 74.0,
+      "visit_remates_over12.5": 66.6,
+      "visit_remates_over13.5": 58.7,
+      "visit_remates_over14.5": 50.8,
+      "visit_remates_over15.5": 43.0,
+      "visit_remates_puerta_over1.5": 97.8,
+      "visit_remates_puerta_over2.5": 92.8,
+      "visit_remates_puerta_over3.5": 83.6,
+      "visit_remates_puerta_over4.5": 70.5,
+      "visit_remates_puerta_over5.5": 55.4,
+      "visit_remates_puerta_over6.5": 40.4,
+      "visit_corners_equipo_over2.5": 84.1,
+      "visit_corners_equipo_over3.5": 71.0,
+      "visit_corners_equipo_over4.5": 56.1,
+      "visit_corners_equipo_over5.5": 41.8,
+      "visit_corners_equipo_over6.5": 29.4,
+      "visit_corners_equipo_over7.5": 19.7
+    },
+    "mu_equipo": {
+      "local": {
+        "remates": 12.94,
+        "remates_puerta": 4.33,
+        "corners_equipo": 4.13
+      },
+      "visit": {
+        "remates": 15.02,
+        "remates_puerta": 6.07,
+        "corners_equipo": 5.25
+      }
+    },
+    "mu_equipo_fuente": "engine",
+    "cruces_validados": [
+      {
+        "mercado": "over25",
+        "etiqueta": "Over 2.5",
+        "cuota": 1.42,
+        "justa": 1.56,
+        "segura": 1.74,
+        "hist": 64.1,
+        "n": 206,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "btts",
+        "etiqueta": "BTTS",
+        "cuota": 1.65,
+        "justa": 1.7,
+        "segura": 1.83,
+        "hist": 58.7,
+        "n": 606,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "local_remates_puerta_over2.5",
+        "etiqueta": "Le Havre Remates a puerta Over 2.5",
+        "cuota": 1.47,
+        "justa": 1.28,
+        "segura": 1.37,
+        "hist": 78.2,
+        "n": 293,
+        "cruza": true,
+        "cruza_segura": true
+      },
+      {
+        "mercado": "local_remates_over9.5",
+        "etiqueta": "Le Havre Remates Over 9.5",
+        "cuota": 1.57,
+        "justa": 1.29,
+        "segura": 1.39,
+        "hist": 77.2,
+        "n": 268,
+        "cruza": true,
+        "cruza_segura": true
+      },
+      {
+        "mercado": "local_remates_puerta_over3.5",
+        "etiqueta": "Le Havre Remates a puerta Over 3.5",
+        "cuota": 2.12,
+        "justa": 1.63,
+        "segura": 1.83,
+        "hist": 61.2,
+        "n": 227,
+        "cruza": true,
+        "cruza_segura": true
+      },
+      {
+        "mercado": "local_remates_puerta_over3.5+over15",
+        "etiqueta": "L Remates a puerta Over 3.5 + Over 1.5",
+        "cuota": 2.25,
+        "justa": 1.78,
+        "segura": 2.0,
+        "hist": 56.1,
+        "n": 253,
+        "cruza": true,
+        "cruza_segura": true
+      },
+      {
+        "mercado": "over15+over05_local",
+        "etiqueta": "Over 1.5 + Over 0.5 L",
+        "cuota": 1.57,
+        "justa": 1.75,
+        "segura": 1.98,
+        "hist": 57.1,
+        "n": 210,
+        "cruza": false,
+        "cruza_segura": false
+      }
+    ],
+    "validadas": [
+      {
+        "mercado": "btts",
+        "etiqueta": "BTTS",
+        "tipo": "simple",
+        "p": 0.572,
+        "cuota_justa": 1.7,
+        "cuota_segura": 1.83,
+        "acierto_hist": 58.7,
+        "n_hist": 606,
+        "cotizada": true
+      },
+      {
+        "mercado": "over05_local+hcp2_visit",
+        "etiqueta": "Over 0.5 L + HCP +2 V",
+        "tipo": "COMBINADA",
+        "p": 0.5591,
+        "cuota_justa": 1.75,
+        "cuota_segura": 1.89,
+        "acierto_hist": 57.2,
+        "n_hist": 512,
+        "cotizada": false
+      },
+      {
+        "mercado": "under45+hcp2_visit",
+        "etiqueta": "Under 4.5 + HCP +2 V",
+        "tipo": "COMBINADA",
+        "p": 0.7309,
+        "cuota_justa": 1.35,
+        "cuota_segura": 1.46,
+        "acierto_hist": 73.8,
+        "n_hist": 298,
+        "cotizada": false
+      },
+      {
+        "mercado": "local_remates_puerta_over2.5",
+        "etiqueta": "Le Havre Remates a puerta Over 2.5",
+        "tipo": "por equipo",
+        "p": 0.7909,
+        "cuota_justa": 1.28,
+        "cuota_segura": 1.37,
+        "acierto_hist": 78.2,
+        "n_hist": 293,
+        "cotizada": true
+      },
+      {
+        "mercado": "local_remates_over9.5",
+        "etiqueta": "Le Havre Remates Over 9.5",
+        "tipo": "por equipo",
+        "p": 0.7614,
+        "cuota_justa": 1.29,
+        "cuota_segura": 1.39,
+        "acierto_hist": 77.2,
+        "n_hist": 268,
+        "cotizada": true
+      },
+      {
+        "mercado": "under35+hcp2_visit",
+        "etiqueta": "Under 3.5 + HCP +2 V",
+        "tipo": "COMBINADA",
+        "p": 0.5612,
+        "cuota_justa": 1.66,
+        "cuota_segura": 1.84,
+        "acierto_hist": 60.3,
+        "n_hist": 267,
+        "cotizada": false
+      },
+      {
+        "mercado": "local_remates_puerta_over3.5+over15",
+        "etiqueta": "L Remates a puerta Over 3.5 + Over 1.5",
+        "tipo": "COMBINADA",
+        "p": 0.5649,
+        "cuota_justa": 1.78,
+        "cuota_segura": 2.0,
+        "acierto_hist": 56.1,
+        "n_hist": 253,
+        "cotizada": true
+      },
+      {
+        "mercado": "btts+hcp2_visit",
+        "etiqueta": "BTTS + HCP +2 V",
+        "tipo": "COMBINADA",
+        "p": 0.5252,
+        "cuota_justa": 1.93,
+        "cuota_segura": 2.2,
+        "acierto_hist": 51.9,
+        "n_hist": 231,
+        "cotizada": false
+      },
+      {
+        "mercado": "local_remates_puerta_over3.5",
+        "etiqueta": "Le Havre Remates a puerta Over 3.5",
+        "tipo": "por equipo",
+        "p": 0.6154,
+        "cuota_justa": 1.63,
+        "cuota_segura": 1.83,
+        "acierto_hist": 61.2,
+        "n_hist": 227,
+        "cotizada": true
+      },
+      {
+        "mercado": "over15+over05_local",
+        "etiqueta": "Over 1.5 + Over 0.5 L",
+        "tipo": "COMBINADA",
+        "p": 0.5654,
+        "cuota_justa": 1.75,
+        "cuota_segura": 1.98,
+        "acierto_hist": 57.1,
+        "n_hist": 210,
+        "cotizada": true
+      },
+      {
+        "mercado": "over25",
+        "etiqueta": "Over 2.5",
+        "tipo": "simple",
+        "p": 0.636,
+        "cuota_justa": 1.56,
+        "cuota_segura": 1.74,
+        "acierto_hist": 64.1,
+        "n_hist": 206,
+        "cotizada": true
+      }
+    ]
   }
 ];
