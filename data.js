@@ -161990,5 +161990,1435 @@ const TRACKER_DATA = [
         "cotizada": false
       }
     ]
+  },
+  {
+    "id": "148",
+    "fecha": "2026-10-31",
+    "jornada": 8,
+    "liga": "D1",
+    "partido": "Schalke 04 vs RB Leipzig",
+    "lambda_forma_l": 1.3607,
+    "lambda_forma_v": 2.3848,
+    "lambda_reg_l": 1.3854,
+    "lambda_reg_v": 2.0889,
+    "lambda_base_l": 1.378,
+    "lambda_base_v": 2.1777,
+    "lambda_final_l": 1.298,
+    "lambda_final_v": 2.2577,
+    "lambda_shadow_l": 1.2331,
+    "lambda_shadow_v": 2.2577,
+    "lambda_corners": 10.756,
+    "ratio": 0.5749213801656554,
+    "visit_dominante": "False",
+    "variables_activas": "V#2(L:0.95)",
+    "variables": {
+      "v1": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa": false,
+        "activa_local": false,
+        "activa_visit": false,
+        "detalle_local": "--",
+        "detalle_visit": "--",
+        "detalle": "Ambos necesitan >=20 PJ (local:7, visit:7)"
+      },
+      "v2": {
+        "factor_local": 0.95,
+        "factor_visit": 1.0,
+        "activa_local": true,
+        "activa_visit": false,
+        "detalle_local": "Rank 16, margen 0pts sobre zona desc",
+        "detalle_visit": "Rank 6, margen 6pts -- fuera de riesgo"
+      },
+      "v3": {
+        "factor_local": 1.0,
+        "activa": false,
+        "n_partidos": 3,
+        "detalle": "Solo 3 partidos como local (min 10)"
+      },
+      "v4": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa_local": false,
+        "activa_visit": false,
+        "bajas_local": 1,
+        "bajas_visit": 1
+      },
+      "v5": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa_local": false,
+        "activa_visit": false
+      },
+      "v6": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa": false
+      },
+      "v7": {
+        "skip": false,
+        "activa_local": false,
+        "activa_visit": false,
+        "detalle": "Sin DT nuevo"
+      },
+      "v8": {
+        "activa": false,
+        "anulado_derby": false,
+        "detalle": "Inactiva"
+      }
+    },
+    "confianza": "MEDIA",
+    "notas": "",
+    "resultado_partido": null,
+    "goles_esperados": "3.56",
+    "apuestas": [
+      {
+        "tipo": "COMBO",
+        "mercado": "local_remates_over9.5+local_remates_puerta_over2.5",
+        "etiqueta": "L Remates Over 9.5 + L Remates a puerta Over 2.5",
+        "cuota": 1.3,
+        "prob": 80.0,
+        "ev_pct": 3.9,
+        "estado": "PENDIENTE",
+        "pl": null,
+        "patas": [
+          "local_remates_over9.5",
+          "local_remates_puerta_over2.5"
+        ],
+        "promovida_combinada": true,
+        "nivel_cruce": "justa",
+        "cuota_justa": 1.3,
+        "cuota_segura": 1.44,
+        "acierto_hist": 76.6,
+        "n_hist": 167
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "local_remates",
+        "linea": 15.5,
+        "etiqueta": "Schalke 04 Remates Over 15.5",
+        "lado": "local",
+        "cuota": 3.6,
+        "prob": 38.0,
+        "ev_pct": 36.8,
+        "estado": "PENDIENTE",
+        "pl": null,
+        "lineas_pasan": 6,
+        "cruzaron_ambos": false
+      }
+    ],
+    "watchlist": [
+      {
+        "mercado": "victoria_visit",
+        "linea": null,
+        "etiqueta": "Victoria RB Leipzig",
+        "cuota": 1.85,
+        "prob": 61.8,
+        "ev_pct": 14.3,
+        "regla_1x2_no_pick": true
+      },
+      {
+        "mercado": "dox2",
+        "linea": null,
+        "etiqueta": "DO Empate o RB Leipzig",
+        "cuota": 1.28,
+        "prob": 78.8,
+        "ev_pct": 0.9,
+        "filtro_edge": "EV=+0.9% < 1.5"
+      },
+      {
+        "mercado": "over15",
+        "linea": null,
+        "etiqueta": "Over 1.5",
+        "cuota": 1.15,
+        "prob": 86.7,
+        "ev_pct": -0.3
+      },
+      {
+        "mercado": "over25",
+        "linea": null,
+        "etiqueta": "Over 2.5",
+        "cuota": 1.47,
+        "prob": 68.0,
+        "ev_pct": -0.0
+      },
+      {
+        "mercado": "over05_local",
+        "linea": null,
+        "etiqueta": "Over 0.5 Schalke 04",
+        "cuota": 1.29,
+        "prob": 74.4,
+        "ev_pct": -4.0,
+        "cuota_justa": 1.38,
+        "cuota_segura": 1.51,
+        "acierto_hist": 72.3,
+        "n_hist": 238
+      },
+      {
+        "mercado": "over05_visit",
+        "linea": null,
+        "etiqueta": "Over 0.5 RB Leipzig",
+        "cuota": 1.12,
+        "prob": 89.5,
+        "ev_pct": 0.2,
+        "filtro_edge": "EV=+0.2% < 1.5"
+      },
+      {
+        "mercado": "corners65",
+        "linea": null,
+        "etiqueta": "Over 6.5 corners",
+        "cuota": 1.15,
+        "prob": 89.5,
+        "ev_pct": 2.9
+      },
+      {
+        "mercado": "corners75",
+        "linea": null,
+        "etiqueta": "Over 7.5 corners",
+        "cuota": 1.28,
+        "prob": 80.8,
+        "ev_pct": 3.4
+      },
+      {
+        "mercado": "local_remates",
+        "linea": 9.5,
+        "etiqueta": "Schalke 04 Remates Over 9.5",
+        "cuota": 1.17,
+        "prob": 83.8,
+        "ev_pct": -2.0,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_corners_equipo",
+        "linea": 2.5,
+        "etiqueta": "Schalke 04 Corners equipo Over 2.5",
+        "cuota": 1.19,
+        "prob": 82.5,
+        "ev_pct": -1.8,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates_puerta",
+        "linea": 3.5,
+        "etiqueta": "RB Leipzig Remates a puerta Over 3.5",
+        "cuota": 1.15,
+        "prob": 78.5,
+        "ev_pct": -9.7,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates",
+        "linea": 10.5,
+        "etiqueta": "Schalke 04 Remates Over 10.5",
+        "cuota": 1.3,
+        "prob": 77.3,
+        "ev_pct": 0.5,
+        "tipo": "POR_EQUIPO",
+        "cuota_justa": 1.29,
+        "cuota_segura": 1.4,
+        "acierto_hist": 77.3,
+        "n_hist": 233
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 3.5,
+        "etiqueta": "RB Leipzig Corners equipo Over 3.5",
+        "cuota": 1.29,
+        "prob": 75.8,
+        "ev_pct": -2.2,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates_puerta",
+        "linea": 3.5,
+        "etiqueta": "Schalke 04 Remates a puerta Over 3.5",
+        "cuota": 1.45,
+        "prob": 73.0,
+        "ev_pct": 5.8,
+        "tipo": "POR_EQUIPO",
+        "cuota_justa": 1.37,
+        "cuota_segura": 1.51,
+        "acierto_hist": 72.8,
+        "n_hist": 206
+      },
+      {
+        "mercado": "local_remates",
+        "linea": 11.5,
+        "etiqueta": "Schalke 04 Remates Over 11.5",
+        "cuota": 1.47,
+        "prob": 70.0,
+        "ev_pct": 2.9,
+        "tipo": "POR_EQUIPO",
+        "cuota_justa": 1.47,
+        "cuota_segura": 1.64,
+        "acierto_hist": 68.1,
+        "n_hist": 185
+      },
+      {
+        "mercado": "local_corners_equipo",
+        "linea": 3.5,
+        "etiqueta": "Schalke 04 Corners equipo Over 3.5",
+        "cuota": 1.47,
+        "prob": 68.5,
+        "ev_pct": 0.7,
+        "tipo": "POR_EQUIPO",
+        "cuota_justa": 1.44,
+        "cuota_segura": 1.56,
+        "acierto_hist": 69.2,
+        "n_hist": 325
+      },
+      {
+        "mercado": "visit_remates_puerta",
+        "linea": 4.5,
+        "etiqueta": "RB Leipzig Remates a puerta Over 4.5",
+        "cuota": 1.35,
+        "prob": 63.5,
+        "ev_pct": -14.3,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 4.5,
+        "etiqueta": "RB Leipzig Corners equipo Over 4.5",
+        "cuota": 1.62,
+        "prob": 62.2,
+        "ev_pct": 0.8,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates",
+        "linea": 12.5,
+        "etiqueta": "Schalke 04 Remates Over 12.5",
+        "cuota": 1.75,
+        "prob": 62.0,
+        "ev_pct": 8.5,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates",
+        "linea": 13.5,
+        "etiqueta": "RB Leipzig Remates Over 13.5",
+        "cuota": 1.24,
+        "prob": 59.6,
+        "ev_pct": -26.1,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates_puerta",
+        "linea": 4.5,
+        "etiqueta": "Schalke 04 Remates a puerta Over 4.5",
+        "cuota": 1.98,
+        "prob": 56.4,
+        "ev_pct": 11.7,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates",
+        "linea": 13.5,
+        "etiqueta": "Schalke 04 Remates Over 13.5",
+        "cuota": 2.15,
+        "prob": 53.8,
+        "ev_pct": 15.7,
+        "tipo": "POR_EQUIPO",
+        "cuota_justa": 1.98,
+        "cuota_segura": 2.32,
+        "acierto_hist": 50.6,
+        "n_hist": 166
+      },
+      {
+        "mercado": "local_corners_equipo",
+        "linea": 4.5,
+        "etiqueta": "Schalke 04 Corners equipo Over 4.5",
+        "cuota": 2.0,
+        "prob": 53.1,
+        "ev_pct": 6.2,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates",
+        "linea": 14.5,
+        "etiqueta": "RB Leipzig Remates Over 14.5",
+        "cuota": 1.38,
+        "prob": 51.7,
+        "ev_pct": -28.7,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 5.5,
+        "etiqueta": "RB Leipzig Corners equipo Over 5.5",
+        "cuota": 2.22,
+        "prob": 48.2,
+        "ev_pct": 7.0,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates_puerta",
+        "linea": 5.5,
+        "etiqueta": "RB Leipzig Remates a puerta Over 5.5",
+        "cuota": 1.7,
+        "prob": 47.3,
+        "ev_pct": -19.6,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates",
+        "linea": 14.5,
+        "etiqueta": "Schalke 04 Remates Over 14.5",
+        "cuota": 2.75,
+        "prob": 45.7,
+        "ev_pct": 25.7,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates",
+        "linea": 15.5,
+        "etiqueta": "RB Leipzig Remates Over 15.5",
+        "cuota": 1.57,
+        "prob": 44.0,
+        "ev_pct": -30.9,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates_puerta",
+        "linea": 5.5,
+        "etiqueta": "Schalke 04 Remates a puerta Over 5.5",
+        "cuota": 2.95,
+        "prob": 39.8,
+        "ev_pct": 17.4,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_corners_equipo",
+        "linea": 5.5,
+        "etiqueta": "Schalke 04 Corners equipo Over 5.5",
+        "cuota": 2.95,
+        "prob": 38.7,
+        "ev_pct": 14.2,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates",
+        "linea": 15.5,
+        "etiqueta": "Schalke 04 Remates Over 15.5",
+        "cuota": 3.6,
+        "prob": 38.0,
+        "ev_pct": 36.8,
+        "tipo": "POR_EQUIPO",
+        "es_remate": true
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 6.5,
+        "etiqueta": "RB Leipzig Corners equipo Over 6.5",
+        "cuota": 3.25,
+        "prob": 35.5,
+        "ev_pct": 15.4,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates_puerta",
+        "linea": 6.5,
+        "etiqueta": "RB Leipzig Remates a puerta Over 6.5",
+        "cuota": 2.32,
+        "prob": 32.6,
+        "ev_pct": -24.4,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_corners_equipo",
+        "linea": 6.5,
+        "etiqueta": "Schalke 04 Corners equipo Over 6.5",
+        "cuota": 4.5,
+        "prob": 26.7,
+        "ev_pct": 20.2,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates_puerta",
+        "linea": 6.5,
+        "etiqueta": "Schalke 04 Remates a puerta Over 6.5",
+        "cuota": 4.6,
+        "prob": 25.8,
+        "ev_pct": 18.7,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 7.5,
+        "etiqueta": "RB Leipzig Corners equipo Over 7.5",
+        "cuota": 4.85,
+        "prob": 24.9,
+        "ev_pct": 20.8,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_corners_equipo",
+        "linea": 7.5,
+        "etiqueta": "Schalke 04 Corners equipo Over 7.5",
+        "cuota": 7.0,
+        "prob": 17.4,
+        "ev_pct": 21.8,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "btts+local_remates_puerta_over2.5",
+        "linea": null,
+        "etiqueta": "BTTS + L Remates a puerta Over 2.5",
+        "cuota": 1.57,
+        "prob": 59.3,
+        "ev_pct": -6.9,
+        "tipo": "COMBINADA",
+        "patas": [
+          "btts",
+          "local_remates_puerta_over2.5"
+        ],
+        "lift": 1.085,
+        "cuota_justa": 1.77,
+        "cuota_segura": 1.94,
+        "acierto_hist": 56.6,
+        "n_hist": 362
+      },
+      {
+        "mercado": "under45+over05_visit",
+        "linea": null,
+        "etiqueta": "Under 4.5 + Over 0.5 V",
+        "cuota": 1.55,
+        "prob": 61.1,
+        "ev_pct": -5.2,
+        "tipo": "COMBINADA",
+        "patas": [
+          "under45",
+          "over05_visit"
+        ],
+        "lift": 0.934,
+        "cuota_justa": 1.56,
+        "cuota_segura": 1.7,
+        "acierto_hist": 64.2,
+        "n_hist": 327
+      },
+      {
+        "mercado": "dox2+hcp3_local",
+        "linea": null,
+        "etiqueta": "DO Empate o V + HCP +3 L",
+        "cuota": 1.53,
+        "prob": 59.2,
+        "ev_pct": -9.5,
+        "tipo": "COMBINADA",
+        "patas": [
+          "dox2",
+          "hcp3_local"
+        ],
+        "lift": 0.968,
+        "cuota_justa": 1.72,
+        "cuota_segura": 1.91,
+        "acierto_hist": 58.1,
+        "n_hist": 296
+      },
+      {
+        "mercado": "under45+hcp2_visit",
+        "linea": null,
+        "etiqueta": "Under 4.5 + HCP +2 V",
+        "cuota": 1.44,
+        "prob": 65.3,
+        "ev_pct": -5.9,
+        "tipo": "COMBINADA",
+        "patas": [
+          "under45",
+          "hcp2_visit"
+        ],
+        "lift": 1.038,
+        "cuota_justa": 1.49,
+        "cuota_segura": 1.64,
+        "acierto_hist": 67.1,
+        "n_hist": 246
+      },
+      {
+        "mercado": "local_remates_puerta_over2.5+over05_local",
+        "linea": null,
+        "etiqueta": "L Remates a puerta Over 2.5 + Over 0.5 L",
+        "cuota": 1.42,
+        "prob": 70.1,
+        "ev_pct": -0.5,
+        "tipo": "COMBINADA",
+        "patas": [
+          "local_remates_puerta_over2.5",
+          "over05_local"
+        ],
+        "lift": 1.081,
+        "cuota_justa": 1.37,
+        "cuota_segura": 1.49,
+        "acierto_hist": 73.0,
+        "n_hist": 230
+      },
+      {
+        "mercado": "local_corners_equipo_over2.5+local_remates_over10.5",
+        "linea": null,
+        "etiqueta": "L Corners Over 2.5 + L Remates Over 10.5",
+        "cuota": 1.47,
+        "prob": 68.7,
+        "ev_pct": 1.0,
+        "tipo": "COMBINADA",
+        "patas": [
+          "local_corners_equipo_over2.5",
+          "local_remates_over10.5"
+        ],
+        "lift": 1.071,
+        "cuota_justa": 1.42,
+        "cuota_segura": 1.56,
+        "acierto_hist": 70.5,
+        "n_hist": 227
+      },
+      {
+        "mercado": "dox2+under45",
+        "linea": null,
+        "etiqueta": "DO Empate o V + Under 4.5",
+        "cuota": 1.67,
+        "prob": 56.2,
+        "ev_pct": -6.1,
+        "tipo": "COMBINADA",
+        "patas": [
+          "dox2",
+          "under45"
+        ],
+        "lift": 1.05,
+        "cuota_justa": 1.67,
+        "cuota_segura": 1.88,
+        "acierto_hist": 59.7,
+        "n_hist": 226
+      },
+      {
+        "mercado": "local_remates_puerta_over3.5+over05_local",
+        "linea": null,
+        "etiqueta": "L Remates a puerta Over 3.5 + Over 0.5 L",
+        "cuota": 1.67,
+        "prob": 59.4,
+        "ev_pct": -0.8,
+        "tipo": "COMBINADA",
+        "patas": [
+          "local_remates_puerta_over3.5",
+          "over05_local"
+        ],
+        "lift": 1.112,
+        "cuota_justa": 1.65,
+        "cuota_segura": 1.85,
+        "acierto_hist": 60.4,
+        "n_hist": 225
+      },
+      {
+        "mercado": "local_corners_equipo_over2.5+local_remates_over9.5",
+        "linea": null,
+        "etiqueta": "L Corners Over 2.5 + L Remates Over 9.5",
+        "cuota": 1.34,
+        "prob": 73.7,
+        "ev_pct": -1.2,
+        "tipo": "COMBINADA",
+        "patas": [
+          "local_corners_equipo_over2.5",
+          "local_remates_over9.5"
+        ],
+        "lift": 1.052,
+        "cuota_justa": 1.34,
+        "cuota_segura": 1.46,
+        "acierto_hist": 74.6,
+        "n_hist": 213
+      },
+      {
+        "mercado": "local_corners_equipo_over4.5+local_remates_over9.5",
+        "linea": null,
+        "etiqueta": "L Corners Over 4.5 + L Remates Over 9.5",
+        "cuota": 2.12,
+        "prob": 50.4,
+        "ev_pct": 6.9,
+        "tipo": "COMBINADA",
+        "patas": [
+          "local_corners_equipo_over4.5",
+          "local_remates_over9.5"
+        ],
+        "lift": 1.111,
+        "cuota_justa": 1.84,
+        "cuota_segura": 2.1,
+        "acierto_hist": 54.3,
+        "n_hist": 208
+      },
+      {
+        "mercado": "local_remates_puerta_over4.5+over15",
+        "linea": null,
+        "etiqueta": "L Remates a puerta Over 4.5 + Over 1.5",
+        "cuota": 2.1,
+        "prob": 54.3,
+        "ev_pct": 14.0,
+        "tipo": "COMBINADA",
+        "patas": [
+          "local_remates_puerta_over4.5",
+          "over15"
+        ],
+        "lift": 1.094,
+        "cuota_justa": 1.94,
+        "cuota_segura": 2.24,
+        "acierto_hist": 51.5,
+        "n_hist": 202
+      },
+      {
+        "mercado": "local_remates_puerta_over3.5+over15",
+        "linea": null,
+        "etiqueta": "L Remates a puerta Over 3.5 + Over 1.5",
+        "cuota": 1.57,
+        "prob": 67.3,
+        "ev_pct": 5.7,
+        "tipo": "COMBINADA",
+        "patas": [
+          "local_remates_puerta_over3.5",
+          "over15"
+        ],
+        "lift": 1.079,
+        "cuota_justa": 1.49,
+        "cuota_segura": 1.66,
+        "acierto_hist": 67.2,
+        "n_hist": 180
+      },
+      {
+        "mercado": "local_remates_over10.5+local_remates_puerta_over2.5",
+        "linea": null,
+        "etiqueta": "L Remates Over 10.5 + L Remates a puerta Over 2.5",
+        "cuota": 1.42,
+        "prob": 74.4,
+        "ev_pct": 5.7,
+        "tipo": "COMBINADA",
+        "patas": [
+          "local_remates_over10.5",
+          "local_remates_puerta_over2.5"
+        ],
+        "lift": 1.096,
+        "cuota_justa": 1.41,
+        "cuota_segura": 1.57,
+        "acierto_hist": 71.2,
+        "n_hist": 156
+      },
+      {
+        "mercado": "local_remates_over12.5+local_remates_puerta_over3.5",
+        "linea": null,
+        "etiqueta": "L Remates Over 12.5 + L Remates a puerta Over 3.5",
+        "cuota": 2.05,
+        "prob": 53.6,
+        "ev_pct": 9.9,
+        "tipo": "COMBINADA",
+        "patas": [
+          "local_remates_over12.5",
+          "local_remates_puerta_over3.5"
+        ],
+        "lift": 1.23,
+        "cuota_justa": 1.97,
+        "cuota_segura": 2.33,
+        "acierto_hist": 50.6,
+        "n_hist": 154
+      },
+      {
+        "mercado": "local_remates_over9.5+local_remates_puerta_over3.5",
+        "linea": null,
+        "etiqueta": "L Remates Over 9.5 + L Remates a puerta Over 3.5",
+        "cuota": 1.53,
+        "prob": 69.7,
+        "ev_pct": 6.7,
+        "tipo": "COMBINADA",
+        "patas": [
+          "local_remates_over9.5",
+          "local_remates_puerta_over3.5"
+        ],
+        "lift": 1.148,
+        "cuota_justa": 1.52,
+        "cuota_segura": 1.73,
+        "acierto_hist": 65.6,
+        "n_hist": 154
+      },
+      {
+        "mercado": "local_remates_over10.5+local_remates_puerta_over4.5",
+        "linea": null,
+        "etiqueta": "L Remates Over 10.5 + L Remates a puerta Over 4.5",
+        "cuota": 2.15,
+        "prob": 51.1,
+        "ev_pct": 9.8,
+        "tipo": "COMBINADA",
+        "patas": [
+          "local_remates_over10.5",
+          "local_remates_puerta_over4.5"
+        ],
+        "lift": 1.254,
+        "cuota_justa": 2.0,
+        "cuota_segura": 2.37,
+        "acierto_hist": 50.0,
+        "n_hist": 154
+      },
+      {
+        "mercado": "visit_remates",
+        "linea": 10.5,
+        "etiqueta": "RB Leipzig Remates Over 10.5",
+        "cuota": 1.13,
+        "prob": 81.4,
+        "ev_pct": -8.0,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates",
+        "linea": 11.5,
+        "etiqueta": "RB Leipzig Remates Over 11.5",
+        "cuota": 1.21,
+        "prob": 74.8,
+        "ev_pct": -9.5,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates",
+        "linea": 12.5,
+        "etiqueta": "RB Leipzig Remates Over 12.5",
+        "cuota": 1.35,
+        "prob": 67.4,
+        "ev_pct": -9.0,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates",
+        "linea": 10.5,
+        "etiqueta": "RB Leipzig Remates Over 10.5",
+        "cuota": 1.13,
+        "prob": 81.4,
+        "ev_pct": -8.0,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates",
+        "linea": 11.5,
+        "etiqueta": "RB Leipzig Remates Over 11.5",
+        "cuota": 1.21,
+        "prob": 74.8,
+        "ev_pct": -9.5,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates",
+        "linea": 12.5,
+        "etiqueta": "RB Leipzig Remates Over 12.5",
+        "cuota": 1.35,
+        "prob": 67.4,
+        "ev_pct": -9.0,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "over35",
+        "linea": null,
+        "etiqueta": "Over 3.5",
+        "cuota": 2.15,
+        "prob": 47.5,
+        "ev_pct": 2.1,
+        "regla_cuota_max_pick": "cuota 2.15 > tope 2.00"
+      }
+    ],
+    "mercados_snapshot": {
+      "victoria_local": 21.2,
+      "empate": 21.6,
+      "victoria_visit": 61.8,
+      "do1x": 38.1,
+      "dox2": 78.8,
+      "over15": 86.7,
+      "over25": 68.0,
+      "under25": 32.0,
+      "over35": 47.5,
+      "under35": 52.5,
+      "under45": 71.5,
+      "btts": 63.7,
+      "over05_local": 74.4,
+      "over05_visit": 89.5,
+      "hcp2_des": 62.8,
+      "hcp3_des": 80.3,
+      "corners65": 89.5,
+      "corners75": 80.8,
+      "local_remates_over7.5": 93.3,
+      "local_remates_over8.5": 89.2,
+      "local_remates_over9.5": 83.8,
+      "local_remates_over10.5": 77.3,
+      "local_remates_over11.5": 70.0,
+      "local_remates_over12.5": 62.0,
+      "local_remates_over13.5": 53.8,
+      "local_remates_over14.5": 45.7,
+      "local_remates_over15.5": 38.0,
+      "local_remates_puerta_over1.5": 95.4,
+      "local_remates_puerta_over2.5": 86.7,
+      "local_remates_puerta_over3.5": 73.0,
+      "local_remates_puerta_over4.5": 56.4,
+      "local_remates_puerta_over5.5": 39.8,
+      "local_remates_puerta_over6.5": 25.8,
+      "local_corners_equipo_over2.5": 82.5,
+      "local_corners_equipo_over3.5": 68.5,
+      "local_corners_equipo_over4.5": 53.1,
+      "local_corners_equipo_over5.5": 38.7,
+      "local_corners_equipo_over6.5": 26.7,
+      "local_corners_equipo_over7.5": 17.4,
+      "visit_remates_over7.5": 94.8,
+      "visit_remates_over8.5": 91.5,
+      "visit_remates_over9.5": 87.0,
+      "visit_remates_over10.5": 81.4,
+      "visit_remates_over11.5": 74.8,
+      "visit_remates_over12.5": 67.4,
+      "visit_remates_over13.5": 59.6,
+      "visit_remates_over14.5": 51.7,
+      "visit_remates_over15.5": 44.0,
+      "visit_remates_puerta_over1.5": 96.8,
+      "visit_remates_puerta_over2.5": 90.0,
+      "visit_remates_puerta_over3.5": 78.5,
+      "visit_remates_puerta_over4.5": 63.5,
+      "visit_remates_puerta_over5.5": 47.3,
+      "visit_remates_puerta_over6.5": 32.6,
+      "visit_corners_equipo_over2.5": 87.3,
+      "visit_corners_equipo_over3.5": 75.8,
+      "visit_corners_equipo_over4.5": 62.2,
+      "visit_corners_equipo_over5.5": 48.2,
+      "visit_corners_equipo_over6.5": 35.5,
+      "visit_corners_equipo_over7.5": 24.9
+    },
+    "mu_equipo": {
+      "local": {
+        "remates": 14.37,
+        "remates_puerta": 5.09,
+        "corners_equipo": 5.04
+      },
+      "visit": {
+        "remates": 15.14,
+        "remates_puerta": 5.55,
+        "corners_equipo": 5.72
+      }
+    },
+    "mu_equipo_fuente": "engine",
+    "cruces_validados": [
+      {
+        "mercado": "btts",
+        "etiqueta": "BTTS",
+        "cuota": 1.44,
+        "justa": 1.6,
+        "segura": 1.76,
+        "hist": 62.7,
+        "n": 260,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "over05_local",
+        "etiqueta": "Over 0.5 L",
+        "cuota": 1.29,
+        "justa": 1.38,
+        "segura": 1.51,
+        "hist": 72.3,
+        "n": 238,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "local_remates_over10.5",
+        "etiqueta": "Schalke 04 Remates Over 10.5",
+        "cuota": 1.3,
+        "justa": 1.29,
+        "segura": 1.4,
+        "hist": 77.3,
+        "n": 233,
+        "cruza": true,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "local_remates_puerta_over3.5",
+        "etiqueta": "Schalke 04 Remates a puerta Over 3.5",
+        "cuota": 1.45,
+        "justa": 1.37,
+        "segura": 1.51,
+        "hist": 72.8,
+        "n": 206,
+        "cruza": true,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "local_remates_over11.5",
+        "etiqueta": "Schalke 04 Remates Over 11.5",
+        "cuota": 1.47,
+        "justa": 1.47,
+        "segura": 1.64,
+        "hist": 68.1,
+        "n": 185,
+        "cruza": true,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "local_corners_equipo_over3.5",
+        "etiqueta": "Schalke 04 Corners Over 3.5",
+        "cuota": 1.47,
+        "justa": 1.44,
+        "segura": 1.56,
+        "hist": 69.2,
+        "n": 325,
+        "cruza": true,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "local_remates_over13.5",
+        "etiqueta": "Schalke 04 Remates Over 13.5",
+        "cuota": 2.15,
+        "justa": 1.98,
+        "segura": 2.32,
+        "hist": 50.6,
+        "n": 166,
+        "cruza": true,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "btts+local_remates_puerta_over2.5",
+        "etiqueta": "BTTS + L Remates a puerta Over 2.5",
+        "cuota": 1.57,
+        "justa": 1.77,
+        "segura": 1.94,
+        "hist": 56.6,
+        "n": 362,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "under45+over05_visit",
+        "etiqueta": "Under 4.5 + Over 0.5 V",
+        "cuota": 1.55,
+        "justa": 1.56,
+        "segura": 1.7,
+        "hist": 64.2,
+        "n": 327,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "dox2+hcp3_local",
+        "etiqueta": "DO Empate o V + HCP +3 L",
+        "cuota": 1.53,
+        "justa": 1.72,
+        "segura": 1.91,
+        "hist": 58.1,
+        "n": 296,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "under45+hcp2_visit",
+        "etiqueta": "Under 4.5 + HCP +2 V",
+        "cuota": 1.44,
+        "justa": 1.49,
+        "segura": 1.64,
+        "hist": 67.1,
+        "n": 246,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "local_remates_puerta_over2.5+over05_local",
+        "etiqueta": "L Remates a puerta Over 2.5 + Over 0.5 L",
+        "cuota": 1.42,
+        "justa": 1.37,
+        "segura": 1.49,
+        "hist": 73.0,
+        "n": 230,
+        "cruza": true,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "local_corners_equipo_over2.5+local_remates_over10.5",
+        "etiqueta": "L Corners Over 2.5 + L Remates Over 10.5",
+        "cuota": 1.47,
+        "justa": 1.42,
+        "segura": 1.56,
+        "hist": 70.5,
+        "n": 227,
+        "cruza": true,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "dox2+under45",
+        "etiqueta": "DO Empate o V + Under 4.5",
+        "cuota": 1.67,
+        "justa": 1.67,
+        "segura": 1.88,
+        "hist": 59.7,
+        "n": 226,
+        "cruza": true,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "local_remates_puerta_over3.5+over05_local",
+        "etiqueta": "L Remates a puerta Over 3.5 + Over 0.5 L",
+        "cuota": 1.67,
+        "justa": 1.65,
+        "segura": 1.85,
+        "hist": 60.4,
+        "n": 225,
+        "cruza": true,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "local_corners_equipo_over2.5+local_remates_over9.5",
+        "etiqueta": "L Corners Over 2.5 + L Remates Over 9.5",
+        "cuota": 1.34,
+        "justa": 1.34,
+        "segura": 1.46,
+        "hist": 74.6,
+        "n": 213,
+        "cruza": true,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "local_corners_equipo_over4.5+local_remates_over9.5",
+        "etiqueta": "L Corners Over 4.5 + L Remates Over 9.5",
+        "cuota": 2.12,
+        "justa": 1.84,
+        "segura": 2.1,
+        "hist": 54.3,
+        "n": 208,
+        "cruza": true,
+        "cruza_segura": true
+      },
+      {
+        "mercado": "local_remates_puerta_over4.5+over15",
+        "etiqueta": "L Remates a puerta Over 4.5 + Over 1.5",
+        "cuota": 2.1,
+        "justa": 1.94,
+        "segura": 2.24,
+        "hist": 51.5,
+        "n": 202,
+        "cruza": true,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "local_remates_puerta_over3.5+over15",
+        "etiqueta": "L Remates a puerta Over 3.5 + Over 1.5",
+        "cuota": 1.57,
+        "justa": 1.49,
+        "segura": 1.66,
+        "hist": 67.2,
+        "n": 180,
+        "cruza": true,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "local_remates_over9.5+local_remates_puerta_over2.5",
+        "etiqueta": "L Remates Over 9.5 + L Remates a puerta Over 2.5",
+        "cuota": 1.3,
+        "justa": 1.3,
+        "segura": 1.44,
+        "hist": 76.6,
+        "n": 167,
+        "cruza": true,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "local_remates_over10.5+local_remates_puerta_over2.5",
+        "etiqueta": "L Remates Over 10.5 + L Remates a puerta Over 2.5",
+        "cuota": 1.42,
+        "justa": 1.41,
+        "segura": 1.57,
+        "hist": 71.2,
+        "n": 156,
+        "cruza": true,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "local_remates_over12.5+local_remates_puerta_over3.5",
+        "etiqueta": "L Remates Over 12.5 + L Remates a puerta Over 3.5",
+        "cuota": 2.05,
+        "justa": 1.97,
+        "segura": 2.33,
+        "hist": 50.6,
+        "n": 154,
+        "cruza": true,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "local_remates_over9.5+local_remates_puerta_over3.5",
+        "etiqueta": "L Remates Over 9.5 + L Remates a puerta Over 3.5",
+        "cuota": 1.53,
+        "justa": 1.52,
+        "segura": 1.73,
+        "hist": 65.6,
+        "n": 154,
+        "cruza": true,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "local_remates_over10.5+local_remates_puerta_over4.5",
+        "etiqueta": "L Remates Over 10.5 + L Remates a puerta Over 4.5",
+        "cuota": 2.15,
+        "justa": 2.0,
+        "segura": 2.37,
+        "hist": 50.0,
+        "n": 154,
+        "cruza": true,
+        "cruza_segura": false
+      }
+    ],
+    "validadas": [
+      {
+        "mercado": "btts+local_remates_puerta_over2.5",
+        "etiqueta": "BTTS + L Remates a puerta Over 2.5",
+        "tipo": "COMBINADA",
+        "p": 0.5927,
+        "cuota_justa": 1.77,
+        "cuota_segura": 1.94,
+        "acierto_hist": 56.6,
+        "n_hist": 362,
+        "cotizada": true
+      },
+      {
+        "mercado": "under45+over05_visit",
+        "etiqueta": "Under 4.5 + Over 0.5 V",
+        "tipo": "COMBINADA",
+        "p": 0.6114,
+        "cuota_justa": 1.56,
+        "cuota_segura": 1.7,
+        "acierto_hist": 64.2,
+        "n_hist": 327,
+        "cotizada": true
+      },
+      {
+        "mercado": "local_corners_equipo_over3.5",
+        "etiqueta": "Schalke 04 Corners Over 3.5",
+        "tipo": "por equipo",
+        "p": 0.6845,
+        "cuota_justa": 1.44,
+        "cuota_segura": 1.56,
+        "acierto_hist": 69.2,
+        "n_hist": 325,
+        "cotizada": true
+      },
+      {
+        "mercado": "dox2+hcp3_local",
+        "etiqueta": "DO Empate o V + HCP +3 L",
+        "tipo": "COMBINADA",
+        "p": 0.5916,
+        "cuota_justa": 1.72,
+        "cuota_segura": 1.91,
+        "acierto_hist": 58.1,
+        "n_hist": 296,
+        "cotizada": true
+      },
+      {
+        "mercado": "btts",
+        "etiqueta": "BTTS",
+        "tipo": "simple",
+        "p": 0.6374,
+        "cuota_justa": 1.6,
+        "cuota_segura": 1.76,
+        "acierto_hist": 62.7,
+        "n_hist": 260,
+        "cotizada": true
+      },
+      {
+        "mercado": "under45+hcp2_visit",
+        "etiqueta": "Under 4.5 + HCP +2 V",
+        "tipo": "COMBINADA",
+        "p": 0.6535,
+        "cuota_justa": 1.49,
+        "cuota_segura": 1.64,
+        "acierto_hist": 67.1,
+        "n_hist": 246,
+        "cotizada": true
+      },
+      {
+        "mercado": "over05_local",
+        "etiqueta": "Over 0.5 L",
+        "tipo": "simple",
+        "p": 0.744,
+        "cuota_justa": 1.38,
+        "cuota_segura": 1.51,
+        "acierto_hist": 72.3,
+        "n_hist": 238,
+        "cotizada": true
+      },
+      {
+        "mercado": "local_remates_over10.5",
+        "etiqueta": "Schalke 04 Remates Over 10.5",
+        "tipo": "por equipo",
+        "p": 0.7735,
+        "cuota_justa": 1.29,
+        "cuota_segura": 1.4,
+        "acierto_hist": 77.3,
+        "n_hist": 233,
+        "cotizada": true
+      },
+      {
+        "mercado": "local_remates_puerta_over2.5+over05_local",
+        "etiqueta": "L Remates a puerta Over 2.5 + Over 0.5 L",
+        "tipo": "COMBINADA",
+        "p": 0.7006,
+        "cuota_justa": 1.37,
+        "cuota_segura": 1.49,
+        "acierto_hist": 73.0,
+        "n_hist": 230,
+        "cotizada": true
+      },
+      {
+        "mercado": "local_corners_equipo_over2.5+local_remates_over10.5",
+        "etiqueta": "L Corners Over 2.5 + L Remates Over 10.5",
+        "tipo": "COMBINADA",
+        "p": 0.6874,
+        "cuota_justa": 1.42,
+        "cuota_segura": 1.56,
+        "acierto_hist": 70.5,
+        "n_hist": 227,
+        "cotizada": true
+      },
+      {
+        "mercado": "dox2+under45",
+        "etiqueta": "DO Empate o V + Under 4.5",
+        "tipo": "COMBINADA",
+        "p": 0.5621,
+        "cuota_justa": 1.67,
+        "cuota_segura": 1.88,
+        "acierto_hist": 59.7,
+        "n_hist": 226,
+        "cotizada": true
+      },
+      {
+        "mercado": "local_remates_puerta_over3.5+over05_local",
+        "etiqueta": "L Remates a puerta Over 3.5 + Over 0.5 L",
+        "tipo": "COMBINADA",
+        "p": 0.594,
+        "cuota_justa": 1.65,
+        "cuota_segura": 1.85,
+        "acierto_hist": 60.4,
+        "n_hist": 225,
+        "cotizada": true
+      },
+      {
+        "mercado": "local_corners_equipo_over2.5+local_remates_over9.5",
+        "etiqueta": "L Corners Over 2.5 + L Remates Over 9.5",
+        "tipo": "COMBINADA",
+        "p": 0.7373,
+        "cuota_justa": 1.34,
+        "cuota_segura": 1.46,
+        "acierto_hist": 74.6,
+        "n_hist": 213,
+        "cotizada": true
+      },
+      {
+        "mercado": "local_corners_equipo_over4.5+local_remates_over9.5",
+        "etiqueta": "L Corners Over 4.5 + L Remates Over 9.5",
+        "tipo": "COMBINADA",
+        "p": 0.5041,
+        "cuota_justa": 1.84,
+        "cuota_segura": 2.1,
+        "acierto_hist": 54.3,
+        "n_hist": 208,
+        "cotizada": true
+      },
+      {
+        "mercado": "local_remates_puerta_over3.5",
+        "etiqueta": "Schalke 04 Remates a puerta Over 3.5",
+        "tipo": "por equipo",
+        "p": 0.73,
+        "cuota_justa": 1.37,
+        "cuota_segura": 1.51,
+        "acierto_hist": 72.8,
+        "n_hist": 206,
+        "cotizada": true
+      },
+      {
+        "mercado": "local_remates_puerta_over4.5+over15",
+        "etiqueta": "L Remates a puerta Over 4.5 + Over 1.5",
+        "tipo": "COMBINADA",
+        "p": 0.5427,
+        "cuota_justa": 1.94,
+        "cuota_segura": 2.24,
+        "acierto_hist": 51.5,
+        "n_hist": 202,
+        "cotizada": true
+      },
+      {
+        "mercado": "local_remates_over11.5",
+        "etiqueta": "Schalke 04 Remates Over 11.5",
+        "tipo": "por equipo",
+        "p": 0.6997,
+        "cuota_justa": 1.47,
+        "cuota_segura": 1.64,
+        "acierto_hist": 68.1,
+        "n_hist": 185,
+        "cotizada": true
+      },
+      {
+        "mercado": "local_remates_puerta_over3.5+over15",
+        "etiqueta": "L Remates a puerta Over 3.5 + Over 1.5",
+        "tipo": "COMBINADA",
+        "p": 0.6733,
+        "cuota_justa": 1.49,
+        "cuota_segura": 1.66,
+        "acierto_hist": 67.2,
+        "n_hist": 180,
+        "cotizada": true
+      },
+      {
+        "mercado": "local_remates_over9.5+local_remates_puerta_over2.5",
+        "etiqueta": "L Remates Over 9.5 + L Remates a puerta Over 2.5",
+        "tipo": "COMBINADA",
+        "p": 0.7995,
+        "cuota_justa": 1.3,
+        "cuota_segura": 1.44,
+        "acierto_hist": 76.6,
+        "n_hist": 167,
+        "cotizada": true
+      },
+      {
+        "mercado": "local_remates_over13.5",
+        "etiqueta": "Schalke 04 Remates Over 13.5",
+        "tipo": "por equipo",
+        "p": 0.5377,
+        "cuota_justa": 1.98,
+        "cuota_segura": 2.32,
+        "acierto_hist": 50.6,
+        "n_hist": 166,
+        "cotizada": true
+      },
+      {
+        "mercado": "local_remates_over10.5+local_remates_puerta_over2.5",
+        "etiqueta": "L Remates Over 10.5 + L Remates a puerta Over 2.5",
+        "tipo": "COMBINADA",
+        "p": 0.7442,
+        "cuota_justa": 1.41,
+        "cuota_segura": 1.57,
+        "acierto_hist": 71.2,
+        "n_hist": 156,
+        "cotizada": true
+      },
+      {
+        "mercado": "local_remates_over12.5+local_remates_puerta_over3.5",
+        "etiqueta": "L Remates Over 12.5 + L Remates a puerta Over 3.5",
+        "tipo": "COMBINADA",
+        "p": 0.5359,
+        "cuota_justa": 1.97,
+        "cuota_segura": 2.33,
+        "acierto_hist": 50.6,
+        "n_hist": 154,
+        "cotizada": true
+      },
+      {
+        "mercado": "local_remates_over9.5+local_remates_puerta_over3.5",
+        "etiqueta": "L Remates Over 9.5 + L Remates a puerta Over 3.5",
+        "tipo": "COMBINADA",
+        "p": 0.6971,
+        "cuota_justa": 1.52,
+        "cuota_segura": 1.73,
+        "acierto_hist": 65.6,
+        "n_hist": 154,
+        "cotizada": true
+      },
+      {
+        "mercado": "local_remates_over10.5+local_remates_puerta_over4.5",
+        "etiqueta": "L Remates Over 10.5 + L Remates a puerta Over 4.5",
+        "tipo": "COMBINADA",
+        "p": 0.5109,
+        "cuota_justa": 2.0,
+        "cuota_segura": 2.37,
+        "acierto_hist": 50.0,
+        "n_hist": 154,
+        "cotizada": true
+      }
+    ]
   }
 ];
