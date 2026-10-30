@@ -158317,5 +158317,976 @@ const TRACKER_DATA = [
         "cotizada": true
       }
     ]
+  },
+  {
+    "id": "145",
+    "fecha": "2026-10-31",
+    "jornada": 10,
+    "liga": "I1",
+    "partido": "Udinese vs Roma",
+    "lambda_forma_l": 1.2632,
+    "lambda_forma_v": 2.7873,
+    "lambda_reg_l": 1.1048,
+    "lambda_reg_v": 1.686,
+    "lambda_base_l": 1.1523,
+    "lambda_base_v": 2.0164,
+    "lambda_final_l": 1.0659,
+    "lambda_final_v": 2.1028,
+    "lambda_shadow_l": 0.9518,
+    "lambda_shadow_v": 2.1028,
+    "lambda_corners": 10.102,
+    "ratio": 0.5068955678143429,
+    "visit_dominante": "True",
+    "variables_activas": "V#2(L:0.95) - V#3(L:0.94)",
+    "variables": {
+      "v1": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa": false,
+        "activa_local": false,
+        "activa_visit": false,
+        "detalle_local": "--",
+        "detalle_visit": "--",
+        "detalle": "Ambos necesitan >=20 PJ (local:9, visit:9)"
+      },
+      "v2": {
+        "factor_local": 0.95,
+        "factor_visit": 1.0,
+        "activa_local": true,
+        "activa_visit": false,
+        "detalle_local": "Rank 17, margen 0pts sobre zona desc",
+        "detalle_visit": "Rank 3, margen 16pts -- fuera de riesgo"
+      },
+      "v3": {
+        "factor_local": 0.94,
+        "activa": true,
+        "n_partidos": 20,
+        "GpG_casa": 0.75,
+        "GpG_liga": 1.35,
+        "hs": -0.6,
+        "muestra_completa": true,
+        "detalle": "hs=-0.60 (20 ptdos)"
+      },
+      "v4": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa_local": false,
+        "activa_visit": false,
+        "bajas_local": 1,
+        "bajas_visit": 0
+      },
+      "v5": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa_local": false,
+        "activa_visit": false
+      },
+      "v6": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa": false
+      },
+      "v7": {
+        "skip": false,
+        "activa_local": false,
+        "activa_visit": false,
+        "detalle": "Sin DT nuevo"
+      },
+      "v8": {
+        "activa": false,
+        "anulado_derby": false,
+        "detalle": "Inactiva"
+      }
+    },
+    "confianza": "MEDIA",
+    "notas": "",
+    "resultado_partido": null,
+    "goles_esperados": "3.17",
+    "apuestas": [
+      {
+        "tipo": "COMBO",
+        "mercado": "local_remates_puerta_over2.5+over05_local",
+        "etiqueta": "L Remates a puerta Over 2.5 + Over 0.5 L",
+        "cuota": 1.75,
+        "prob": 60.8,
+        "ev_pct": 6.5,
+        "estado": "PENDIENTE",
+        "pl": null,
+        "patas": [
+          "local_remates_puerta_over2.5",
+          "over05_local"
+        ],
+        "promovida_combinada": true,
+        "nivel_cruce": "segura",
+        "cuota_justa": 1.55,
+        "cuota_segura": 1.74,
+        "acierto_hist": 64.4,
+        "n_hist": 205
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "local_remates",
+        "linea": 15.5,
+        "etiqueta": "Udinese Remates Over 15.5",
+        "lado": "local",
+        "cuota": 4.3,
+        "prob": 27.6,
+        "ev_pct": 18.7,
+        "estado": "PENDIENTE",
+        "pl": null,
+        "lineas_pasan": 3,
+        "cruzaron_ambos": false
+      }
+    ],
+    "watchlist": [
+      {
+        "mercado": "victoria_local",
+        "linea": null,
+        "etiqueta": "Victoria Udinese",
+        "cuota": 5.4,
+        "prob": 18.4,
+        "ev_pct": -0.6
+      },
+      {
+        "mercado": "empate",
+        "linea": null,
+        "etiqueta": "Empate",
+        "cuota": 4.35,
+        "prob": 22.3,
+        "ev_pct": -3.0
+      },
+      {
+        "mercado": "victoria_visit",
+        "linea": null,
+        "etiqueta": "Victoria Roma",
+        "cuota": 1.57,
+        "prob": 64.2,
+        "ev_pct": 0.8,
+        "regla_1x2_no_pick": true
+      },
+      {
+        "mercado": "dox2",
+        "linea": null,
+        "etiqueta": "DO Empate o Roma",
+        "cuota": 1.18,
+        "prob": 81.6,
+        "ev_pct": -3.7
+      },
+      {
+        "mercado": "over15",
+        "linea": null,
+        "etiqueta": "Over 1.5",
+        "cuota": 1.19,
+        "prob": 83.0,
+        "ev_pct": -1.2
+      },
+      {
+        "mercado": "over25",
+        "linea": null,
+        "etiqueta": "Over 2.5",
+        "cuota": 1.6,
+        "prob": 61.3,
+        "ev_pct": -1.9,
+        "cuota_justa": 1.56,
+        "cuota_segura": 1.74,
+        "acierto_hist": 64.1,
+        "n_hist": 206
+      },
+      {
+        "mercado": "under35",
+        "linea": null,
+        "etiqueta": "Under 3.5",
+        "cuota": 1.57,
+        "prob": 61.0,
+        "ev_pct": -4.2,
+        "cuota_justa": 1.57,
+        "cuota_segura": 1.73,
+        "acierto_hist": 63.8,
+        "n_hist": 246
+      },
+      {
+        "mercado": "under45",
+        "linea": null,
+        "etiqueta": "Under 4.5",
+        "cuota": 1.24,
+        "prob": 78.6,
+        "ev_pct": -2.5
+      },
+      {
+        "mercado": "btts",
+        "linea": null,
+        "etiqueta": "BTTS",
+        "cuota": 1.65,
+        "prob": 59.1,
+        "ev_pct": -2.5,
+        "cuota_justa": 1.7,
+        "cuota_segura": 1.83,
+        "acierto_hist": 58.7,
+        "n_hist": 606
+      },
+      {
+        "mercado": "over05_local",
+        "linea": null,
+        "etiqueta": "Over 0.5 Udinese",
+        "cuota": 1.47,
+        "prob": 66.8,
+        "ev_pct": -1.8,
+        "cuota_justa": 1.49,
+        "cuota_segura": 1.67,
+        "acierto_hist": 67.3,
+        "n_hist": 162
+      },
+      {
+        "mercado": "over05_visit",
+        "linea": null,
+        "etiqueta": "Over 0.5 Roma",
+        "cuota": 1.11,
+        "prob": 87.8,
+        "ev_pct": -2.5
+      },
+      {
+        "mercado": "hcp2_des",
+        "linea": null,
+        "etiqueta": "HCP +2 Udinese",
+        "cuota": 1.55,
+        "prob": 62.1,
+        "ev_pct": -3.7
+      },
+      {
+        "mercado": "hcp3_des",
+        "linea": null,
+        "etiqueta": "HCP +3 Udinese",
+        "cuota": 1.21,
+        "prob": 80.6,
+        "ev_pct": -2.5
+      },
+      {
+        "mercado": "corners65",
+        "linea": null,
+        "etiqueta": "Over 6.5 corners",
+        "cuota": 1.18,
+        "prob": 85.8,
+        "ev_pct": 1.2
+      },
+      {
+        "mercado": "corners75",
+        "linea": null,
+        "etiqueta": "Over 7.5 corners",
+        "cuota": 1.35,
+        "prob": 76.1,
+        "ev_pct": 2.7
+      },
+      {
+        "mercado": "local_remates_puerta",
+        "linea": 2.5,
+        "etiqueta": "Udinese Remates a puerta Over 2.5",
+        "cuota": 1.42,
+        "prob": 81.1,
+        "ev_pct": 15.2,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 3.5,
+        "etiqueta": "Roma Corners equipo Over 3.5",
+        "cuota": 1.2,
+        "prob": 78.3,
+        "ev_pct": -6.0,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates_puerta",
+        "linea": 4.5,
+        "etiqueta": "Roma Remates a puerta Over 4.5",
+        "cuota": 1.38,
+        "prob": 78.0,
+        "ev_pct": 7.6,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates",
+        "linea": 9.5,
+        "etiqueta": "Udinese Remates Over 9.5",
+        "cuota": 1.23,
+        "prob": 76.7,
+        "ev_pct": -5.7,
+        "tipo": "POR_EQUIPO",
+        "cuota_justa": 1.29,
+        "cuota_segura": 1.39,
+        "acierto_hist": 77.2,
+        "n_hist": 268
+      },
+      {
+        "mercado": "local_corners_equipo",
+        "linea": 2.5,
+        "etiqueta": "Udinese Corners equipo Over 2.5",
+        "cuota": 1.38,
+        "prob": 72.8,
+        "ev_pct": 0.5,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates",
+        "linea": 10.5,
+        "etiqueta": "Udinese Remates Over 10.5",
+        "cuota": 1.39,
+        "prob": 68.7,
+        "ev_pct": -4.5,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates",
+        "linea": 14.5,
+        "etiqueta": "Roma Remates Over 14.5",
+        "cuota": 1.27,
+        "prob": 67.4,
+        "ev_pct": -14.4,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 4.5,
+        "etiqueta": "Roma Corners equipo Over 4.5",
+        "cuota": 1.45,
+        "prob": 65.4,
+        "ev_pct": -5.2,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates_puerta",
+        "linea": 5.5,
+        "etiqueta": "Roma Remates a puerta Over 5.5",
+        "cuota": 1.75,
+        "prob": 64.6,
+        "ev_pct": 13.0,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates_puerta",
+        "linea": 3.5,
+        "etiqueta": "Udinese Remates a puerta Over 3.5",
+        "cuota": 2.0,
+        "prob": 64.4,
+        "ev_pct": 28.8,
+        "tipo": "POR_EQUIPO",
+        "cuota_justa": 1.63,
+        "cuota_segura": 1.83,
+        "acierto_hist": 61.2,
+        "n_hist": 227
+      },
+      {
+        "mercado": "visit_remates",
+        "linea": 15.5,
+        "etiqueta": "Roma Remates Over 15.5",
+        "cuota": 1.4,
+        "prob": 60.4,
+        "ev_pct": -15.4,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates",
+        "linea": 11.5,
+        "etiqueta": "Udinese Remates Over 11.5",
+        "cuota": 1.62,
+        "prob": 60.0,
+        "ev_pct": -2.8,
+        "tipo": "POR_EQUIPO",
+        "cuota_justa": 1.67,
+        "cuota_segura": 1.89,
+        "acierto_hist": 59.8,
+        "n_hist": 199
+      },
+      {
+        "mercado": "local_corners_equipo",
+        "linea": 3.5,
+        "etiqueta": "Udinese Corners equipo Over 3.5",
+        "cuota": 1.87,
+        "prob": 55.4,
+        "ev_pct": 3.6,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 5.5,
+        "etiqueta": "Roma Corners equipo Over 5.5",
+        "cuota": 1.9,
+        "prob": 51.7,
+        "ev_pct": -1.8,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates",
+        "linea": 12.5,
+        "etiqueta": "Udinese Remates Over 12.5",
+        "cuota": 1.98,
+        "prob": 51.2,
+        "ev_pct": 1.4,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates_puerta",
+        "linea": 6.5,
+        "etiqueta": "Roma Remates a puerta Over 6.5",
+        "cuota": 2.42,
+        "prob": 50.1,
+        "ev_pct": 21.2,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates_puerta",
+        "linea": 4.5,
+        "etiqueta": "Udinese Remates a puerta Over 4.5",
+        "cuota": 3.15,
+        "prob": 46.3,
+        "ev_pct": 45.8,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates",
+        "linea": 13.5,
+        "etiqueta": "Udinese Remates Over 13.5",
+        "cuota": 2.5,
+        "prob": 42.7,
+        "ev_pct": 6.8,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 6.5,
+        "etiqueta": "Roma Corners equipo Over 6.5",
+        "cuota": 2.65,
+        "prob": 39.0,
+        "ev_pct": 3.4,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_corners_equipo",
+        "linea": 4.5,
+        "etiqueta": "Udinese Corners equipo Over 4.5",
+        "cuota": 2.92,
+        "prob": 38.8,
+        "ev_pct": 13.3,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates",
+        "linea": 14.5,
+        "etiqueta": "Udinese Remates Over 14.5",
+        "cuota": 3.25,
+        "prob": 34.7,
+        "ev_pct": 12.8,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates_puerta",
+        "linea": 5.5,
+        "etiqueta": "Udinese Remates a puerta Over 5.5",
+        "cuota": 5.2,
+        "prob": 30.1,
+        "ev_pct": 56.5,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 7.5,
+        "etiqueta": "Roma Corners equipo Over 7.5",
+        "cuota": 3.9,
+        "prob": 28.0,
+        "ev_pct": 9.2,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates",
+        "linea": 15.5,
+        "etiqueta": "Udinese Remates Over 15.5",
+        "cuota": 4.3,
+        "prob": 27.6,
+        "ev_pct": 18.7,
+        "tipo": "POR_EQUIPO",
+        "es_remate": true
+      },
+      {
+        "mercado": "local_corners_equipo",
+        "linea": 5.5,
+        "etiqueta": "Udinese Corners equipo Over 5.5",
+        "cuota": 4.75,
+        "prob": 25.3,
+        "ev_pct": 20.2,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates_puerta",
+        "linea": 6.5,
+        "etiqueta": "Udinese Remates a puerta Over 6.5",
+        "cuota": 8.25,
+        "prob": 17.9,
+        "ev_pct": 47.7,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_corners_equipo",
+        "linea": 6.5,
+        "etiqueta": "Udinese Corners equipo Over 6.5",
+        "cuota": 7.6,
+        "prob": 15.4,
+        "ev_pct": 17.0,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "btts+local_remates_puerta_over2.5",
+        "linea": null,
+        "etiqueta": "BTTS + L Remates a puerta Over 2.5",
+        "cuota": 1.98,
+        "prob": 53.0,
+        "ev_pct": 5.0,
+        "tipo": "COMBINADA",
+        "patas": [
+          "btts",
+          "local_remates_puerta_over2.5"
+        ],
+        "lift": 1.085,
+        "cuota_justa": 1.86,
+        "cuota_segura": 2.08,
+        "acierto_hist": 53.9,
+        "n_hist": 297
+      },
+      {
+        "mercado": "over15+hcp3_local",
+        "linea": null,
+        "etiqueta": "Over 1.5 + HCP +3 L",
+        "cuota": 1.5,
+        "prob": 63.1,
+        "ev_pct": -5.4,
+        "tipo": "COMBINADA",
+        "patas": [
+          "over15",
+          "hcp3_local"
+        ],
+        "lift": 0.98,
+        "cuota_justa": 1.56,
+        "cuota_segura": 1.71,
+        "acierto_hist": 64.1,
+        "n_hist": 284
+      },
+      {
+        "mercado": "local_remates_puerta_over3.5+over15",
+        "linea": null,
+        "etiqueta": "L Remates a puerta Over 3.5 + Over 1.5",
+        "cuota": 2.18,
+        "prob": 57.8,
+        "ev_pct": 25.9,
+        "tipo": "COMBINADA",
+        "patas": [
+          "local_remates_puerta_over3.5",
+          "over15"
+        ],
+        "lift": 1.079,
+        "cuota_justa": 1.78,
+        "cuota_segura": 2.0,
+        "acierto_hist": 56.1,
+        "n_hist": 253
+      },
+      {
+        "mercado": "local_remates",
+        "linea": 8.5,
+        "etiqueta": "Udinese Remates Over 8.5",
+        "cuota": 1.21,
+        "prob": 83.7,
+        "ev_pct": 1.3,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates",
+        "linea": 13.5,
+        "etiqueta": "Roma Remates Over 13.5",
+        "cuota": 1.21,
+        "prob": 74.1,
+        "ev_pct": -10.3,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates",
+        "linea": 8.5,
+        "etiqueta": "Udinese Remates Over 8.5",
+        "cuota": 1.21,
+        "prob": 83.7,
+        "ev_pct": 1.3,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates",
+        "linea": 13.5,
+        "etiqueta": "Roma Remates Over 13.5",
+        "cuota": 1.21,
+        "prob": 74.1,
+        "ev_pct": -10.3,
+        "tipo": "POR_EQUIPO"
+      }
+    ],
+    "mercados_snapshot": {
+      "victoria_local": 18.4,
+      "empate": 22.3,
+      "victoria_visit": 64.2,
+      "do1x": 35.8,
+      "dox2": 81.6,
+      "over15": 83.0,
+      "over25": 61.3,
+      "under25": 38.7,
+      "over35": 39.0,
+      "under35": 61.0,
+      "under45": 78.6,
+      "btts": 59.1,
+      "over05_local": 66.8,
+      "over05_visit": 87.8,
+      "hcp2_des": 62.1,
+      "hcp3_des": 80.6,
+      "corners65": 85.8,
+      "corners75": 76.1,
+      "local_remates_over7.5": 89.4,
+      "local_remates_over8.5": 83.7,
+      "local_remates_over9.5": 76.7,
+      "local_remates_over10.5": 68.7,
+      "local_remates_over11.5": 60.0,
+      "local_remates_over12.5": 51.2,
+      "local_remates_over13.5": 42.7,
+      "local_remates_over14.5": 34.7,
+      "local_remates_over15.5": 27.6,
+      "local_remates_puerta_over1.5": 92.9,
+      "local_remates_puerta_over2.5": 81.1,
+      "local_remates_puerta_over3.5": 64.4,
+      "local_remates_puerta_over4.5": 46.3,
+      "local_remates_puerta_over5.5": 30.1,
+      "local_remates_puerta_over6.5": 17.9,
+      "local_corners_equipo_over2.5": 72.8,
+      "local_corners_equipo_over3.5": 55.4,
+      "local_corners_equipo_over4.5": 38.8,
+      "local_corners_equipo_over5.5": 25.3,
+      "local_corners_equipo_over6.5": 15.4,
+      "local_corners_equipo_over7.5": 8.9,
+      "visit_remates_over7.5": 97.7,
+      "visit_remates_over8.5": 95.9,
+      "visit_remates_over9.5": 93.3,
+      "visit_remates_over10.5": 89.8,
+      "visit_remates_over11.5": 85.4,
+      "visit_remates_over12.5": 80.2,
+      "visit_remates_over13.5": 74.1,
+      "visit_remates_over14.5": 67.4,
+      "visit_remates_over15.5": 60.4,
+      "visit_remates_puerta_over1.5": 98.7,
+      "visit_remates_puerta_over2.5": 95.3,
+      "visit_remates_puerta_over3.5": 88.5,
+      "visit_remates_puerta_over4.5": 78.0,
+      "visit_remates_puerta_over5.5": 64.6,
+      "visit_remates_puerta_over6.5": 50.1,
+      "visit_corners_equipo_over2.5": 88.8,
+      "visit_corners_equipo_over3.5": 78.3,
+      "visit_corners_equipo_over4.5": 65.4,
+      "visit_corners_equipo_over5.5": 51.7,
+      "visit_corners_equipo_over6.5": 39.0,
+      "visit_corners_equipo_over7.5": 28.0
+    },
+    "mu_equipo": {
+      "local": {
+        "remates": 13.03,
+        "remates_puerta": 4.5,
+        "corners_equipo": 4.11
+      },
+      "visit": {
+        "remates": 17.42,
+        "remates_puerta": 6.74,
+        "corners_equipo": 5.99
+      }
+    },
+    "mu_equipo_fuente": "engine",
+    "cruces_validados": [
+      {
+        "mercado": "over25",
+        "etiqueta": "Over 2.5",
+        "cuota": 1.6,
+        "justa": 1.56,
+        "segura": 1.74,
+        "hist": 64.1,
+        "n": 206,
+        "cruza": true,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "under35",
+        "etiqueta": "Under 3.5",
+        "cuota": 1.57,
+        "justa": 1.57,
+        "segura": 1.73,
+        "hist": 63.8,
+        "n": 246,
+        "cruza": true,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "btts",
+        "etiqueta": "BTTS",
+        "cuota": 1.65,
+        "justa": 1.7,
+        "segura": 1.83,
+        "hist": 58.7,
+        "n": 606,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "over05_local",
+        "etiqueta": "Over 0.5 L",
+        "cuota": 1.47,
+        "justa": 1.49,
+        "segura": 1.67,
+        "hist": 67.3,
+        "n": 162,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "local_remates_over9.5",
+        "etiqueta": "Udinese Remates Over 9.5",
+        "cuota": 1.23,
+        "justa": 1.29,
+        "segura": 1.39,
+        "hist": 77.2,
+        "n": 268,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "local_remates_puerta_over3.5",
+        "etiqueta": "Udinese Remates a puerta Over 3.5",
+        "cuota": 2.0,
+        "justa": 1.63,
+        "segura": 1.83,
+        "hist": 61.2,
+        "n": 227,
+        "cruza": true,
+        "cruza_segura": true
+      },
+      {
+        "mercado": "local_remates_over11.5",
+        "etiqueta": "Udinese Remates Over 11.5",
+        "cuota": 1.62,
+        "justa": 1.67,
+        "segura": 1.89,
+        "hist": 59.8,
+        "n": 199,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "btts+local_remates_puerta_over2.5",
+        "etiqueta": "BTTS + L Remates a puerta Over 2.5",
+        "cuota": 1.98,
+        "justa": 1.86,
+        "segura": 2.08,
+        "hist": 53.9,
+        "n": 297,
+        "cruza": true,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "over15+hcp3_local",
+        "etiqueta": "Over 1.5 + HCP +3 L",
+        "cuota": 1.5,
+        "justa": 1.56,
+        "segura": 1.71,
+        "hist": 64.1,
+        "n": 284,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "local_remates_puerta_over3.5+over15",
+        "etiqueta": "L Remates a puerta Over 3.5 + Over 1.5",
+        "cuota": 2.18,
+        "justa": 1.78,
+        "segura": 2.0,
+        "hist": 56.1,
+        "n": 253,
+        "cruza": true,
+        "cruza_segura": true
+      },
+      {
+        "mercado": "local_remates_puerta_over2.5+over05_local",
+        "etiqueta": "L Remates a puerta Over 2.5 + Over 0.5 L",
+        "cuota": 1.75,
+        "justa": 1.55,
+        "segura": 1.74,
+        "hist": 64.4,
+        "n": 205,
+        "cruza": true,
+        "cruza_segura": true
+      }
+    ],
+    "validadas": [
+      {
+        "mercado": "btts",
+        "etiqueta": "BTTS",
+        "tipo": "simple",
+        "p": 0.5912,
+        "cuota_justa": 1.7,
+        "cuota_segura": 1.83,
+        "acierto_hist": 58.7,
+        "n_hist": 606,
+        "cotizada": true
+      },
+      {
+        "mercado": "over05_local+hcp2_visit",
+        "etiqueta": "Over 0.5 L + HCP +2 V",
+        "tipo": "COMBINADA",
+        "p": 0.5892,
+        "cuota_justa": 1.75,
+        "cuota_segura": 1.89,
+        "acierto_hist": 57.2,
+        "n_hist": 512,
+        "cotizada": false
+      },
+      {
+        "mercado": "under45+hcp2_visit",
+        "etiqueta": "Under 4.5 + HCP +2 V",
+        "tipo": "COMBINADA",
+        "p": 0.7337,
+        "cuota_justa": 1.35,
+        "cuota_segura": 1.46,
+        "acierto_hist": 73.8,
+        "n_hist": 298,
+        "cotizada": false
+      },
+      {
+        "mercado": "btts+local_remates_puerta_over2.5",
+        "etiqueta": "BTTS + L Remates a puerta Over 2.5",
+        "tipo": "COMBINADA",
+        "p": 0.5301,
+        "cuota_justa": 1.86,
+        "cuota_segura": 2.08,
+        "acierto_hist": 53.9,
+        "n_hist": 297,
+        "cotizada": true
+      },
+      {
+        "mercado": "over15+hcp3_local",
+        "etiqueta": "Over 1.5 + HCP +3 L",
+        "tipo": "COMBINADA",
+        "p": 0.6306,
+        "cuota_justa": 1.56,
+        "cuota_segura": 1.71,
+        "acierto_hist": 64.1,
+        "n_hist": 284,
+        "cotizada": true
+      },
+      {
+        "mercado": "local_remates_over9.5",
+        "etiqueta": "Udinese Remates Over 9.5",
+        "tipo": "por equipo",
+        "p": 0.767,
+        "cuota_justa": 1.29,
+        "cuota_segura": 1.39,
+        "acierto_hist": 77.2,
+        "n_hist": 268,
+        "cotizada": true
+      },
+      {
+        "mercado": "under35+hcp2_visit",
+        "etiqueta": "Under 3.5 + HCP +2 V",
+        "tipo": "COMBINADA",
+        "p": 0.5771,
+        "cuota_justa": 1.66,
+        "cuota_segura": 1.84,
+        "acierto_hist": 60.3,
+        "n_hist": 267,
+        "cotizada": false
+      },
+      {
+        "mercado": "local_remates_puerta_over3.5+over15",
+        "etiqueta": "L Remates a puerta Over 3.5 + Over 1.5",
+        "tipo": "COMBINADA",
+        "p": 0.5776,
+        "cuota_justa": 1.78,
+        "cuota_segura": 2.0,
+        "acierto_hist": 56.1,
+        "n_hist": 253,
+        "cotizada": true
+      },
+      {
+        "mercado": "under35",
+        "etiqueta": "Under 3.5",
+        "tipo": "simple",
+        "p": 0.6095,
+        "cuota_justa": 1.57,
+        "cuota_segura": 1.73,
+        "acierto_hist": 63.8,
+        "n_hist": 246,
+        "cotizada": true
+      },
+      {
+        "mercado": "btts+hcp2_visit",
+        "etiqueta": "BTTS + HCP +2 V",
+        "tipo": "COMBINADA",
+        "p": 0.5444,
+        "cuota_justa": 1.93,
+        "cuota_segura": 2.2,
+        "acierto_hist": 51.9,
+        "n_hist": 231,
+        "cotizada": false
+      },
+      {
+        "mercado": "local_remates_puerta_over3.5",
+        "etiqueta": "Udinese Remates a puerta Over 3.5",
+        "tipo": "por equipo",
+        "p": 0.6442,
+        "cuota_justa": 1.63,
+        "cuota_segura": 1.83,
+        "acierto_hist": 61.2,
+        "n_hist": 227,
+        "cotizada": true
+      },
+      {
+        "mercado": "over25",
+        "etiqueta": "Over 2.5",
+        "tipo": "simple",
+        "p": 0.6131,
+        "cuota_justa": 1.56,
+        "cuota_segura": 1.74,
+        "acierto_hist": 64.1,
+        "n_hist": 206,
+        "cotizada": true
+      },
+      {
+        "mercado": "local_remates_puerta_over2.5+over05_local",
+        "etiqueta": "L Remates a puerta Over 2.5 + Over 0.5 L",
+        "tipo": "COMBINADA",
+        "p": 0.6083,
+        "cuota_justa": 1.55,
+        "cuota_segura": 1.74,
+        "acierto_hist": 64.4,
+        "n_hist": 205,
+        "cotizada": true
+      },
+      {
+        "mercado": "local_remates_over11.5",
+        "etiqueta": "Udinese Remates Over 11.5",
+        "tipo": "por equipo",
+        "p": 0.6003,
+        "cuota_justa": 1.67,
+        "cuota_segura": 1.89,
+        "acierto_hist": 59.8,
+        "n_hist": 199,
+        "cotizada": true
+      },
+      {
+        "mercado": "over05_local",
+        "etiqueta": "Over 0.5 L",
+        "tipo": "simple",
+        "p": 0.6681,
+        "cuota_justa": 1.49,
+        "cuota_segura": 1.67,
+        "acierto_hist": 67.3,
+        "n_hist": 162,
+        "cotizada": true
+      }
+    ]
   }
 ];
