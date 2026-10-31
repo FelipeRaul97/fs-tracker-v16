@@ -149084,7 +149084,7 @@ const TRACKER_DATA = [
   },
   {
     "id": "138",
-    "fecha": "2026-10-30",
+    "fecha": "2026-10-31",
     "jornada": 9,
     "liga": "E0",
     "partido": "Chelsea vs Man United",
@@ -150859,7 +150859,7 @@ const TRACKER_DATA = [
   },
   {
     "id": "139",
-    "fecha": "2026-10-30",
+    "fecha": "2026-10-31",
     "jornada": 9,
     "liga": "E0",
     "partido": "Manchester City vs Brighton",
