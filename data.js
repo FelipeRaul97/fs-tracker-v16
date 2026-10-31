@@ -166802,5 +166802,777 @@ const TRACKER_DATA = [
         "cotizada": true
       }
     ]
+  },
+  {
+    "id": "151",
+    "fecha": "2026-10-31",
+    "jornada": 8,
+    "liga": "D1",
+    "partido": "Bayern Munich vs Dortmund",
+    "lambda_forma_l": 2.8307,
+    "lambda_forma_v": 1.5934,
+    "lambda_reg_l": 2.4625,
+    "lambda_reg_v": 1.1707,
+    "lambda_base_l": 2.573,
+    "lambda_base_v": 1.2975,
+    "lambda_final_l": 2.7005,
+    "lambda_final_v": 1.17,
+    "lambda_shadow_l": 2.8517,
+    "lambda_shadow_v": 1.17,
+    "lambda_corners": 12.604,
+    "ratio": 2.3081196581196584,
+    "visit_dominante": "False",
+    "variables_activas": "V#3(L:1.10) - V#6(L:0.96)",
+    "variables": {
+      "v1": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa": false,
+        "activa_local": false,
+        "activa_visit": false,
+        "detalle_local": "--",
+        "detalle_visit": "--",
+        "detalle": "Ambos necesitan >=20 PJ (local:7, visit:7)"
+      },
+      "v2": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa_local": false,
+        "activa_visit": false,
+        "detalle_local": "Rank 1, margen 11pts -- fuera de riesgo",
+        "detalle_visit": "Rank 2, margen 11pts -- fuera de riesgo"
+      },
+      "v3": {
+        "factor_local": 1.1,
+        "activa": true,
+        "n_partidos": 20,
+        "GpG_casa": 4.3,
+        "GpG_liga": 1.74,
+        "hs": 2.56,
+        "muestra_completa": true,
+        "detalle": "hs=+2.56 (20 ptdos)"
+      },
+      "v4": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa_local": false,
+        "activa_visit": false,
+        "bajas_local": 0,
+        "bajas_visit": 0
+      },
+      "v5": {
+        "factor_local": 1.0,
+        "factor_visit": 1.0,
+        "activa_local": false,
+        "activa_visit": false
+      },
+      "v6": {
+        "factor_local": 0.96,
+        "factor_visit": 1.0,
+        "activa": true,
+        "favorito": "local"
+      },
+      "v7": {
+        "skip": false,
+        "activa_local": false,
+        "activa_visit": false,
+        "detalle": "Sin DT nuevo"
+      },
+      "v8": {
+        "activa": false,
+        "anulado_derby": false,
+        "detalle": "Inactiva"
+      }
+    },
+    "confianza": "MEDIA",
+    "notas": "",
+    "resultado_partido": null,
+    "goles_esperados": "3.87",
+    "apuestas": [
+      {
+        "tipo": "COMBO",
+        "mercado": "over15+hcp3_visit",
+        "etiqueta": "Over 1.5 + HCP +3 V",
+        "cuota": 1.62,
+        "prob": 60.3,
+        "ev_pct": -2.3,
+        "estado": "PENDIENTE",
+        "pl": null,
+        "patas": [
+          "over15",
+          "hcp3_visit"
+        ],
+        "promovida_combinada": true,
+        "nivel_cruce": "justa",
+        "cuota_justa": 1.55,
+        "cuota_segura": 1.68,
+        "acierto_hist": 64.5,
+        "n_hist": 375
+      },
+      {
+        "tipo": "REMATE",
+        "mercado": "visit_remates",
+        "linea": 13.5,
+        "etiqueta": "Dortmund Remates Over 13.5",
+        "lado": "visit",
+        "cuota": 4.65,
+        "prob": 27.7,
+        "ev_pct": 28.8,
+        "estado": "PENDIENTE",
+        "pl": null,
+        "lineas_pasan": 9,
+        "cruzaron_ambos": false
+      }
+    ],
+    "watchlist": [
+      {
+        "mercado": "empate",
+        "linea": null,
+        "etiqueta": "Empate",
+        "cuota": 5.7,
+        "prob": 17.2,
+        "ev_pct": -2.0
+      },
+      {
+        "mercado": "do1x",
+        "linea": null,
+        "etiqueta": "DO Bayern Munich o Empate",
+        "cuota": 1.11,
+        "prob": 88.4,
+        "ev_pct": -1.9
+      },
+      {
+        "mercado": "dox2",
+        "linea": null,
+        "etiqueta": "DO Empate o Dortmund",
+        "cuota": 3.35,
+        "prob": 30.3,
+        "ev_pct": 1.5,
+        "regla_no_elegible": true
+      },
+      {
+        "mercado": "over15",
+        "linea": null,
+        "etiqueta": "Over 1.5",
+        "cuota": 1.08,
+        "prob": 89.1,
+        "ev_pct": -3.8
+      },
+      {
+        "mercado": "under25",
+        "linea": null,
+        "etiqueta": "Under 2.5",
+        "cuota": 3.85,
+        "prob": 27.2,
+        "ev_pct": 4.7,
+        "regla_no_elegible": true
+      },
+      {
+        "mercado": "under35",
+        "linea": null,
+        "etiqueta": "Under 3.5",
+        "cuota": 2.25,
+        "prob": 45.9,
+        "ev_pct": 3.3,
+        "regla_no_elegible": true
+      },
+      {
+        "mercado": "under45",
+        "linea": null,
+        "etiqueta": "Under 4.5",
+        "cuota": 1.57,
+        "prob": 65.4,
+        "ev_pct": 2.7,
+        "regla_no_elegible": true
+      },
+      {
+        "mercado": "over05_local",
+        "linea": null,
+        "etiqueta": "Over 0.5 Bayern Munich",
+        "cuota": 1.04,
+        "prob": 94.7,
+        "ev_pct": -1.5
+      },
+      {
+        "mercado": "over05_visit",
+        "linea": null,
+        "etiqueta": "Over 0.5 Dortmund",
+        "cuota": 1.38,
+        "prob": 69.0,
+        "ev_pct": -4.8
+      },
+      {
+        "mercado": "hcp2_des",
+        "linea": null,
+        "etiqueta": "HCP +2 Dortmund",
+        "cuota": 2.0,
+        "prob": 50.9,
+        "ev_pct": 1.8,
+        "regla_no_elegible": true
+      },
+      {
+        "mercado": "hcp3_des",
+        "linea": null,
+        "etiqueta": "HCP +3 Dortmund",
+        "cuota": 1.44,
+        "prob": 70.5,
+        "ev_pct": 1.5,
+        "regla_no_elegible": true
+      },
+      {
+        "mercado": "corners65",
+        "linea": null,
+        "etiqueta": "Over 6.5 corners",
+        "cuota": 1.13,
+        "prob": 95.0,
+        "ev_pct": 7.3
+      },
+      {
+        "mercado": "corners75",
+        "linea": null,
+        "etiqueta": "Over 7.5 corners",
+        "cuota": 1.25,
+        "prob": 89.1,
+        "ev_pct": 11.4
+      },
+      {
+        "mercado": "local_corners_equipo",
+        "linea": 4.5,
+        "etiqueta": "Bayern Munich Corners equipo Over 4.5",
+        "cuota": 1.18,
+        "prob": 83.8,
+        "ev_pct": -1.1,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_remates_puerta",
+        "linea": 6.5,
+        "etiqueta": "Bayern Munich Remates a puerta Over 6.5",
+        "cuota": 1.55,
+        "prob": 81.6,
+        "ev_pct": 26.5,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates",
+        "linea": 7.5,
+        "etiqueta": "Dortmund Remates Over 7.5",
+        "cuota": 1.2,
+        "prob": 81.3,
+        "ev_pct": -2.4,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates_puerta",
+        "linea": 2.5,
+        "etiqueta": "Dortmund Remates a puerta Over 2.5",
+        "cuota": 1.34,
+        "prob": 75.8,
+        "ev_pct": 1.6,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_corners_equipo",
+        "linea": 5.5,
+        "etiqueta": "Bayern Munich Corners equipo Over 5.5",
+        "cuota": 1.38,
+        "prob": 74.6,
+        "ev_pct": 2.9,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates",
+        "linea": 8.5,
+        "etiqueta": "Dortmund Remates Over 8.5",
+        "cuota": 1.36,
+        "prob": 73.0,
+        "ev_pct": -0.7,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "local_corners_equipo",
+        "linea": 6.5,
+        "etiqueta": "Bayern Munich Corners equipo Over 6.5",
+        "cuota": 1.72,
+        "prob": 64.0,
+        "ev_pct": 10.1,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates",
+        "linea": 9.5,
+        "etiqueta": "Dortmund Remates Over 9.5",
+        "cuota": 1.6,
+        "prob": 63.7,
+        "ev_pct": 1.9,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 2.5,
+        "etiqueta": "Dortmund Corners equipo Over 2.5",
+        "cuota": 1.67,
+        "prob": 63.1,
+        "ev_pct": 5.4,
+        "tipo": "POR_EQUIPO",
+        "cuota_justa": 1.61,
+        "cuota_segura": 1.84,
+        "acierto_hist": 62.1,
+        "n_hist": 161
+      },
+      {
+        "mercado": "visit_remates_puerta",
+        "linea": 3.5,
+        "etiqueta": "Dortmund Remates a puerta Over 3.5",
+        "cuota": 1.83,
+        "prob": 57.1,
+        "ev_pct": 4.5,
+        "tipo": "POR_EQUIPO",
+        "cuota_justa": 1.74,
+        "cuota_segura": 2.0,
+        "acierto_hist": 57.6,
+        "n_hist": 172
+      },
+      {
+        "mercado": "visit_remates",
+        "linea": 10.5,
+        "etiqueta": "Dortmund Remates Over 10.5",
+        "cuota": 2.0,
+        "prob": 54.0,
+        "ev_pct": 8.0,
+        "tipo": "POR_EQUIPO",
+        "cuota_justa": 1.96,
+        "cuota_segura": 2.28,
+        "acierto_hist": 51.1,
+        "n_hist": 178
+      },
+      {
+        "mercado": "local_corners_equipo",
+        "linea": 7.5,
+        "etiqueta": "Bayern Munich Corners equipo Over 7.5",
+        "cuota": 2.3,
+        "prob": 53.1,
+        "ev_pct": 22.1,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates",
+        "linea": 11.5,
+        "etiqueta": "Dortmund Remates Over 11.5",
+        "cuota": 2.57,
+        "prob": 44.5,
+        "ev_pct": 14.4,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 3.5,
+        "etiqueta": "Dortmund Corners equipo Over 3.5",
+        "cuota": 2.62,
+        "prob": 43.8,
+        "ev_pct": 14.8,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates_puerta",
+        "linea": 4.5,
+        "etiqueta": "Dortmund Remates a puerta Over 4.5",
+        "cuota": 2.8,
+        "prob": 38.5,
+        "ev_pct": 7.8,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates",
+        "linea": 12.5,
+        "etiqueta": "Dortmund Remates Over 12.5",
+        "cuota": 3.4,
+        "prob": 35.6,
+        "ev_pct": 21.0,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates",
+        "linea": 13.5,
+        "etiqueta": "Dortmund Remates Over 13.5",
+        "cuota": 4.65,
+        "prob": 27.7,
+        "ev_pct": 28.8,
+        "tipo": "POR_EQUIPO",
+        "es_remate": true
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 4.5,
+        "etiqueta": "Dortmund Corners equipo Over 4.5",
+        "cuota": 4.45,
+        "prob": 27.7,
+        "ev_pct": 23.3,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates_puerta",
+        "linea": 5.5,
+        "etiqueta": "Dortmund Remates a puerta Over 5.5",
+        "cuota": 4.5,
+        "prob": 23.3,
+        "ev_pct": 4.8,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_corners_equipo",
+        "linea": 5.5,
+        "etiqueta": "Dortmund Corners equipo Over 5.5",
+        "cuota": 7.4,
+        "prob": 16.2,
+        "ev_pct": 19.9,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_corners_equipo_over2.5+visit_remates_over9.5",
+        "linea": null,
+        "etiqueta": "V Corners Over 2.5 + V Remates Over 9.5",
+        "cuota": 2.35,
+        "prob": 50.3,
+        "ev_pct": 18.1,
+        "tipo": "COMBINADA",
+        "patas": [
+          "visit_corners_equipo_over2.5",
+          "visit_remates_over9.5"
+        ],
+        "lift": 1.169,
+        "cuota_justa": 1.99,
+        "cuota_segura": 2.23,
+        "acierto_hist": 50.3,
+        "n_hist": 324
+      },
+      {
+        "mercado": "under45+over05_local",
+        "linea": null,
+        "etiqueta": "Under 4.5 + Over 0.5 L",
+        "cuota": 1.7,
+        "prob": 58.7,
+        "ev_pct": -0.1,
+        "tipo": "COMBINADA",
+        "patas": [
+          "under45",
+          "over05_local"
+        ],
+        "lift": 0.952,
+        "cuota_justa": 1.71,
+        "cuota_segura": 1.91,
+        "acierto_hist": 58.4,
+        "n_hist": 269
+      },
+      {
+        "mercado": "over15+over05_visit",
+        "linea": null,
+        "etiqueta": "Over 1.5 + Over 0.5 V",
+        "cuota": 1.42,
+        "prob": 66.5,
+        "ev_pct": -5.6,
+        "tipo": "COMBINADA",
+        "patas": [
+          "over15",
+          "over05_visit"
+        ],
+        "lift": 1.173,
+        "cuota_justa": 1.43,
+        "cuota_segura": 1.56,
+        "acierto_hist": 69.9,
+        "n_hist": 269
+      },
+      {
+        "mercado": "visit_remates",
+        "linea": 14.5,
+        "etiqueta": "Dortmund Remates Over 14.5",
+        "cuota": 5.5,
+        "prob": 21.0,
+        "ev_pct": 15.5,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates",
+        "linea": 15.5,
+        "etiqueta": "Dortmund Remates Over 15.5",
+        "cuota": 7.5,
+        "prob": 15.5,
+        "ev_pct": 16.3,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates",
+        "linea": 14.5,
+        "etiqueta": "Dortmund Remates Over 14.5",
+        "cuota": 5.5,
+        "prob": 21.0,
+        "ev_pct": 15.5,
+        "tipo": "POR_EQUIPO"
+      },
+      {
+        "mercado": "visit_remates",
+        "linea": 15.5,
+        "etiqueta": "Dortmund Remates Over 15.5",
+        "cuota": 7.5,
+        "prob": 15.5,
+        "ev_pct": 16.3,
+        "tipo": "POR_EQUIPO"
+      }
+    ],
+    "mercados_snapshot": {
+      "victoria_local": 69.7,
+      "empate": 17.2,
+      "victoria_visit": 11.6,
+      "do1x": 88.4,
+      "dox2": 30.3,
+      "over15": 89.1,
+      "over25": 72.8,
+      "under25": 27.2,
+      "over35": 54.0,
+      "under35": 45.9,
+      "under45": 65.4,
+      "btts": 63.3,
+      "over05_local": 94.7,
+      "over05_visit": 69.0,
+      "hcp2_des": 50.9,
+      "hcp3_des": 70.5,
+      "corners65": 95.0,
+      "corners75": 89.1,
+      "local_remates_over7.5": 99.5,
+      "local_remates_over8.5": 99.0,
+      "local_remates_over9.5": 98.2,
+      "local_remates_over10.5": 97.0,
+      "local_remates_over11.5": 95.3,
+      "local_remates_over12.5": 93.0,
+      "local_remates_over13.5": 90.0,
+      "local_remates_over14.5": 86.4,
+      "local_remates_over15.5": 82.2,
+      "local_remates_puerta_over1.5": 99.8,
+      "local_remates_puerta_over2.5": 99.3,
+      "local_remates_puerta_over3.5": 97.8,
+      "local_remates_puerta_over4.5": 94.7,
+      "local_remates_puerta_over5.5": 89.3,
+      "local_remates_puerta_over6.5": 81.6,
+      "local_corners_equipo_over2.5": 96.0,
+      "local_corners_equipo_over3.5": 91.1,
+      "local_corners_equipo_over4.5": 83.8,
+      "local_corners_equipo_over5.5": 74.6,
+      "local_corners_equipo_over6.5": 64.0,
+      "local_corners_equipo_over7.5": 53.1,
+      "visit_remates_over7.5": 81.3,
+      "visit_remates_over8.5": 73.0,
+      "visit_remates_over9.5": 63.7,
+      "visit_remates_over10.5": 54.0,
+      "visit_remates_over11.5": 44.5,
+      "visit_remates_over12.5": 35.6,
+      "visit_remates_over13.5": 27.7,
+      "visit_remates_over14.5": 21.0,
+      "visit_remates_over15.5": 15.5,
+      "visit_remates_puerta_over1.5": 90.3,
+      "visit_remates_puerta_over2.5": 75.8,
+      "visit_remates_puerta_over3.5": 57.1,
+      "visit_remates_puerta_over4.5": 38.5,
+      "visit_remates_puerta_over5.5": 23.3,
+      "visit_remates_puerta_over6.5": 12.8,
+      "visit_corners_equipo_over2.5": 63.1,
+      "visit_corners_equipo_over3.5": 43.8,
+      "visit_corners_equipo_over4.5": 27.7,
+      "visit_corners_equipo_over5.5": 16.2,
+      "visit_corners_equipo_over6.5": 8.8,
+      "visit_corners_equipo_over7.5": 4.5
+    },
+    "mu_equipo": {
+      "local": {
+        "remates": 21.73,
+        "remates_puerta": 9.63,
+        "corners_equipo": 8.22
+      },
+      "visit": {
+        "remates": 11.27,
+        "remates_puerta": 4.07,
+        "corners_equipo": 3.45
+      }
+    },
+    "mu_equipo_fuente": "engine",
+    "cruces_validados": [
+      {
+        "mercado": "btts",
+        "etiqueta": "BTTS",
+        "cuota": 1.45,
+        "justa": 1.6,
+        "segura": 1.76,
+        "hist": 62.7,
+        "n": 260,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "visit_corners_equipo_over2.5",
+        "etiqueta": "Dortmund Corners Over 2.5",
+        "cuota": 1.67,
+        "justa": 1.61,
+        "segura": 1.84,
+        "hist": 62.1,
+        "n": 161,
+        "cruza": true,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "visit_remates_puerta_over3.5",
+        "etiqueta": "Dortmund Remates a puerta Over 3.5",
+        "cuota": 1.83,
+        "justa": 1.74,
+        "segura": 2.0,
+        "hist": 57.6,
+        "n": 172,
+        "cruza": true,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "visit_remates_over10.5",
+        "etiqueta": "Dortmund Remates Over 10.5",
+        "cuota": 2.0,
+        "justa": 1.96,
+        "segura": 2.28,
+        "hist": 51.1,
+        "n": 178,
+        "cruza": true,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "over15+hcp3_visit",
+        "etiqueta": "Over 1.5 + HCP +3 V",
+        "cuota": 1.62,
+        "justa": 1.55,
+        "segura": 1.68,
+        "hist": 64.5,
+        "n": 375,
+        "cruza": true,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "visit_corners_equipo_over2.5+visit_remates_over9.5",
+        "etiqueta": "V Corners Over 2.5 + V Remates Over 9.5",
+        "cuota": 2.35,
+        "justa": 1.99,
+        "segura": 2.23,
+        "hist": 50.3,
+        "n": 324,
+        "cruza": true,
+        "cruza_segura": true
+      },
+      {
+        "mercado": "under45+over05_local",
+        "etiqueta": "Under 4.5 + Over 0.5 L",
+        "cuota": 1.7,
+        "justa": 1.71,
+        "segura": 1.91,
+        "hist": 58.4,
+        "n": 269,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "over15+over05_visit",
+        "etiqueta": "Over 1.5 + Over 0.5 V",
+        "cuota": 1.42,
+        "justa": 1.43,
+        "segura": 1.56,
+        "hist": 69.9,
+        "n": 269,
+        "cruza": false,
+        "cruza_segura": false
+      }
+    ],
+    "validadas": [
+      {
+        "mercado": "over15+hcp3_visit",
+        "etiqueta": "Over 1.5 + HCP +3 V",
+        "tipo": "COMBINADA",
+        "p": 0.603,
+        "cuota_justa": 1.55,
+        "cuota_segura": 1.68,
+        "acierto_hist": 64.5,
+        "n_hist": 375,
+        "cotizada": true
+      },
+      {
+        "mercado": "visit_corners_equipo_over2.5+visit_remates_over9.5",
+        "etiqueta": "V Corners Over 2.5 + V Remates Over 9.5",
+        "tipo": "COMBINADA",
+        "p": 0.5026,
+        "cuota_justa": 1.99,
+        "cuota_segura": 2.23,
+        "acierto_hist": 50.3,
+        "n_hist": 324,
+        "cotizada": true
+      },
+      {
+        "mercado": "under45+over05_local",
+        "etiqueta": "Under 4.5 + Over 0.5 L",
+        "tipo": "COMBINADA",
+        "p": 0.5874,
+        "cuota_justa": 1.71,
+        "cuota_segura": 1.91,
+        "acierto_hist": 58.4,
+        "n_hist": 269,
+        "cotizada": true
+      },
+      {
+        "mercado": "over15+over05_visit",
+        "etiqueta": "Over 1.5 + Over 0.5 V",
+        "tipo": "COMBINADA",
+        "p": 0.6649,
+        "cuota_justa": 1.43,
+        "cuota_segura": 1.56,
+        "acierto_hist": 69.9,
+        "n_hist": 269,
+        "cotizada": true
+      },
+      {
+        "mercado": "btts",
+        "etiqueta": "BTTS",
+        "tipo": "simple",
+        "p": 0.6326,
+        "cuota_justa": 1.6,
+        "cuota_segura": 1.76,
+        "acierto_hist": 62.7,
+        "n_hist": 260,
+        "cotizada": true
+      },
+      {
+        "mercado": "visit_remates_over10.5",
+        "etiqueta": "Dortmund Remates Over 10.5",
+        "tipo": "por equipo",
+        "p": 0.5402,
+        "cuota_justa": 1.96,
+        "cuota_segura": 2.28,
+        "acierto_hist": 51.1,
+        "n_hist": 178,
+        "cotizada": true
+      },
+      {
+        "mercado": "visit_remates_puerta_over3.5",
+        "etiqueta": "Dortmund Remates a puerta Over 3.5",
+        "tipo": "por equipo",
+        "p": 0.5707,
+        "cuota_justa": 1.74,
+        "cuota_segura": 2.0,
+        "acierto_hist": 57.6,
+        "n_hist": 172,
+        "cotizada": true
+      },
+      {
+        "mercado": "visit_corners_equipo_over2.5",
+        "etiqueta": "Dortmund Corners Over 2.5",
+        "tipo": "por equipo",
+        "p": 0.6306,
+        "cuota_justa": 1.61,
+        "cuota_segura": 1.84,
+        "acierto_hist": 62.1,
+        "n_hist": 161,
+        "cotizada": true
+      }
+    ]
   }
 ];
