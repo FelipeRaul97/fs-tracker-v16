@@ -2846,13 +2846,32 @@ function renderUnicidadTotales(){
 
 // Filtro de calidad del edge: rendimiento de los PICK candidatos (EV+) que el filtro
 // mando a watchlist. Mismo patron que renderCapa1x2, con columna de motivo.
+// Motivo del filtro (texto libre de add_bet.py) -> categoria, para poder filtrar la tabla.
+const _FE_MOTIVOS=[['ev','EV bajo el mínimo (Vía B: EV < min_ev_pick)'],['val','No cruza su línea validada (Vía A)'],
+  ['dp','Edge prestado por Platt (Δ alto)'],['a','Platt no discrimina el mercado (a bajo)']];
+function _feMotivo(txt){
+  const s=String(txt||'');
+  if(s.startsWith('EV=')) return 'ev';
+  if(s.startsWith('no cruza validada')) return 'val';
+  if(s.startsWith('dPlatt')) return 'dp';
+  if(/Platt no discrimina/.test(s)) return 'a';
+  return 'otro';
+}
+let _feSel='todos';
 function renderFiltroEdge(){
   const el=document.getElementById('wl-filtroedge'); if(!el) return;
-  const items=_dataWLLiga().flatMap(p=>(p.watchlist||[])
+  const todos=_dataWLLiga().flatMap(p=>(p.watchlist||[])
     .filter(w=>w.filtro_edge)
     .map(w=>({...w,partido:p})))
     .sort((a,b)=>_pFechaHora(b.partido)-_pFechaHora(a.partido));
-  if(!items.length){ el.innerHTML='<p class="empty">El filtro aún no bloqueó ningún PICK candidato.</p>'; return; }
+  if(!todos.length){ el.innerHTML='<p class="empty">El filtro aún no bloqueó ningún PICK candidato.</p>'; return; }
+  const cuentaFE=k=>todos.filter(w=>_feMotivo(w.filtro_edge)===k).length;
+  if(_feSel!=='todos'&&!cuentaFE(_feSel)) _feSel='todos';
+  const selFE='<div style="font-size:12px;margin-bottom:10px"><label>Motivo <select id="fe-motivo" onchange="_feSel=this.value;renderFiltroEdge()" style="font-size:12px">'
+    +'<option value="todos"'+(_feSel==='todos'?' selected':'')+'>Todos ('+todos.length+')</option>'
+    +_FE_MOTIVOS.filter(m=>cuentaFE(m[0])).map(m=>'<option value="'+m[0]+'"'+(_feSel===m[0]?' selected':'')+'>'+m[1]+' ('+cuentaFE(m[0])+')</option>').join('')
+    +'</select></label></div>';
+  const items=_feSel==='todos'?todos:todos.filter(w=>_feMotivo(w.filtro_edge)===_feSel);
   const cerr=items.filter(w=>w.acerto!=null);
   const filas=items.map(w=>{
     const salio=w.acerto==null?'<span style="color:var(--text3)">pendiente</span>'
@@ -2878,7 +2897,7 @@ function renderFiltroEdge(){
       +'<span>ROI si apostadas <b class="'+(roi>=0?'pl-neg':'pl-pos')+'">'+(roi>=0?'+':'')+roi.toFixed(1)+'%</b></span>'
       +'<span>'+veredicto+'</span></div>';
   }
-  el.innerHTML=resumen
+  el.innerHTML=selFE+resumen
     +'<div class="table-wrap table-wrap-scroll"><table class="hm-table"><thead><tr><th style="text-align:left">Partido</th>'
     +'<th style="text-align:left">Selección</th><th style="text-align:left">Motivo</th>'
     +'<th>Cuota</th><th>EV%</th><th>Resultado</th><th>P&L teórico</th></tr></thead><tbody>'+filas+'</tbody></table></div>';
