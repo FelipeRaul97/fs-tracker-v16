@@ -804,6 +804,7 @@
             <option value="todos">Todos los partidos</option><option value="nuevos">Solo nuevos (&gt; #129)</option></select></label>
         </div>
         <div id="mej-x"></div>
+        <div id="mej-o05"></div>
         <div style="font-size:12px;color:var(--text3);margin:18px 0 4px;font-weight:600">Umbral de λ total — cómo cambia el ROI al mover el corte (misma muestra de arriba)</div>
         <div id="mej-umbral"></div>
       </div>
@@ -4437,8 +4438,9 @@ const MEJ_VARS=[['tot','λ total',c=>c.lt],['ll','λ local',c=>c.ll],['lv','λ v
   // Variables propias de cada linea de un mercado por equipo (fn recibe partido e item)
   ['gap','Línea − media del modelo (mercados por equipo)',(c,i)=>i.gap],['linea','Línea (mercados por equipo)',(c,i)=>i.linea],
   ['ev','EV% de la selección',(c,i)=>i.ev],['cuota','Cuota de la selección',(c,i)=>i.cuota],['own','λ del propio equipo (mercados por equipo)',(c,i)=>i.own]];
-const MEJ_MKX=[...MEJ_GOLES.filter(m=>!MEJ_NOELEG.includes(m)),...MEJ_COR,'fav','rem','rempu','corn'];
-const MEJ_MKX_LBL={fav:'1X2 favorito (victoria del de mayor λ)',rem:'Remates totales por equipo (todas las líneas)',
+const MEJ_MKX=[...MEJ_GOLES.filter(m=>!MEJ_NOELEG.includes(m)),...MEJ_COR,'fav','o05fav','o05nof','rem','rempu','corn'];
+const MEJ_MKX_LBL={fav:'1X2 favorito (victoria del de mayor λ)',
+  o05fav:'Over 0.5 del favorito (equipo de mayor λ; empate de λ = local)',o05nof:'Over 0.5 del no favorito (equipo de menor λ)',rem:'Remates totales por equipo (todas las líneas)',
   rempu:'Remates a puerta por equipo (todas las líneas)',corn:'Córners por equipo (todas las líneas)'};
 const MEJ_BANDAS_L=[['≤ 2.7',x=>x<=2.7],['2.7 – 3.0',x=>x>2.7&&x<=3.0],['3.0 – 3.3',x=>x>3.0&&x<=3.3],['> 3.3',x=>x>3.3]];
 
@@ -4738,6 +4740,34 @@ function _mejRenderCalib(D){
     +(b-1.645*se>1?'<span class="pl-pos">Mayor que 1 con claridad: la λ está comprimida.</span>':(b+1.645*se<1?'<span class="pl-neg">Menor que 1 con claridad: la λ está estirada de más.</span>':'<span style="color:var(--text3)">Compatible con 1.0 (λ calibrada).</span>'))
     +' Al 2026-10-27 (125 partidos) era 1.77 ± 0.61.</p>';
 }
+// Over 0.5 por equipo segun su rol en el partido: 'fav' = equipo de mayor λ final (empate de λ = local), 'nof' = el otro.
+// Se calcula al vuelo desde λ: no cambia ninguna clave guardada (over05_local / over05_visit siguen igual).
+function _mejO05Lado(i,c){
+  if(i.m!=='over05_local'&&i.m!=='over05_visit') return null;
+  const localFav=c.sd>=0;
+  return ((i.m==='over05_local')===localFav)?'fav':'nof';
+}
+// Tabla fija: Over 0.5 favorito vs no favorito, y cada uno por local/visita (solo selecciones con cuota).
+function _mejRenderO05(D){
+  const el=document.getElementById('mej-o05'); if(!el) return;
+  const solo=document.getElementById('mej-x-sm').value==='nuevos', its=[];
+  D.ctxs.filter(c=>!solo||c.nuevo).forEach(c=>c.items.forEach(i=>{
+    const r=_mejO05Lado(i,c); if(r&&i.win!=null&&i.cuota<=MEJ_CUOTA_MAX) its.push({...i,rol:r,lado:i.m==='over05_local'?'L':'V'});
+  }));
+  const grupos=[['Favorito',i=>i.rol==='fav'],['No favorito',i=>i.rol==='nof'],
+    ['Favorito · local',i=>i.rol==='fav'&&i.lado==='L'],['Favorito · visita',i=>i.rol==='fav'&&i.lado==='V'],
+    ['No favorito · local',i=>i.rol==='nof'&&i.lado==='L'],['No favorito · visita',i=>i.rol==='nof'&&i.lado==='V']];
+  const filas=grupos.map(([n,f])=>{
+    const a=its.filter(f), s=_mejSt(a); if(!s) return '<tr><td style="text-align:left">'+n+'</td><td colspan="7" style="color:var(--text3);text-align:center">—</td></tr>';
+    const pr=a.reduce((x,i)=>x+i.prob,0)/a.length;
+    return '<tr><td style="text-align:left">'+n+'</td><td class="num" style="'+(s.n<15?'opacity:.5':'')+'">'+s.n+'</td><td class="num">'+s.ac.toFixed(0)+'%</td><td class="num">'+pr.toFixed(0)+'%</td>'
+      +'<td class="num '+_mejCl(s.ac-pr)+'">'+_mejSg(s.ac-pr,1)+'</td><td class="num">'+s.cuota.toFixed(2)+'</td><td class="num">'+_mejRoi(s)+'</td><td class="num">'+_mejMoe(s)+'</td></tr>';
+  }).join('');
+  el.innerHTML='<div style="font-size:12px;color:var(--text3);margin:18px 0 4px;font-weight:600">Over 0.5 por equipo — favorito vs no favorito (favorito = equipo de mayor λ final)</div>'
+    +_mejTabla(['Grupo','Apuestas','Acierto','Prob. modelo','Real − modelo','Cuota media','ROI','±90%'],filas)
+    +'<p style="font-size:12px;color:var(--text3);margin:6px 0 0">Solo selecciones con cuota (cuota ≤ 2). «Real − modelo» en puntos. Con menos de 15 apuestas el grupo no concluye; '
+    +'el margen de error de un grupo de ~60 es de ±5 puntos. Mismo filtro de muestra que el explorador de arriba.</p>';
+}
 // Explorador: un mercado contra una variable de lambda, en cuartiles de esa variable.
 function _mejRenderExplora(D){
   const gv=id=>document.getElementById(id), mkSel=gv('mej-x-mk'), vSel=gv('mej-x-var');
@@ -4750,6 +4780,7 @@ function _mejRenderExplora(D){
   const evSel=gv('mej-x-ev').value, equipo=['rem','rempu','corn'].includes(mk), its=[];
   D.ctxs.filter(c=>!solo||c.nuevo).forEach(c=>{
     const cand=mk==='fav'?c.items.filter(i=>i.fam==='x12'&&i.m!=='empate'&&(i.m==='victoria_local')===(c.sd>0)&&c.sd!==0)
+      :(mk==='o05fav'||mk==='o05nof')?c.items.filter(i=>_mejO05Lado(i,c)!==null&&(_mejO05Lado(i,c)==='fav')===(mk==='o05fav')&&i.cuota<=MEJ_CUOTA_MAX)
       :(equipo?c.items.filter(i=>i.fam===mk):c.items.filter(i=>i.m===mk&&i.cuota<=MEJ_CUOTA_MAX));
     cand.filter(i=>i.win!=null&&(evSel==='todos'||(evSel==='pos'?i.ev>0:i.ev<=0))).forEach(i=>{
       const v=vf(c,i); if(v==null||isNaN(v)) return;
@@ -4799,7 +4830,7 @@ function renderMejoras(){
   // Tarjetas que vivian en Seguimiento y Watchlist y se unificaron aqui (todas ignoran el filtro de liga).
   renderSeguimiento(); renderCrucesValidados(); renderPorEquipoEV();
   _mejRenderSalud();
-  _mejRenderExplora(D);
+  _mejRenderExplora(D); _mejRenderO05(D);
   _mejRenderReglas(D,_mejReglas(par),'mej-reglas',true); _mejRenderReglas(D,_mejReglasEq(),'mej-reglas-eq',false); _mejRenderEV(D); _mejRenderCuota(D); _mejRenderLambda(D); _mejRenderCalib(D);
 }
 
