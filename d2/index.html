@@ -147,6 +147,7 @@
   .badge-pick{background:var(--blue-bg);color:var(--blue)}
   .badge-combo{background:var(--amber-bg);color:var(--amber)}
   .badge-remate{background:var(--green-bg);color:var(--green)}
+  .badge-puerta{background:var(--surface2);color:var(--text2);border:1px solid var(--border)}
   .badge-liga{background:var(--surface2);color:var(--text2)}
   .pl-pos{color:var(--green-mid);font-weight:500}
   .pl-neg{color:var(--red-mid);font-weight:500}
@@ -289,7 +290,7 @@
         <option value="PENDIENTE">Pendiente</option><option value="GANADA">Ganada</option>
         <option value="PERDIDA">Perdida</option><option value="VOID">Void</option></select>
       <select id="f-tipo"><option value="">Todos los tipos</option>
-        <option value="PICK">PICK</option><option value="COMBO">COMBO</option><option value="REMATE">REMATE</option></select>
+        <option value="PICK">PICK</option><option value="COMBO">COMBO</option><option value="REMATE">REMATE</option><option value="PUERTA">A PUERTA</option></select>
       <select id="f-conf"><option value="">Toda confianza</option>
         <option value="ALTA">Alta</option><option value="MEDIA">Media</option></select>
       <button type="button" class="btn btn-sm" onclick="limpiarFiltrosApuestas()">Limpiar filtros</button>
@@ -611,8 +612,11 @@
               Cuota entre <b>1.10 y 2.00</b>. Sin tope de PICK por partido, sin exigir EV &gt; 0 ni línea validada (salvo el DO). Under 4.5, 1X2 y Over 0.5 por equipo no entran.</td>
             <td style="text-align:left;font-size:12px">EV &gt; 0, máximo 2 por partido (mayor P%), cuota ≤ 2.0, línea validada (Vía A) o filtro de edge (Vía B), unicidad de totales y de hándicap, DO solo del favorito.</td></tr>
           <tr><td style="text-align:left"><b>COMBO</b></td>
-            <td style="text-align:left;font-size:12px">La combinada validada que cruza su cuota justa y tiene mayor P%, <b>salvo</b> si es un par <b>C1 Remates + ST</b> o <b>C2 Corners + Remates</b>: entonces baja al watchlist (<code>regla_d2</code>) y el partido queda sin COMBO. Sin reemplazo; la siguiente candidata queda marcada (<code>reemplazo_d2</code>) para medirla.</td>
+            <td style="text-align:left;font-size:12px">La combinada validada que cruza su cuota justa y tiene mayor P%, <b>salvo</b> si es un par <b>C1 Remates + ST</b>, <b>C2 Corners + Remates</b> o <b>C3 ST + Over 0.5 por equipo</b>: entonces baja al watchlist (<code>regla_d2</code>) y el partido queda sin COMBO. Sin reemplazo; la siguiente candidata queda marcada (<code>reemplazo_d2</code>) para medirla.</td>
             <td style="text-align:left;font-size:12px">La misma combinada, sin excluir ningún par.</td></tr>
+          <tr><td style="text-align:left"><b>A PUERTA</b></td>
+            <td style="text-align:left;font-size:12px"><b>S1</b>: una apuesta de remates a puerta <b>por equipo</b> (local y/o visita): la línea con EV &gt; 0 y <b>cuota ≥ 1.60</b> de mayor EV×P. Sin condición sobre la distancia a la media (en ST no ordena el ROI). Las demás bandas de cuota se miden aparte en este tab.</td>
+            <td style="text-align:left;font-size:12px">No existe: los remates a puerta por equipo solo van al watchlist.</td></tr>
           <tr><td style="text-align:left"><b>REMATE</b></td>
             <td style="text-align:left;font-size:12px"><b>R1</b>: una apuesta por partido (local o visita). Líneas de remates totales con EV &gt; 0 y <b>línea − media del modelo entre −4 y 0</b>; mejor EV×P de cada equipo y, si pasan los dos, la de mayor P%. Nunca una línea a +2 o más. Guarda <code>equipo_favorito</code> y <code>gap_media</code>.</td>
             <td style="text-align:left;font-size:12px">Mejor línea por EV×P de cada equipo con los filtros de PICK y sin tope de cuota; sin condición sobre la distancia a la media.</td></tr>
@@ -645,6 +649,13 @@
       <div class="card card-full">
         <div class="card-title">¿Acierta R1 al quedarse con la zona de 4 a 0 por debajo de la media?</div>
         <div id="hip-remate"></div>
+      </div>
+    </div>
+    <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">Remates a puerta S1</div>
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
+        <div class="card-title">¿Qué bandas de cuota y de distancia a la media rinden en remates a puerta por equipo?</div>
+        <div id="hip-puerta"></div>
       </div>
     </div>
     <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">Piso de cuota 1.10</div>
@@ -1253,6 +1264,7 @@
 const REPO   = 'FelipeRaul97/fs-tracker-v16';
 const BRANCH = 'main';
 const LIGA_NAMES={D1:'Bundesliga',E0:'Premier League',F1:'Ligue 1',I1:'Serie A',SP1:'La Liga'};
+const TIPOS_APUESTA_D1=['PICK','COMBO','REMATE'];
 const ES_D2=true;   // build_d2.py la pone en true: activa el tab Hipótesis y oculta las tarjetas de reglas del d1
 
 // ── State: work on a mutable copy ─────────────────────────
@@ -1294,7 +1306,8 @@ const fmtL=n=>n==null?'—':(n>=0?'+':'')+Number(n).toFixed(2)+'u';
 function badge(text,cls){return`<span class="badge badge-${cls.toLowerCase()}">${text}</span>`;}
 function estadoBadge(e){return badge(e,{GANADA:'ganada',PERDIDA:'perdida',PENDIENTE:'pendiente',VOID:'void'}[e]||'void');}
 function confBadge(c){if(!c)return'—';const t=c==='ALTA'?'🟢 Alta':'🟡 Media';return badge(t,c.toLowerCase());}
-function tipoBadge(t){return badge(t,{PICK:'pick',COMBO:'combo',REMATE:'remate'}[t]||'pick');}
+const TIPOS_APUESTA=ES_D2?['PICK','COMBO','REMATE','PUERTA']:TIPOS_APUESTA_D1;
+function tipoBadge(t){return badge(t,{PICK:'pick',COMBO:'combo',REMATE:'remate',PUERTA:'puerta'}[t]||'pick');}
 
 function calcStats(apuestas){
   const settled=apuestas.filter(a=>a.estado==='GANADA'||a.estado==='PERDIDA');
@@ -1537,12 +1550,14 @@ function renderBets(){
     const nPick=items.filter(r=>r.a.tipo==='PICK').length;
     const nCombo=items.filter(r=>r.a.tipo==='COMBO').length;
     const nRemate=items.filter(r=>r.a.tipo==='REMATE').length;
+    const nPuerta=items.filter(r=>r.a.tipo==='PUERTA').length;
     const cerr=items.filter(r=>r.a.estado==='GANADA'||r.a.estado==='PERDIDA');
     const plGrupo=cerr.length?cerr.reduce((s,r)=>s+(r.a.pl||0),0):null;
     const resumen=[items.length+' apuesta'+(items.length>1?'s':'')];
     if(nPick) resumen.push(nPick+' PICK');
     if(nCombo) resumen.push(nCombo+' COMBO');
     if(nRemate) resumen.push(nRemate+' REMATE');
+    if(nPuerta) resumen.push(nPuerta+' A PUERTA');
     if(plGrupo!=null) resumen.push('<b class="'+(plGrupo>=0?'pl-pos':'pl-neg')+'">'+(plGrupo>=0?'+':'')+plGrupo.toFixed(2)+'u</b>');
     let html='<tr class="bets-group" data-bgid="'+safeGid+'" onclick="toggleBetsGroup(\''+safeGid+'\')" style="cursor:pointer;background:var(--surface2)">'
       +'<td class="bets-caret" style="color:var(--text3);font-weight:700">▶</td>'
@@ -1598,7 +1613,7 @@ function renderBets(){
           <div class="detail-item"><span class="detail-key">Confianza</span><span>${p.confianza}</span></div>
           <div class="detail-item"><span class="detail-key">Resultado</span><span>${p.resultado_partido||'Pendiente'}</span></div>
           <div class="detail-item"><span class="detail-key">Notas</span><span>${p.notas||'—'}</span></div>
-          ${(a.tipo==='REMATE'&&a.gap_media!=null)?`<div class="detail-item"><span class="detail-key">REMATE (R1)</span><span>línea − media del modelo: ${a.gap_media>=0?'+':''}${a.gap_media} · ${a.lado==='local'?'local':'visita'} ${a.equipo_favorito?'favorito':'no favorito'}${a.cruzaron_ambos?' · pasaban los dos lados':''}</span></div>`:''}
+          ${((a.tipo==='REMATE'||a.tipo==='PUERTA')&&a.gap_media!=null)?`<div class="detail-item"><span class="detail-key">${a.tipo==='PUERTA'?'A PUERTA (S1)':'REMATE (R1)'}</span><span>línea − media del modelo: ${a.gap_media>=0?'+':''}${a.gap_media} · ${a.lado==='local'?'local':'visita'} ${a.equipo_favorito?'favorito':'no favorito'}${a.cruzaron_ambos?' · pasaban los dos lados':''}</span></div>`:''}
           ${(p.watchlist&&p.watchlist.length)?`<div class="detail-item" style="grid-column:1/-1;margin-top:6px">
             <span class="detail-key">Watchlist (${p.watchlist.length})</span>
             <div>${p.watchlist.map(w=>`<div class="wl-item"><span>${w.etiqueta||w.mercado} <span class="wl-tag">EV ${w.ev_pct>=0?'+':''}${fmt(w.ev_pct,1)}%</span></span><span style="color:var(--text3)">cuota ${fmt(w.cuota)} · prob ${fmtP(w.prob)}</span></div>`).join('')}</div>
@@ -2060,7 +2075,7 @@ function renderCalibBands(){
 }
 
 function renderCalibTipo(settled){
-  const tipos=['PICK','COMBO','REMATE'];
+  const tipos=TIPOS_APUESTA;
   document.getElementById('calib-tipo').innerHTML=tipos.map(tipo=>{
     const en=settled.filter(a=>a.tipo===tipo);
     if(!en.length) return`<div class="stat-row"><span class="stat-label">${tipo}</span><span style="color:var(--text3)">Sin datos</span></div>`;
@@ -2399,8 +2414,8 @@ function renderMercadoLigaHeatmap(){
 
 function renderLigaTipo(){
   const ligas=Object.keys(LIGA_NAMES);
-  const tipos=['PICK','COMBO','REMATE'];
-  const cols={PICK:'var(--blue-mid)',COMBO:'var(--amber-mid)',REMATE:'var(--green-mid)'};
+  const tipos=TIPOS_APUESTA;
+  const cols={PICK:'var(--blue-mid)',COMBO:'var(--amber-mid)',REMATE:'var(--green-mid)',PUERTA:'var(--text3)'};
   const el=document.getElementById('chart-liga-tipo');
   if(!ligas.length){el.innerHTML='<p class="empty">Sin datos</p>';return;}
   const W=700,H=230,PL=50,PR=80,PT=20,PB=45;
@@ -2518,7 +2533,7 @@ function renderLigaCards(){
 }
 
 function renderTipoStats(){
-  document.getElementById('tipo-stats').innerHTML=['PICK','COMBO','REMATE'].map(tipo=>{
+  document.getElementById('tipo-stats').innerHTML=TIPOS_APUESTA.map(tipo=>{
     const s=calcStats(flatBets({tipo}).filter(a=>a.estado==='GANADA'||a.estado==='PERDIDA'));
     const plC=s.pl>=0?'pl-pos':'pl-neg';
     return`<div class="stat-row"><span>${tipoBadge(tipo)}</span>
@@ -3750,7 +3765,7 @@ function _tablaRoi(obs,orden,titulo,colN){
   orden.forEach(b=>{
     const arr=obs.filter(o=>o.b===b).map(o=>o.a);
     if(!arr.length) return;
-    const tipos=[['Todas',arr],['PICK',arr.filter(a=>a.tipo==='PICK')],['COMBO',arr.filter(a=>a.tipo==='COMBO')],['REMATE',arr.filter(a=>a.tipo==='REMATE')]]
+    const tipos=[['Todas',arr],['PICK',arr.filter(a=>a.tipo==='PICK')],['COMBO',arr.filter(a=>a.tipo==='COMBO')],['REMATE',arr.filter(a=>a.tipo==='REMATE')]].concat(ES_D2?[['PUERTA',arr.filter(a=>a.tipo==='PUERTA')]]:[])
       .filter(([,x])=>x.length);
     // Si hay un solo tipo, "Todas" repetiría la misma fila.
     const vis=tipos.length===2?tipos.slice(1):tipos;
@@ -5118,14 +5133,14 @@ function _mejRenderHipotesis(D){
 }
 function _mejRenderD2Combo(){
   const el=document.getElementById('mej-d2cmb'); if(!el) return;
-  const grp={'C1 · Remates + ST (excluido)':[],'C2 · Corners + Remates (excluido)':[],'Reemplazo de un excluido':[],'COMBO apostado (referencia)':[]};
+  const grp={'C1 · Remates + ST (excluido)':[],'C2 · Corners + Remates (excluido)':[],'C3 · ST + Over 0.5 por equipo (excluido)':[],'Reemplazo de un excluido':[],'COMBO apostado (referencia)':[]};
   let hay=false;
   _DATA.forEach(p=>{
     const id=+p.id;
     (p.watchlist||[]).forEach(w=>{
       if(w.tipo!=='COMBINADA'||w.acerto==null&&!(w.regla_d2||w.reemplazo_d2)) return;
       const o={id,cuota:+w.cuota,win:w.acerto==null?null:!!w.acerto};
-      if(w.regla_d2){ hay=true; grp[String(w.regla_d2).startsWith('C1')?'C1 · Remates + ST (excluido)':'C2 · Corners + Remates (excluido)'].push(o); }
+      if(w.regla_d2){ hay=true; grp[String(w.regla_d2).startsWith('C1')?'C1 · Remates + ST (excluido)':String(w.regla_d2).startsWith('C3')?'C3 · ST + Over 0.5 por equipo (excluido)':'C2 · Corners + Remates (excluido)'].push(o); }
       else if(w.reemplazo_d2){ hay=true; grp['Reemplazo de un excluido'].push(o); }
     });
     (p.apuestas||[]).forEach(a=>{
@@ -5275,11 +5290,11 @@ function _hipTabla(col1,filas){
     +'<th class="num">ROI ±90%</th><th class="num">P&amp;L</th><th class="num" title="Unidades por partido (un dato por partido) y su ±90%; entre paréntesis, partidos">u / partido (±90%)</th></tr></thead><tbody>'+filas+'</tbody></table></div>';
 }
 function _hipBets(){
-  const B={pick:[],combo:[],rem:[]};
+  const B={pick:[],combo:[],rem:[],puerta:[]};
   _DATA.forEach(p=>(p.apuestas||[]).forEach(a=>{
     if(a.estado!=='GANADA'&&a.estado!=='PERDIDA') return;
     const o={id:+p.id,cuota:+a.cuota,win:a.estado==='GANADA',h:a.hipotesis||'',a,p};
-    if(a.tipo==='PICK') B.pick.push(o); else if(a.tipo==='COMBO') B.combo.push(o); else if(a.tipo==='REMATE') B.rem.push(o);
+    if(a.tipo==='PICK') B.pick.push(o); else if(a.tipo==='COMBO') B.combo.push(o); else if(a.tipo==='REMATE') B.rem.push(o); else if(a.tipo==='PUERTA') B.puerta.push(o);
   }));
   return B;
 }
@@ -5291,12 +5306,13 @@ function _hipRenderResumen(B){
     +'<div style="width:'+pct+'%;height:100%;background:var(--accent,#378add)"></div></div><span><b>'+cerr+'</b> de '+MEJ_N+' partidos cerrados · '+pend+' pendientes</span></div>'
     +'<p style="font-size:12px;margin:8px 0 10px">'+(cerr<MEJ_N?'Faltan <b>'+(MEJ_N-cerr)+'</b> partidos cerrados para decidir qué hipótesis sostener: hasta entonces ninguna cifra prueba nada.'
       :'Con <b>'+cerr+'</b> partidos: una hipótesis se sostiene si su ROI menos el ±90% sigue siendo positivo <b>y</b> su u/partido menos el ±90% también.')+'</p>';
-  const todas=[...B.pick,...B.combo,...B.rem];
+  const todas=[...B.pick,...B.combo,...B.rem,...B.puerta];
   const hs=Object.keys(HIP_LBL);
   const filas=_hipFila('PICK de goles (todas las hipótesis)',B.pick,{b:1})
     +hs.map(h=>_hipFila(h+' · '+HIP_LBL[h],B.pick.filter(x=>x.h===h),{sub:1})).join('')
-    +_hipFila('COMBO (sin los pares C1 Remates+ST y C2 Corners+Remates)',B.combo,{b:1})
+    +_hipFila('COMBO (sin los pares C1 Remates+ST, C2 Corners+Remates y C3 ST+Over 0.5 por equipo)',B.combo,{b:1})
     +_hipFila('REMATE R1 (una línea por partido, de 4 a 0 por debajo de la media)',B.rem,{b:1})
+    +_hipFila('REMATE A PUERTA S1 (una línea por equipo, EV > 0 y cuota ≥ 1.60)',B.puerta,{b:1})
     +_hipFila('TOTAL del dashboard 2',todas,{b:1});
   el.innerHTML=_hipTabla('Qué se habría apostado',filas);
 }
@@ -5333,17 +5349,41 @@ function _hipRenderAcum(B){
   let acum=0, filas='';
   for(let i=0;i<ps.length;i+=10){
     const ids=new Set(ps.slice(i,i+10).map(p=>+p.id)), f=l=>l.filter(b=>ids.has(b.id));
-    const a=u(f(B.pick)), c=u(f(B.combo)), r=u(f(B.rem)), t=a+c+r; acum+=t;
+    const a=u(f(B.pick)), c=u(f(B.combo)), r=u(f(B.rem)), pu=u(f(B.puerta)), t=a+c+r+pu; acum+=t;
     filas+='<tr><td style="text-align:left">Partidos '+(i+1)+'–'+Math.min(i+10,ps.length)+' <span style="color:var(--text3);font-size:11px">('+ps[i].fecha+')</span></td>'
-      +'<td class="num">'+_mejU(a)+'</td><td class="num">'+_mejU(c)+'</td><td class="num">'+_mejU(r)+'</td><td class="num"><b>'+_mejU(t)+'</b></td><td class="num">'+_mejU(acum)+'</td></tr>';
+      +'<td class="num">'+_mejU(a)+'</td><td class="num">'+_mejU(c)+'</td><td class="num">'+_mejU(r)+'</td><td class="num">'+_mejU(pu)+'</td><td class="num"><b>'+_mejU(t)+'</b></td><td class="num">'+_mejU(acum)+'</td></tr>';
   }
-  el.innerHTML='<div class="table-wrap"><table class="hm-table"><thead><tr><th style="text-align:left">Bloque de 10 partidos cerrados</th><th class="num">PICK</th><th class="num">COMBO</th><th class="num">REMATE</th><th class="num">Total</th><th class="num">Acumulado</th></tr></thead><tbody>'+filas+'</tbody></table></div>';
+  el.innerHTML='<div class="table-wrap"><table class="hm-table"><thead><tr><th style="text-align:left">Bloque de 10 partidos cerrados</th><th class="num">PICK</th><th class="num">COMBO</th><th class="num">REMATE</th><th class="num">A PUERTA</th><th class="num">Total</th><th class="num">Acumulado</th></tr></thead><tbody>'+filas+'</tbody></table></div>';
+}
+function _hipRenderPuerta(B){
+  const el=document.getElementById('hip-puerta'); if(!el) return;
+  const L=[];
+  _DATA.filter(p=>p.resultado_partido&&p.mu_equipo).forEach(p=>(p.watchlist||[]).forEach(w=>{
+    if(w.tipo!=='POR_EQUIPO'||!(w.mercado==='local_remates_puerta'||w.mercado==='visit_remates_puerta')||w.acerto==null||!w.cuota||w.linea==null) return;
+    const lado=w.mercado.startsWith('local')?'local':'visit', mu=((p.mu_equipo[lado])||{}).remates_puerta; if(mu==null) return;
+    L.push({id:+p.id,cuota:+w.cuota,win:!!w.acerto,d:w.linea-mu,ev:+w.ev_pct||0,S1:!!w.es_puerta});
+  }));
+  const pos=L.filter(x=>x.ev>0), neg=L.filter(x=>x.ev<=0);
+  const cu=[['cuota &lt; 1.30 · no se apuesta',x=>x.cuota<1.30,0],['1.30 – 1.60 · no se apuesta',x=>x.cuota>=1.30&&x.cuota<1.60,0],['1.60 – 2.20 · zona S1',x=>x.cuota>=1.60&&x.cuota<2.20,1],['2.20 – 3.50 · zona S1',x=>x.cuota>=2.20&&x.cuota<3.50,1],['cuota ≥ 3.50 · zona S1',x=>x.cuota>=3.50,1]];
+  const f1=cu.map(([l,f,z])=>_hipFila(l,pos.filter(f),{b:z})).join('')
+    +_hipFila('Todas las líneas con EV &gt; 0',pos,{sub:1})
+    +_hipFila('Contraste: cuota ≥ 1.60 con EV ≤ 0 (no se apuesta)',neg.filter(x=>x.cuota>=1.60),{sub:1});
+  const di=[['&lt; −2',x=>x.d<-2],['−2 a −1',x=>x.d>=-2&&x.d<-1],['−1 a 0',x=>x.d>=-1&&x.d<0],['0 a +1',x=>x.d>=0&&x.d<1],['+1 a +2',x=>x.d>=1&&x.d<2],['≥ +2',x=>x.d>=2]];
+  const hi=pos.filter(x=>x.cuota>=1.60);
+  const f2=di.map(([l,f])=>_hipFila(l,hi.filter(f))).join('')+_hipFila('Todas (EV &gt; 0 y cuota ≥ 1.60)',hi,{sub:1});
+  const f3=[['Local favorito',x=>x.a.lado==='local'&&x.a.equipo_favorito===true],['Local no favorito',x=>x.a.lado==='local'&&x.a.equipo_favorito===false],
+    ['Visita favorito',x=>x.a.lado==='visit'&&x.a.equipo_favorito===true],['Visita no favorito',x=>x.a.lado==='visit'&&x.a.equipo_favorito===false]]
+    .map(([l,f])=>_hipFila(l,B.puerta.filter(f),{sub:1})).join('')+_hipFila('Todas las S1 apostadas',B.puerta,{b:1});
+  const tt=(t,x)=>'<div style="font-size:12px;color:var(--text3);margin:'+(t.startsWith('①')?'0':'16px')+' 0 6px;font-weight:600">'+t+'</div>'+x;
+  el.innerHTML=tt('① Todas las líneas de remates a puerta con EV &gt; 0, por cuota (se apuesten o no): ¿qué pasa con las bandas que S1 deja fuera?',_hipTabla('Cuota',f1))
+    +tt('② Las líneas de la zona S1 (EV &gt; 0 y cuota ≥ 1.60), por distancia a la media esperada de ST del equipo',_hipTabla('Línea − media',f2))
+    +tt('③ Lo realmente elegido por S1 (una por equipo), por lado y rol del equipo',_hipTabla('A PUERTA S1',f3));
 }
 function renderHipotesis(){
   if(!document.getElementById('hip-resumen')) return;
   const B=_hipBets(), D=_mejDatos();
   _mejRenderHipotesis(D); _mejRenderD2Combo();      // tarjetas que viven en este tab; la de hipotesis fija _hipBajas
-  _hipRenderResumen(B); _hipRenderRemate(B); _hipRenderCuota(B); _hipRenderAcum(B);
+  _hipRenderResumen(B); _hipRenderRemate(B); _hipRenderPuerta(B); _hipRenderCuota(B); _hipRenderAcum(B);
 }
 // Por que NO se apostó cada selección de goles del watchlist (lo contrario de una hipótesis). ROI < 0 = el descarte acertó.
 function _hipRazon(p,w){
