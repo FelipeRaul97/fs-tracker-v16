@@ -666,6 +666,17 @@
           <select id="seg-dist-cob" onchange="_segRemateDist()" style="font-size:12px">
             <option value="todos">Todos</option><option value="completa">Solo con 5 o más líneas de remates cotizadas</option></select></label></div>
         <div id="seg-remate-dist"></div>
+        <div style="font-size:12px;color:var(--text3);margin:22px 0 4px;font-weight:600">
+          Reglas para elegir UNA línea de remates por equipo y partido — ¿cuál rinde más?</div>
+        <p style="font-size:12px;color:var(--text3);margin:0 0 8px">
+          Cada regla elige una sola línea de remates totales por equipo en cada partido, entre todas las cotizadas, y mide qué habría pasado
+          (1u por apuesta). Sirve para comparar criterios de elección: por cuota objetivo, por probabilidad o por distancia a la media del modelo.
+          Con «Solo EV &gt; 0» las candidatas son únicamente las líneas con EV positivo. «Nuevos» = partidos posteriores al #129, la única muestra que
+          no se usó para encontrar las reglas. Provisional: son criterios probados sobre los mismos partidos, no reglas activas.</p>
+        <div style="margin-bottom:8px;font-size:12px"><label>Candidatas
+          <select id="seg-reg-ev" onchange="_segReglasLinea()" style="font-size:12px">
+            <option value="todas">Todas las líneas cotizadas</option><option value="pos">Solo EV &gt; 0</option></select></label></div>
+        <div id="seg-reglas-linea"></div>
       </div>
     </div>
     <div class="grid2" style="margin-bottom:16px">
@@ -4198,6 +4209,44 @@ function _segRemateBets(ctx,crit,modo){
   });
   return out;
 }
+// Reglas para elegir UNA linea de remates por equipo y partido. Candidatas: todas las lineas cotizadas (o solo EV>0).
+function _segReglasLinea(){
+  const el=document.getElementById('seg-reglas-linea'); if(!el) return;
+  const soloPos=((document.getElementById('seg-reg-ev')||{}).value||'todas')==='pos';
+  const grupos=[];
+  _DATA.filter(p=>p.resultado_partido).forEach(p=>{
+    ['local','visit'].forEach(lado=>{
+      const mu=p.mu_equipo?((p.mu_equipo[lado]||{}).remates):null;
+      const c=(p.watchlist||[]).filter(w=>w.tipo==='POR_EQUIPO'&&w.mercado===lado+'_remates'&&w.cuota&&w.acerto!=null&&w.linea!=null)
+        .map(w=>({id:+p.id,cu:+w.cuota,pr:(w.prob||0)/100,ev:+w.ev_pct||0,win:!!w.acerto,d:mu!=null?w.linea-mu:null}))
+        .filter(x=>!soloPos||x.ev>0);
+      if(c.length) grupos.push(c);
+    });
+  });
+  const cerca=(t,lo,hi)=>g=>{const a=g.filter(x=>x.cu>=lo&&x.cu<=hi); return a.length?a.reduce((m,x)=>Math.abs(x.cu-t)<Math.abs(m.cu-t)?x:m):null;};
+  const maxProb=min=>g=>{const a=g.filter(x=>x.cu>=min); return a.length?a.reduce((m,x)=>x.pr>m.pr?x:m):null;};
+  const dist=(lo,hi,obj)=>g=>{const a=g.filter(x=>x.d!=null&&x.d>=lo&&x.d<=hi); return a.length?a.reduce((m,x)=>Math.abs(x.d-obj)<Math.abs(m.d-obj)?x:m):null;};
+  const evp=g=>{const a=g.filter(x=>x.ev>0); return a.length?a.reduce((m,x)=>x.ev*x.pr>m.ev*m.pr?x:m):null;};
+  const reglas=[['Vigente: mayor EV × prob con EV > 0',evp],
+    ['Cuota más cercana a 1.50 (entre 1.35 y 1.70)',cerca(1.5,1.35,1.7)],['Cuota más cercana a 1.55 (entre 1.45 y 1.65)',cerca(1.55,1.45,1.65)],
+    ['Cuota más cercana a 1.80 (entre 1.60 y 2.10)',cerca(1.8,1.6,2.1)],['Cuota más cercana a 2.20 (entre 2.00 y 2.60)',cerca(2.2,2.0,2.6)],
+    ['Mayor probabilidad con cuota ≥ 1.50',maxProb(1.5)],['Mayor probabilidad con cuota ≥ 1.80',maxProb(1.8)],
+    ['Línea más cercana a la media del modelo (−1 a +1)',dist(-1,1,0)],['Línea 0 a 2 por debajo de la media (−2 a 0)',dist(-2,0,-1)]];
+  const st=a=>{ const n=a.length; if(!n) return null;
+    const x=a.map(b=>b.win?b.cu-1:-1), m=x.reduce((s,v)=>s+v,0)/n, sd=n>1?Math.sqrt(x.reduce((s,v)=>s+(v-m)*(v-m),0)/(n-1)):0;
+    return {n,ac:a.filter(b=>b.win).length/n*100,cu:a.reduce((s,b)=>s+b.cu,0)/n,roi:m*100,moe:1.645*sd/Math.sqrt(n)*100}; };
+  const roiTxt=s=>s?'<b class="'+(s.roi>=0?'pl-pos':'pl-neg')+'">'+(s.roi>=0?'+':'')+s.roi.toFixed(0)+'%</b> <span style="color:var(--text3);font-size:11px">±'+s.moe.toFixed(0)+'</span>':'<span style="color:var(--text3)">—</span>';
+  const filas=reglas.map(([nom,f])=>{
+    const sel=grupos.map(f).filter(Boolean), nuevos=sel.filter(x=>x.id>MEJ_CORTE_ID), s=st(sel), sn=st(nuevos);
+    if(!s) return '<tr><td style="text-align:left">'+nom+'</td><td colspan="6" style="color:var(--text3);text-align:center">sin casos</td></tr>';
+    return '<tr><td style="text-align:left">'+nom+'</td><td class="num">'+s.n+'</td><td class="num">'+s.ac.toFixed(0)+'%</td><td class="num">'+s.cu.toFixed(2)+'</td>'
+      +'<td class="num">'+roiTxt(s)+'</td><td class="num" style="'+(sn&&sn.n<15?'opacity:.55':'')+'">'+(sn?sn.n:0)+'</td><td class="num" style="'+(sn&&sn.n<15?'opacity:.55':'')+'">'+roiTxt(sn)+'</td></tr>';
+  }).join('');
+  el.innerHTML='<div class="table-wrap"><table class="hm-table"><thead><tr><th style="text-align:left">Regla (una línea por equipo y partido)</th><th class="num">Casos</th>'
+    +'<th class="num">Acierto</th><th class="num">Cuota media</th><th class="num">ROI ±90%</th><th class="num">Nuevos · casos</th><th class="num">Nuevos · ROI</th></tr></thead><tbody>'+filas+'</tbody></table></div>'
+    +'<p style="font-size:12px;color:var(--text3);margin-top:8px">'+grupos.length+' equipo-partidos con líneas cotizadas'+(soloPos?' y EV &gt; 0':'')+'. Filas «Nuevos» atenuadas con menos de 15 casos. '
+    +'Un mismo partido aporta dos casos (local y visita), así que el ± es algo optimista.</p>';
+}
 // Distancia entre la linea de remates y la media esperada del modelo (mu_equipo). Candidatas = lineas que pasan el
 // filtro de PICK (_segPasaPick), apostadas o no. Cuota baja/probabilidad alta lejos por debajo de la media; cuota alta cerca o encima.
 function _segRemateDist(){
@@ -4354,7 +4403,7 @@ function _segEleccion(){
 function renderSeguimiento(){
   _segReglasNuevas();
   _segRemate();
-  _segRemateDist();
+  _segRemateDist(); _segReglasLinea();
   _segEleccion();
   const wl=_DATA.flatMap(p=>(p.watchlist||[]).map(w=>({...w,partido:p})));
   const simples=wl.filter(w=>!w.tipo);
