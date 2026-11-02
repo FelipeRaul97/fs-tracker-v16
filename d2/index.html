@@ -265,6 +265,7 @@
 
   <div class="tabs">
     <div class="tab active" data-tab="apuestas">Apuestas</div>
+    <div class="tab" data-tab="hipotesis">Hipótesis</div>
     <div class="tab" data-tab="tendencias">Tendencias</div>
     <div class="tab" data-tab="variables">Variables</div>
     <div class="tab" data-tab="mercados">Mercados</div>
@@ -528,6 +529,15 @@
     </div>
     <div class="grid2" style="margin-bottom:16px">
       <div class="card card-full">
+        <div class="card-title">Por qué no se apostó — rendimiento de cada motivo de descarte (goles)</div>
+        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">
+          Las selecciones de goles que ninguna hipótesis eligió, agrupadas por el primer motivo que las deja fuera. Mide qué habría pasado si se hubieran apostado:
+          <b>ROI &lt; 0</b> = el descarte acertó. Reemplaza a las tarjetas Capa 1X2, Filtro de edge, Unicidad y Reglas de selección del dashboard 1, que aquí no aplican.</p>
+        <div id="wl-razon"></div>
+      </div>
+    </div>
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
         <div class="card-title">Capa 1X2 — rendimiento de lo que bloqueó</div>
         <p style="font-size:12px;color:var(--text3);margin:0 0 10px">
           Empates y victorias del equipo de menor λ que <em>habrían sido PICK</em> (EV+) y
@@ -578,6 +588,81 @@
     </div>
   </div>
 
+  <!-- Hipótesis (solo dashboard 2) -->
+  <div class="tab-panel" id="tab-hipotesis">
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
+        <div class="card-title">Dashboard 2 — lo que habrían dado las hipótesis de selección</div>
+        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">
+          Aquí <b>no se apuesta nada</b>: cada PICK, COMBO y REMATE es una <b>hipótesis</b> con reglas propias (distintas a las del dashboard 1), elegida con datos del dashboard 1
+          y que solo se confirma o se descarta con los partidos que se acumulen aquí. 1 unidad por apuesta. <b>u / partido</b> suma las unidades de todas las apuestas de un partido
+          y usa ese total como un dato: es la lectura honesta cuando las apuestas de un mismo partido se parecen entre sí.</p>
+        <div id="hip-progreso"></div>
+        <div id="hip-resumen"></div>
+      </div>
+    </div>
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
+        <div class="card-title">Reglas del dashboard 2 frente al dashboard 1</div>
+        <div class="table-wrap"><table class="hm-table"><thead><tr><th style="text-align:left">Tipo</th><th style="text-align:left">Dashboard 2 (hipótesis)</th><th style="text-align:left">Dashboard 1 (reglas vigentes)</th></tr></thead><tbody>
+          <tr><td style="text-align:left"><b>PICK</b></td>
+            <td style="text-align:left;font-size:12px">Una barrera de λ propia por familia: <b>H1</b> Over 1.5 y <b>H2</b> Over 2.5 con λ total ≥ 3.0 · <b>H3</b> Over 3.5 con ≥ 3.4 · <b>H4</b> BTTS con ≥ 2.6 ·
+              <b>H5a</b> Under 3.5 con &lt; 3.0 · <b>H5b</b> Under 2.5 con ≤ 2.4 · <b>H6</b> DO solo del favorito (y si tiene línea validada, debe cruzarla) · <b>H7</b> Hándicap +2/+3 con &lt; 3.0.
+              Cuota entre <b>1.10 y 2.00</b>. Sin tope de PICK por partido, sin exigir EV &gt; 0 ni línea validada (salvo el DO). Under 4.5, 1X2 y Over 0.5 por equipo no entran.</td>
+            <td style="text-align:left;font-size:12px">EV &gt; 0, máximo 2 por partido (mayor P%), cuota ≤ 2.0, línea validada (Vía A) o filtro de edge (Vía B), unicidad de totales y de hándicap, DO solo del favorito.</td></tr>
+          <tr><td style="text-align:left"><b>COMBO</b></td>
+            <td style="text-align:left;font-size:12px">La combinada validada que cruza su cuota justa y tiene mayor P%, <b>salvo</b> si es un par <b>C1 Remates + ST</b> o <b>C2 Corners + Remates</b>: entonces baja al watchlist (<code>regla_d2</code>) y el partido queda sin COMBO. Sin reemplazo; la siguiente candidata queda marcada (<code>reemplazo_d2</code>) para medirla.</td>
+            <td style="text-align:left;font-size:12px">La misma combinada, sin excluir ningún par.</td></tr>
+          <tr><td style="text-align:left"><b>REMATE</b></td>
+            <td style="text-align:left;font-size:12px"><b>R1</b>: una apuesta por partido (local o visita). Líneas de remates totales con EV &gt; 0 y <b>línea − media del modelo entre −4 y 0</b>; mejor EV×P de cada equipo y, si pasan los dos, la de mayor P%. Nunca una línea a +2 o más. Guarda <code>equipo_favorito</code> y <code>gap_media</code>.</td>
+            <td style="text-align:left;font-size:12px">Mejor línea por EV×P de cada equipo con los filtros de PICK y sin tope de cuota; sin condición sobre la distancia a la media.</td></tr>
+        </tbody></table></div>
+      </div>
+    </div>
+    <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">Hipótesis de elección por mercado (goles)</div>
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
+        <div class="card-title">Una barrera propia por familia — ¿qué habría pasado con cada hipótesis?</div>
+        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">Cada fila es una <b>hipótesis</b> (no una regla activa) con su contraste: el mismo mercado cuando NO cumple la condición.
+          Sin exigir EV &gt; 0, con cuota entre 1.10 y 2.0 (ningún PICK por debajo de 1.10). <b>Por apuesta</b>: Apuestas, ROI y P&amp;L. <b>Por partido</b>: «u / partido» suma las unidades de todas las selecciones de un mismo partido y usa ese
+          total como un dato (el ±90% de ahí es el honesto; entre paréntesis, partidos). DO: solo el del favorito (equipo de mayor λ), y si tiene línea validada debe cruzarla.
+          Los umbrales salen de datos ya vistos: se confirman o se descartan con lo que se acumule.</p>
+        <div id="mej-hip"></div>
+      </div>
+    </div>
+    <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">COMBO excluidos y sus reemplazos (regla del dashboard 2)</div>
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
+        <div class="card-title">¿Qué habría pasado con el COMBO que se descartó y con la candidata que lo habría reemplazado?</div>
+        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">En el dashboard 2 el COMBO elegido NO se apuesta si es un par <b>C1 Remates + ST</b> o <b>C2 Corners + Remates</b>: baja al watchlist con
+          <code>regla_d2</code>. La siguiente candidata que cruza su cuota justa queda marcada con <code>reemplazo_d2</code> (tampoco se apuesta). Aquí se miden las dos, más el COMBO apostado como referencia.
+          En el dashboard 1 (datos anteriores, 24 reemplazos): excluidos −9.1u, reemplazos −11.3u. Si aquí los reemplazos rinden claramente más, se puede cambiar la regla a «sustituir».</p>
+        <div id="mej-d2cmb"></div>
+      </div>
+    </div>
+    <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">REMATE R1</div>
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
+        <div class="card-title">¿Acierta R1 al quedarse con la zona de 4 a 0 por debajo de la media?</div>
+        <div id="hip-remate"></div>
+      </div>
+    </div>
+    <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">Piso de cuota 1.10</div>
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
+        <div class="card-title">PICK de goles por cuota — ¿hizo bien el piso en dejar fuera las cuotas &lt; 1.10?</div>
+        <div id="hip-cuota"></div>
+      </div>
+    </div>
+    <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">Evolución</div>
+    <div class="grid2">
+      <div class="card card-full">
+        <div class="card-title">P&amp;L por bloques de 10 partidos cerrados</div>
+        <div id="hip-acum"></div>
+      </div>
+    </div>
+  </div>
+
   <!-- Confianza -->
   <div class="tab-panel" id="tab-confianza">
     <div class="grid2" id="conf-cards"></div>
@@ -602,7 +687,7 @@
       <div class="card card-full">
         <div class="card-title">Posibles mejoras de selección — Over y Under (registradas 2026-10-27)</div>
         <p style="font-size:12px;color:var(--text3);margin:0 0 10px">
-          Cada fila es una regla <b>candidata</b> para elegir PICKs de goles. Ninguna está activa: se calculan solas desde
+          Cada fila es una regla <b>candidata</b> para elegir PICKs de goles. Las que usa el dashboard 2 están en el tab Hipótesis; estas son variantes a comparar y se calculan solas desde
           <code>watchlist</code> y <code>apuestas</code> (no requieren capturar nada extra). Este dashboard parte de cero: todos los partidos cerrados son muestra nueva (las reglas se encontraron en el dashboard original). Con <b>40 partidos cerrados</b> la tabla señala cuál confirmar. 1 unidad por apuesta; ±90% es aproximado e ignora que las apuestas de un mismo partido se correlacionan.</p>
         <div id="mej-progreso" style="margin-bottom:10px"></div>
         <div style="display:flex;gap:12px;flex-wrap:wrap;font-size:12px;margin-bottom:10px;align-items:center">
@@ -714,6 +799,8 @@
         <div id="wl-porequipo-ev"></div>
       </div>
     </div>
+    <div style="font-size:12px;color:var(--text3);margin:22px 0 16px;padding:10px 12px;border:1px dashed var(--border);border-radius:8px">Las secciones «Reglas vigentes», «Escenarios» y «Simulación EV ≤ 0» miden las reglas del dashboard 1 (máx. 2 PICK, cuota ≤ 2, Vía A/B) y no aplican aquí; las reglas de este dashboard y su rendimiento están en el tab <b>Hipótesis</b>.</div>
+    <div style="display:none">
     <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">Reglas vigentes, escenarios e hipótesis abiertas</div>
     <p style="font-size:12px;color:var(--text3);margin:0 0 10px">Antes en la pestaña Seguimiento (se unificó aquí). Mide el rendimiento de las reglas actuales y de variantes de criterio.</p>
     <p style="font-size:12px;color:var(--text3);margin:0 0 12px">
@@ -778,6 +865,7 @@
         </div>
       </div>
     </div>
+    </div>
     <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">Elección de partidos</div>
     <div class="grid2" style="margin-bottom:16px">
       <div class="card card-full">
@@ -791,27 +879,6 @@
           (la λ y el puesto quedan guardados en cada entrada). <b>Unidades</b> = PICK + COMBO + REMATE de cada partido;
           <b>Brier</b> = error del modelo en sus 18 mercados de goles (menor es mejor).</p>
         <div id="seg-eleccion"></div>
-      </div>
-    </div>
-    <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">Hipótesis de elección por mercado (goles)</div>
-    <div class="grid2" style="margin-bottom:16px">
-      <div class="card card-full">
-        <div class="card-title">Una barrera propia por familia — ¿qué habría pasado con cada hipótesis?</div>
-        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">Cada fila es una <b>hipótesis</b> (no una regla activa) con su contraste: el mismo mercado cuando NO cumple la condición.
-          Sin exigir EV &gt; 0, con cuota entre 1.10 y 2.0 (ningún PICK por debajo de 1.10). <b>Por apuesta</b>: Apuestas, ROI y P&amp;L. <b>Por partido</b>: «u / partido» suma las unidades de todas las selecciones de un mismo partido y usa ese
-          total como un dato (el ±90% de ahí es el honesto; entre paréntesis, partidos). DO: solo el del favorito (equipo de mayor λ), y si tiene línea validada debe cruzarla.
-          Los umbrales salen de datos ya vistos: se confirman o se descartan con lo que se acumule.</p>
-        <div id="mej-hip"></div>
-      </div>
-    </div>
-    <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">COMBO excluidos y sus reemplazos (regla del dashboard 2)</div>
-    <div class="grid2" style="margin-bottom:16px">
-      <div class="card card-full">
-        <div class="card-title">¿Qué habría pasado con el COMBO que se descartó y con la candidata que lo habría reemplazado?</div>
-        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">En el dashboard 2 el COMBO elegido NO se apuesta si es un par <b>C1 Remates + ST</b> o <b>C2 Corners + Remates</b>: baja al watchlist con
-          <code>regla_d2</code>. La siguiente candidata que cruza su cuota justa queda marcada con <code>reemplazo_d2</code> (tampoco se apuesta). Aquí se miden las dos, más el COMBO apostado como referencia.
-          En el dashboard 1 (datos anteriores, 24 reemplazos): excluidos −9.1u, reemplazos −11.3u. Si aquí los reemplazos rinden claramente más, se puede cambiar la regla a «sustituir».</p>
-        <div id="mej-d2cmb"></div>
       </div>
     </div>
     <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">Vigilancia de COMBO</div>
@@ -1186,6 +1253,7 @@
 const REPO   = 'FelipeRaul97/fs-tracker-v16';
 const BRANCH = 'main';
 const LIGA_NAMES={D1:'Bundesliga',E0:'Premier League',F1:'Ligue 1',I1:'Serie A',SP1:'La Liga'};
+const ES_D2=true;   // build_d2.py la pone en true: activa el tab Hipótesis y oculta las tarjetas de reglas del d1
 
 // ── State: work on a mutable copy ─────────────────────────
 // Priority: localStorage > data.js
@@ -1501,7 +1569,7 @@ function renderBets(){
           <div style="font-size:10px">${p.liga}·${numLiga}</div>
         </td>
         <td></td>
-        <td colspan="2" style="padding-left:22px">${a.etiqueta||a.mercado}</td>
+        <td colspan="2" style="padding-left:22px">${a.etiqueta||a.mercado}${a.hipotesis?' <span class="wl-tag" title="Hipótesis del dashboard 2 que eligió esta apuesta">'+a.hipotesis+'</span>':''}</td>
         <td></td>
         <td>${tipoBadge(a.tipo)}</td>
         <td class="num">${fmt(a.cuota)}</td>
@@ -1530,6 +1598,7 @@ function renderBets(){
           <div class="detail-item"><span class="detail-key">Confianza</span><span>${p.confianza}</span></div>
           <div class="detail-item"><span class="detail-key">Resultado</span><span>${p.resultado_partido||'Pendiente'}</span></div>
           <div class="detail-item"><span class="detail-key">Notas</span><span>${p.notas||'—'}</span></div>
+          ${(a.tipo==='REMATE'&&a.gap_media!=null)?`<div class="detail-item"><span class="detail-key">REMATE (R1)</span><span>línea − media del modelo: ${a.gap_media>=0?'+':''}${a.gap_media} · ${a.lado==='local'?'local':'visita'} ${a.equipo_favorito?'favorito':'no favorito'}${a.cruzaron_ambos?' · pasaban los dos lados':''}</span></div>`:''}
           ${(p.watchlist&&p.watchlist.length)?`<div class="detail-item" style="grid-column:1/-1;margin-top:6px">
             <span class="detail-key">Watchlist (${p.watchlist.length})</span>
             <div>${p.watchlist.map(w=>`<div class="wl-item"><span>${w.etiqueta||w.mercado} <span class="wl-tag">EV ${w.ev_pct>=0?'+':''}${fmt(w.ev_pct,1)}%</span></span><span style="color:var(--text3)">cuota ${fmt(w.cuota)} · prob ${fmtP(w.prob)}</span></div>`).join('')}</div>
@@ -4814,6 +4883,7 @@ function _mejReglasEq(){
     {k:'rev',ref:1,n:'Todas las líneas con EV &gt; 0 (sin elegir una)',f:sel('rem',ev0,'todas')},
     {k:'ract',fuerte:1,n:'EV &gt; 0, mejor línea por EV×P de cada equipo, un lado por partido (regla vigente simulada)',f:sel('rem',ev0,'lado')},
     {k:'rgap',fuerte:1,n:'… y línea no más de 4 por debajo de la media del modelo (hipótesis del 2026-10-26)',f:sel('rem',i=>ev0(i)&&cerca(i),'lado')},
+    {k:'rr1',fuerte:1,n:'R1 (dashboard 2): EV &gt; 0 y línea entre 4 y 0 por debajo de la media, un lado por partido',f:sel('rem',i=>ev0(i)&&i.gap!=null&&i.gap>=-4&&i.gap<0,'lado')},
     {k:'rgap2',n:'… ídem, apostando los dos lados',f:sel('rem',i=>ev0(i)&&cerca(i),'ambos')},
     {k:'rc2',n:'EV &gt; 0 con cuota ≤ 2 (la regla actual, pero con tope de cuota)',f:sel('rem',i=>ev0(i)&&i.cuota<=2,'lado')},
     {k:'rprob',n:'EV &gt; 0, línea de mayor probabilidad (más segura)',f:sel('rem',ev0,'lado',i=>i.prob)},
@@ -5041,6 +5111,7 @@ function _mejRenderHipotesis(D){
     filas.push('<tr style="opacity:.8"><td style="text-align:left;padding-left:22px;font-size:12px">↳ contraste: el mismo mercado cuando NO cumple</td>'+cel(_mejSt(no))+'</tr>');
   });
   filas.push('<tr style="background:var(--surface2);font-weight:600"><td style="text-align:left">Todas las hipótesis que cumplen, juntas</td>'+cel(_mejSt(cumplen))+'</tr>');
+  window._hipBajas=bajas;
   filas.push('<tr style="opacity:.8"><td style="text-align:left">Cumplirían una hipótesis pero tienen cuota &lt; '+MEJ_HIP_CUOTA_MIN.toFixed(2)+' (no se apuestan)</td>'+cel(_mejSt(bajas))+'</tr>');
   el.innerHTML='<div class="table-wrap table-wrap-scroll"><table class="hm-table"><thead><tr><th style="text-align:left">Hipótesis</th><th class="num">Apuestas</th><th class="num">Acierto</th><th class="num">Cuota</th>'
     +'<th class="num">ROI ±90%</th><th class="num">P&amp;L</th><th class="num" title="Unidades por partido (un dato por partido) y su ±90%; entre paréntesis, partidos">u / partido (±90%)</th></tr></thead><tbody>'+filas.join('')+'</tbody></table></div>';
@@ -5185,7 +5256,137 @@ function renderMejoras(){
   _mejRenderReglas(D,_mejReglas(par),'mej-reglas',true); _mejRenderReglas(D,_mejReglasEq(),'mej-reglas-eq',false); _mejRenderEV(D); _mejRenderCuota(D); _mejRenderLambda(D); _mejRenderBarreras(D); _mejRenderCalib(D);
 }
 
+// ── Tab Hipótesis (dashboard 2) ───────────────────────────────────────────────
+// En el d2 no se apuesta nada: cada PICK / COMBO / REMATE es una HIPÓTESIS (H1–H7, C1/C2, R1) que el engine marca en
+// `hipotesis`. Este tab mide lo que esas reglas habrían dado, y el de Watchlist explica por qué lo demás no se apostó.
+const HIP_MERCADOS=['victoria_local','empate','victoria_visit','corners65','corners75','over15','over25','over35','under25','under35','under45','btts','do1x','dox2','hcp2_des','hcp3_des','over05_local','over05_visit'];
+const HIP_LBL={H1:'Over 1.5 · λ total ≥ 3.0',H2:'Over 2.5 · λ total ≥ 3.0',H3:'Over 3.5 · λ total ≥ 3.4',H4:'BTTS · λ total ≥ 2.6',
+  H5a:'Under 3.5 · λ total < 3.0',H5b:'Under 2.5 · λ total ≤ 2.4',H6:'Doble oportunidad del favorito',H7:'Hándicap +2 / +3 · λ total < 3.0'};
+function _hipCel(s){
+  return s?'<td class="num" style="'+(s.n<10?'opacity:.55':'')+'">'+s.n+'</td><td class="num">'+Math.round(s.ac)+'%</td><td class="num">'+s.cuota.toFixed(2)+'</td><td class="num">'+_mejRoi(s)+' '+_mejMoe(s)+'</td><td class="num">'+_mejU(s.u)+'</td><td class="num">'+_mejPP(s)+'</td>'
+    :'<td class="num" style="color:var(--text3)">0</td><td colspan="5" style="color:var(--text3);text-align:center">sin cerrados</td>';
+}
+function _hipFila(lbl,lst,o){
+  o=o||{};
+  return '<tr style="'+(o.b?'background:var(--surface2);font-weight:600;':'')+(o.sub?'opacity:.9;':'')+'"><td style="text-align:left;'+(o.sub?'padding-left:22px;font-size:12px':'')+'">'+lbl+'</td>'+_hipCel(_mejSt(lst))+'</tr>';
+}
+function _hipTabla(col1,filas){
+  return '<div class="table-wrap table-wrap-scroll"><table class="hm-table"><thead><tr><th style="text-align:left">'+col1+'</th><th class="num">Apuestas</th><th class="num">Acierto</th><th class="num">Cuota</th>'
+    +'<th class="num">ROI ±90%</th><th class="num">P&amp;L</th><th class="num" title="Unidades por partido (un dato por partido) y su ±90%; entre paréntesis, partidos">u / partido (±90%)</th></tr></thead><tbody>'+filas+'</tbody></table></div>';
+}
+function _hipBets(){
+  const B={pick:[],combo:[],rem:[]};
+  _DATA.forEach(p=>(p.apuestas||[]).forEach(a=>{
+    if(a.estado!=='GANADA'&&a.estado!=='PERDIDA') return;
+    const o={id:+p.id,cuota:+a.cuota,win:a.estado==='GANADA',h:a.hipotesis||'',a,p};
+    if(a.tipo==='PICK') B.pick.push(o); else if(a.tipo==='COMBO') B.combo.push(o); else if(a.tipo==='REMATE') B.rem.push(o);
+  }));
+  return B;
+}
+function _hipRenderResumen(B){
+  const el=document.getElementById('hip-resumen'); if(!el) return;
+  const cerr=_DATA.filter(p=>p.resultado_partido).length, pend=_DATA.length-cerr, pct=Math.min(100,cerr/MEJ_N*100);
+  const prog=document.getElementById('hip-progreso');
+  if(prog) prog.innerHTML='<div style="display:flex;align-items:center;gap:10px;font-size:12px"><div style="flex:0 0 200px;height:8px;border-radius:4px;background:var(--surface2);overflow:hidden">'
+    +'<div style="width:'+pct+'%;height:100%;background:var(--accent,#378add)"></div></div><span><b>'+cerr+'</b> de '+MEJ_N+' partidos cerrados · '+pend+' pendientes</span></div>'
+    +'<p style="font-size:12px;margin:8px 0 10px">'+(cerr<MEJ_N?'Faltan <b>'+(MEJ_N-cerr)+'</b> partidos cerrados para decidir qué hipótesis sostener: hasta entonces ninguna cifra prueba nada.'
+      :'Con <b>'+cerr+'</b> partidos: una hipótesis se sostiene si su ROI menos el ±90% sigue siendo positivo <b>y</b> su u/partido menos el ±90% también.')+'</p>';
+  const todas=[...B.pick,...B.combo,...B.rem];
+  const hs=Object.keys(HIP_LBL);
+  const filas=_hipFila('PICK de goles (todas las hipótesis)',B.pick,{b:1})
+    +hs.map(h=>_hipFila(h+' · '+HIP_LBL[h],B.pick.filter(x=>x.h===h),{sub:1})).join('')
+    +_hipFila('COMBO (sin los pares C1 Remates+ST y C2 Corners+Remates)',B.combo,{b:1})
+    +_hipFila('REMATE R1 (una línea por partido, de 4 a 0 por debajo de la media)',B.rem,{b:1})
+    +_hipFila('TOTAL del dashboard 2',todas,{b:1});
+  el.innerHTML=_hipTabla('Qué se habría apostado',filas);
+}
+function _hipRenderRemate(B){
+  const el=document.getElementById('hip-remate'); if(!el) return;
+  const L=[];
+  _DATA.filter(p=>p.resultado_partido&&p.mu_equipo).forEach(p=>(p.watchlist||[]).forEach(w=>{
+    if(w.tipo!=='POR_EQUIPO'||!(w.mercado==='local_remates'||w.mercado==='visit_remates')||w.acerto==null||!w.cuota||w.linea==null||!(w.ev_pct>0)) return;
+    const mu=((p.mu_equipo[w.mercado==='local_remates'?'local':'visit'])||{}).remates; if(mu==null) return;
+    L.push({id:+p.id,cuota:+w.cuota,win:!!w.acerto,d:w.linea-mu});
+  }));
+  const bandas=[['< −4 (el modelo las sobreestima)',x=>x.d<-4],['−4 a −2 · zona R1',x=>x.d>=-4&&x.d<-2,1],['−2 a 0 · zona R1',x=>x.d>=-2&&x.d<0,1],['0 a +2',x=>x.d>=0&&x.d<2],['+2 o más (nunca se apuestan)',x=>x.d>=2]];
+  const f1=bandas.map(([l,f,z])=>_hipFila(l,L.filter(f),{b:z})).join('')+_hipFila('Todas las líneas con EV > 0',L,{sub:1});
+  const f2=[['Local favorito',x=>x.a.lado==='local'&&x.a.equipo_favorito===true],['Local no favorito',x=>x.a.lado==='local'&&x.a.equipo_favorito===false],
+    ['Visita favorito',x=>x.a.lado==='visit'&&x.a.equipo_favorito===true],['Visita no favorito',x=>x.a.lado==='visit'&&x.a.equipo_favorito===false]]
+    .map(([l,f])=>_hipFila(l,B.rem.filter(f),{sub:1})).join('')+_hipFila('Todos los REMATE R1',B.rem,{b:1});
+  el.innerHTML='<div style="font-size:12px;color:var(--text3);margin:0 0 6px;font-weight:600">① Todas las líneas de remates totales con EV &gt; 0, según su distancia a la media esperada del modelo (se apuesten o no)</div>'
+    +_hipTabla('Línea − media',f1)
+    +'<div style="font-size:12px;color:var(--text3);margin:16px 0 6px;font-weight:600">② Lo realmente elegido por R1, por lado y por rol del equipo (favorito = mayor λ)</div>'+_hipTabla('REMATE R1',f2);
+}
+function _hipRenderCuota(B){
+  const el=document.getElementById('hip-cuota'); if(!el) return;
+  const baj=window._hipBajas||[];
+  const bandas=[['1.10 – 1.20',x=>x.cuota<1.20],['1.20 – 1.35',x=>x.cuota>=1.20&&x.cuota<1.35],['1.35 – 1.60',x=>x.cuota>=1.35&&x.cuota<1.60],['1.60 – 2.00',x=>x.cuota>=1.60]];
+  const filas=_hipFila('Cuota &lt; 1.10 · cumplían una hipótesis pero NO se apuestan (piso)',baj,{sub:1})
+    +bandas.map(([l,f])=>_hipFila(l,B.pick.filter(f))).join('')+_hipFila('PICK de goles apostados',B.pick,{b:1});
+  el.innerHTML=_hipTabla('Cuota',filas);
+}
+function _hipRenderAcum(B){
+  const el=document.getElementById('hip-acum'); if(!el) return;
+  const ps=_DATA.filter(p=>p.resultado_partido).sort((a,b)=>_pFechaHora(a)-_pFechaHora(b));
+  if(!ps.length){ el.innerHTML='<p class="empty">Sin partidos cerrados todavía.</p>'; return; }
+  const u=l=>l.reduce((t,b)=>t+(b.win?b.cuota-1:-1),0);
+  let acum=0, filas='';
+  for(let i=0;i<ps.length;i+=10){
+    const ids=new Set(ps.slice(i,i+10).map(p=>+p.id)), f=l=>l.filter(b=>ids.has(b.id));
+    const a=u(f(B.pick)), c=u(f(B.combo)), r=u(f(B.rem)), t=a+c+r; acum+=t;
+    filas+='<tr><td style="text-align:left">Partidos '+(i+1)+'–'+Math.min(i+10,ps.length)+' <span style="color:var(--text3);font-size:11px">('+ps[i].fecha+')</span></td>'
+      +'<td class="num">'+_mejU(a)+'</td><td class="num">'+_mejU(c)+'</td><td class="num">'+_mejU(r)+'</td><td class="num"><b>'+_mejU(t)+'</b></td><td class="num">'+_mejU(acum)+'</td></tr>';
+  }
+  el.innerHTML='<div class="table-wrap"><table class="hm-table"><thead><tr><th style="text-align:left">Bloque de 10 partidos cerrados</th><th class="num">PICK</th><th class="num">COMBO</th><th class="num">REMATE</th><th class="num">Total</th><th class="num">Acumulado</th></tr></thead><tbody>'+filas+'</tbody></table></div>';
+}
+function renderHipotesis(){
+  if(!document.getElementById('hip-resumen')) return;
+  const B=_hipBets(), D=_mejDatos();
+  _mejRenderHipotesis(D); _mejRenderD2Combo();      // tarjetas que viven en este tab; la de hipotesis fija _hipBajas
+  _hipRenderResumen(B); _hipRenderRemate(B); _hipRenderCuota(B); _hipRenderAcum(B);
+}
+// Por que NO se apostó cada selección de goles del watchlist (lo contrario de una hipótesis). ROI < 0 = el descarte acertó.
+function _hipRazon(p,w){
+  const m=w.mercado, ll=+p.lambda_final_l, lv=+p.lambda_final_v, lt=ll+lv, cu=+w.cuota;
+  if(['victoria_local','empate','victoria_visit'].includes(m)) return '1X2 simple (ninguna hipótesis lo elige)';
+  if(m==='corners65'||m==='corners75') return 'Córners totales (nunca son PICK)';
+  if(m==='over05_local'||m==='over05_visit') return 'Over 0.5 por equipo (se estudia aparte)';
+  if(m==='under45') return 'Under 4.5 (sin edge)';
+  if(cu>2) return 'Cuota > 2.0';
+  if(cu<1.10) return 'Cuota < 1.10 (piso)';
+  if(m==='over15'||m==='over25') return lt<3.0?'Over 1.5 / 2.5 con λ total < 3.0':null;
+  if(m==='over35') return lt<3.4?'Over 3.5 con λ total < 3.4':null;
+  if(m==='btts') return lt<2.6?'BTTS con λ total < 2.6':null;
+  if(m==='under35') return lt>=3.0?'Under 3.5 con λ total ≥ 3.0':null;
+  if(m==='under25') return lt>2.4?'Under 2.5 con λ total > 2.4':null;
+  if(m==='hcp2_des'||m==='hcp3_des') return lt>=3.0?'Hándicap con λ total ≥ 3.0':null;
+  if(m==='do1x'||m==='dox2'){
+    if((m==='do1x')!==(ll>=lv)) return 'Doble oportunidad del desfavorecido';
+    const cz=(p.cruces_validados||[]).find(c=>c.mercado===m);
+    return (cz&&cz.cruza===false)?'DO del favorito que no cruza su línea validada':null;
+  }
+  return null;
+}
+function _hipRenderRazon(){
+  const el=document.getElementById('wl-razon'); if(!el) return;
+  const G={};
+  _DATA.filter(p=>p.resultado_partido).forEach(p=>(p.watchlist||[]).forEach(w=>{
+    if(w.tipo||w.acerto==null||!w.cuota||!HIP_MERCADOS.includes(w.mercado)) return;   // las filas sin tipo de entradas viejas pueden ser de equipo
+    const r=_hipRazon(p,w)||'Cumple una hipótesis pero no se apostó (revisar)';
+    (G[r]=G[r]||[]).push({id:+p.id,cuota:+w.cuota,win:!!w.acerto});
+  }));
+  const orden=Object.keys(G).sort((a,b)=>G[b].length-G[a].length);
+  if(!orden.length){ el.innerHTML='<p class="empty">Sin selecciones de goles cerradas en el watchlist todavía.</p>'; return; }
+  el.innerHTML=_hipTabla('Motivo por el que no se apostó',orden.map(r=>_hipFila(r,G[r])).join(''))
+    +'<p style="font-size:12px;color:var(--text3);margin-top:8px">ROI &lt; 0 = el descarte acertó (apostarlo habría perdido). ROI &gt; 0 con margen que no cruza cero = esa barrera está costando dinero y hay que revisarla.</p>';
+}
+// Oculta en el d2 las tarjetas que miden reglas del dashboard 1 (sus marcas regla_* no existen aquí)
+function _d2OcultarReglasD1(){
+  if(!ES_D2) return;
+  ['wl-capa1x2','wl-filtroedge','wl-unicidad','wl-reglas'].forEach(id=>{ const g=document.getElementById(id); const c=g&&g.closest('.grid2'); if(c) c.style.display='none'; });
+}
 function renderAll(){
+  _d2OcultarReglasD1();
   renderMetrics();
   renderBets();
   // Re-render active tab
@@ -5195,7 +5396,8 @@ function renderAll(){
   if(active==='mercados'){renderCuotaROI();renderMercadoCuotaHeatmap();renderRemateMercados();renderTipoStats();renderMercadoFreq();renderCombosPorPar();}
   if(active==='ligas'){renderLigaTipo();renderLigaRollingROI();renderMercadoLigaHeatmap();renderLigaCards();}
   if(active==='variables'){renderVariablesHeatmap();}
-  if(active==='watchlist'){renderWatchlist();}
+  if(active==='watchlist'){renderWatchlist(); _hipRenderRazon();}
+  if(active==='hipotesis'){renderHipotesis();}
     if(active==='diagnostico'){renderDiagnostico();}
   if(active==='mejoras'){renderMejoras();}
   if(active==='confianza'){renderConfianza();}
