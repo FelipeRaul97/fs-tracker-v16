@@ -793,6 +793,17 @@
         <div id="seg-eleccion"></div>
       </div>
     </div>
+    <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">Hipótesis de elección por mercado (goles)</div>
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
+        <div class="card-title">Una barrera propia por familia — ¿qué habría pasado con cada hipótesis?</div>
+        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">Cada fila es una <b>hipótesis</b> (no una regla activa) con su contraste: el mismo mercado cuando NO cumple la condición.
+          Sin exigir EV &gt; 0 y con cuota ≤ 2.0. <b>Por apuesta</b>: Apuestas, ROI y P&amp;L. <b>Por partido</b>: «u / partido» suma las unidades de todas las selecciones de un mismo partido y usa ese
+          total como un dato (el ±90% de ahí es el honesto; entre paréntesis, partidos). DO: solo el del favorito (equipo de mayor λ), y si tiene línea validada debe cruzarla.
+          Los umbrales salen de datos ya vistos: se confirman o se descartan con lo que se acumule.</p>
+        <div id="mej-hip"></div>
+      </div>
+    </div>
     <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">Vigilancia de COMBO</div>
     <div class="grid2" style="margin-bottom:16px">
       <div class="card card-full">
@@ -4311,16 +4322,17 @@ function _segReglasLinea(){
     ['Línea más cercana a la media del modelo (−1 a +1)',dist(-1,1,0)],['Línea 0 a 2 por debajo de la media (−2 a 0)',dist(-2,0,-1)]];
   const st=a=>{ const n=a.length; if(!n) return null;
     const x=a.map(b=>b.win?b.cu-1:-1), m=x.reduce((s,v)=>s+v,0)/n, sd=n>1?Math.sqrt(x.reduce((s,v)=>s+(v-m)*(v-m),0)/(n-1)):0;
-    return {n,ac:a.filter(b=>b.win).length/n*100,cu:a.reduce((s,b)=>s+b.cu,0)/n,roi:m*100,moe:1.645*sd/Math.sqrt(n)*100,u:x.reduce((t,v)=>t+v,0)}; };
+    return {n,ac:a.filter(b=>b.win).length/n*100,cu:a.reduce((s,b)=>s+b.cu,0)/n,roi:m*100,moe:1.645*sd/Math.sqrt(n)*100,u:x.reduce((t,v)=>t+v,0),
+      pp:_ppStats(a.map((b,i)=>({id:b.id,u:x[i]})))}; };
   const roiTxt=s=>s?'<b class="'+(s.roi>=0?'pl-pos':'pl-neg')+'">'+(s.roi>=0?'+':'')+s.roi.toFixed(0)+'%</b> <span style="color:var(--text3);font-size:11px">±'+s.moe.toFixed(0)+'</span>':'<span style="color:var(--text3)">—</span>';
   const filas=reglas.map(([nom,f])=>{
     const sel=grupos.map(f).filter(Boolean), s=st(sel);
-    if(!s) return '<tr><td style="text-align:left">'+nom+'</td><td colspan="5" style="color:var(--text3);text-align:center">sin casos</td></tr>';
+    if(!s) return '<tr><td style="text-align:left">'+nom+'</td><td colspan="6" style="color:var(--text3);text-align:center">sin casos</td></tr>';
     return '<tr><td style="text-align:left">'+nom+'</td><td class="num">'+s.n+'</td><td class="num">'+s.ac.toFixed(0)+'%</td><td class="num">'+s.cu.toFixed(2)+'</td>'
-      +'<td class="num">'+roiTxt(s)+'</td><td class="num">'+_mejU(s.u)+'</td></tr>';
+      +'<td class="num">'+roiTxt(s)+'</td><td class="num">'+_mejU(s.u)+'</td><td class="num">'+_mejPP(s.pp)+'</td></tr>';
   }).join('');
   el.innerHTML='<div class="table-wrap"><table class="hm-table"><thead><tr><th style="text-align:left">Regla (una línea por equipo y partido)</th><th class="num">Casos</th>'
-    +'<th class="num">Acierto</th><th class="num">Cuota media</th><th class="num">ROI ±90%</th><th class="num">P&amp;L</th></tr></thead><tbody>'+filas+'</tbody></table></div>'
+    +'<th class="num">Acierto</th><th class="num">Cuota media</th><th class="num">ROI ±90%</th><th class="num">P&amp;L</th><th class="num" title="Un dato por partido (local y visita se suman)">u / partido (±90%)</th></tr></thead><tbody>'+filas+'</tbody></table></div>'
     +'<p style="font-size:12px;color:var(--text3);margin-top:8px">'+grupos.length+' equipo-partidos con líneas cotizadas'+(soloPos?' y EV &gt; 0':'')+'. '
     +'Un mismo partido aporta dos casos (local y visita), así que el ± es algo optimista.</p>';
 }
@@ -4608,13 +4620,24 @@ function _mejSt(a){
   const c=a.filter(b=>b.win!=null), n=c.length; if(!n) return null;
   const x=c.map(b=>b.win?b.cuota-1:-1), u=x.reduce((s,v)=>s+v,0), m=u/n;
   const sd=n>1?Math.sqrt(x.reduce((s,v)=>s+(v-m)*(v-m),0)/(n-1)):0;
+  const pp=_ppStats(c.map((b,i)=>({id:b.id,u:x[i]})));
   return {n,partidos:new Set(c.map(b=>b.id)).size,ac:c.filter(b=>b.win).length/n*100,
-          cuota:c.reduce((s,b)=>s+b.cuota,0)/n,u,roi:m*100,moe:n>1?1.645*sd/Math.sqrt(n)*100:null};
+          cuota:c.reduce((s,b)=>s+b.cuota,0)/n,u,roi:m*100,moe:n>1?1.645*sd/Math.sqrt(n)*100:null,np:pp.np,pu:pp.pu,pmoe:pp.pmoe};
+}
+// Vista POR PARTIDO: suma las unidades de todas las apuestas de un mismo partido y trata ese total como UNA observacion.
+// El ±90% sale de esos totales (los partidos son las unidades independientes), asi que es mas honesto que el de por apuesta.
+function _ppStats(lst){
+  const by={}; lst.forEach(b=>{ by[b.id]=(by[b.id]||0)+b.u; });
+  const v=Object.values(by), np=v.length; if(!np) return {np:0,pu:0,pmoe:null};
+  const m=v.reduce((a,b)=>a+b,0)/np, sd=np>1?Math.sqrt(v.reduce((a,b)=>a+(b-m)*(b-m),0)/(np-1)):0;
+  return {np,pu:m,pmoe:np>1?1.645*sd/Math.sqrt(np):null};
 }
 const _mejCl=v=>v>=0?'pl-pos':'pl-neg', _mejSg=(v,d)=>(v>=0?'+':'')+v.toFixed(d);
 function _mejRoi(s){ return s?'<span class="'+_mejCl(s.roi)+'"><b>'+_mejSg(s.roi,1)+'%</b></span>':'<span style="color:var(--text3)">—</span>'; }
 function _mejMoe(s){ return s&&s.moe!=null?'<span style="color:var(--text3)">±'+s.moe.toFixed(0)+'</span>':'<span style="color:var(--text3)">—</span>'; }
 function _mejU(v){ return '<span class="'+_mejCl(v)+'">'+_mejSg(v,1)+'u</span>'; }
+// u / partido (±90%): media de unidades por partido y su margen; o:{np,pu,pmoe} (lo devuelven _mejSt y _ppStats)
+function _mejPP(o){ return o&&o.np?'<span class="'+_mejCl(o.pu)+'"><b>'+_mejSg(o.pu,2)+'</b></span> <span style="color:var(--text3);font-size:11px">'+(o.pmoe!=null?'±'+o.pmoe.toFixed(2):'')+' ('+o.np+')</span>':'<span style="color:var(--text3)">—</span>'; }
 
 // Todas las selecciones cotizadas de un partido (apuestas + watchlist), sin duplicados.
 function _mejItems(p){
@@ -4733,17 +4756,17 @@ function _mejRenderReglas(D,R,elId,conProg){
   const res=R.map(r=>({r,sN:_mejSt(D.ctxs.flatMap(c=>r.f(c)))}));
   const refN=res[0].sN;
   const filas=res.map(o=>{
-    const g=o.r.g?'<tr><td colspan="7" style="text-align:left;background:var(--surface2);font-size:11px;color:var(--text2);font-weight:600">'+o.r.g+'</td></tr>':'';
+    const g=o.r.g?'<tr><td colspan="8" style="text-align:left;background:var(--surface2);font-size:11px;color:var(--text2);font-weight:600">'+o.r.g+'</td></tr>':'';
     const fuerte=o.r.k==='ref'||o.r.k==='o1'||o.r.k==='u1'||o.r.fuerte;
     const n=o.sN;
     return g+'<tr'+(fuerte?' style="font-weight:600"':'')+(o.r.ctl?' style="opacity:.8"':'')+'><td style="text-align:left">'+o.r.n+'</td>'
-      +(n?'<td class="num">'+n.n+'</td><td class="num">'+n.partidos+'</td><td class="num">'+_mejRoi(n)+'</td><td class="num">'+_mejMoe(n)+'</td><td class="num">'+_mejU(n.u)+'</td>'
-         :'<td class="num" style="color:var(--text3)">0</td><td colspan="4" style="color:var(--text3);text-align:center">sin casos</td>')
+      +(n?'<td class="num">'+n.n+'</td><td class="num">'+n.partidos+'</td><td class="num">'+_mejRoi(n)+'</td><td class="num">'+_mejMoe(n)+'</td><td class="num">'+_mejU(n.u)+'</td><td class="num">'+_mejPP(n)+'</td>'
+         :'<td class="num" style="color:var(--text3)">0</td><td colspan="5" style="color:var(--text3);text-align:center">sin casos</td>')
       +'<td style="text-align:left;font-size:11px">'+_mejVeredicto(o.r,n,refN,D.nNuevos)+'</td></tr>';
   }).join('');
   document.getElementById(elId).innerHTML='<div class="table-wrap table-wrap-scroll"><table class="hm-table"><thead>'
     +'<tr><th style="text-align:left">Regla</th><th class="num">Apuestas</th><th class="num">Partidos</th><th class="num">ROI</th><th class="num">±90%</th>'
-    +'<th class="num">Unidades</th><th style="text-align:left">Veredicto</th></tr>'
+    +'<th class="num">Unidades</th><th class="num" title="Unidades por partido (un dato por partido) y su ±90%">u / partido (±90%)</th><th style="text-align:left">Veredicto</th></tr>'
     +'</thead><tbody>'+filas+'</tbody></table></div>';
   if(!conProg) return;
   // Recomendacion
@@ -4974,6 +4997,39 @@ function _mejRenderUmbral(D,solo){
     +T('Familia Under: «dentro» = λ baja',fam(MEJ_UNDER),[2.4,2.5,2.6,2.7,2.8,2.9,3.0],false)+'</div>';
 }
 // ===== Vigilancia de COMBO =====
+// ===== Hipotesis de eleccion por mercado de goles =====
+const MEJ_HIP=[
+  ['H1','Over 1.5 con λ total ≥ 3.0','over15',(c,i)=>c.lt>=3.0],
+  ['H2','Over 2.5 con λ total ≥ 3.0','over25',(c,i)=>c.lt>=3.0],
+  ['H3','Over 3.5 con λ total ≥ 3.4','over35',(c,i)=>c.lt>=3.4],
+  ['H4','BTTS con λ total ≥ 2.6','btts',(c,i)=>c.lt>=2.6],
+  ['H5a','Under 3.5 con λ total < 3.0','under35',(c,i)=>c.lt<3.0],
+  ['H5b','Under 2.5 con λ total ≤ 2.4','under25',(c,i)=>c.lt<=2.4],
+  ['H6','DO del favorito (si tiene línea validada, debe cruzarla)',['do1x','dox2'],(c,i)=>{
+      if((i.m==='do1x')!==(c.sd>=0)) return false;
+      const x=((c.p&&c.p.cruces_validados)||[]).find(z=>z.mercado===i.m); return !x||x.cruza!==false; }],
+  ['H7a','Hándicap +2 con λ total < 3.0','hcp2_des',(c,i)=>c.lt<3.0],
+  ['H7b','Hándicap +3 con λ total < 3.0','hcp3_des',(c,i)=>c.lt<3.0]
+];
+function _mejRenderHipotesis(D){
+  const el=document.getElementById('mej-hip'); if(!el) return;
+  if(!D.ctxs.length){ el.innerHTML='<p class="empty">Sin partidos cerrados todavía.</p>'; return; }
+  const cel=s=>s?'<td class="num" style="'+(s.n<15?'opacity:.55':'')+'">'+s.n+'</td><td class="num">'+Math.round(s.ac)+'%</td><td class="num">'+s.cuota.toFixed(2)+'</td><td class="num">'+_mejRoi(s)+' '+_mejMoe(s)+'</td><td class="num">'+_mejU(s.u)+'</td><td class="num">'+_mejPP(s)+'</td>'
+    :'<td class="num" style="color:var(--text3)">0</td><td colspan="5" style="color:var(--text3);text-align:center">—</td>';
+  const filas=[], cumplen=[];
+  MEJ_HIP.forEach(([id,txt,mk,ok])=>{
+    const ms=Array.isArray(mk)?mk:[mk], si=[], no=[];
+    D.ctxs.forEach(c=>c.pool.filter(i=>ms.includes(i.m)).forEach(i=>{
+      if(['do1x','dox2'].includes(i.m)&&(i.m==='do1x')!==(c.sd>=0)){ no.push({...i,id:c.id}); return; }
+      (ok(c,i)?si:no).push({...i,id:c.id}); }));
+    si.forEach(x=>cumplen.push(x));
+    filas.push('<tr style="font-weight:600"><td style="text-align:left">'+id+' · '+txt+'</td>'+cel(_mejSt(si))+'</tr>');
+    filas.push('<tr style="opacity:.8"><td style="text-align:left;padding-left:22px;font-size:12px">↳ contraste: el mismo mercado cuando NO cumple</td>'+cel(_mejSt(no))+'</tr>');
+  });
+  filas.push('<tr style="background:var(--surface2);font-weight:600"><td style="text-align:left">Todas las hipótesis que cumplen, juntas</td>'+cel(_mejSt(cumplen))+'</tr>');
+  el.innerHTML='<div class="table-wrap table-wrap-scroll"><table class="hm-table"><thead><tr><th style="text-align:left">Hipótesis</th><th class="num">Apuestas</th><th class="num">Acierto</th><th class="num">Cuota</th>'
+    +'<th class="num">ROI ±90%</th><th class="num">P&amp;L</th><th class="num" title="Unidades por partido (un dato por partido) y su ±90%; entre paréntesis, partidos">u / partido (±90%)</th></tr></thead><tbody>'+filas.join('')+'</tbody></table></div>';
+}
 function _comboCerrados(){
   const out=[];
   _DATA.forEach(p=>(p.apuestas||[]).forEach(a=>{
@@ -5060,12 +5116,12 @@ function _comboRenderReglas(){
   const filas=reglas.map(([nom,f,ref])=>{
     const sel=[]; por.forEach(l=>f(l).forEach(x=>sel.push(x)));
     const s=st(sel);
-    const cel=s=>s?'<td class="num">'+s.n+'</td><td class="num">'+Math.round(s.ac)+'%</td><td class="num">'+_mejRoi(s)+'</td><td class="num">'+_mejMoe(s)+'</td><td class="num">'+_mejU(s.u)+'</td>'
-      :'<td class="num" style="color:var(--text3)">0</td><td colspan="4" style="color:var(--text3);text-align:center">—</td>';
+    const cel=s=>s?'<td class="num">'+s.n+'</td><td class="num">'+Math.round(s.ac)+'%</td><td class="num">'+_mejRoi(s)+'</td><td class="num">'+_mejMoe(s)+'</td><td class="num">'+_mejU(s.u)+'</td><td class="num">'+_mejPP(s)+'</td>'
+      :'<td class="num" style="color:var(--text3)">0</td><td colspan="5" style="color:var(--text3);text-align:center">—</td>';
     return '<tr style="'+(ref===1?'font-weight:600;background:var(--surface2)':(ref===2?'opacity:.85':''))+'"><td style="text-align:left">'+nom+'</td>'+cel(s)+'</tr>';
   }).join('');
   el.innerHTML='<div class="table-wrap table-wrap-scroll"><table class="hm-table"><thead>'
-    +'<tr><th style="text-align:left">Regla</th><th class="num">Casos</th><th class="num">Acierto</th><th class="num">ROI</th><th class="num">±90%</th><th class="num">P&amp;L</th></tr></thead><tbody>'+filas+'</tbody></table></div>'
+    +'<tr><th style="text-align:left">Regla</th><th class="num">Casos</th><th class="num">Acierto</th><th class="num">ROI</th><th class="num">±90%</th><th class="num">P&amp;L</th><th class="num">u / partido (±90%)</th></tr></thead><tbody>'+filas+'</tbody></table></div>'
     +'<p style="font-size:12px;color:var(--text3);margin-top:8px">'+por.size+' partidos con al menos una combinada cotizada y cerrada. Solo entran combinadas con línea justa validada y resultado. «Casos» = una por partido (o todas, en la referencia sin elegir).</p>';
 }
 function _comboRenderPares(){
@@ -5086,7 +5142,7 @@ function renderMejoras(){
   // Tarjetas que vivian en Seguimiento y Watchlist y se unificaron aqui (todas ignoran el filtro de liga).
   renderSeguimiento(); renderCrucesValidados(); renderPorEquipoEV();
   _mejRenderSalud();
-  _mejRenderExplora(D); _comboRenderSalud(); _comboRenderBanda(); _comboRenderReglas(); _comboRenderPares();
+  _mejRenderExplora(D); _mejRenderHipotesis(D); _comboRenderSalud(); _comboRenderBanda(); _comboRenderReglas(); _comboRenderPares();
   _mejRenderReglas(D,_mejReglas(par),'mej-reglas',true); _mejRenderReglas(D,_mejReglasEq(),'mej-reglas-eq',false); _mejRenderEV(D); _mejRenderCuota(D); _mejRenderLambda(D); _mejRenderBarreras(D); _mejRenderCalib(D);
 }
 
