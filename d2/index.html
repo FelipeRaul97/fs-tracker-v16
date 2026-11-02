@@ -5348,6 +5348,7 @@ function renderHipotesis(){
 // Por que NO se apostó cada selección de goles del watchlist (lo contrario de una hipótesis). ROI < 0 = el descarte acertó.
 function _hipRazon(p,w){
   const m=w.mercado, ll=+p.lambda_final_l, lv=+p.lambda_final_v, lt=ll+lv, cu=+w.cuota;
+  if(w.regla_d2) return 'Over X + Under X de la misma línea (una pierde siempre)';
   if(['victoria_local','empate','victoria_visit'].includes(m)) return '1X2 simple (ninguna hipótesis lo elige)';
   if(m==='corners65'||m==='corners75') return 'Córners totales (nunca son PICK)';
   if(m==='over05_local'||m==='over05_visit') return 'Over 0.5 por equipo (se estudia aparte)';
