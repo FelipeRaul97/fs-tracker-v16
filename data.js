@@ -174266,7 +174266,7 @@ const TRACKER_DATA = [
       }
     },
     "confianza": "MEDIA",
-    "notas": "",
+    "notas": "Cotizada con el partido ya iniciado (cuotas no prematch); entrada incompleta, ver cobertura.",
     "resultado_partido": "0-1",
     "goles_esperados": "2.88",
     "apuestas": [
@@ -176250,7 +176250,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "cotizada_en_vivo": true
   },
   {
     "id": "156",

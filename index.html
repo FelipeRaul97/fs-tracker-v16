@@ -816,7 +816,6 @@
             <option value="todos">Todos los partidos</option><option value="nuevos">Solo nuevos (&gt; #129)</option></select></label>
         </div>
         <div id="mej-x"></div>
-        <div id="mej-o05"></div>
         <div style="font-size:12px;color:var(--text3);margin:18px 0 4px;font-weight:600">Umbral de λ total — cómo cambia el ROI al mover el corte (misma muestra de arriba)</div>
         <div id="mej-umbral"></div>
       </div>
@@ -873,12 +872,13 @@
     </div>
     <div class="grid2" style="margin-bottom:16px">
       <div class="card card-full">
-        <div class="card-title">Over 0.5 por equipo — favorito / no favorito × local / visita según λ total</div>
-        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">Favorito = el equipo de mayor λ final (empate de λ = local). Cada celda: P&amp;L, (apuestas) y ROI de apostar 1u al Over 0.5 de ese equipo
-          (cuota ≤ 2). Usa la misma muestra que la tarjeta de arriba. Con menos de 10 apuestas, atenuada.</p>
-        <div style="font-size:12px;font-weight:600;margin:6px 0 4px">Por tramo de λ total</div>
+        <div class="card-title">Over 0.5 por equipo — local frente a visita según la λ propia del equipo</div>
+        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">La probabilidad de que un equipo marque depende sobre todo de SU λ, no de la suma del partido. Cada celda: P&amp;L, (apuestas) y ROI de
+          apostar 1u al Over 0.5 de ese equipo (cuota ≤ 2). Se separa local y visita porque el modelo se comporta distinto en cada lado. Usa la misma muestra que la tarjeta de arriba.
+          Con menos de 10 apuestas, atenuada.</p>
+        <div style="font-size:12px;font-weight:600;margin:6px 0 4px">Por tramo de λ propia</div>
         <div id="mej-bar-o05t"></div>
-        <div style="font-size:12px;font-weight:600;margin:16px 0 4px">Acumulado: barrera «λ total ≥ X»</div>
+        <div style="font-size:12px;font-weight:600;margin:16px 0 4px">Acumulado: barrera «λ propia ≥ X»</div>
         <div id="mej-bar-o05a"></div>
       </div>
     </div>
@@ -1434,6 +1434,7 @@ function renderBets(){
       +'<td style="font-weight:600">'+(p.resultado_partido?p.resultado_partido:'<span style="color:var(--text3);font-weight:400">—</span>')+'</td>'
       +'<td><div class="partido-cell">'+p.partido+'</div>'
         +'<div class="partido-sub">'+(LIGA_NAMES[p.liga]||p.liga)+' · J'+p.jornada+' · '+p.fecha+(p.hora?' '+p.hora:'')+'</div>'
+        +(p.cotizada_en_vivo?'<div class="partido-sub" style="color:var(--amber-mid,#b7791f)" title="Las cuotas se tomaron con el partido ya iniciado: no son prematch">⚠ cotizada en vivo</div>':'')
         +(_muTexto(p)?'<div class="partido-sub" title="Media esperada por el modelo, local–visita; entre paréntesis lo que pasó">Esperado: '+_muTexto(p)+'</div>':'')+'</td>'
       +'<td>'+badge(LIGA_NAMES[p.liga]||p.liga,'liga')+'</td>'
       +'<td colspan="9" style="color:var(--text3);font-size:12px">'+resumen.join(' · ')+'</td></tr>';
@@ -4560,9 +4561,8 @@ const MEJ_VARS=[['tot','λ total',c=>c.lt],['ll','λ local',c=>c.ll],['lv','λ v
   // Variables propias de cada linea de un mercado por equipo (fn recibe partido e item)
   ['gap','Línea − media del modelo (mercados por equipo)',(c,i)=>i.gap],['linea','Línea (mercados por equipo)',(c,i)=>i.linea],
   ['ev','EV% de la selección',(c,i)=>i.ev],['cuota','Cuota de la selección',(c,i)=>i.cuota],['own','λ del propio equipo (mercados por equipo)',(c,i)=>i.own]];
-const MEJ_MKX=[...MEJ_GOLES.filter(m=>!MEJ_NOELEG.includes(m)),...MEJ_COR,'fav','o05fav','o05nof','rem','rempu','corn'];
-const MEJ_MKX_LBL={fav:'1X2 favorito (victoria del de mayor λ)',
-  o05fav:'Over 0.5 del favorito (equipo de mayor λ; empate de λ = local)',o05nof:'Over 0.5 del no favorito (equipo de menor λ)',rem:'Remates totales por equipo (todas las líneas)',
+const MEJ_MKX=[...MEJ_GOLES.filter(m=>!MEJ_NOELEG.includes(m)),...MEJ_COR,'fav','rem','rempu','corn'];
+const MEJ_MKX_LBL={fav:'1X2 favorito (victoria del de mayor λ)',rem:'Remates totales por equipo (todas las líneas)',
   rempu:'Remates a puerta por equipo (todas las líneas)',corn:'Córners por equipo (todas las líneas)'};
 const MEJ_BANDAS_L=[['≤ 2.7',x=>x<=2.7],['2.7 – 3.0',x=>x>2.7&&x<=3.0],['3.0 – 3.3',x=>x>3.0&&x<=3.3],['> 3.3',x=>x>3.3]];
 
@@ -4848,7 +4848,9 @@ function _mejRenderLambda(D){
   document.getElementById('mej-lambda').innerHTML=_mejTabla(cab,fam('Familia Over (1.5/2.5/3.5/BTTS)',MEJ_OVER)+fam('Familia Under',MEJ_UNDER)+filas);
 }
 const MEJ_BAR_MK=['over15','over25','over35','btts'];
-const MEJ_O05_GRUPOS=[['Favorito · local','fav','over05_local'],['No favorito · local','nof','over05_local'],['Favorito · visita','fav','over05_visit'],['No favorito · visita','nof','over05_visit']];
+const MEJ_O05_GRUPOS=[['Local','over05_local'],['Visita','over05_visit']];
+const MEJ_O05_TRAMOS=[['< 1.2',x=>x<1.2],['1.2 – 1.5',x=>x>=1.2&&x<1.5],['≥ 1.5',x=>x>=1.5]];
+const MEJ_O05_UMBRALES=[1.0,1.2,1.5,1.9];
 const MEJ_BAR_TRAMOS=[['< 2.6',x=>x<2.6],['2.6 – 2.9',x=>x>=2.6&&x<2.9],['2.9 – 3.1',x=>x>=2.9&&x<3.1],['3.1 – 3.3',x=>x>=3.1&&x<3.3],['3.3 – 3.6',x=>x>=3.3&&x<3.6],['> 3.6',x=>x>=3.6]];
 const MEJ_BAR_UMBRALES=[2.6,2.8,2.9,3.0,3.1,3.2,3.4];
 function _mejRenderBarreras(D){
@@ -4861,17 +4863,16 @@ function _mejRenderBarreras(D){
     return '<td class="num" style="'+(s.n<10?'opacity:.45':'')+'"><span class="'+_mejCl(s.u)+'"><b>'+_mejSg(s.u,1)+'u</b></span> <span style="color:var(--text3)">('+s.n+')</span><br>'
       +'<span class="'+_mejCl(s.roi)+'" style="font-size:11px">'+_mejSg(s.roi,0)+'%</span></td>'; };
   const cab=['λ total',...MEJ_BAR_MK];
-  // Over 0.5 por equipo, separado por rol (favorito = mayor λ final) y lado
+  // Over 0.5 del equipo: local vs visita segun la lambda PROPIA del equipo (no la total)
   const po={}; MEJ_O05_GRUPOS.forEach(g=>po[g[0]]=[]);
   D.ctxs.filter(c=>!solo||c.nuevo).forEach(c=>c.pool.forEach(i=>{
-    const r=_mejO05Lado(i,c); if(!r) return;
-    const g=MEJ_O05_GRUPOS.find(x=>x[1]===r&&x[2]===i.m); if(g) po[g[0]].push({...i,lt:c.lt});
+    const g=MEJ_O05_GRUPOS.find(x=>x[1]===i.m); if(g) po[g[0]].push({...i,own:i.m==='over05_local'?c.ll:c.lv});
   }));
-  const cab5=['λ total',...MEJ_O05_GRUPOS.map(g=>g[0])];
-  const todasFila=l=>'<tr style="background:var(--surface2);font-weight:600"><td style="text-align:left">'+l+'</td>'+MEJ_O05_GRUPOS.map(g=>celda(po[g[0]])).join('')+'</tr>';
-  document.getElementById('mej-bar-o05t').innerHTML=_mejTabla(cab5,todasFila('Todos los partidos')+MEJ_BAR_TRAMOS.map(([l,f])=>'<tr><td style="text-align:left">'+l+'</td>'+MEJ_O05_GRUPOS.map(g=>celda(po[g[0]].filter(i=>f(i.lt)))).join('')+'</tr>').join(''));
-  document.getElementById('mej-bar-o05a').innerHTML=_mejTabla(['Barrera',...MEJ_O05_GRUPOS.map(g=>g[0])],MEJ_BAR_UMBRALES.map(t=>'<tr><td style="text-align:left">λ total ≥ '+t.toFixed(1)+'</td>'
-    +MEJ_O05_GRUPOS.map(g=>celda(po[g[0]].filter(i=>i.lt>=t))).join('')+'</tr>').join(''));
+  const cab5=['λ propia del equipo',...MEJ_O05_GRUPOS.map(g=>g[0])];
+  const todasFila='<tr style="background:var(--surface2);font-weight:600"><td style="text-align:left">Todos</td>'+MEJ_O05_GRUPOS.map(g=>celda(po[g[0]])).join('')+'</tr>';
+  document.getElementById('mej-bar-o05t').innerHTML=_mejTabla(cab5,todasFila+MEJ_O05_TRAMOS.map(([l,f])=>'<tr><td style="text-align:left">'+l+'</td>'+MEJ_O05_GRUPOS.map(g=>celda(po[g[0]].filter(i=>f(i.own)))).join('')+'</tr>').join(''));
+  document.getElementById('mej-bar-o05a').innerHTML=_mejTabla(['Barrera',...MEJ_O05_GRUPOS.map(g=>g[0])],MEJ_O05_UMBRALES.map(t=>'<tr><td style="text-align:left">λ propia ≥ '+t.toFixed(1)+'</td>'
+    +MEJ_O05_GRUPOS.map(g=>celda(po[g[0]].filter(i=>i.own>=t))).join('')+'</tr>').join(''));
   elT.innerHTML=_mejTabla(cab,MEJ_BAR_TRAMOS.map(([l,f])=>'<tr><td style="text-align:left">'+l+'</td>'+MEJ_BAR_MK.map(m=>celda(por[m].filter(i=>f(i.lt)))).join('')+'</tr>').join(''));
   elA.innerHTML=_mejTabla(['Barrera',...MEJ_BAR_MK],MEJ_BAR_UMBRALES.map(t=>'<tr><td style="text-align:left">λ total ≥ '+t.toFixed(1)+'</td>'
     +MEJ_BAR_MK.map(m=>celda(por[m].filter(i=>i.lt>=t))).join('')+'</tr>').join(''));
@@ -4891,34 +4892,6 @@ function _mejRenderCalib(D){
     +(b-1.645*se>1?'<span class="pl-pos">Mayor que 1 con claridad: la λ está comprimida.</span>':(b+1.645*se<1?'<span class="pl-neg">Menor que 1 con claridad: la λ está estirada de más.</span>':'<span style="color:var(--text3)">Compatible con 1.0 (λ calibrada).</span>'))
     +' Al 2026-10-27 (125 partidos) era 1.77 ± 0.61.</p>';
 }
-// Over 0.5 por equipo segun su rol en el partido: 'fav' = equipo de mayor λ final (empate de λ = local), 'nof' = el otro.
-// Se calcula al vuelo desde λ: no cambia ninguna clave guardada (over05_local / over05_visit siguen igual).
-function _mejO05Lado(i,c){
-  if(i.m!=='over05_local'&&i.m!=='over05_visit') return null;
-  const localFav=c.sd>=0;
-  return ((i.m==='over05_local')===localFav)?'fav':'nof';
-}
-// Tabla fija: Over 0.5 favorito vs no favorito, y cada uno por local/visita (solo selecciones con cuota).
-function _mejRenderO05(D){
-  const el=document.getElementById('mej-o05'); if(!el) return;
-  const solo=document.getElementById('mej-x-sm').value==='nuevos', its=[];
-  D.ctxs.filter(c=>!solo||c.nuevo).forEach(c=>c.items.forEach(i=>{
-    const r=_mejO05Lado(i,c); if(r&&i.win!=null&&i.cuota<=MEJ_CUOTA_MAX) its.push({...i,rol:r,lado:i.m==='over05_local'?'L':'V'});
-  }));
-  const grupos=[['Favorito',i=>i.rol==='fav'],['No favorito',i=>i.rol==='nof'],
-    ['Favorito · local',i=>i.rol==='fav'&&i.lado==='L'],['Favorito · visita',i=>i.rol==='fav'&&i.lado==='V'],
-    ['No favorito · local',i=>i.rol==='nof'&&i.lado==='L'],['No favorito · visita',i=>i.rol==='nof'&&i.lado==='V']];
-  const filas=grupos.map(([n,f])=>{
-    const a=its.filter(f), s=_mejSt(a); if(!s) return '<tr><td style="text-align:left">'+n+'</td><td colspan="8" style="color:var(--text3);text-align:center">—</td></tr>';
-    const pr=a.reduce((x,i)=>x+i.prob,0)/a.length;
-    return '<tr><td style="text-align:left">'+n+'</td><td class="num" style="'+(s.n<15?'opacity:.5':'')+'">'+s.n+'</td><td class="num">'+s.ac.toFixed(0)+'%</td><td class="num">'+pr.toFixed(0)+'%</td>'
-      +'<td class="num '+_mejCl(s.ac-pr)+'">'+_mejSg(s.ac-pr,1)+'</td><td class="num">'+s.cuota.toFixed(2)+'</td><td class="num">'+_mejRoi(s)+'</td><td class="num">'+_mejMoe(s)+'</td><td class="num">'+_mejU(s.u)+'</td></tr>';
-  }).join('');
-  el.innerHTML='<div style="font-size:12px;color:var(--text3);margin:18px 0 4px;font-weight:600">Over 0.5 por equipo — favorito vs no favorito (favorito = equipo de mayor λ final)</div>'
-    +_mejTabla(['Grupo','Apuestas','Acierto','Prob. modelo','Real − modelo','Cuota media','ROI','±90%','P&amp;L'],filas)
-    +'<p style="font-size:12px;color:var(--text3);margin:6px 0 0">Solo selecciones con cuota (cuota ≤ 2). «Real − modelo» en puntos. Con menos de 15 apuestas el grupo no concluye; '
-    +'el margen de error de un grupo de ~60 es de ±5 puntos. Mismo filtro de muestra que el explorador de arriba.</p>';
-}
 // Explorador: un mercado contra una variable de lambda, en cuartiles de esa variable.
 function _mejRenderExplora(D){
   const gv=id=>document.getElementById(id), mkSel=gv('mej-x-mk'), vSel=gv('mej-x-var');
@@ -4931,7 +4904,6 @@ function _mejRenderExplora(D){
   const evSel=gv('mej-x-ev').value, equipo=['rem','rempu','corn'].includes(mk), its=[];
   D.ctxs.filter(c=>!solo||c.nuevo).forEach(c=>{
     const cand=mk==='fav'?c.items.filter(i=>i.fam==='x12'&&i.m!=='empate'&&(i.m==='victoria_local')===(c.sd>0)&&c.sd!==0)
-      :(mk==='o05fav'||mk==='o05nof')?c.items.filter(i=>_mejO05Lado(i,c)!==null&&(_mejO05Lado(i,c)==='fav')===(mk==='o05fav')&&i.cuota<=MEJ_CUOTA_MAX)
       :(equipo?c.items.filter(i=>i.fam===mk):c.items.filter(i=>i.m===mk&&i.cuota<=MEJ_CUOTA_MAX));
     cand.filter(i=>i.win!=null&&(evSel==='todos'||(evSel==='pos'?i.ev>0:i.ev<=0))).forEach(i=>{
       const v=vf(c,i); if(v==null||isNaN(v)) return;
@@ -4981,7 +4953,7 @@ function renderMejoras(){
   // Tarjetas que vivian en Seguimiento y Watchlist y se unificaron aqui (todas ignoran el filtro de liga).
   renderSeguimiento(); renderCrucesValidados(); renderPorEquipoEV();
   _mejRenderSalud();
-  _mejRenderExplora(D); _mejRenderO05(D);
+  _mejRenderExplora(D);
   _mejRenderReglas(D,_mejReglas(par),'mej-reglas',true); _mejRenderReglas(D,_mejReglasEq(),'mej-reglas-eq',false); _mejRenderEV(D); _mejRenderCuota(D); _mejRenderLambda(D); _mejRenderBarreras(D); _mejRenderCalib(D);
 }
 
