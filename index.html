@@ -2412,6 +2412,7 @@ function _comboEtPata(x){
 function _comboNombrePar(k){
   return k.split('+').map(_comboEtPata).sort().join(' + ');
 }
+var _cppSort={col:'n',dir:'desc'};
 function renderCombosPorPar(){
   const el=document.getElementById('combos-por-par'); if(!el) return;
   const todos=flatBets().filter(a=>a.tipo==='COMBO'&&(a.estado==='GANADA'||a.estado==='PERDIDA'));
@@ -2439,18 +2440,33 @@ function renderCombosPorPar(){
     const fTxt=Object.keys(fallos).length?Object.entries(fallos).map(([n,c])=>n+' ×'+c).join(', '):(arr.some(a=>a.estado==='PERDIDA')?'sin dato':'—');
     const sesgo=probMed!=null?wr-probMed:null;
     const chica=arr.length<5?' style="color:var(--text3)"':'';
-    return '<tr'+chica+'><td style="text-align:left">'+k+'</td><td>'+arr.length+'</td>'
+    const html='<tr'+chica+'><td style="text-align:left">'+k+'</td><td>'+arr.length+'</td>'
       +'<td>'+wr.toFixed(0)+'%</td>'
       +'<td>'+(probMed!=null?probMed.toFixed(0)+'%':'—')+(sesgo!=null?' <span style="font-size:10px;color:var(--text3)">('+(sesgo>=0?'+':'')+sesgo.toFixed(0)+')</span>':'')+'</td>'
       +'<td class="'+(plTot>=0?'pl-pos':'pl-neg')+'">'+(plTot>=0?'+':'')+plTot.toFixed(2)+'u</td>'
       +'<td class="'+(roi>=0?'pl-pos':'pl-neg')+'">'+(roi>=0?'+':'')+roi.toFixed(0)+'%</td>'
       +'<td>'+(margen!=null?(margen>=0?'+':'')+margen.toFixed(0)+'%':'—')+'</td>'
       +'<td style="text-align:left;font-size:11px">'+fTxt+'</td></tr>';
+    return {html,n:arr.length,wr,prob:probMed,pl:plTot,roi,margen};
   };
-  const filas=Object.entries(mapa).sort((a,b)=>b[1].length-a[1].length).map(([k,arr])=>fila(k,arr)).join('');
-  el.innerHTML='<table class="hm-table"><thead><tr><th style="text-align:left">Par</th><th>Cerrados</th><th>WR</th>'
-    +'<th>Prob. modelo (sesgo)</th><th>P&amp;L</th><th>ROI</th><th>Margen vs justa</th><th style="text-align:left">Pata que falló</th></tr></thead><tbody>'
-    +filas+fila('TOTAL',todos).replace('<tr','<tr class="hm-total-row"')+'</tbody></table>';
+  // Orden por columna numerica: clic en el titulo alterna mayor→menor y menor→mayor. TOTAL siempre queda abajo.
+  const col=_cppSort.col, dir=_cppSort.dir;
+  const datos=Object.entries(mapa).map(([k,arr])=>fila(k,arr));
+  datos.sort((a,b)=>{
+    const x=a[col], y=b[col];
+    if(x==null&&y==null) return b.n-a.n; if(x==null) return 1; if(y==null) return -1;
+    return (dir==='asc'?x-y:y-x)||(b.n-a.n);
+  });
+  const th=(c,txt)=>'<th class="cpp-th" onclick="_cppOrdenar(\''+c+'\')" style="cursor:pointer;user-select:none" title="Ordenar por esta columna">'+txt
+    +(col===c?(dir==='asc'?' ▲':' ▼'):'<span style="opacity:.3"> ↕</span>')+'</th>';
+  el.innerHTML='<table class="hm-table"><thead><tr><th style="text-align:left">Par</th>'+th('n','Cerrados')+th('wr','WR')
+    +th('prob','Prob. modelo (sesgo)')+th('pl','P&amp;L')+th('roi','ROI')+th('margen','Margen vs justa')
+    +'<th style="text-align:left">Pata que falló</th></tr></thead><tbody>'
+    +datos.map(d=>d.html).join('')+fila('TOTAL',todos).html.replace('<tr','<tr class="hm-total-row"')+'</tbody></table>';
+}
+function _cppOrdenar(c){
+  _cppSort=(_cppSort.col===c)?{col:c,dir:_cppSort.dir==='desc'?'asc':'desc'}:{col:c,dir:'desc'};
+  renderCombosPorPar();
 }
 
 // ── Calib by market ───────────────────────────────────────
