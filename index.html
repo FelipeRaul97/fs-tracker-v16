@@ -808,6 +808,16 @@
         <div id="mej-hip"></div>
       </div>
     </div>
+    <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">COMBO excluidos y sus reemplazos (regla del dashboard 2)</div>
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
+        <div class="card-title">¿Qué habría pasado con el COMBO que se descartó y con la candidata que lo habría reemplazado?</div>
+        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">En el dashboard 2 el COMBO elegido NO se apuesta si es un par <b>C1 Remates + ST</b> o <b>C2 Corners + Remates</b>: baja al watchlist con
+          <code>regla_d2</code>. La siguiente candidata que cruza su cuota justa queda marcada con <code>reemplazo_d2</code> (tampoco se apuesta). Aquí se miden las dos, más el COMBO apostado como referencia.
+          En el dashboard 1 (datos anteriores, 24 reemplazos): excluidos −9.1u, reemplazos −11.3u. Si aquí los reemplazos rinden claramente más, se puede cambiar la regla a «sustituir».</p>
+        <div id="mej-d2cmb"></div>
+      </div>
+    </div>
     <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">Vigilancia de COMBO</div>
     <div class="grid2" style="margin-bottom:16px">
       <div class="card card-full">
@@ -5050,6 +5060,30 @@ function _mejRenderHipotesis(D){
   el.innerHTML='<div class="table-wrap table-wrap-scroll"><table class="hm-table"><thead><tr><th style="text-align:left">Hipótesis</th><th class="num">Apuestas</th><th class="num">Acierto</th><th class="num">Cuota</th>'
     +'<th class="num">ROI ±90%</th><th class="num">P&amp;L</th><th class="num" title="Unidades por partido (un dato por partido) y su ±90%; entre paréntesis, partidos">u / partido (±90%)</th></tr></thead><tbody>'+filas.join('')+'</tbody></table></div>';
 }
+function _mejRenderD2Combo(){
+  const el=document.getElementById('mej-d2cmb'); if(!el) return;
+  const grp={'C1 · Remates + ST (excluido)':[],'C2 · Corners + Remates (excluido)':[],'Reemplazo de un excluido':[],'COMBO apostado (referencia)':[]};
+  let hay=false;
+  _DATA.forEach(p=>{
+    const id=+p.id;
+    (p.watchlist||[]).forEach(w=>{
+      if(w.tipo!=='COMBINADA'||w.acerto==null&&!(w.regla_d2||w.reemplazo_d2)) return;
+      const o={id,cuota:+w.cuota,win:w.acerto==null?null:!!w.acerto};
+      if(w.regla_d2){ hay=true; grp[String(w.regla_d2).startsWith('C1')?'C1 · Remates + ST (excluido)':'C2 · Corners + Remates (excluido)'].push(o); }
+      else if(w.reemplazo_d2){ hay=true; grp['Reemplazo de un excluido'].push(o); }
+    });
+    (p.apuestas||[]).forEach(a=>{
+      if(a.tipo==='COMBO'&&a.promovida_combinada&&(a.estado==='GANADA'||a.estado==='PERDIDA'))
+        grp['COMBO apostado (referencia)'].push({id,cuota:+a.cuota,win:a.estado==='GANADA'});
+    });
+  });
+  if(!hay){ el.innerHTML='<p class="empty">Sin COMBO excluidos todavía (la regla solo existe en el dashboard 2).</p>'; return; }
+  const cel=s=>s?'<td class="num" style="'+(s.n<10?'opacity:.55':'')+'">'+s.n+'</td><td class="num">'+Math.round(s.ac)+'%</td><td class="num">'+s.cuota.toFixed(2)+'</td><td class="num">'+_mejRoi(s)+' '+_mejMoe(s)+'</td><td class="num">'+_mejU(s.u)+'</td><td class="num">'+_mejPP(s)+'</td>'
+    :'<td class="num" style="color:var(--text3)">0</td><td colspan="5" style="color:var(--text3);text-align:center">sin cerrados</td>';
+  const filas=Object.entries(grp).map(([k,v])=>'<tr'+(k.startsWith('COMBO apostado')?' style="background:var(--surface2);font-weight:600"':'')+'><td style="text-align:left">'+k+'</td>'+cel(_mejSt(v))+'</tr>').join('');
+  el.innerHTML='<div class="table-wrap table-wrap-scroll"><table class="hm-table"><thead><tr><th style="text-align:left">Grupo</th><th class="num">Casos</th><th class="num">Acierto</th><th class="num">Cuota</th>'
+    +'<th class="num">ROI ±90%</th><th class="num">P&amp;L</th><th class="num" title="Unidades por partido (un dato por partido) y su ±90%; entre paréntesis, partidos">u / partido (±90%)</th></tr></thead><tbody>'+filas+'</tbody></table></div>';
+}
 function _comboCerrados(){
   const out=[];
   _DATA.forEach(p=>(p.apuestas||[]).forEach(a=>{
@@ -5164,7 +5198,7 @@ function renderMejoras(){
   // Tarjetas que vivian en Seguimiento y Watchlist y se unificaron aqui (todas ignoran el filtro de liga).
   renderSeguimiento(); renderCrucesValidados(); renderPorEquipoEV();
   _mejRenderSalud();
-  _mejRenderExplora(D); _mejRenderHipotesis(D); _comboRenderSalud(); _comboRenderBanda(); _comboRenderReglas(); _comboRenderPares();
+  _mejRenderExplora(D); _mejRenderHipotesis(D); _mejRenderD2Combo(); _comboRenderSalud(); _comboRenderBanda(); _comboRenderReglas(); _comboRenderPares();
   _mejRenderReglas(D,_mejReglas(par),'mej-reglas',true); _mejRenderReglas(D,_mejReglasEq(),'mej-reglas-eq',false); _mejRenderEV(D); _mejRenderCuota(D); _mejRenderLambda(D); _mejRenderBarreras(D); _mejRenderCalib(D);
 }
 
