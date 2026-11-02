@@ -797,6 +797,40 @@
         <div id="seg-eleccion"></div>
       </div>
     </div>
+    <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">Vigilancia de COMBO</div>
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
+        <div class="card-title">Salud del COMBO — ¿el modelo sigue acertando lo que promete?</div>
+        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">Compara el acierto real de los COMBO con la probabilidad conjunta que decía el modelo, en bloques consecutivos de 30 (del más reciente al más antiguo)
+          y en las últimas ventanas. <b>Sesgo</b> = acierto real − probabilidad del modelo, en puntos. Semáforo: <b>rojo</b> si los dos últimos bloques tienen sesgo &lt; −10;
+          <b>amarillo</b> si el último bloque tiene sesgo &lt; −5; verde en otro caso. Es una señal de revisión, no una orden de parar.</p>
+        <div id="combo-vig-salud"></div>
+      </div>
+    </div>
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
+        <div class="card-title">Calibración por banda de probabilidad del COMBO</div>
+        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">Dónde se equivoca la probabilidad conjunta. Una banda con sesgo menor que −10 puntos y 15+ combos está sobreestimada: el modelo promete más de lo que cumple.</p>
+        <div id="combo-vig-banda"></div>
+      </div>
+    </div>
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
+        <div class="card-title">Reglas para elegir el COMBO — ¿qué habría pasado con otro criterio?</div>
+        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">Cada regla elige <b>un COMBO por partido</b> entre todas las combinadas validadas cotizadas (las promovidas y las que quedaron en watchlist), usando 1u por apuesta.
+          La regla <b>vigente</b> es «mayor P% entre las que cruzan su línea justa». «Nuevos» = partidos posteriores al #129, la única muestra que no se usó para encontrar las reglas;
+          con pocos casos solo orienta. No cambia ninguna regla activa.</p>
+        <div id="combo-vig-reglas"></div>
+      </div>
+    </div>
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
+        <div class="card-title">Pares de mercados en revisión</div>
+        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">Semáforo por par (igual que la columna «Estado» de la tabla «COMBOs por par de mercados»): rojo con 8+ cerrados y ROI &lt; −30% o sesgo &lt; −15 pp;
+          amarillo con 5+ cerrados, ROI negativo y sesgo &lt; −10 pp.</p>
+        <div id="combo-vig-pares"></div>
+      </div>
+    </div>
     <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">Explorador</div>
     <div class="grid2" style="margin-bottom:16px">
       <div class="card card-full">
@@ -2456,6 +2490,18 @@ function _comboNombrePar(k){
   return k.split('+').map(_comboEtPata).sort().join(' + ');
 }
 var _cppSort={col:'n',dir:'desc'};
+// Semaforo de un par de mercados del COMBO. Rojo = en revision (n>=8 y ROI < -30% o sesgo < -15 pp); amarillo = n>=5, ROI<0 y sesgo < -10 pp; gris = menos de 5 cerrados.
+function _comboSemaforo(n,roi,sesgo){
+  if(n<5) return 'gris';
+  if(n>=8&&(roi<-30||(sesgo!=null&&sesgo<-15))) return 'rojo';
+  if(roi<0&&sesgo!=null&&sesgo<-10) return 'amarillo';
+  return 'verde';
+}
+function _comboSemaforoHtml(n,roi,sesgo){
+  const k=_comboSemaforo(n,roi,sesgo);
+  const m={rojo:['#d64545','En revisión'],amarillo:['#e0a030','Atención'],verde:['#4a9a3a','OK'],gris:['#aaa','pocos datos']}[k];
+  return '<span title="'+m[1]+'" style="display:inline-block;width:9px;height:9px;border-radius:50%;background:'+m[0]+';margin-right:4px"></span><span style="font-size:11px;color:var(--text3)">'+m[1]+'</span>';
+}
 function renderCombosPorPar(){
   const el=document.getElementById('combos-por-par'); if(!el) return;
   const todos=flatBets().filter(a=>a.tipo==='COMBO'&&(a.estado==='GANADA'||a.estado==='PERDIDA'));
@@ -2489,6 +2535,7 @@ function renderCombosPorPar(){
       +'<td class="'+(plTot>=0?'pl-pos':'pl-neg')+'">'+(plTot>=0?'+':'')+plTot.toFixed(2)+'u</td>'
       +'<td class="'+(roi>=0?'pl-pos':'pl-neg')+'">'+(roi>=0?'+':'')+roi.toFixed(0)+'%</td>'
       +'<td>'+(margen!=null?(margen>=0?'+':'')+margen.toFixed(0)+'%':'—')+'</td>'
+      +'<td style="text-align:center">'+_comboSemaforoHtml(arr.length,roi,sesgo)+'</td>'
       +'<td style="text-align:left;font-size:11px">'+fTxt+'</td></tr>';
     return {html,n:arr.length,wr,prob:probMed,pl:plTot,roi,margen};
   };
@@ -2504,7 +2551,7 @@ function renderCombosPorPar(){
     +(col===c?(dir==='asc'?' ▲':' ▼'):'<span style="opacity:.3"> ↕</span>')+'</th>';
   el.innerHTML='<table class="hm-table"><thead><tr><th style="text-align:left">Par</th>'+th('n','Cerrados')+th('wr','WR')
     +th('prob','Prob. modelo (sesgo)')+th('pl','P&amp;L')+th('roi','ROI')+th('margen','Margen vs justa')
-    +'<th style="text-align:left">Pata que falló</th></tr></thead><tbody>'
+    +'<th title="Semáforo del par: ver reglas en Mejoras → Vigilancia de COMBO">Estado</th><th style="text-align:left">Pata que falló</th></tr></thead><tbody>'
     +datos.map(d=>d.html).join('')+fila('TOTAL',todos).html.replace('<tr','<tr class="hm-total-row"')+'</tbody></table>';
 }
 function _cppOrdenar(c){
@@ -4946,6 +4993,114 @@ function _mejRenderUmbral(D,solo){
     +T('Familia Over (1.5/2.5/3.5/BTTS): «dentro» = λ alta',fam(MEJ_OVER),[2.8,2.9,3.0,3.1,3.2,3.3,3.4],true)
     +T('Familia Under: «dentro» = λ baja',fam(MEJ_UNDER),[2.4,2.5,2.6,2.7,2.8,2.9,3.0],false)+'</div>';
 }
+// ===== Vigilancia de COMBO =====
+function _comboCerrados(){
+  const out=[];
+  _DATA.forEach(p=>(p.apuestas||[]).forEach(a=>{
+    if(a.tipo==='COMBO'&&(a.estado==='GANADA'||a.estado==='PERDIDA'))
+      out.push({id:+p.id,m:a.mercado,cuota:+a.cuota,prob:(+a.prob||0),win:a.estado==='GANADA',pl:+a.pl||0});
+  }));
+  return out.sort((a,b)=>a.id-b.id);
+}
+function _comboVentana(a){
+  const n=a.length, pl=a.reduce((s,x)=>s+x.pl,0), wr=a.filter(x=>x.win).length/n*100, pr=a.reduce((s,x)=>s+x.prob,0)/n;
+  return {n,pl,wr,pr,ses:wr-pr,roi:pl/n*100,desde:a[0].id,hasta:a[n-1].id};
+}
+function _comboSem(ses,prev){
+  if(ses<-10&&prev!=null&&prev<-10) return ['rojo','#d64545','En revisión: sesgo < −10 pp en dos bloques seguidos'];
+  if(ses<-5) return ['amarillo','#e0a030','Atención: sesgo < −5 pp en el último bloque'];
+  return ['verde','#4a9a3a','Sin alerta'];
+}
+function _comboRenderSalud(){
+  const el=document.getElementById('combo-vig-salud'); if(!el) return;
+  const C=_comboCerrados();
+  if(C.length<30){ el.innerHTML='<p class="empty">Hacen falta 30+ COMBO cerrados ('+C.length+' por ahora).</p>'; return; }
+  const bloques=[]; for(let end=C.length;end>0;end-=30){ const b=C.slice(Math.max(0,end-30),end); if(b.length>=15) bloques.push(_comboVentana(b)); }
+  const sem=_comboSem(bloques[0].ses,bloques[1]?bloques[1].ses:null);
+  const f1=v=>(v>=0?'+':'')+v.toFixed(1), cl=v=>v>=0?'pl-pos':'pl-neg';
+  const fila=(lbl,w)=>'<tr><td style="text-align:left">'+lbl+'</td><td class="num">#'+w.desde+'–#'+w.hasta+'</td><td class="num">'+w.n+'</td><td class="num">'+w.wr.toFixed(0)+'%</td><td class="num">'+w.pr.toFixed(0)+'%</td>'
+    +'<td class="num '+cl(w.ses)+'"><b>'+f1(w.ses)+'</b></td><td class="num '+cl(w.pl)+'">'+f1(w.pl)+'u</td><td class="num '+cl(w.roi)+'">'+f1(w.roi)+'%</td></tr>';
+  const ult=[10,20,30].map(k=>fila('Últimos '+k,_comboVentana(C.slice(-k)))).join('');
+  const bl=bloques.map((w,i)=>fila(i===0?'Bloque actual':'Bloque −'+i,w)).join('');
+  el.innerHTML='<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px"><span style="display:inline-block;width:14px;height:14px;border-radius:50%;background:'+sem[1]+'"></span>'
+    +'<b>'+sem[0].toUpperCase()+'</b><span style="font-size:12px;color:var(--text3)">'+sem[2]+'</span></div>'
+    +_mejTabla(['Ventana','Partidos (id)','COMBO','Acierto real','Prob. modelo','Sesgo','P&amp;L','ROI'],ult+bl);
+}
+function _comboRenderBanda(){
+  const el=document.getElementById('combo-vig-banda'); if(!el) return;
+  const C=_comboCerrados(); if(C.length<10){ el.innerHTML='<p class="empty">Pocos COMBO cerrados.</p>'; return; }
+  const bandas=[['< 60%',x=>x<60],['60 – 70%',x=>x>=60&&x<70],['70 – 80%',x=>x>=70&&x<80],['≥ 80%',x=>x>=80]];
+  const f1=v=>(v>=0?'+':'')+v.toFixed(1), cl=v=>v>=0?'pl-pos':'pl-neg';
+  const filas=bandas.map(([l,f])=>{ const a=C.filter(x=>f(x.prob)); if(!a.length) return '<tr><td style="text-align:left">'+l+'</td><td colspan="7" style="color:var(--text3);text-align:center">sin combos</td></tr>';
+    const w=_comboVentana(a), alerta=w.n>=15&&w.ses<-10;
+    return '<tr style="'+(w.n<15?'opacity:.6':'')+'"><td style="text-align:left">'+l+(alerta?' <span class="pl-neg" title="Sobreestimada">⚠ sobreestimada</span>':'')+'</td><td class="num">'+w.n+'</td><td class="num">'+w.wr.toFixed(0)+'%</td><td class="num">'+w.pr.toFixed(0)+'%</td>'
+      +'<td class="num '+cl(w.ses)+'"><b>'+f1(w.ses)+'</b></td><td class="num">'+(a.reduce((s,x)=>s+x.cuota,0)/a.length).toFixed(2)+'</td><td class="num '+cl(w.roi)+'">'+f1(w.roi)+'%</td><td class="num '+cl(w.pl)+'">'+f1(w.pl)+'u</td></tr>'; }).join('');
+  el.innerHTML=_mejTabla(['Prob. del modelo','COMBO','Acierto real','Prob. modelo','Sesgo','Cuota media','ROI','P&amp;L'],filas);
+}
+// Candidatas a COMBO de cada partido cerrado: las promovidas (apuestas) + las combinadas validadas del watchlist, con resultado.
+function _comboCandidatas(){
+  const por=new Map();
+  _DATA.filter(p=>p.resultado_partido).forEach(p=>{
+    const lst=[], vistos=new Set();
+    const push=(o,real)=>{
+      const win=real!=null?real:(o.acerto==null?null:!!o.acerto);
+      if(win==null||o.cuota==null||o.cuota_justa==null||vistos.has(o.mercado)) return; vistos.add(o.mercado);
+      const patas=o.patas||String(o.mercado).split('+');
+      const pura=!patas.some(t=>/remates|corners/.test(t));
+      const lados=patas.filter(t=>/remates|corners/.test(t)).map(t=>t.startsWith('local_')?'L':(t.startsWith('visit_')?'V':'?'));
+      const mismoEquipoRem=patas.length>1&&lados.length===patas.length&&new Set(lados).size===1;
+      lst.push({id:+p.id,win,cuota:+o.cuota,prob:+o.prob||0,ev:+o.ev_pct||0,j:+o.cuota_justa,s:o.cuota_segura!=null?+o.cuota_segura:null,pura,mismoEquipoRem,real:real!=null});
+    };
+    (p.apuestas||[]).filter(a=>a.tipo==='COMBO'&&(a.estado==='GANADA'||a.estado==='PERDIDA')).forEach(a=>push(a,a.estado==='GANADA'));
+    (p.watchlist||[]).filter(w=>w.tipo==='COMBINADA').forEach(w=>push(w,null));
+    if(lst.length) por.set(+p.id,lst);
+  });
+  return por;
+}
+function _comboRenderReglas(){
+  const el=document.getElementById('combo-vig-reglas'); if(!el) return;
+  const por=_comboCandidatas(); if(por.size<10){ el.innerHTML='<p class="empty">Pocos partidos con combinadas cerradas.</p>'; return; }
+  const maxBy=(a,k)=>a.length?a.reduce((m,x)=>k(x)>k(m)?x:m):null;
+  const cruza=l=>l.filter(x=>x.cuota>=x.j);
+  const uno=(sel)=>l=>{ const r=sel(l); return r?[r]:[]; };
+  const marg=x=>x.cuota/x.j-1;
+  const reglas=[
+    ['Vigente: mayor P% entre las que cruzan su línea justa',uno(l=>maxBy(cruza(l),x=>x.prob)),1],
+    ['Mayor margen sobre la justa entre las que cruzan',uno(l=>maxBy(cruza(l),marg))],
+    ['Mayor EV% entre las que cruzan',uno(l=>maxBy(cruza(l),x=>x.ev))],
+    ['Mayor P% entre las que cruzan la cuota segura (IC95)',uno(l=>maxBy(l.filter(x=>x.s!=null&&x.cuota>=x.s),x=>x.prob))],
+    ['Mayor P% con margen sobre la justa ≥ 10%',uno(l=>maxBy(cruza(l).filter(x=>marg(x)>=0.10),x=>x.prob))],
+    ['Mayor P% con P ≤ 75% (tope a la probabilidad prometida)',uno(l=>maxBy(cruza(l).filter(x=>x.prob<=75),x=>x.prob))],
+    ['Mayor P% sin pares de remates/córners del mismo equipo',uno(l=>maxBy(cruza(l).filter(x=>!x.mismoEquipoRem),x=>x.prob))],
+    ['Mayor P% solo con patas de goles',uno(l=>maxBy(cruza(l).filter(x=>x.pura),x=>x.prob))],
+    ['Referencia: todas las que cruzan, sin elegir',cruza,2],
+    ['Referencia: COMBO realmente apostado',l=>l.filter(x=>x.real),2]
+  ];
+  const st=a=>{ const arr=a.map(x=>({id:x.id,win:x.win,cuota:x.cuota})); return _mejSt(arr); };
+  const filas=reglas.map(([nom,f,ref])=>{
+    const sel=[]; por.forEach(l=>f(l).forEach(x=>sel.push(x)));
+    const s=st(sel), sn=st(sel.filter(x=>x.id>MEJ_CORTE_ID));
+    const cel=(s,tenue)=>s?'<td class="num" style="'+(tenue&&s.n<15?'opacity:.55':'')+'">'+s.n+'</td><td class="num">'+Math.round(s.ac)+'%</td><td class="num">'+_mejRoi(s)+'</td><td class="num">'+_mejMoe(s)+'</td><td class="num">'+_mejU(s.u)+'</td>'
+      :'<td class="num" style="color:var(--text3)">0</td><td colspan="4" style="color:var(--text3);text-align:center">—</td>';
+    return '<tr style="'+(ref===1?'font-weight:600;background:var(--surface2)':(ref===2?'opacity:.85':''))+'"><td style="text-align:left">'+nom+'</td>'+cel(s,false)+cel(sn,true)+'</tr>';
+  }).join('');
+  el.innerHTML='<div class="table-wrap table-wrap-scroll"><table class="hm-table"><thead>'
+    +'<tr><th></th><th colspan="5" style="text-align:center">Todos los partidos</th><th colspan="5" style="text-align:center">Nuevos (&gt; #'+MEJ_CORTE_ID+')</th></tr>'
+    +'<tr><th style="text-align:left">Regla</th><th class="num">Casos</th><th class="num">Acierto</th><th class="num">ROI</th><th class="num">±90%</th><th class="num">P&amp;L</th>'
+    +'<th class="num">Casos</th><th class="num">Acierto</th><th class="num">ROI</th><th class="num">±90%</th><th class="num">P&amp;L</th></tr></thead><tbody>'+filas+'</tbody></table></div>'
+    +'<p style="font-size:12px;color:var(--text3);margin-top:8px">'+por.size+' partidos con al menos una combinada cotizada y cerrada. Solo entran combinadas con línea justa validada y resultado. «Casos» = una por partido (o todas, en la referencia sin elegir).</p>';
+}
+function _comboRenderPares(){
+  const el=document.getElementById('combo-vig-pares'); if(!el) return;
+  const todos=_comboCerrados(); if(!todos.length){ el.innerHTML='<p class="empty">Sin COMBO cerrados.</p>'; return; }
+  const mapa={}; todos.forEach(a=>{ const k=_comboNombrePar(a.m); (mapa[k]=mapa[k]||[]).push(a); });
+  const f1=v=>(v>=0?'+':'')+v.toFixed(0);
+  const filas=Object.entries(mapa).map(([k,arr])=>{ const w=_comboVentana(arr); return {k,w,e:_comboSemaforo(arr.length,w.roi,w.ses)}; })
+    .filter(r=>r.e==='rojo'||r.e==='amarillo').sort((a,b)=>(a.e===b.e?a.w.roi-b.w.roi:(a.e==='rojo'?-1:1)));
+  if(!filas.length){ el.innerHTML='<p class="empty">Ningún par en revisión.</p>'; return; }
+  el.innerHTML=_mejTabla(['Par','Estado','COMBO','Acierto real','Prob. modelo','Sesgo','P&amp;L','ROI'],filas.map(r=>'<tr><td style="text-align:left">'+r.k+'</td><td class="num">'+_comboSemaforoHtml(r.w.n,r.w.roi,r.w.ses)+'</td><td class="num">'+r.w.n+'</td><td class="num">'+r.w.wr.toFixed(0)+'%</td><td class="num">'+r.w.pr.toFixed(0)+'%</td>'
+    +'<td class="num '+(r.w.ses>=0?'pl-pos':'pl-neg')+'">'+f1(r.w.ses)+'</td><td class="num">'+_mejU(r.w.pl)+'</td><td class="num '+(r.w.roi>=0?'pl-pos':'pl-neg')+'">'+f1(r.w.roi)+'%</td></tr>').join(''));
+}
 function renderMejoras(){
   if(!document.getElementById('mej-reglas')) return;
   document.getElementById('mej-corte').textContent=MEJ_CORTE_ID;
@@ -4953,7 +5108,7 @@ function renderMejoras(){
   // Tarjetas que vivian en Seguimiento y Watchlist y se unificaron aqui (todas ignoran el filtro de liga).
   renderSeguimiento(); renderCrucesValidados(); renderPorEquipoEV();
   _mejRenderSalud();
-  _mejRenderExplora(D);
+  _mejRenderExplora(D); _comboRenderSalud(); _comboRenderBanda(); _comboRenderReglas(); _comboRenderPares();
   _mejRenderReglas(D,_mejReglas(par),'mej-reglas',true); _mejRenderReglas(D,_mejReglasEq(),'mej-reglas-eq',false); _mejRenderEV(D); _mejRenderCuota(D); _mejRenderLambda(D); _mejRenderBarreras(D); _mejRenderCalib(D);
 }
 
