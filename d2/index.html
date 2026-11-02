@@ -798,7 +798,7 @@
       <div class="card card-full">
         <div class="card-title">Una barrera propia por familia — ¿qué habría pasado con cada hipótesis?</div>
         <p style="font-size:12px;color:var(--text3);margin:0 0 10px">Cada fila es una <b>hipótesis</b> (no una regla activa) con su contraste: el mismo mercado cuando NO cumple la condición.
-          Sin exigir EV &gt; 0 y con cuota ≤ 2.0. <b>Por apuesta</b>: Apuestas, ROI y P&amp;L. <b>Por partido</b>: «u / partido» suma las unidades de todas las selecciones de un mismo partido y usa ese
+          Sin exigir EV &gt; 0, con cuota entre 1.10 y 2.0 (ningún PICK por debajo de 1.10). <b>Por apuesta</b>: Apuestas, ROI y P&amp;L. <b>Por partido</b>: «u / partido» suma las unidades de todas las selecciones de un mismo partido y usa ese
           total como un dato (el ±90% de ahí es el honesto; entre paréntesis, partidos). DO: solo el del favorito (equipo de mayor λ), y si tiene línea validada debe cruzarla.
           Los umbrales salen de datos ya vistos: se confirman o se descartan con lo que se acumule.</p>
         <div id="mej-hip"></div>
@@ -5021,22 +5021,27 @@ const MEJ_HIP=[
   ['H7a','Hándicap +2 con λ total < 3.0','hcp2_des',(c,i)=>c.lt<3.0],
   ['H7b','Hándicap +3 con λ total < 3.0','hcp3_des',(c,i)=>c.lt<3.0]
 ];
+const MEJ_HIP_CUOTA_MIN=1.10;
 function _mejRenderHipotesis(D){
   const el=document.getElementById('mej-hip'); if(!el) return;
   if(!D.ctxs.length){ el.innerHTML='<p class="empty">Sin partidos cerrados todavía.</p>'; return; }
   const cel=s=>s?'<td class="num" style="'+(s.n<15?'opacity:.55':'')+'">'+s.n+'</td><td class="num">'+Math.round(s.ac)+'%</td><td class="num">'+s.cuota.toFixed(2)+'</td><td class="num">'+_mejRoi(s)+' '+_mejMoe(s)+'</td><td class="num">'+_mejU(s.u)+'</td><td class="num">'+_mejPP(s)+'</td>'
     :'<td class="num" style="color:var(--text3)">0</td><td colspan="5" style="color:var(--text3);text-align:center">—</td>';
-  const filas=[], cumplen=[];
+  const filas=[], cumplen=[], bajas=[];
   MEJ_HIP.forEach(([id,txt,mk,ok])=>{
     const ms=Array.isArray(mk)?mk:[mk], si=[], no=[];
     D.ctxs.forEach(c=>c.pool.filter(i=>ms.includes(i.m)).forEach(i=>{
-      if(['do1x','dox2'].includes(i.m)&&(i.m==='do1x')!==(c.sd>=0)){ no.push({...i,id:c.id}); return; }
+      const dof=['do1x','dox2'].includes(i.m)&&(i.m==='do1x')!==(c.sd>=0);
+      // piso de cuota (2026-11-02, a pedido): ningun PICK con cuota < 1.10; lo que cumpliria la hipotesis se mide aparte
+      if(i.cuota<MEJ_HIP_CUOTA_MIN){ if(!dof&&ok(c,i)) bajas.push({...i,id:c.id}); return; }
+      if(dof){ no.push({...i,id:c.id}); return; }
       (ok(c,i)?si:no).push({...i,id:c.id}); }));
     si.forEach(x=>cumplen.push(x));
     filas.push('<tr style="font-weight:600"><td style="text-align:left">'+id+' · '+txt+'</td>'+cel(_mejSt(si))+'</tr>');
     filas.push('<tr style="opacity:.8"><td style="text-align:left;padding-left:22px;font-size:12px">↳ contraste: el mismo mercado cuando NO cumple</td>'+cel(_mejSt(no))+'</tr>');
   });
   filas.push('<tr style="background:var(--surface2);font-weight:600"><td style="text-align:left">Todas las hipótesis que cumplen, juntas</td>'+cel(_mejSt(cumplen))+'</tr>');
+  filas.push('<tr style="opacity:.8"><td style="text-align:left">Cumplirían una hipótesis pero tienen cuota &lt; '+MEJ_HIP_CUOTA_MIN.toFixed(2)+' (no se apuestan)</td>'+cel(_mejSt(bajas))+'</tr>');
   el.innerHTML='<div class="table-wrap table-wrap-scroll"><table class="hm-table"><thead><tr><th style="text-align:left">Hipótesis</th><th class="num">Apuestas</th><th class="num">Acierto</th><th class="num">Cuota</th>'
     +'<th class="num">ROI ±90%</th><th class="num">P&amp;L</th><th class="num" title="Unidades por partido (un dato por partido) y su ±90%; entre paréntesis, partidos">u / partido (±90%)</th></tr></thead><tbody>'+filas.join('')+'</tbody></table></div>';
 }
