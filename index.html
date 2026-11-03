@@ -627,6 +627,20 @@
         <div id="mej-reglas"></div>
       </div>
     </div>
+    <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">Victoria del favorito (1X2)</div>
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
+        <div class="card-title">¿Merece la victoria del favorito dejar de ser solo watchlist?</div>
+        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">
+          Hoy ningún 1X2 simple puede ser PICK (capa 1X2); aquí se mide lo que habría dado «gana X» (empate aparte, no incluido). <b>Favorito</b> = el equipo de mayor λ final.
+          Se ordena por cuota y por las tres medidas de λ: <b>diferencia</b> (λ favorito − λ rival), <b>proporción</b> (λ favorito ÷ λ rival) y <b>total</b> (λ local + λ visita).
+          1 unidad por apuesta; ±90% aproximado. <b>Candidata en observación</b>: favorito con cuota entre 1.80 y 3.00 (se eligió mirando datos del dashboard 1, así que solo los partidos nuevos la prueban; en el dashboard 2 todos lo son).</p>
+        <div style="margin-bottom:8px;font-size:12px"><label>Selecciones
+          <select id="mej-fav-ev" onchange="renderMejoras()" style="font-size:12px">
+            <option value="todas">Todas las cotizadas</option><option value="pos">Solo EV &gt; 0</option></select></label></div>
+        <div id="mej-fav"></div>
+      </div>
+    </div>
     <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">REMATE y mercados por equipo</div>
     <p style="font-size:12px;color:var(--text3);margin:0 0 10px">Reglas candidatas, detalle de la regla vigente y qué mercados por equipo rinden si pasaran el filtro de PICK.</p>
     <div class="grid2" style="margin-bottom:16px">
@@ -851,20 +865,6 @@
         <p style="font-size:12px;color:var(--text3);margin:0 0 10px">Semáforo por par (igual que la columna «Estado» de la tabla «COMBOs por par de mercados»): rojo con 8+ cerrados y ROI &lt; −30% o sesgo &lt; −15 pp;
           amarillo con 5+ cerrados, ROI negativo y sesgo &lt; −10 pp.</p>
         <div id="combo-vig-pares"></div>
-      </div>
-    </div>
-    <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">Victoria del favorito (1X2)</div>
-    <div class="grid2" style="margin-bottom:16px">
-      <div class="card card-full">
-        <div class="card-title">¿Merece la victoria del favorito dejar de ser solo watchlist?</div>
-        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">
-          Hoy ningún 1X2 simple puede ser PICK (capa 1X2); aquí se mide lo que habría dado «gana X» (empate aparte, no incluido). <b>Favorito</b> = el equipo de mayor λ final.
-          Se ordena por cuota y por las tres medidas de λ: <b>diferencia</b> (λ favorito − λ rival), <b>proporción</b> (λ favorito ÷ λ rival) y <b>total</b> (λ local + λ visita).
-          1 unidad por apuesta; ±90% aproximado. <b>Candidata en observación</b>: favorito con cuota entre 1.80 y 3.00 (se eligió mirando datos del dashboard 1, así que solo los partidos nuevos la prueban).</p>
-        <div style="margin-bottom:8px;font-size:12px"><label>Selecciones
-          <select id="mej-fav-ev" onchange="renderMejoras()" style="font-size:12px">
-            <option value="todas">Todas las cotizadas</option><option value="pos">Solo EV &gt; 0</option></select></label></div>
-        <div id="mej-fav"></div>
       </div>
     </div>
     <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">Combinadas: validadas frente a no validadas</div>
@@ -5102,6 +5102,7 @@ function _mejRenderHipotesis(D){
 }
 function _mejRenderD2Combo(){
   const el=document.getElementById('mej-d2cmb'); if(!el) return;
+  if(!ES_D2){ const c=el.closest('.grid2'); if(c){ c.style.display='none'; const h=c.previousElementSibling; if(h) h.style.display='none'; } return; }   // en el dashboard 1 esa regla no existe
   const grp={'C1 · Remates + ST (excluido)':[],'C2 · Corners + Remates (excluido)':[],'C3 · ST + Over 0.5 por equipo (excluido)':[],'Reemplazo de un excluido':[],'COMBO apostado (referencia)':[]};
   let hay=false;
   _DATA.forEach(p=>{
@@ -5317,8 +5318,8 @@ function _mejRenderFavorito(){
   const C=F.filter(x=>x.cuota>=1.8&&x.cuota<3.0);
   const t6=fila('Candidata: favorito con cuota 1.80 – 3.00',C,{b:1})
     +fila('… y λ total entre 2.60 y 3.40',C.filter(x=>x.tot>=2.6&&x.tot<3.4))
-    +fila('… hasta la entrada #'+MEJ_CORTE_ID+' (donde se encontró)',C.filter(x=>x.id<=MEJ_CORTE_ID))
-    +fila('… partidos nuevos (la única prueba real)',C.filter(x=>x.id>MEJ_CORTE_ID))
+    +(ES_D2?'':fila('… hasta la entrada #'+MEJ_CORTE_ID+' (donde se encontró)',C.filter(x=>x.id<=MEJ_CORTE_ID)))
+    +fila(ES_D2?'… todos los partidos de este dashboard (muestra nueva)':'… partidos nuevos (la única prueba real)',C.filter(x=>x.id>MEJ_CORTE_ID))
     +fila('Favorito local',F.filter(x=>x.lado==='local'))+fila('Favorito visita',F.filter(x=>x.lado==='visita'));
   const t0=(t,x,c)=>'<div style="font-size:12px;color:var(--text3);margin:'+(t.startsWith('①')?'0':'16px')+' 0 6px;font-weight:600">'+t+'</div>'+tab(c,x);
   el.innerHTML=t0('① Favorito frente a no favorito',t1,'Selección')
