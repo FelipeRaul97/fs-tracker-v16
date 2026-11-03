@@ -853,6 +853,18 @@
         <div id="combo-vig-pares"></div>
       </div>
     </div>
+    <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">Combinadas: validadas frente a no validadas</div>
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
+        <div class="card-title">¿Sirve exigir línea validada en el COMBO? ¿Qué rinden las combinadas del favorito?</div>
+        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">
+          Desde el 2026-11-02 el motor también cotiza y guarda las combinadas que <b>no</b> son del catálogo validado (registro ampliado, <b>no se apuestan</b>):
+          <b>goles</b> = cualquier par de mercados de goles (probabilidad exacta), <b>fuera de banda</b> = pares del catálogo cuya probabilidad cae fuera de su banda,
+          <b>espejo</b> = pares del catálogo con el lado cambiado (local ↔ visita). Se miden junto a las validadas (que vienen del watchlist y del COMBO) <b>de esos mismos partidos</b>. Solo cuentan los partidos
+          cargados desde esa fecha: <b>los anteriores no tienen estas combinadas y no se pueden recuperar</b> (la cuota del Bet Builder solo se lee antes del saque).</p>
+        <div id="mej-extra"></div>
+      </div>
+    </div>
     <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">Explorador</div>
     <div class="grid2" style="margin-bottom:16px">
       <div class="card card-full">
@@ -5205,6 +5217,52 @@ function _comboRenderPares(){
   el.innerHTML=_mejTabla(['Par','Estado','COMBO','Acierto real','Prob. modelo','Sesgo','P&amp;L','ROI'],filas.map(r=>'<tr><td style="text-align:left">'+r.k+'</td><td class="num">'+_comboSemaforoHtml(r.w.n,r.w.roi,r.w.ses)+'</td><td class="num">'+r.w.n+'</td><td class="num">'+r.w.wr.toFixed(0)+'%</td><td class="num">'+r.w.pr.toFixed(0)+'%</td>'
     +'<td class="num '+(r.w.ses>=0?'pl-pos':'pl-neg')+'">'+f1(r.w.ses)+'</td><td class="num">'+_mejU(r.w.pl)+'</td><td class="num '+(r.w.roi>=0?'pl-pos':'pl-neg')+'">'+f1(r.w.roi)+'%</td></tr>').join(''));
 }
+function _extraItems(){
+  const out=[];
+  _DATA.forEach(p=>{
+    if(!p.resultado_partido||!(p.combinadas_extra&&p.combinadas_extra.length)) return;   // misma muestra para validadas y extras: solo partidos con registro ampliado
+    const id=+p.id, fl=+p.lambda_final_l, fv=+p.lambda_final_v, favL=fl>=fv;
+    const cat=m=>{ const eq=m.split('+').filter(x=>/^(local|visit)_/.test(x)).map(x=>x.startsWith('local_')); if(!eq.length) return 'solo goles';
+      return eq.every(x=>x===favL)?'favorito':eq.every(x=>x!==favL)?'no favorito':'mixto'; };
+    (p.watchlist||[]).forEach(w=>{ if(w.tipo!=='COMBINADA'||!w.cuota||w.acerto==null||w.regla_d2) return;
+      out.push({id,m:w.mercado,cuota:+w.cuota,win:!!w.acerto,pr:+w.prob,orig:(w.cuota_justa&&w.cuota>=w.cuota_justa)?'validada que cruza':'validada que no cruza',cat:cat(w.mercado)}); });
+    (p.apuestas||[]).forEach(a=>{ if(a.tipo==='COMBO'&&a.promovida_combinada&&(a.estado==='GANADA'||a.estado==='PERDIDA'))
+      out.push({id,m:a.mercado,cuota:+a.cuota,win:a.estado==='GANADA',pr:+a.prob,orig:'validada que cruza',cat:cat(a.mercado)}); });
+    (p.watchlist||[]).forEach(w=>{ if(w.tipo==='COMBINADA'&&w.regla_d2&&w.cuota&&w.acerto!=null)
+      out.push({id,m:w.mercado,cuota:+w.cuota,win:!!w.acerto,pr:+w.prob,orig:'validada que cruza',cat:cat(w.mercado)}); });
+    (p.combinadas_extra||[]).forEach(x=>{ if(!x.cotizada||x.acerto==null) return;
+      out.push({id,m:x.mercado,cuota:+x.cuota,win:!!x.acerto,pr:+x.prob,orig:x.motivo==='goles'?'extra: goles':x.motivo==='espejo'?'extra: espejo':'extra: fuera de banda',cat:cat(x.mercado)}); });
+  });
+  return out;
+}
+function _mejRenderExtras(){
+  const el=document.getElementById('mej-extra'); if(!el) return;
+  const I=_extraItems(), ex=I.filter(x=>x.orig.startsWith('extra'));
+  if(!ex.length){ el.innerHTML='<p class="empty">Todavía no hay partidos cerrados con combinadas extra (se llenan con los partidos cargados desde el 2026-11-02).</p>'; return; }
+  const cel=s=>s?'<td class="num" style="'+(s.n<15?'opacity:.55':'')+'">'+s.n+'</td><td class="num">'+Math.round(s.ac)+'%</td><td class="num">'+s.cuota.toFixed(2)+'</td><td class="num">'+_mejRoi(s)+' '+_mejMoe(s)+'</td><td class="num">'+_mejU(s.u)+'</td><td class="num">'+_mejPP(s)+'</td>'
+    :'<td class="num" style="color:var(--text3)">0</td><td colspan="5" style="color:var(--text3);text-align:center">—</td>';
+  const tab=(c1,filas)=>'<div class="table-wrap table-wrap-scroll"><table class="hm-table"><thead><tr><th style="text-align:left">'+c1+'</th><th class="num">Casos</th><th class="num">Acierto</th><th class="num">Cuota</th><th class="num">ROI ±90%</th><th class="num">P&amp;L</th><th class="num">u / partido (±90%)</th></tr></thead><tbody>'+filas+'</tbody></table></div>';
+  const fila=(l,a,b)=>'<tr'+(b?' style="background:var(--surface2);font-weight:600"':'')+'><td style="text-align:left">'+l+'</td>'+cel(_mejSt(a))+'</tr>';
+  const ORIG=['validada que cruza','validada que no cruza','extra: fuera de banda','extra: espejo','extra: goles'];
+  const t1=ORIG.map(o=>fila(o,I.filter(x=>x.orig===o))).join('')+fila('Todas las cotizadas',I,1);
+  const CAT=['solo goles','favorito','no favorito','mixto'];
+  const t2=CAT.map(c=>fila(c,I.filter(x=>x.cat===c))).join('');
+  const BP=[['P &lt; 50%',x=>x.pr<50],['50 – 65%',x=>x.pr>=50&&x.pr<65],['65 – 80%',x=>x.pr>=65&&x.pr<80],['P ≥ 80%',x=>x.pr>=80]];
+  const t3=BP.map(([l,f])=>fila(l,I.filter(f))).join('');
+  // regla de eleccion: UNA combinada por partido
+  const by={}; I.forEach(x=>{ (by[x.id]=by[x.id]||[]).push(x); });
+  const reglas=[['Actual: mayor P% entre las validadas que cruzan',v=>{ const c=v.filter(x=>x.orig==='validada que cruza'); return c.length?c.reduce((a,b)=>b.pr>a.pr?b:a):null; }],
+    ['Sin línea validada: mayor P% de todas las cotizadas',v=>v.reduce((a,b)=>b.pr>a.pr?b:a)],
+    ['Sin línea validada: mayor EV% de todas',v=>v.reduce((a,b)=>(b.pr*b.cuota)>(a.pr*a.cuota)?b:a)],
+    ['Mayor P% entre las del favorito o solo de goles',v=>{ const c=v.filter(x=>x.cat==='favorito'||x.cat==='solo goles'); return c.length?c.reduce((a,b)=>b.pr>a.pr?b:a):null; }]];
+  const t4=reglas.map(([l,f],i)=>fila(l,Object.values(by).map(f).filter(Boolean),i===0)).join('');
+  const nPart=new Set(ex.map(x=>x.id)).size;
+  el.innerHTML='<div style="font-size:12px;color:var(--text3);margin:0 0 6px;font-weight:600">① Por origen de la combinada ('+nPart+' partidos con combinadas extra cerradas)</div>'+tab('Origen',t1)
+    +'<div style="font-size:12px;color:var(--text3);margin:16px 0 6px;font-weight:600">② Por equipo de las patas de remates, ST o córners (favorito = mayor λ)</div>'+tab('Patas de equipo',t2)
+    +'<div style="font-size:12px;color:var(--text3);margin:16px 0 6px;font-weight:600">③ Por probabilidad del modelo</div>'+tab('P% del modelo',t3)
+    +'<div style="font-size:12px;color:var(--text3);margin:16px 0 6px;font-weight:600">④ ¿Qué habría pasado eligiendo UNA combinada por partido con otra regla? (en la primera fila, solo cuentan las validadas)</div>'+tab('Regla de elección',t4)
+    +'<p style="font-size:12px;color:var(--text3);margin-top:8px">1 unidad por apuesta; ninguna de estas apuestas se hizo, es lo que habrían dado. Con menos de 15 casos las filas salen atenuadas.</p>';
+}
 function renderMejoras(){
   if(!document.getElementById('mej-reglas')) return;
   document.getElementById('mej-corte').textContent=MEJ_CORTE_ID;
@@ -5212,7 +5270,7 @@ function renderMejoras(){
   // Tarjetas que vivian en Seguimiento y Watchlist y se unificaron aqui (todas ignoran el filtro de liga).
   renderSeguimiento(); renderCrucesValidados(); renderPorEquipoEV();
   _mejRenderSalud();
-  _mejRenderExplora(D); _mejRenderHipotesis(D); _mejRenderD2Combo(); _comboRenderSalud(); _comboRenderBanda(); _comboRenderReglas(); _comboRenderPares();
+  _mejRenderExplora(D); _mejRenderHipotesis(D); _mejRenderD2Combo(); _mejRenderExtras(); _comboRenderSalud(); _comboRenderBanda(); _comboRenderReglas(); _comboRenderPares();
   _mejRenderReglas(D,_mejReglas(par),'mej-reglas',true); _mejRenderReglas(D,_mejReglasEq(),'mej-reglas-eq',false); _mejRenderEV(D); _mejRenderCuota(D); _mejRenderLambda(D); _mejRenderBarreras(D); _mejRenderCalib(D);
 }
 
