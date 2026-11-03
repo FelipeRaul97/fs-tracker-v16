@@ -612,7 +612,7 @@
               Cuota entre <b>1.10 y 2.00</b>. Sin tope de PICK por partido, sin exigir EV &gt; 0 ni línea validada (salvo el DO). Under 4.5, 1X2 y Over 0.5 por equipo no entran.</td>
             <td style="text-align:left;font-size:12px">EV &gt; 0, máximo 2 por partido (mayor P%), cuota ≤ 2.0, línea validada (Vía A) o filtro de edge (Vía B), unicidad de totales y de hándicap, DO solo del favorito.</td></tr>
           <tr><td style="text-align:left"><b>COMBO</b></td>
-            <td style="text-align:left;font-size:12px">La combinada validada que cruza su cuota justa y tiene mayor P%, <b>salvo</b> si es un par <b>C1 Remates + ST</b>, <b>C2 Corners + Remates</b> o <b>C3 ST + Over 0.5 por equipo</b>: entonces baja al watchlist (<code>regla_d2</code>) y el partido queda sin COMBO. Sin reemplazo; la siguiente candidata queda marcada (<code>reemplazo_d2</code>) para medirla.</td>
+            <td style="text-align:left;font-size:12px">La combinada validada que cruza su cuota justa y tiene mayor P%, <b>salvo</b> si es un par <b>C1 Remates + ST</b>, <b>C2 Corners + Remates</b> o <b>C3 ST + Over 0.5 por equipo</b>, o si tiene una pata de <b>hándicap con λ total ≥ 3.0</b> (<b>C4</b>, la misma barrera de H7): entonces baja al watchlist (<code>regla_d2</code>) y el partido queda sin COMBO. Sin reemplazo; la siguiente candidata queda marcada (<code>reemplazo_d2</code>) para medirla.</td>
             <td style="text-align:left;font-size:12px">La misma combinada, sin excluir ningún par.</td></tr>
           <tr><td style="text-align:left"><b>A PUERTA</b></td>
             <td style="text-align:left;font-size:12px"><b>S1</b>: una apuesta de remates a puerta <b>por equipo</b> (local y/o visita): la línea con EV &gt; 0 y <b>cuota ≥ 1.60</b> de mayor EV×P. Sin condición sobre la distancia a la media (en ST no ordena el ROI). Las demás bandas de cuota se miden aparte en este tab.</td>
@@ -5160,14 +5160,14 @@ function _mejRenderHipotesis(D){
 function _mejRenderD2Combo(){
   const el=document.getElementById('mej-d2cmb'); if(!el) return;
   if(!ES_D2){ const c=el.closest('.grid2'); if(c){ c.style.display='none'; const h=c.previousElementSibling; if(h) h.style.display='none'; } return; }   // en el dashboard 1 esa regla no existe
-  const grp={'C1 · Remates + ST (excluido)':[],'C2 · Corners + Remates (excluido)':[],'C3 · ST + Over 0.5 por equipo (excluido)':[],'Reemplazo de un excluido':[],'COMBO apostado (referencia)':[]};
+  const grp={'C1 · Remates + ST (excluido)':[],'C2 · Corners + Remates (excluido)':[],'C3 · ST + Over 0.5 por equipo (excluido)':[],'C4 · pata de hándicap con λ total ≥ 3.0 (excluido)':[],'Reemplazo de un excluido':[],'COMBO apostado (referencia)':[]};
   let hay=false;
   _DATA.forEach(p=>{
     const id=+p.id;
     (p.watchlist||[]).forEach(w=>{
       if(w.tipo!=='COMBINADA'||w.acerto==null&&!(w.regla_d2||w.reemplazo_d2)) return;
       const o={id,cuota:+w.cuota,win:w.acerto==null?null:!!w.acerto};
-      if(w.regla_d2){ hay=true; grp[String(w.regla_d2).startsWith('C1')?'C1 · Remates + ST (excluido)':String(w.regla_d2).startsWith('C3')?'C3 · ST + Over 0.5 por equipo (excluido)':'C2 · Corners + Remates (excluido)'].push(o); }
+      if(w.regla_d2){ hay=true; grp[String(w.regla_d2).startsWith('C1')?'C1 · Remates + ST (excluido)':String(w.regla_d2).startsWith('C3')?'C3 · ST + Over 0.5 por equipo (excluido)':String(w.regla_d2).startsWith('C4')?'C4 · pata de hándicap con λ total ≥ 3.0 (excluido)':'C2 · Corners + Remates (excluido)'].push(o); }
       else if(w.reemplazo_d2){ hay=true; grp['Reemplazo de un excluido'].push(o); }
     });
     (p.apuestas||[]).forEach(a=>{
@@ -5437,7 +5437,7 @@ function _hipRenderResumen(B){
   const hs=Object.keys(HIP_LBL);
   const filas=_hipFila('PICK de goles (todas las hipótesis)',B.pick,{b:1})
     +hs.map(h=>_hipFila(h+' · '+HIP_LBL[h],B.pick.filter(x=>x.h===h),{sub:1})).join('')
-    +_hipFila('COMBO (sin los pares C1 Remates+ST, C2 Corners+Remates y C3 ST+Over 0.5 por equipo)',B.combo,{b:1})
+    +_hipFila('COMBO (sin las exclusiones C1 a C4)',B.combo,{b:1})
     +_hipFila('REMATE R1 (una línea por partido, de 4 a 0 por debajo de la media)',B.rem,{b:1})
     +_hipFila('REMATE A PUERTA S1 (una línea por equipo, EV > 0 y cuota ≥ 1.60)',B.puerta,{b:1})
     +_hipFila('TOTAL del dashboard 2',todas,{b:1});
