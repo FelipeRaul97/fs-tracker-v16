@@ -853,6 +853,20 @@
         <div id="combo-vig-pares"></div>
       </div>
     </div>
+    <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">Victoria del favorito (1X2)</div>
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
+        <div class="card-title">¿Merece la victoria del favorito dejar de ser solo watchlist?</div>
+        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">
+          Hoy ningún 1X2 simple puede ser PICK (capa 1X2); aquí se mide lo que habría dado «gana X» (empate aparte, no incluido). <b>Favorito</b> = el equipo de mayor λ final.
+          Se ordena por cuota y por las tres medidas de λ: <b>diferencia</b> (λ favorito − λ rival), <b>proporción</b> (λ favorito ÷ λ rival) y <b>total</b> (λ local + λ visita).
+          1 unidad por apuesta; ±90% aproximado. <b>Candidata en observación</b>: favorito con cuota entre 1.80 y 3.00 (se eligió mirando datos del dashboard 1, así que solo los partidos nuevos la prueban).</p>
+        <div style="margin-bottom:8px;font-size:12px"><label>Selecciones
+          <select id="mej-fav-ev" onchange="renderMejoras()" style="font-size:12px">
+            <option value="todas">Todas las cotizadas</option><option value="pos">Solo EV &gt; 0</option></select></label></div>
+        <div id="mej-fav"></div>
+      </div>
+    </div>
     <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">Combinadas: validadas frente a no validadas</div>
     <div class="grid2" style="margin-bottom:16px">
       <div class="card card-full">
@@ -5263,6 +5277,60 @@ function _mejRenderExtras(){
     +'<div style="font-size:12px;color:var(--text3);margin:16px 0 6px;font-weight:600">④ ¿Qué habría pasado eligiendo UNA combinada por partido con otra regla? (en la primera fila, solo cuentan las validadas)</div>'+tab('Regla de elección',t4)
     +'<p style="font-size:12px;color:var(--text3);margin-top:8px">1 unidad por apuesta; ninguna de estas apuestas se hizo, es lo que habrían dado. Con menos de 15 casos las filas salen atenuadas.</p>';
 }
+function _favItems(){
+  const out=[];
+  _DATA.forEach(p=>{
+    if(!p.resultado_partido) return;
+    const id=+p.id, ll=+p.lambda_final_l, lv=+p.lambda_final_v; if(!(ll>0)||!(lv>0)) return;
+    const vistos=new Set();
+    const push=(m,cuota,prob,ev,win)=>{
+      if(vistos.has(m)||cuota==null||win==null) return; vistos.add(m);
+      const loc=m==='victoria_local', own=loc?ll:lv, riv=loc?lv:ll;
+      out.push({id,m,lado:loc?'local':'visita',cuota:+cuota,pr:+prob,ev:+ev||0,win:!!win,own,riv,diff:own-riv,ratio:own/riv,tot:ll+lv,fav:own>riv});
+    };
+    (p.apuestas||[]).forEach(a=>{ if(a.tipo==='PICK'&&(a.mercado==='victoria_local'||a.mercado==='victoria_visit')&&(a.estado==='GANADA'||a.estado==='PERDIDA')) push(a.mercado,a.cuota,a.prob,a.ev_pct,a.estado==='GANADA'); });
+    (p.watchlist||[]).forEach(w=>{ if(!w.tipo&&(w.mercado==='victoria_local'||w.mercado==='victoria_visit')&&w.cuota&&w.acerto!=null) push(w.mercado,w.cuota,w.prob,w.ev_pct,w.acerto); });
+  });
+  return out;
+}
+function _mejRenderFavorito(){
+  const el=document.getElementById('mej-fav'); if(!el) return;
+  let I=_favItems();
+  if(!I.length){ el.innerHTML='<p class="empty">Sin victorias de equipo cerradas todavía.</p>'; return; }
+  if((document.getElementById('mej-fav-ev')||{}).value==='pos') I=I.filter(x=>x.ev>0);
+  const cel=(s,pm)=>s?'<td class="num" style="'+(s.n<15?'opacity:.55':'')+'">'+s.n+'</td><td class="num">'+Math.round(s.ac)+'%</td><td class="num">'+pm+'</td><td class="num">'+s.cuota.toFixed(2)+'</td><td class="num">'+_mejRoi(s)+' '+_mejMoe(s)+'</td><td class="num">'+_mejU(s.u)+'</td><td class="num">'+_mejPP(s)+'</td>'
+    :'<td class="num" style="color:var(--text3)">0</td><td colspan="6" style="color:var(--text3);text-align:center">—</td>';
+  const tab=(c1,filas)=>'<div class="table-wrap table-wrap-scroll"><table class="hm-table"><thead><tr><th style="text-align:left">'+c1+'</th><th class="num">Casos</th><th class="num">Acierto</th><th class="num" title="Probabilidad media del modelo: si es mayor que el acierto, el modelo sobreestima">P modelo</th><th class="num">Cuota</th><th class="num">ROI ±90%</th><th class="num">P&amp;L</th><th class="num">u / partido (±90%)</th></tr></thead><tbody>'+filas+'</tbody></table></div>';
+  const fila=(l,a,o)=>{ o=o||{}; const pm=a.length?(a.reduce((t,x)=>t+x.pr,0)/a.length).toFixed(0)+'%':'—'; return '<tr'+(o.b?' style="background:var(--surface2);font-weight:600"':'')+(o.dim?' style="opacity:.85"':'')+'><td style="text-align:left">'+l+'</td>'+cel(_mejSt(a),pm)+'</tr>'; };
+  const F=I.filter(x=>x.fav), N=I.filter(x=>!x.fav);
+  const t1=fila('Favorito',F,{b:1})+fila('No favorito',N)+fila('Todas',I,{dim:1});
+  const CB=[['cuota &lt; 1.50',x=>x.cuota<1.5],['1.50 – 1.80',x=>x.cuota>=1.5&&x.cuota<1.8],['1.80 – 2.20 · candidata',x=>x.cuota>=1.8&&x.cuota<2.2],['2.20 – 3.00 · candidata',x=>x.cuota>=2.2&&x.cuota<3.0],['3.00 – 4.50',x=>x.cuota>=3.0&&x.cuota<4.5],['≥ 4.50',x=>x.cuota>=4.5]];
+  const t2=CB.map(([l,f])=>fila(l,F.filter(f))).join('');
+  const t2b=CB.map(([l,f])=>fila(l,N.filter(f))).join('');
+  const DB=[['&lt; 0.30',x=>x.diff<0.3],['0.30 – 0.60',x=>x.diff>=0.3&&x.diff<0.6],['0.60 – 1.00',x=>x.diff>=0.6&&x.diff<1.0],['≥ 1.00',x=>x.diff>=1.0]];
+  const RB=[['&lt; 1.30',x=>x.ratio<1.3],['1.30 – 1.70',x=>x.ratio>=1.3&&x.ratio<1.7],['1.70 – 2.30',x=>x.ratio>=1.7&&x.ratio<2.3],['≥ 2.30',x=>x.ratio>=2.3]];
+  const TB=[['&lt; 2.60',x=>x.tot<2.6],['2.60 – 3.00',x=>x.tot>=2.6&&x.tot<3.0],['3.00 – 3.40',x=>x.tot>=3.0&&x.tot<3.4],['≥ 3.40',x=>x.tot>=3.4]];
+  const t3=DB.map(([l,f])=>fila(l,F.filter(f))).join('');
+  const t4=RB.map(([l,f])=>fila(l,F.filter(f))).join('');
+  const t5=TB.map(([l,f])=>fila(l,F.filter(f))).join('');
+  const t5b=TB.map(([l,f])=>fila(l,N.filter(f))).join('');
+  const C=F.filter(x=>x.cuota>=1.8&&x.cuota<3.0);
+  const t6=fila('Candidata: favorito con cuota 1.80 – 3.00',C,{b:1})
+    +fila('… y λ total entre 2.60 y 3.40',C.filter(x=>x.tot>=2.6&&x.tot<3.4))
+    +fila('… hasta la entrada #'+MEJ_CORTE_ID+' (donde se encontró)',C.filter(x=>x.id<=MEJ_CORTE_ID))
+    +fila('… partidos nuevos (la única prueba real)',C.filter(x=>x.id>MEJ_CORTE_ID))
+    +fila('Favorito local',F.filter(x=>x.lado==='local'))+fila('Favorito visita',F.filter(x=>x.lado==='visita'));
+  const t0=(t,x,c)=>'<div style="font-size:12px;color:var(--text3);margin:'+(t.startsWith('①')?'0':'16px')+' 0 6px;font-weight:600">'+t+'</div>'+tab(c,x);
+  el.innerHTML=t0('① Favorito frente a no favorito',t1,'Selección')
+    +t0('② Favorito por cuota',t2,'Cuota')
+    +t0('③ Favorito por λ diferencia (λ favorito − λ rival)',t3,'λ diferencia')
+    +t0('④ Favorito por λ proporción (λ favorito ÷ λ rival)',t4,'λ proporción')
+    +t0('⑤ Favorito por λ total',t5,'λ total')
+    +t0('⑥ La candidata y cómo se reparte',t6,'Regla')
+    +t0('⑦ No favorito por cuota (control: debería perder)',t2b,'Cuota')
+    +t0('⑧ No favorito por λ total (control)',t5b,'λ total')
+    +'<p style="font-size:12px;color:var(--text3);margin-top:8px">«P modelo» es la probabilidad media que dio el modelo: si supera al acierto, el modelo sobreestima ese grupo. Las filas con menos de 15 casos salen atenuadas.</p>';
+}
 function renderMejoras(){
   if(!document.getElementById('mej-reglas')) return;
   document.getElementById('mej-corte').textContent=MEJ_CORTE_ID;
@@ -5270,7 +5338,7 @@ function renderMejoras(){
   // Tarjetas que vivian en Seguimiento y Watchlist y se unificaron aqui (todas ignoran el filtro de liga).
   renderSeguimiento(); renderCrucesValidados(); renderPorEquipoEV();
   _mejRenderSalud();
-  _mejRenderExplora(D); _mejRenderHipotesis(D); _mejRenderD2Combo(); _mejRenderExtras(); _comboRenderSalud(); _comboRenderBanda(); _comboRenderReglas(); _comboRenderPares();
+  _mejRenderExplora(D); _mejRenderHipotesis(D); _mejRenderD2Combo(); _mejRenderExtras(); _mejRenderFavorito(); _comboRenderSalud(); _comboRenderBanda(); _comboRenderReglas(); _comboRenderPares();
   _mejRenderReglas(D,_mejReglas(par),'mej-reglas',true); _mejRenderReglas(D,_mejReglasEq(),'mej-reglas-eq',false); _mejRenderEV(D); _mejRenderCuota(D); _mejRenderLambda(D); _mejRenderBarreras(D); _mejRenderCalib(D);
 }
 
