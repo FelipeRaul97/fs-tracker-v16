@@ -5401,9 +5401,38 @@ function _hipRenderRemate(B){
   const f2=[['Local favorito',x=>x.a.lado==='local'&&x.a.equipo_favorito===true],['Local no favorito',x=>x.a.lado==='local'&&x.a.equipo_favorito===false],
     ['Visita favorito',x=>x.a.lado==='visit'&&x.a.equipo_favorito===true],['Visita no favorito',x=>x.a.lado==='visit'&&x.a.equipo_favorito===false]]
     .map(([l,f])=>_hipFila(l,B.rem.filter(f),{sub:1})).join('')+_hipFila('Todos los REMATE R1',B.rem,{b:1});
+  // ③ Regla A (anterior: -4 <= línea − media < 0) frente a regla B (vigente desde 2026-11-06: línea − media >= -4 y tope en la LÍNEA PROMEDIO,
+  //   media X,Y -> promedio X, línea promedio Over (X-1),5, o sea k = línea − ((X-1)+0,5) <= 0). Cada una elige como R1: mejor EV×P por lado y,
+  //   si pasan los dos, la de mayor P%. Se simulan sobre las mismas líneas (watchlist), así que las dos son comparables.
+  const sim=(regla)=>{
+    const out=[];
+    _DATA.filter(p=>p.resultado_partido&&p.mu_equipo).forEach(p=>{
+      const por={};
+      (p.watchlist||[]).forEach(w=>{
+        if(w.tipo!=='POR_EQUIPO'||!(w.mercado==='local_remates'||w.mercado==='visit_remates')||w.acerto==null||!w.cuota||w.linea==null||!(w.ev_pct>0)) return;
+        const lado=w.mercado==='local_remates'?'local':'visit', mu=((p.mu_equipo[lado])||{}).remates; if(mu==null) return;
+        const g=w.linea-mu, k=w.linea-(Math.floor(mu)-0.5);
+        if(!regla(g,k)) return;
+        const sc=[w.ev_pct*w.prob/100,w.prob];
+        if(!por[lado]||sc[0]>por[lado].sc[0]||(sc[0]===por[lado].sc[0]&&sc[1]>por[lado].sc[1])) por[lado]={sc,w};
+      });
+      const v=Object.values(por); if(!v.length) return;
+      const best=v.reduce((m,x)=>(x.w.prob>m.w.prob||(x.w.prob===m.w.prob&&x.w.ev_pct>m.w.ev_pct))?x:m);
+      out.push({id:+p.id,cuota:+best.w.cuota,win:!!best.w.acerto,et:best.w.etiqueta});
+    });
+    return out;
+  };
+  const rA=sim((g,k)=>g>=-4&&g<0), rB=sim((g,k)=>g>=-4&&k<=0);
+  const mA=new Map(rA.map(x=>[x.id,x])), mB=new Map(rB.map(x=>[x.id,x]));
+  const ids=[...new Set([...mA.keys(),...mB.keys()])];
+  const dif=ids.filter(i=>(mA.get(i)||{}).et!==(mB.get(i)||{}).et);
+  const f3=_hipFila('A · anterior: −4 ≤ línea − media &lt; 0',rA,{b:0})+_hipFila('B · vigente: línea − media ≥ −4 y tope en la línea promedio',rB,{b:1})
+    +_hipFila('Solo los '+dif.length+' partidos donde difieren · lo que habría elegido A',dif.map(i=>mA.get(i)).filter(Boolean),{sub:1})
+    +_hipFila('Solo los '+dif.length+' partidos donde difieren · lo que elige B',dif.map(i=>mB.get(i)).filter(Boolean),{sub:1});
   el.innerHTML='<div style="font-size:12px;color:var(--text3);margin:0 0 6px;font-weight:600">① Todas las líneas de remates totales con EV &gt; 0, según su distancia a la media esperada del modelo (se apuesten o no)</div>'
     +_hipTabla('Línea − media',f1)
-    +'<div style="font-size:12px;color:var(--text3);margin:16px 0 6px;font-weight:600">② Lo realmente elegido por R1, por lado y por rol del equipo (favorito = mayor λ)</div>'+_hipTabla('REMATE R1',f2);
+    +'<div style="font-size:12px;color:var(--text3);margin:16px 0 6px;font-weight:600">② Lo realmente elegido por R1, por lado y por rol del equipo (favorito = mayor λ)</div>'+_hipTabla('REMATE R1',f2)
+    +'<div style="font-size:12px;color:var(--text3);margin:16px 0 6px;font-weight:600">③ Regla A (anterior) frente a regla B (vigente): misma muestra, misma forma de elegir; solo cambia el tope superior (línea − media &lt; 0 frente a la línea promedio)</div>'+_hipTabla('Regla',f3);
 }
 function _hipRenderCuota(B){
   const el=document.getElementById('hip-cuota'); if(!el) return;
