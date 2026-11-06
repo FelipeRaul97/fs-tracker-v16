@@ -5383,7 +5383,7 @@ function _hipRenderResumen(B){
   const filas=_hipFila('PICK de goles (todas las hipótesis)',B.pick,{b:1})
     +hs.map(h=>_hipFila(h+' · '+HIP_LBL[h],B.pick.filter(x=>x.h===h),{sub:1})).join('')
     +_hipFila('COMBO (sin las exclusiones C1 a C4)',B.combo,{b:1})
-    +_hipFila('REMATE R1 (una línea por partido, de 4 a 0 por debajo de la media)',B.rem,{b:1})
+    +_hipFila('REMATE R1 (una línea por partido, hasta 4 por debajo de la media y sin pasar la línea promedio)',B.rem,{b:1})
     +_hipFila('REMATE A PUERTA S1 (una línea por equipo, EV > 0 y cuota ≥ 1.60)',B.puerta,{b:1})
     +_hipFila('TOTAL del dashboard 2',todas,{b:1});
   el.innerHTML=_hipTabla('Qué se habría apostado',filas);
@@ -5396,7 +5396,7 @@ function _hipRenderRemate(B){
     const mu=((p.mu_equipo[w.mercado==='local_remates'?'local':'visit'])||{}).remates; if(mu==null) return;
     L.push({id:+p.id,cuota:+w.cuota,win:!!w.acerto,d:w.linea-mu});
   }));
-  const bandas=[['< −4 (el modelo las sobreestima)',x=>x.d<-4],['−4 a −2 · zona R1',x=>x.d>=-4&&x.d<-2,1],['−2 a 0 · zona R1',x=>x.d>=-2&&x.d<0,1],['0 a +2',x=>x.d>=0&&x.d<2],['+2 o más (nunca se apuestan)',x=>x.d>=2]];
+  const bandas=[['< −4 (el modelo las sobreestima)',x=>x.d<-4],['−4 a −2 · zona R1',x=>x.d>=-4&&x.d<-2,1],['−2 a 0 · zona R1',x=>x.d>=-2&&x.d<0,1],['0 a +2 (solo entran si siguen en la línea promedio)',x=>x.d>=0&&x.d<2],['+2 o más (nunca se apuestan)',x=>x.d>=2]];
   const f1=bandas.map(([l,f,z])=>_hipFila(l,L.filter(f),{b:z})).join('')+_hipFila('Todas las líneas con EV > 0',L,{sub:1});
   const f2=[['Local favorito',x=>x.a.lado==='local'&&x.a.equipo_favorito===true],['Local no favorito',x=>x.a.lado==='local'&&x.a.equipo_favorito===false],
     ['Visita favorito',x=>x.a.lado==='visit'&&x.a.equipo_favorito===true],['Visita no favorito',x=>x.a.lado==='visit'&&x.a.equipo_favorito===false]]
