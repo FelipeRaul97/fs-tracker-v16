@@ -5433,7 +5433,7 @@ function _hipRenderPuerta(B){
   _DATA.filter(p=>p.resultado_partido&&p.mu_equipo).forEach(p=>(p.watchlist||[]).forEach(w=>{
     if(w.tipo!=='POR_EQUIPO'||!(w.mercado==='local_remates_puerta'||w.mercado==='visit_remates_puerta')||w.acerto==null||!w.cuota||w.linea==null) return;
     const lado=w.mercado.startsWith('local')?'local':'visit', mu=((p.mu_equipo[lado])||{}).remates_puerta; if(mu==null) return;
-    L.push({id:+p.id,cuota:+w.cuota,win:!!w.acerto,d:w.linea-mu,ev:+w.ev_pct||0,S1:!!w.es_puerta});
+    L.push({id:+p.id,cuota:+w.cuota,win:!!w.acerto,d:w.linea-mu,k:w.linea-(Math.floor(mu)-0.5),ev:+w.ev_pct||0,S1:!!w.es_puerta});
   }));
   const pos=L.filter(x=>x.ev>0), neg=L.filter(x=>x.ev<=0);
   const cu=[['cuota &lt; 1.30 · no se apuesta',x=>x.cuota<1.30,0],['1.30 – 1.60 · no se apuesta',x=>x.cuota>=1.30&&x.cuota<1.60,0],['1.60 – 2.20 · zona S1',x=>x.cuota>=1.60&&x.cuota<2.20,1],['2.20 – 3.50 · zona S1',x=>x.cuota>=2.20&&x.cuota<3.50,1],['cuota ≥ 3.50 · zona S1',x=>x.cuota>=3.50,1]];
@@ -5443,13 +5443,16 @@ function _hipRenderPuerta(B){
   const di=[['&lt; −2',x=>x.d<-2],['−2 a −1',x=>x.d>=-2&&x.d<-1],['−1 a 0',x=>x.d>=-1&&x.d<0],['0 a +1',x=>x.d>=0&&x.d<1],['+1 a +2',x=>x.d>=1&&x.d<2],['≥ +2',x=>x.d>=2]];
   const hi=pos.filter(x=>x.cuota>=1.60);
   const f2=di.map(([l,f])=>_hipFila(l,hi.filter(f))).join('')+_hipFila('Todas (EV &gt; 0 y cuota ≥ 1.60)',hi,{sub:1});
+  const ki=[['2 o más líneas por debajo',x=>x.k<=-2],['1 línea por debajo (X−1,5)',x=>x.k===-1],['LÍNEA PROMEDIO (X−0,5): media X,Y → Over (X−1),5 = «X o más»',x=>x.k===0],['1 línea por encima (X+0,5)',x=>x.k===1],['2 líneas por encima',x=>x.k===2],['3 o más por encima',x=>x.k>=3]];
+  const f4=ki.map(([l,f])=>_hipFila(l,hi.filter(f))).join('')+_hipFila('Todas (EV &gt; 0 y cuota ≥ 1.60)',hi,{sub:1});
   const f3=[['Local favorito',x=>x.a.lado==='local'&&x.a.equipo_favorito===true],['Local no favorito',x=>x.a.lado==='local'&&x.a.equipo_favorito===false],
     ['Visita favorito',x=>x.a.lado==='visit'&&x.a.equipo_favorito===true],['Visita no favorito',x=>x.a.lado==='visit'&&x.a.equipo_favorito===false]]
     .map(([l,f])=>_hipFila(l,B.puerta.filter(f),{sub:1})).join('')+_hipFila('Todas las S1 apostadas',B.puerta,{b:1});
   const tt=(t,x)=>'<div style="font-size:12px;color:var(--text3);margin:'+(t.startsWith('①')?'0':'16px')+' 0 6px;font-weight:600">'+t+'</div>'+x;
   el.innerHTML=tt('① Todas las líneas de remates a puerta con EV &gt; 0, por cuota (se apuesten o no): ¿qué pasa con las bandas que S1 deja fuera?',_hipTabla('Cuota',f1))
     +tt('② Las líneas de la zona S1 (EV &gt; 0 y cuota ≥ 1.60), por distancia a la media esperada de ST del equipo',_hipTabla('Línea − media',f2))
-    +tt('③ Lo realmente elegido por S1 (una por equipo), por lado y rol del equipo',_hipTabla('A PUERTA S1',f3));
+    +tt('③ Las mismas líneas por posición respecto a la LÍNEA PROMEDIO (media X,Y → promedio = X, línea promedio = Over (X−1),5; ej. media 5,03 → Over 4,5)',_hipTabla('Posición',f4))
+    +tt('④ Lo realmente elegido por S1 (una por equipo), por lado y rol del equipo',_hipTabla('A PUERTA S1',f3));
 }
 function renderHipotesis(){
   if(!document.getElementById('hip-resumen')) return;
