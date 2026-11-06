@@ -4388,9 +4388,9 @@ const _SEG_GOLES_BRIER=['victoria_local','empate','victoria_visit','do1x','dox2'
   'under45','btts','over05_local','over05_visit','hcp2_des','hcp3_des','corners65','corners75'];
 const SEG_CONTROL_META=40;   // partidos de control (mejor puesto >= 9) a acumular antes de concluir
 function _segPartidoFicha(p){
-  const v=(p.variables||{}).v2||{};
+  const v=(p.variables||{}).v2||{};   // entradas anteriores a 2026-11-06 guardaban el puesto aqui; las nuevas, en p.puesto
   const rk=t=>{const m=/Rank (\d+)/.exec(t||''); return m?+m[1]:null;};
-  const rl=rk(v.detalle_local), rv=rk(v.detalle_visit);
+  const rl=(p.puesto&&p.puesto.local!=null)?p.puesto.local:rk(v.detalle_local), rv=(p.puesto&&p.puesto.visit!=null)?p.puesto.visit:rk(v.detalle_visit);
   const ap=(p.apuestas||[]).filter(a=>a.estado==='GANADA'||a.estado==='PERDIDA');
   const sn=p.mercados_snapshot||{}, rs=p.snapshot_resultados||{};
   const br=_SEG_GOLES_BRIER.filter(k=>sn[k]!=null&&rs[k]!=null).map(k=>(sn[k]/100-(rs[k]?1:0))**2);
