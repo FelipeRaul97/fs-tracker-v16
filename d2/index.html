@@ -268,7 +268,6 @@
     <div class="tab active" data-tab="apuestas">Apuestas</div>
     <div class="tab" data-tab="hipotesis">Hipótesis</div>
     <div class="tab" data-tab="tendencias">Tendencias</div>
-    <div class="tab" data-tab="variables">Variables</div>
     <div class="tab" data-tab="mercados">Mercados</div>
     <div class="tab" data-tab="ligas">Por liga</div>
     <div class="tab" data-tab="calibracion">Calibración</div>
@@ -327,15 +326,6 @@
     <div class="grid2">
       <div class="card"><div class="card-title">Alto EV% + PERDIDA</div><div id="high-ev-lost"></div></div>
       <div class="card"><div class="card-title">Racha actual</div><div id="racha-actual"></div></div>
-    </div>
-  </div>
-
-  <!-- Variables -->
-  <div class="tab-panel" id="tab-variables">
-    <div class="card">
-      <div class="card-title">Impacto de variables V# en Win Rate y ROI%</div>
-      <div id="var-heatmap"></div>
-      <div class="chart-note" style="margin-top:10px">N = apuestas confirmadas en partidos donde la variable estuvo activa.</div>
     </div>
   </div>
 
@@ -1100,15 +1090,6 @@
     </div>
     <div class="grid2" style="margin-bottom:16px">
       <div class="card card-full">
-        <div class="card-title">λ shadow vs λ final — ¿deberían aplicarse las variables?</div>
-        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">
-          Error absoluto medio contra los goles reales. Si shadow gana de forma
-          consistente, las V# merecen volver a tocar λ.</p>
-        <div id="diag-shadow"></div>
-      </div>
-    </div>
-    <div class="grid2" style="margin-bottom:16px">
-      <div class="card card-full">
         <div class="card-title">Bandas de λ_total — ¿escora el modelo a cierto ritmo de partido?</div>
         <p style="font-size:12px;color:var(--text3);margin:0 0 10px">
           λ_total = λ final local + visita: el total de goles que proyecta el modelo.
@@ -1193,9 +1174,9 @@
     </div>
     <div class="grid2" style="margin-bottom:16px">
       <div class="card card-full">
-        <div class="card-title">λ por equipo y por bajas — raíz del modelo, no un mercado</div>
+        <div class="card-title">λ por equipo — raíz del modelo, no un mercado</div>
         <p style="font-size:12px;color:var(--text3);margin:0 0 10px">
-          Dos estudios que miran la λ continua (no un umbral) contra los goles que de
+          Estudio que mira la λ continua (no un umbral) contra los goles que de
           verdad marcó cada equipo. Cada partido cerrado aporta dos observaciones.</p>
         <div style="font-size:12px;color:var(--text3);margin:6px 0 4px;font-weight:600">
           ⑨ λ por equipo vs goles reales — ¿calibra igual de local que de visita?</div>
@@ -1203,23 +1184,9 @@
           Si λ_visit tiene sesgo sistemático que λ_local no tiene, contamina todo lo del
           visitante. Sesgo = λ media − goles medios del equipo en ese tramo.</p>
         <div id="diag-eqlado"></div>
-        <div style="font-size:12px;color:var(--text3);margin:18px 0 4px;font-weight:600">
-          ⑩ Error de λ según magnitud de bajas (V#4) — ¿rinde de menos un equipo diezmado?</div>
-        <p style="font-size:11px;color:var(--text3);margin:0 0 6px">
-          No "hubo bajas sí/no" sino la dosis: 8 fuera vs 2. Sesgo &gt; 0 con muchas bajas
-          = el equipo marcó menos que su λ → argumento para que V#4 vuelva a tocar λ.</p>
-        <div id="diag-bajas"></div>
       </div>
     </div>
     <div class="grid2">
-      <div class="card">
-        <div class="card-title">Por variable activa — ¿derbis, lesiones o copa descalibran algo?</div>
-        <p style="font-size:11px;color:var(--text3);margin:0 0 8px">
-          Mismo formato que las tablas de arriba (Predicho/Real/Sesgo, N = predicciones
-          de mercado acumuladas). Agrupa por qué V# estaba activa en ese partido — un
-          partido puede aportar a varias filas a la vez si tuvo más de una variable activa.</p>
-        <div id="diag-vars"></div>
-      </div>
       <div class="card">
         <div class="card-title">Cobertura del mercado — ¿cuánto de lo validado llegás a cotizar?</div>
         <p style="font-size:11px;color:var(--text3);margin:0 0 8px">
@@ -1630,12 +1597,10 @@ function renderBets(){
         <div class="detail-grid">
           <div class="detail-item"><span class="detail-key">λ base</span><span>L=${p.lambda_base_l||'—'} · V=${p.lambda_base_v||'—'}</span></div>
           <div class="detail-item"><span class="detail-key">λ final</span><span>L=${p.lambda_final_l} · V=${p.lambda_final_v}</span></div>
-          <div class="detail-item"><span class="detail-key">λ shadow</span><span>L=${p.lambda_shadow_l||'—'} · V=${p.lambda_shadow_v||'—'}</span></div>
           <div class="detail-item"><span class="detail-key">Goles esperados</span><span>${p.goles_esperados!=null?Number(p.goles_esperados).toFixed(2):'—'}</span></div>
           <div class="detail-item"><span class="detail-key">Ratio${p.visit_dominante?' · Visit dom.':''}</span><span>${p.ratio}${p.visit_dominante?' ⚠':''}
 </span></div>
           <div class="detail-item"><span class="detail-key">λ corners</span><span>${p.lambda_corners||'—'}</span></div>
-          <div class="detail-item"><span class="detail-key">Variables (shadow)</span><span>${p.variables_activas||'—'}</span></div>
           <div class="detail-item"><span class="detail-key">Confianza</span><span>${p.confianza}</span></div>
           <div class="detail-item"><span class="detail-key">Resultado</span><span>${p.resultado_partido||'Pendiente'}</span></div>
           <div class="detail-item"><span class="detail-key">Notas</span><span>${p.notas||'—'}</span></div>
@@ -2491,31 +2456,6 @@ function renderLigaTipo(){
   el.innerHTML='';el.appendChild(svg);
 }
 
-function renderVariablesHeatmap(){
-  const varMap={};
-  _DATA.forEach(p=>{
-    const vars=[...new Set((p.variables_activas.match(/V#\d+/g)||[]))];
-    vars.forEach(v=>{if(!varMap[v])varMap[v]=[];p.apuestas.forEach(a=>varMap[v].push(a));});
-  });
-  const el=document.getElementById('var-heatmap');
-  const vars=Object.keys(varMap).sort((a,b)=>parseInt(a.replace('V#',''))-parseInt(b.replace('V#','')));
-  if(!vars.length){el.innerHTML='<p class="empty">Sin variables activas registradas</p>';return;}
-  const rows=vars.map(v=>{const bets=varMap[v];const s=calcStats(bets);return{v,n:s.settled,wr:s.wr,roi:s.roi,pl:s.pl,evProm:s.evProm};}).filter(r=>r.n>0);
-  const wrVals=rows.map(r=>r.wr).filter(v=>v!=null);
-  const roiVals=rows.map(r=>r.roi).filter(v=>v!=null);
-  const minWR=Math.min(...wrVals,0),maxWR=Math.max(...wrVals,100);
-  const minROI=Math.min(...roiVals,0),maxROI=Math.max(...roiVals,0);
-  function hmColor(v,min,max){if(v==null)return'var(--surface2)';const t=(v-min)/(max-min||1);if(t>0.65)return`rgba(99,153,34,${0.30+t*0.45})`;if(t<0.35)return`rgba(226,75,74,${0.30+(1-t)*0.3})`;return`rgba(239,159,39,0.35)`;}
-  el.innerHTML=`<div style="overflow-x:auto"><table class="hm-table">
-    <thead><tr><th>Variable</th><th>N</th><th>Win Rate</th><th>ROI%</th><th>P&amp;L</th><th>EV% prom</th></tr></thead>
-    <tbody>${rows.map(r=>`<tr>
-      <td>${r.v}</td><td style="color:var(--text2)">${r.n}</td>
-      <td style="background:${hmColor(r.wr,minWR,maxWR)}">${r.wr!=null?r.wr.toFixed(1)+'%':'—'}</td>
-      <td style="background:${hmColor(r.roi,minROI,maxROI)};color:${r.roi>=0?'var(--green)':'var(--red)'}">${r.roi!=null?(r.roi>=0?'+':'')+r.roi.toFixed(1)+'%':'—'}</td>
-      <td style="color:${r.pl>=0?'var(--green)':'var(--red)'}">${(r.pl>=0?'+':'')+r.pl.toFixed(2)}u</td>
-      <td style="color:${r.evProm>=0?'var(--green-mid)':'var(--red-mid)'}">${r.evProm!=null?(r.evProm>=0?'+':'')+r.evProm.toFixed(1)+'%':'—'}</td>
-    </tr>`).join('')}</tbody></table></div>`;
-}
 
 function renderHighEVLost(){
   const THRESH=8;
@@ -3383,7 +3323,7 @@ function _diagObs(){
     Object.entries(r).forEach(([k,ac])=>{
       if(s[k]==null) return;
       o.push({prob:s[k], acerto:!!ac, liga:p.liga, conf:p.confianza,
-              loc, vis, vars:p.variables||{}, entry:p, lado:_ladoMercado(k,p), mercado:k});
+              loc, vis, entry:p, lado:_ladoMercado(k,p), mercado:k});
     });
   });
   return o;
@@ -3670,37 +3610,9 @@ function renderDiagnostico(){
     _tablaSesgo(_agrupar(obs,o=>LIGA_NAMES[o.liga]||o.liga,59),'Liga');
   document.getElementById('diag-conf').innerHTML=
     _tablaSesgo(_agrupar(obs,o=>o.conf,59),'Confianza');
-  document.getElementById('diag-vars').innerHTML=
-    _tablaSesgo(_agrupar(obs,o=>Object.entries(o.vars)
-      .filter(([,v])=>v&&(v.activa||v.activa_local||v.activa_visit))
-      .map(([k])=>k.toUpperCase().replace('V','V#')),59),'Variable');
-
-  // lambda shadow vs final: error absoluto contra los goles reales
-  const sh=document.getElementById('diag-shadow');
-  const cer=_dataLiga().filter(p=>p.resultado_partido&&p.lambda_shadow_l!=null);
-  if(cer.length<5){
-    sh.innerHTML='<p class="empty">Hacen falta 5+ partidos cerrados ('+cer.length+' por ahora).</p>';
-  }else{
-    let ef=0,es=0;
-    cer.forEach(p=>{
-      const [gh,ga]=p.resultado_partido.split('-').map(Number);
-      ef+=Math.abs(p.lambda_final_l-gh)+Math.abs(p.lambda_final_v-ga);
-      es+=Math.abs(p.lambda_shadow_l-gh)+Math.abs(p.lambda_shadow_v-ga);
-    });
-    ef/=cer.length*2; es/=cer.length*2;
-    const gana=es<ef;
-    sh.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px">'
-      +'<div class="metric"><div class="metric-label">Partidos</div><div class="metric-val">'+cer.length+'</div></div>'
-      +'<div class="metric"><div class="metric-label">Error λ final</div><div class="metric-val">'+ef.toFixed(3)+'</div></div>'
-      +'<div class="metric"><div class="metric-label">Error λ shadow</div><div class="metric-val">'+es.toFixed(3)+'</div></div>'
-      +'</div><p style="font-size:12px;margin-top:10px;color:var(--text3)">'
-      +(gana?'<span class="pl-pos">Shadow gana por '+(ef-es).toFixed(3)+' goles.</span> Con muestra suficiente, revisar si las V# deben volver a λ.'
-            :'<span>λ final gana por '+(es-ef).toFixed(3)+' goles.</span> Las V# siguen sin justificar tocar λ.')
-      +'</p>';
-  }
 
   renderLambdaBandas();
-  renderLambdaEquipoBajas();
+  renderLambdaEquipo();
 
   // cobertura: de las validadas que encuentra el engine, cuantas se cotizan
   const cob=document.getElementById('diag-cobertura');
@@ -3999,7 +3911,7 @@ function renderLambdaBandas(){
     +' sobre '+cer.length+' partidos. Poisson asume 0; una desviación estable justificaría un término de corrección.</p>';
 }
 
-// -- lambda por equipo (local vs visita) y por magnitud de bajas V#4 --------------
+// -- lambda por equipo (local vs visita) --------------
 // Renderiza una tabla de sesgo lambda-goles a partir de observaciones {lam,goles} ya
 // agrupadas por clave, en el orden dado. sesgo = lam medio - goles medios.
 function _tablaLamGoles(grupos, orden, etqCol){
@@ -4018,11 +3930,7 @@ function _tablaLamGoles(grupos, orden, etqCol){
         +'<td style="color:'+cs+';font-weight:600">'+(sg>=0?'+':'')+sg.toFixed(2)+'</td></tr>';
     }).join('')+'</tbody></table>';
 }
-const _BAJAS_ORDER=['0','1 – 2','3 – 4','5+'];
-function _bajasBanda(n){ if(n==null)return null; if(n<=0)return '0'; if(n<=2)return '1 – 2';
-  if(n<=4)return '3 – 4'; return '5+'; }
-
-function renderLambdaEquipoBajas(){
+function renderLambdaEquipo(){
   const el=document.getElementById('diag-eqlado');
   if(!el) return;
   const cer=_dataLiga().filter(p=>p.resultado_partido&&p.lambda_final_l!=null&&p.lambda_final_v!=null);
@@ -4049,18 +3957,6 @@ function renderLambdaEquipoBajas(){
     +_tablaLamGoles(gLoc,_LAM_EQ_ORDER,'Banda λ equipo')
     +'<div style="font-size:11px;color:var(--text3);margin:12px 0 2px;font-weight:600">Visita (con λ visita)</div>'
     +_tablaLamGoles(gVis,_LAM_EQ_ORDER,'Banda λ equipo');
-
-  // (10) error de lambda por magnitud de bajas V#4.
-  const bEl=document.getElementById('diag-bajas');
-  const gB={};
-  cer.forEach(p=>{ const g=_golesReales(p); const v4=(p.variables||{}).v4||{};
-    const bl=_bajasBanda(v4.bajas_local); if(bl!=null)(gB[bl]=gB[bl]||[]).push({lam:p.lambda_final_l,goles:g.h});
-    const bv=_bajasBanda(v4.bajas_visit); if(bv!=null)(gB[bv]=gB[bv]||[]).push({lam:p.lambda_final_v,goles:g.a});
-  });
-  const anyB=Object.keys(gB).length;
-  bEl.innerHTML=(!anyB?'<p class="empty">Sin nº de bajas registrado en los cierres todavía.</p>'
-    :_tablaLamGoles(gB,_BAJAS_ORDER,'Bajas del XI (V#4)'))
-    +(anyB?'<p style="font-size:11px;color:var(--text3);margin-top:6px">Sesgo creciente con las bajas: el modelo no descuenta a los equipos diezmados y V#4 tendría motivo para aplicarse.</p>':'');
 }
 
 // De donde vino un mercado del snapshot para ESE partido: 'REAL' si en algun
@@ -5594,7 +5490,6 @@ function renderAll(){
   if(active==='calibracion'){renderEVScatter();renderCalibBands();renderCalibByMarket();}
   if(active==='mercados'){renderCuotaROI();renderMercadoCuotaHeatmap();renderRemateMercados();renderTipoStats();renderMercadoFreq();renderCombosPorPar();}
   if(active==='ligas'){renderLigaTipo();renderLigaRollingROI();renderMercadoLigaHeatmap();renderLigaCards();}
-  if(active==='variables'){renderVariablesHeatmap();}
   if(active==='watchlist'){renderWatchlist(); _hipRenderRazon();}
   if(active==='hipotesis'){renderHipotesis();}
     if(active==='diagnostico'){renderDiagnostico();}
