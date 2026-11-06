@@ -5299,7 +5299,7 @@ function _hipRenderRemate(B){
     .map(([l,f])=>_hipFila(l,B.rem.filter(f),{sub:1})).join('')+_hipFila('Todos los REMATE R1',B.rem,{b:1});
   // ③ Regla A (anterior: -4 <= línea − media < 0) frente a regla B (vigente desde 2026-11-06: línea − media >= -4 y tope en la LÍNEA PROMEDIO,
   //   media X,Y -> promedio X, línea promedio Over (X-1),5, o sea k = línea − ((X-1)+0,5) <= 0). Cada una elige como R1: mejor EV×P por lado y,
-  //   si pasan los dos, la de mayor P%. Se simulan sobre las mismas líneas (watchlist), así que las dos son comparables.
+  //   y se apuesta una por equipo (hasta 2 por partido). Se simulan sobre las mismas líneas (watchlist), así que las dos son comparables.
   const sim=(regla)=>{
     const out=[];
     _DATA.filter(p=>p.resultado_partido&&p.mu_equipo).forEach(p=>{
@@ -5312,19 +5312,18 @@ function _hipRenderRemate(B){
         const sc=[w.ev_pct*w.prob/100,w.prob];
         if(!por[lado]||sc[0]>por[lado].sc[0]||(sc[0]===por[lado].sc[0]&&sc[1]>por[lado].sc[1])) por[lado]={sc,w};
       });
-      const v=Object.values(por); if(!v.length) return;
-      const best=v.reduce((m,x)=>(x.w.prob>m.w.prob||(x.w.prob===m.w.prob&&x.w.ev_pct>m.w.ev_pct))?x:m);
-      out.push({id:+p.id,cuota:+best.w.cuota,win:!!best.w.acerto,et:best.w.etiqueta});
+      Object.values(por).forEach(x=>out.push({id:+p.id,cuota:+x.w.cuota,win:!!x.w.acerto,et:x.w.etiqueta}));   // una por EQUIPO (desde 2026-11-06)
     });
     return out;
   };
   const rA=sim((g,k)=>g>=-4&&g<0), rB=sim((g,k)=>g>=-4&&k<=0);
-  const mA=new Map(rA.map(x=>[x.id,x])), mB=new Map(rB.map(x=>[x.id,x]));
+  const grp=r=>{const m=new Map(); r.forEach(x=>{if(!m.has(x.id))m.set(x.id,[]); m.get(x.id).push(x);}); return m;};
+  const mA=grp(rA), mB=grp(rB), firma=l=>(l||[]).map(x=>x.et).sort().join('|');
   const ids=[...new Set([...mA.keys(),...mB.keys()])];
-  const dif=ids.filter(i=>(mA.get(i)||{}).et!==(mB.get(i)||{}).et);
+  const dif=ids.filter(i=>firma(mA.get(i))!==firma(mB.get(i)));
   const f3=_hipFila('A · anterior: −4 ≤ línea − media &lt; 0',rA,{b:0})+_hipFila('B · vigente: línea − media ≥ −4 y tope en la línea promedio',rB,{b:1})
-    +_hipFila('Solo los '+dif.length+' partidos donde difieren · lo que habría elegido A',dif.map(i=>mA.get(i)).filter(Boolean),{sub:1})
-    +_hipFila('Solo los '+dif.length+' partidos donde difieren · lo que elige B',dif.map(i=>mB.get(i)).filter(Boolean),{sub:1});
+    +_hipFila('Solo los '+dif.length+' partidos donde difieren · lo que habría elegido A',dif.flatMap(i=>mA.get(i)||[]),{sub:1})
+    +_hipFila('Solo los '+dif.length+' partidos donde difieren · lo que elige B',dif.flatMap(i=>mB.get(i)||[]),{sub:1});
   el.innerHTML='<div style="font-size:12px;color:var(--text3);margin:0 0 6px;font-weight:600">① Todas las líneas de remates totales con EV &gt; 0, según su distancia a la media esperada del modelo (se apuesten o no)</div>'
     +_hipTabla('Línea − media',f1)
     +'<div style="font-size:12px;color:var(--text3);margin:16px 0 6px;font-weight:600">② Lo realmente elegido por R1, por lado y por rol del equipo (favorito = mayor λ)</div>'+_hipTabla('REMATE R1',f2)
