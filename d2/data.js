@@ -6182,22 +6182,6 @@ const TRACKER_DATA = [
         "pl": null
       },
       {
-        "tipo": "PICK",
-        "mercado": "btts",
-        "linea": null,
-        "etiqueta": "BTTS",
-        "cuota": 1.44,
-        "prob": 64.4,
-        "ev_pct": -7.3,
-        "cuota_justa": 1.6,
-        "cuota_segura": 1.76,
-        "acierto_hist": 62.7,
-        "n_hist": 260,
-        "hipotesis": "H4",
-        "estado": "PENDIENTE",
-        "pl": null
-      },
-      {
         "tipo": "PUERTA",
         "mercado": "local_remates_puerta",
         "linea": 5.5,
@@ -6214,6 +6198,19 @@ const TRACKER_DATA = [
       }
     ],
     "watchlist": [
+      {
+        "mercado": "btts",
+        "linea": null,
+        "etiqueta": "BTTS",
+        "cuota": 1.44,
+        "prob": 64.4,
+        "ev_pct": -7.3,
+        "cuota_justa": 1.6,
+        "cuota_segura": 1.76,
+        "acierto_hist": 62.7,
+        "n_hist": 260,
+        "hipotesis": "H4"
+      },
       {
         "mercado": "do1x",
         "linea": null,
@@ -6293,6 +6290,15 @@ const TRACKER_DATA = [
         "cuota": 1.07,
         "prob": 90.4,
         "ev_pct": -3.3
+      },
+      {
+        "mercado": "under35",
+        "linea": null,
+        "etiqueta": "Under 3.5",
+        "cuota": 1.65,
+        "prob": 56.7,
+        "ev_pct": -6.4,
+        "regla_d2": "over25 + under35: ventana de exactamente 3 goles"
       },
       {
         "mercado": "victoria_local",
@@ -6847,15 +6853,6 @@ const TRACKER_DATA = [
         "n_hist": 258,
         "tipo": "COMBINADA",
         "regla_d2": "C2: par excluido"
-      },
-      {
-        "mercado": "under35",
-        "linea": null,
-        "etiqueta": "Under 3.5",
-        "cuota": 1.65,
-        "prob": 56.7,
-        "ev_pct": -6.4,
-        "regla_d2": "over25 + under35: ventana de exactamente 3 goles"
       }
     ],
     "mercados_snapshot": {
@@ -12592,22 +12589,6 @@ const TRACKER_DATA = [
         "pl": null
       },
       {
-        "tipo": "PICK",
-        "mercado": "btts",
-        "linea": null,
-        "etiqueta": "BTTS",
-        "cuota": 1.45,
-        "prob": 61.9,
-        "ev_pct": -10.2,
-        "cuota_justa": 1.6,
-        "cuota_segura": 1.76,
-        "acierto_hist": 62.7,
-        "n_hist": 260,
-        "hipotesis": "H4",
-        "estado": "PENDIENTE",
-        "pl": null
-      },
-      {
         "tipo": "REMATE",
         "mercado": "local_remates",
         "linea": 15.5,
@@ -12640,6 +12621,19 @@ const TRACKER_DATA = [
       }
     ],
     "watchlist": [
+      {
+        "mercado": "btts",
+        "linea": null,
+        "etiqueta": "BTTS",
+        "cuota": 1.45,
+        "prob": 61.9,
+        "ev_pct": -10.2,
+        "cuota_justa": 1.6,
+        "cuota_segura": 1.76,
+        "acierto_hist": 62.7,
+        "n_hist": 260,
+        "hipotesis": "H4"
+      },
       {
         "mercado": "do1x",
         "linea": null,

@@ -275,6 +275,8 @@
     <div class="tab" data-tab="confianza">Confianza</div>
     <div class="tab" data-tab="diagnostico">Diagnóstico</div>
     <div class="tab" data-tab="mejoras">Mejoras</div>
+    <div class="tab" data-tab="h4">H4 · BTTS</div>
+    <div class="tab" data-tab="h7">H7 · Hándicap</div>
   </div>
 
   <!-- Apuestas -->
@@ -1031,6 +1033,30 @@
       </div>
     </div>
 
+  </div>
+
+  <div class="tab-panel" id="tab-h4">
+    <div class="card card-full">
+      <div class="card-title">H4 · BTTS — λ total ≥ 3.0 y diferencia de λ ≥ 0.4</div>
+      <p style="font-size:12px;color:var(--text3);margin:0 0 10px">
+        Regla vigente en el dashboard 2 (desde el partido 1). La <b>diferencia</b> es |λ local − λ visita|. En el dashboard 1 las tablas miden lo que
+        <i>habría</i> dado la regla sobre los partidos cerrados (no la aplica); en el 2 se llenan con sus propios cierres. Se recalcula entero desde <code>data.js</code>.
+        Cuota considerada: 1.10 – 2.00. «Brecha» = acierto real − probabilidad del modelo (pp) con su ±90%.</p>
+      <div id="dif-h4"></div>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="tab-h7">
+    <div class="card card-full">
+      <div class="card-title">H7 · Hándicap +2 del desfavorecido — λ total &lt; 3.0 y diferencia de λ &lt; 1.2</div>
+      <p style="font-size:12px;color:var(--text3);margin:0 0 10px">
+        Regla vigente en el dashboard 2 (desde el partido 1) para el +2; el +3 solo lleva λ total &lt; 3.0 y se muestra aparte para comparar.
+        La <b>diferencia</b> es |λ local − λ visita|. En el dashboard 1 las tablas miden lo que <i>habría</i> dado la regla; en el 2 se llenan con sus cierres.
+        Cuota considerada: 1.10 – 2.00. «Brecha» = acierto real − probabilidad del modelo (pp) con su ±90%.</p>
+      <div id="dif-h7"></div>
+      <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">Para comparar: hándicap +3 (sin condición de diferencia)</div>
+      <div id="dif-h7b"></div>
+    </div>
   </div>
 
   <div class="tab-panel" id="tab-diagnostico">
@@ -5479,6 +5505,63 @@ function _d2OcultarReglasD1(){
   if(!ES_D2) return;
   ['wl-capa1x2','wl-filtroedge','wl-unicidad','wl-reglas'].forEach(id=>{ const g=document.getElementById(id); const c=g&&g.closest('.grid2'); if(c) c.style.display='none'; });
 }
+
+// ── Tabs H4 (BTTS) y H7 (hándicap +2): efecto de la DIFERENCIA de λ (2026-11-06, a pedido) ─────────────────
+function _difRows(mk){
+  const out=[];
+  _DATA.filter(p=>p.resultado_partido&&p.snapshot_resultados&&p.mercados_snapshot&&p.lambda_final_l!=null&&p.lambda_final_v!=null).forEach(p=>{
+    if(!(mk in p.snapshot_resultados)||p.mercados_snapshot[mk]==null) return;
+    let cu=null; (p.watchlist||[]).concat(p.apuestas||[]).forEach(x=>{ if(x.mercado===mk&&x.cuota!=null) cu=+x.cuota; });
+    const ll=+p.lambda_final_l, lv=+p.lambda_final_v;
+    out.push({id:+p.id,tot:ll+lv,df:Math.abs(ll-lv),win:!!p.snapshot_resultados[mk],p:p.mercados_snapshot[mk]/100,cuota:cu});
+  });
+  return out;
+}
+const _DIF_BANDAS=[['&lt; 0.4',x=>x.df<0.4],['0.4 – 0.8',x=>x.df>=0.4&&x.df<0.8],['0.8 – 1.2',x=>x.df>=0.8&&x.df<1.2],['≥ 1.2',x=>x.df>=1.2]];
+const _DIF_TOT=[['λ total &lt; 2.6',x=>x.tot<2.6],['λ total 2.6 – 3.2',x=>x.tot>=2.6&&x.tot<3.2],['λ total ≥ 3.2',x=>x.tot>=3.2]];
+function _difCalib(lst,bandas){
+  return bandas.map(([l,f])=>{
+    const r=lst.filter(f), n=r.length;
+    if(!n) return '<tr><td style="text-align:left">'+l+'</td><td class="num">0</td><td colspan="3" style="color:var(--text3);text-align:center">sin cerrados</td></tr>';
+    const ac=r.filter(x=>x.win).length/n*100, pm=r.reduce((s,x)=>s+x.p,0)/n*100, g=ac-pm, se=Math.sqrt(Math.max(pm*(100-pm),1)/n);
+    return '<tr><td style="text-align:left">'+l+'</td><td class="num" style="'+(n<10?'opacity:.55':'')+'">'+n+'</td><td class="num">'+ac.toFixed(0)+'%</td><td class="num">'+pm.toFixed(0)+'%</td>'
+      +'<td class="num"><span class="'+_mejCl(g)+'"><b>'+_mejSg(g,0)+' pp</b></span> <span style="color:var(--text3);font-size:11px">±'+(1.645*se).toFixed(0)+'</span></td></tr>';
+  }).join('');
+}
+function _difTablaCal(col1,filas){
+  return '<div class="table-wrap table-wrap-scroll"><table class="hm-table"><thead><tr><th style="text-align:left">'+col1+'</th><th class="num">Partidos</th><th class="num">Acierto real</th><th class="num">Modelo</th><th class="num">Brecha (±90%)</th></tr></thead><tbody>'+filas+'</tbody></table></div>';
+}
+const _difTt=t=>'<div style="font-size:12px;color:var(--text3);margin:16px 0 6px;font-weight:600">'+t+'</div>';
+function _difBloque(el,mk,cfg){
+  const R=_difRows(mk);
+  if(!R.length){ el.innerHTML='<p class="empty">Sin partidos cerrados con este mercado todavía.</p>'; return; }
+  const bet=x=>({id:x.id,cuota:x.cuota,win:x.win});
+  const enC=R.filter(x=>x.cuota!=null&&x.cuota>=1.10&&x.cuota<=2.0);
+  let h='';
+  if(cfg.regla){
+    const conB=enC.filter(cfg.barrera), con=enC.filter(cfg.regla), exc=conB.filter(x=>!cfg.regla(x));
+    let f=_hipFila('Con la regla (se apuesta)',con.map(bet),{b:1})
+      +_hipFila('Solo la barrera de λ total, sin condición de diferencia',conB.map(bet))
+      +_hipFila('Excluidas por la diferencia (cumplen la barrera de λ total, no la regla)',exc.map(bet),{sub:1})
+      +_hipFila('Sin ninguna barrera (toda cuota 1.10 – 2.00)',enC.map(bet),{sub:1});
+    if(ES_D2){
+      const real=[]; _DATA.forEach(p=>(p.apuestas||[]).forEach(a=>{ if(a.tipo==='PICK'&&a.mercado===mk&&(a.estado==='GANADA'||a.estado==='PERDIDA')) real.push({id:+p.id,cuota:+a.cuota,win:a.estado==='GANADA'}); }));
+      f+=_hipFila('Lo realmente apostado en este dashboard (PICK '+cfg.h+')',real,{b:1});
+    }
+    h+=_difTt('① ¿Qué cambia la regla? (cuota 1.10 – 2.00)')+_hipTabla('Selección',f);
+  }
+  h+=_difTt('② Acierto real frente al modelo, por diferencia de λ (todos los partidos cerrados, sin mirar la cuota)')+_difTablaCal('|λ local − λ visita|',_difCalib(R,_DIF_BANDAS)+_difCalib(R,[['Todos',x=>true]]));
+  const cruce=[]; _DIF_TOT.forEach(([lt,ft])=>_DIF_BANDAS.forEach(([ld,fd])=>cruce.push([lt+' · diferencia '+ld,x=>ft(x)&&fd(x)])));
+  h+=_difTt('③ Cruce λ total × diferencia (acierto real frente al modelo)')+_difTablaCal('Tramo',_difCalib(R,cruce));
+  h+=_difTt('④ ROI por diferencia de λ (cuota 1.10 – 2.00, cualquier λ total)')+_hipTabla('|λ local − λ visita|',_DIF_BANDAS.map(([l,f])=>_hipFila(l,enC.filter(f).map(bet))).join('')+_hipFila('Todas',enC.map(bet),{sub:1}));
+  el.innerHTML=h;
+}
+function renderTabsDif(){
+  const a=document.getElementById('dif-h4'), b=document.getElementById('dif-h7'), c=document.getElementById('dif-h7b');
+  if(a) _difBloque(a,'btts',{h:'H4',barrera:x=>x.tot>=3.0,regla:x=>x.tot>=3.0&&x.df>=0.4});
+  if(b) _difBloque(b,'hcp2_des',{h:'H7',barrera:x=>x.tot<3.0,regla:x=>x.tot<3.0&&x.df<1.2});
+  if(c) _difBloque(c,'hcp3_des',{h:'H7',barrera:x=>x.tot<3.0,regla:x=>x.tot<3.0});
+}
 function renderAll(){
   _d2OcultarReglasD1();
   renderMetrics();
@@ -5493,6 +5576,7 @@ function renderAll(){
   if(active==='hipotesis'){renderHipotesis();}
     if(active==='diagnostico'){renderDiagnostico();}
   if(active==='mejoras'){renderMejoras();}
+  if(active==='h4'||active==='h7'){renderTabsDif();}
   if(active==='confianza'){renderConfianza();}
 }
 
