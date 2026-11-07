@@ -5269,8 +5269,8 @@ function renderMejoras(){
 // En el d2 no se apuesta nada: cada PICK / COMBO / REMATE es una HIPÓTESIS (H1–H7, C1/C2, R1) que el engine marca en
 // `hipotesis`. Este tab mide lo que esas reglas habrían dado, y el de Watchlist explica por qué lo demás no se apostó.
 const HIP_MERCADOS=['victoria_local','empate','victoria_visit','corners65','corners75','over15','over25','over35','under25','under35','under45','btts','do1x','dox2','hcp2_des','hcp3_des','over05_local','over05_visit'];
-const HIP_LBL={H1:'Over 1.5 · λ total ≥ 3.0',H2:'Over 2.5 · λ total ≥ 3.0',H3:'Over 3.5 · λ total ≥ 3.4',H4:'BTTS · λ total ≥ 3.0',
-  H5a:'Under 3.5 · sin barrera de λ',H5b:'Under 2.5 · sin barrera de λ',H6:'Doble oportunidad del favorito',H7:'Hándicap +2 / +3 · λ total < 3.0'};
+const HIP_LBL={H1:'Over 1.5 · λ total ≥ 3.0',H2:'Over 2.5 · λ total ≥ 3.0',H3:'Over 3.5 · λ total ≥ 3.4',H4:'BTTS · λ total ≥ 3.0 y diferencia ≥ 0.4',
+  H5a:'Under 3.5 · sin barrera de λ',H5b:'Under 2.5 · no se apuesta (watchlist)',H6:'Doble oportunidad del favorito',H7:'Hándicap +2 (λ < 3.0, dif. < 1.2) / +3 (λ < 3.0)'};
 function _hipCel(s){
   return s?'<td class="num" style="'+(s.n<10?'opacity:.55':'')+'">'+s.n+'</td><td class="num">'+Math.round(s.ac)+'%</td><td class="num">'+s.cuota.toFixed(2)+'</td><td class="num">'+_mejRoi(s)+' '+_mejMoe(s)+'</td><td class="num">'+_mejU(s.u)+'</td><td class="num">'+_mejPP(s)+'</td>'
     :'<td class="num" style="color:var(--text3)">0</td><td colspan="5" style="color:var(--text3);text-align:center">sin cerrados</td>';
@@ -5540,6 +5540,22 @@ document.querySelectorAll('.tab').forEach(tab=>{
     renderAll();
   });
 });
+
+// ── Índice de secciones de los tabs largos (Hipótesis y Mejoras) ──────────────
+// Cada sección es un rótulo en negrita de 14px seguido de su tarjeta; el índice se arma una sola vez, desde esos rótulos.
+(function(){
+  ['hipotesis','mejoras'].forEach(id=>{
+    const p=document.getElementById('tab-'+id); if(!p) return;
+    const rot=[...p.children].filter(e=>e.tagName==='DIV' && !e.className && /font-size:14px;font-weight:700/.test(e.getAttribute('style')||'') && e.textContent.trim());
+    if(rot.length<3) return;
+    rot.forEach((e,i)=>{ e.id='sec-'+id+'-'+i; });
+    const nav=document.createElement('div');
+    nav.style.cssText='display:flex;flex-wrap:wrap;gap:6px;margin:0 0 14px;font-size:12px;align-items:center';
+    nav.innerHTML='<span style="color:var(--text3)">Ir a:</span>'+rot.map((e,i)=>'<a href="#sec-'+id+'-'+i+'" style="padding:2px 9px;border:1px solid var(--border);border-radius:12px;color:var(--text2);text-decoration:none;background:var(--surface)">'+e.textContent.trim().replace(/&/g,'&amp;').replace(/</g,'&lt;')+'</a>').join('');
+    nav.addEventListener('click',ev=>{ const a=ev.target.closest('a'); if(!a) return; ev.preventDefault(); document.getElementById(a.getAttribute('href').slice(1)).scrollIntoView({behavior:'smooth',block:'start'}); });
+    p.insertBefore(nav,p.firstChild);
+  });
+})();
 
 // El filtro ahora re-renderiza la pestaña activa (via renderAll), no solo Apuestas:
 // asi el selector de liga corta TOTAL/por-liga tambien en Diagnostico, calibracion

@@ -267,6 +267,8 @@
   <div class="tabs">
     <div class="tab active" data-tab="apuestas">Apuestas</div>
     <div class="tab" data-tab="hipotesis">Hipótesis</div>
+    <div class="tab" data-tab="h4">H4 · BTTS</div>
+    <div class="tab" data-tab="h7">H7 · Hándicap</div>
     <div class="tab" data-tab="tendencias">Tendencias</div>
     <div class="tab" data-tab="mercados">Mercados</div>
     <div class="tab" data-tab="ligas">Por liga</div>
@@ -275,8 +277,6 @@
     <div class="tab" data-tab="confianza">Confianza</div>
     <div class="tab" data-tab="diagnostico">Diagnóstico</div>
     <div class="tab" data-tab="mejoras">Mejoras</div>
-    <div class="tab" data-tab="h4">H4 · BTTS</div>
-    <div class="tab" data-tab="h7">H7 · Hándicap</div>
   </div>
 
   <!-- Apuestas -->
@@ -594,14 +594,22 @@
         <div id="hip-resumen"></div>
       </div>
     </div>
+    <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">Evolución</div>
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
+        <div class="card-title">P&amp;L por bloques de 10 partidos cerrados</div>
+        <div id="hip-acum"></div>
+      </div>
+    </div>
+    <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">Reglas</div>
     <div class="grid2" style="margin-bottom:16px">
       <div class="card card-full">
         <div class="card-title">Reglas del dashboard 2 frente al dashboard 1</div>
         <div class="table-wrap"><table class="hm-table"><thead><tr><th style="text-align:left">Tipo</th><th style="text-align:left">Dashboard 2 (hipótesis)</th><th style="text-align:left">Dashboard 1 (reglas vigentes)</th></tr></thead><tbody>
           <tr><td style="text-align:left"><b>PICK</b></td>
-            <td style="text-align:left;font-size:12px">Una barrera de λ propia por familia: <b>H1</b> Over 1.5 y <b>H2</b> Over 2.5 con λ total ≥ 3.0 · <b>H3</b> Over 3.5 con ≥ 3.4 · <b>H4</b> BTTS con ≥ 3.0 ·
-              <b>H5a</b> Under 3.5 y <b>H5b</b> Under 2.5 sin barrera de λ (la cuota ya filtra) · <b>H6</b> DO solo del favorito (y si tiene línea validada, debe cruzarla) · <b>H7</b> Hándicap +2/+3 con &lt; 3.0.
-              Cuota entre <b>1.10 y 2.00</b>. Sin tope de PICK por partido, sin exigir EV &gt; 0 ni línea validada (salvo el DO). Under 4.5, 1X2 y Over 0.5 por equipo no entran.</td>
+            <td style="text-align:left;font-size:12px">Una barrera de λ propia por familia: <b>H1</b> Over 1.5 y <b>H2</b> Over 2.5 con λ total ≥ 3.0 · <b>H3</b> Over 3.5 con ≥ 3.4 · <b>H4</b> BTTS con λ total ≥ 3.0 y diferencia |λ local − λ visita| ≥ 0.4 ·
+              <b>H5a</b> Under 3.5 sin barrera de λ (la cuota ya filtra) · <b>H6</b> DO solo del favorito (y si tiene línea validada, debe cruzarla) · <b>H7</b> Hándicap +2 con λ total &lt; 3.0 y diferencia &lt; 1.2; +3 con λ total &lt; 3.0.
+              Cuota entre <b>1.10 y 2.00</b>. Sin tope de PICK por partido, sin exigir EV &gt; 0 ni línea validada (salvo el DO). Over 2.5 y Under 3.5 no van juntos (queda el Over 2.5). Under 2.5 (H5b), Under 4.5, 1X2 y Over 0.5 por equipo no entran: van al watchlist.</td>
             <td style="text-align:left;font-size:12px">EV &gt; 0, máximo 2 por partido (mayor P%), cuota ≤ 2.0, línea validada (Vía A) o filtro de edge (Vía B), unicidad de totales y de hándicap, DO solo del favorito.</td></tr>
           <tr><td style="text-align:left"><b>COMBO</b></td>
             <td style="text-align:left;font-size:12px">La combinada validada que cruza su cuota justa y tiene mayor P%, <b>salvo</b> si es un par <b>C1 Remates + ST</b>, <b>C2 Corners + Remates</b> o <b>C3 ST + Over 0.5 por equipo</b>, o si tiene una pata de <b>hándicap con λ total ≥ 3.0</b> (<b>C4</b>, la misma barrera de H7): entonces baja al watchlist (<code>regla_d2</code>) y el partido queda sin COMBO. Sin reemplazo; la siguiente candidata queda marcada (<code>reemplazo_d2</code>) para medirla.</td>
@@ -610,7 +618,7 @@
             <td style="text-align:left;font-size:12px"><b>S1</b>: una apuesta de remates a puerta <b>por equipo</b> (local y/o visita): la línea con EV &gt; 0 y <b>cuota ≥ 1.60</b> de mayor EV×P. Sin condición sobre la distancia a la media (en ST no ordena el ROI). Las demás bandas de cuota se miden aparte en este tab.</td>
             <td style="text-align:left;font-size:12px">No existe: los remates a puerta por equipo solo van al watchlist.</td></tr>
           <tr><td style="text-align:left"><b>REMATE</b></td>
-            <td style="text-align:left;font-size:12px"><b>R1</b>: una apuesta <b>por equipo</b> (local y/o visita; hasta 2 por partido). Líneas de remates totales con EV &gt; 0 y <b>línea − media ≥ −4 y no por encima de la línea promedio</b> (media X,Y → línea promedio Over (X−1),5); mejor EV×P de cada equipo. Nunca por encima de la línea promedio. Guarda <code>equipo_favorito</code> y <code>gap_media</code>.</td>
+            <td style="text-align:left;font-size:12px"><b>R1</b>: una apuesta <b>por equipo</b> (local y/o visita; hasta 2 por partido). Líneas de remates totales con EV &gt; 0 y <b>línea − media ≥ −4 y no por encima de la línea promedio</b> (media X,Y → línea promedio Over (X−1),5); mejor EV×P de cada equipo. Guarda <code>equipo_favorito</code> y <code>gap_media</code>.</td>
             <td style="text-align:left;font-size:12px">Mejor línea por EV×P de cada equipo con los filtros de PICK y sin tope de cuota; sin condición sobre la distancia a la media.</td></tr>
         </tbody></table></div>
       </div>
@@ -624,6 +632,13 @@
           total como un dato (el ±90% de ahí es el honesto; entre paréntesis, partidos). DO: solo el del favorito (equipo de mayor λ), y si tiene línea validada debe cruzarla.
           Los umbrales salen de datos ya vistos: se confirman o se descartan con lo que se acumule.</p>
         <div id="mej-hip"></div>
+      </div>
+    </div>
+    <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">Piso de cuota 1.10</div>
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
+        <div class="card-title">PICK de goles por cuota — ¿hizo bien el piso en dejar fuera las cuotas &lt; 1.10?</div>
+        <div id="hip-cuota"></div>
       </div>
     </div>
     <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">Victoria del favorito (1X2)</div>
@@ -674,20 +689,6 @@
       <div class="card card-full">
         <div class="card-title">¿Qué bandas de cuota y de distancia a la media rinden en remates a puerta por equipo?</div>
         <div id="hip-puerta"></div>
-      </div>
-    </div>
-    <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">Piso de cuota 1.10</div>
-    <div class="grid2" style="margin-bottom:16px">
-      <div class="card card-full">
-        <div class="card-title">PICK de goles por cuota — ¿hizo bien el piso en dejar fuera las cuotas &lt; 1.10?</div>
-        <div id="hip-cuota"></div>
-      </div>
-    </div>
-    <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">Evolución</div>
-    <div class="grid2">
-      <div class="card card-full">
-        <div class="card-title">P&amp;L por bloques de 10 partidos cerrados</div>
-        <div id="hip-acum"></div>
       </div>
     </div>
   </div>
@@ -5324,8 +5325,8 @@ function renderMejoras(){
 // En el d2 no se apuesta nada: cada PICK / COMBO / REMATE es una HIPÓTESIS (H1–H7, C1/C2, R1) que el engine marca en
 // `hipotesis`. Este tab mide lo que esas reglas habrían dado, y el de Watchlist explica por qué lo demás no se apostó.
 const HIP_MERCADOS=['victoria_local','empate','victoria_visit','corners65','corners75','over15','over25','over35','under25','under35','under45','btts','do1x','dox2','hcp2_des','hcp3_des','over05_local','over05_visit'];
-const HIP_LBL={H1:'Over 1.5 · λ total ≥ 3.0',H2:'Over 2.5 · λ total ≥ 3.0',H3:'Over 3.5 · λ total ≥ 3.4',H4:'BTTS · λ total ≥ 3.0',
-  H5a:'Under 3.5 · sin barrera de λ',H5b:'Under 2.5 · sin barrera de λ',H6:'Doble oportunidad del favorito',H7:'Hándicap +2 / +3 · λ total < 3.0'};
+const HIP_LBL={H1:'Over 1.5 · λ total ≥ 3.0',H2:'Over 2.5 · λ total ≥ 3.0',H3:'Over 3.5 · λ total ≥ 3.4',H4:'BTTS · λ total ≥ 3.0 y diferencia ≥ 0.4',
+  H5a:'Under 3.5 · sin barrera de λ',H5b:'Under 2.5 · no se apuesta (watchlist)',H6:'Doble oportunidad del favorito',H7:'Hándicap +2 (λ < 3.0, dif. < 1.2) / +3 (λ < 3.0)'};
 function _hipCel(s){
   return s?'<td class="num" style="'+(s.n<10?'opacity:.55':'')+'">'+s.n+'</td><td class="num">'+Math.round(s.ac)+'%</td><td class="num">'+s.cuota.toFixed(2)+'</td><td class="num">'+_mejRoi(s)+' '+_mejMoe(s)+'</td><td class="num">'+_mejU(s.u)+'</td><td class="num">'+_mejPP(s)+'</td>'
     :'<td class="num" style="color:var(--text3)">0</td><td colspan="5" style="color:var(--text3);text-align:center">sin cerrados</td>';
@@ -5595,6 +5596,22 @@ document.querySelectorAll('.tab').forEach(tab=>{
     renderAll();
   });
 });
+
+// ── Índice de secciones de los tabs largos (Hipótesis y Mejoras) ──────────────
+// Cada sección es un rótulo en negrita de 14px seguido de su tarjeta; el índice se arma una sola vez, desde esos rótulos.
+(function(){
+  ['hipotesis','mejoras'].forEach(id=>{
+    const p=document.getElementById('tab-'+id); if(!p) return;
+    const rot=[...p.children].filter(e=>e.tagName==='DIV' && !e.className && /font-size:14px;font-weight:700/.test(e.getAttribute('style')||'') && e.textContent.trim());
+    if(rot.length<3) return;
+    rot.forEach((e,i)=>{ e.id='sec-'+id+'-'+i; });
+    const nav=document.createElement('div');
+    nav.style.cssText='display:flex;flex-wrap:wrap;gap:6px;margin:0 0 14px;font-size:12px;align-items:center';
+    nav.innerHTML='<span style="color:var(--text3)">Ir a:</span>'+rot.map((e,i)=>'<a href="#sec-'+id+'-'+i+'" style="padding:2px 9px;border:1px solid var(--border);border-radius:12px;color:var(--text2);text-decoration:none;background:var(--surface)">'+e.textContent.trim().replace(/&/g,'&amp;').replace(/</g,'&lt;')+'</a>').join('');
+    nav.addEventListener('click',ev=>{ const a=ev.target.closest('a'); if(!a) return; ev.preventDefault(); document.getElementById(a.getAttribute('href').slice(1)).scrollIntoView({behavior:'smooth',block:'start'}); });
+    p.insertBefore(nav,p.firstChild);
+  });
+})();
 
 // El filtro ahora re-renderiza la pestaña activa (via renderAll), no solo Apuestas:
 // asi el selector de liga corta TOTAL/por-liga tambien en Diagnostico, calibracion
