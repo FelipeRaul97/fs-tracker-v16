@@ -1966,7 +1966,8 @@ const TRACKER_DATA = [
       }
     ],
     "id_origen": "158",
-    "reglas_d2": "hipotesis-2026-11-02"
+    "reglas_d2": "hipotesis-2026-11-02",
+    "hora": "15:00"
   },
   {
     "id": "002",
@@ -3813,7 +3814,8 @@ const TRACKER_DATA = [
       }
     ],
     "id_origen": "159",
-    "reglas_d2": "hipotesis-2026-11-02"
+    "reglas_d2": "hipotesis-2026-11-02",
+    "hora": "15:00"
   },
   {
     "id": "003",
@@ -6066,12 +6068,13 @@ const TRACKER_DATA = [
       }
     ],
     "id_origen": "160",
-    "reglas_d2": "hipotesis-2026-11-02"
+    "reglas_d2": "hipotesis-2026-11-02",
+    "hora": "07:30"
   },
   {
     "id": "004",
     "fecha": "2026-11-07",
-    "jornada": 10,
+    "jornada": 11,
     "liga": "I1",
     "partido": "Cagliari vs Frosinone",
     "lambda_forma_l": 1.4165,
@@ -8312,12 +8315,13 @@ const TRACKER_DATA = [
       }
     ],
     "id_origen": "161",
-    "reglas_d2": "hipotesis-2026-11-02"
+    "reglas_d2": "hipotesis-2026-11-02",
+    "hora": "09:00"
   },
   {
     "id": "005",
     "fecha": "2026-11-07",
-    "jornada": 10,
+    "jornada": 9,
     "liga": "D1",
     "partido": "Mainz vs Bayern Munich",
     "lambda_forma_l": 1.4915,
@@ -10033,12 +10037,13 @@ const TRACKER_DATA = [
       }
     ],
     "id_origen": "162",
-    "reglas_d2": "hipotesis-2026-11-02"
+    "reglas_d2": "hipotesis-2026-11-02",
+    "hora": "09:30"
   },
   {
     "id": "006",
     "fecha": "2026-11-07",
-    "jornada": 10,
+    "jornada": 9,
     "liga": "D1",
     "partido": "Borussia Dortmund vs Elversberg",
     "lambda_forma_l": 2.2904,
@@ -11077,12 +11082,13 @@ const TRACKER_DATA = [
       }
     ],
     "id_origen": "163",
-    "reglas_d2": "hipotesis-2026-11-02"
+    "reglas_d2": "hipotesis-2026-11-02",
+    "hora": "09:30"
   },
   {
     "id": "007",
     "fecha": "2026-11-07",
-    "jornada": 10,
+    "jornada": 9,
     "liga": "D1",
     "partido": "RB Leipzig vs Augsburg",
     "lambda_forma_l": 2.4466,
@@ -12532,12 +12538,13 @@ const TRACKER_DATA = [
       }
     ],
     "id_origen": "164",
-    "reglas_d2": "hipotesis-2026-11-02"
+    "reglas_d2": "hipotesis-2026-11-02",
+    "hora": "09:30"
   },
   {
     "id": "008",
     "fecha": "2026-11-07",
-    "jornada": 10,
+    "jornada": 9,
     "liga": "D1",
     "partido": "Paderborn vs Eintracht Frankfurt",
     "lambda_forma_l": 1.6129,
@@ -15054,7 +15061,8 @@ const TRACKER_DATA = [
       }
     ],
     "id_origen": "165",
-    "reglas_d2": "hipotesis-2026-11-02"
+    "reglas_d2": "hipotesis-2026-11-02",
+    "hora": "09:30"
   },
   {
     "id": "009",
@@ -16161,7 +16169,8 @@ const TRACKER_DATA = [
       }
     ],
     "id_origen": "166",
-    "reglas_d2": "hipotesis-2026-11-02"
+    "reglas_d2": "hipotesis-2026-11-02",
+    "hora": "10:00"
   },
   {
     "id": "010",
@@ -18311,12 +18320,13 @@ const TRACKER_DATA = [
       }
     ],
     "id_origen": "167",
-    "reglas_d2": "hipotesis-2026-11-02"
+    "reglas_d2": "hipotesis-2026-11-02",
+    "hora": "10:15"
   },
   {
     "id": "011",
     "fecha": "2026-11-07",
-    "jornada": 10,
+    "jornada": 9,
     "liga": "D1",
     "partido": "VfB Stuttgart vs Werder Bremen",
     "lambda_forma_l": 1.8684,
@@ -19969,7 +19979,8 @@ const TRACKER_DATA = [
       }
     ],
     "id_origen": "168",
-    "reglas_d2": "hipotesis-2026-11-02"
+    "reglas_d2": "hipotesis-2026-11-02",
+    "hora": "12:30"
   },
   {
     "id": "012",
@@ -22180,7 +22191,8 @@ const TRACKER_DATA = [
       }
     ],
     "id_origen": "169",
-    "reglas_d2": "hipotesis-2026-11-02"
+    "reglas_d2": "hipotesis-2026-11-02",
+    "hora": "12:30"
   },
   {
     "id": "013",
@@ -24006,7 +24018,8 @@ const TRACKER_DATA = [
       }
     ],
     "id_origen": "170",
-    "reglas_d2": "hipotesis-2026-11-02"
+    "reglas_d2": "hipotesis-2026-11-02",
+    "hora": "12:30"
   },
   {
     "id": "014",
@@ -25658,7 +25671,8 @@ const TRACKER_DATA = [
       }
     ],
     "id_origen": "171",
-    "reglas_d2": "hipotesis-2026-11-02"
+    "reglas_d2": "hipotesis-2026-11-02",
+    "hora": "13:00"
   },
   {
     "id": "015",
@@ -26730,7 +26744,8 @@ const TRACKER_DATA = [
       }
     ],
     "id_origen": "172",
-    "reglas_d2": "hipotesis-2026-11-02"
+    "reglas_d2": "hipotesis-2026-11-02",
+    "hora": "14:45"
   },
   {
     "id": "016",
@@ -28355,7 +28370,8 @@ const TRACKER_DATA = [
       }
     ],
     "id_origen": "173",
-    "reglas_d2": "hipotesis-2026-11-02"
+    "reglas_d2": "hipotesis-2026-11-02",
+    "hora": "15:00"
   },
   {
     "id": "017",
@@ -29354,6 +29370,7 @@ const TRACKER_DATA = [
       }
     ],
     "id_origen": "174",
-    "reglas_d2": "hipotesis-2026-11-02"
+    "reglas_d2": "hipotesis-2026-11-02",
+    "hora": "15:05"
   }
 ];

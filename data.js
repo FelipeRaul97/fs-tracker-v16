@@ -171757,7 +171757,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": true,
       "visit_corners_equipo_over6.5": true,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "hora": "09:00"
   },
   {
     "id": "153",
@@ -172757,7 +172758,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "hora": "09:00"
   },
   {
     "id": "154",
@@ -174183,7 +174185,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": true,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "hora": "10:15"
   },
   {
     "id": "155",
@@ -176251,7 +176254,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
     },
-    "cotizada_en_vivo": true
+    "cotizada_en_vivo": true,
+    "hora": "11:30"
   },
   {
     "id": "156",
@@ -177530,7 +177534,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "hora": "11:15"
   },
   {
     "id": "157",
@@ -179352,7 +179357,8 @@ const TRACKER_DATA = [
       "visit_corners_equipo_over5.5": false,
       "visit_corners_equipo_over6.5": false,
       "visit_corners_equipo_over7.5": false
-    }
+    },
+    "hora": "11:15"
   },
   {
     "id": "158",
@@ -181315,7 +181321,8 @@ const TRACKER_DATA = [
         "ev_pct": 14.0,
         "cotizada": true
       }
-    ]
+    ],
+    "hora": "15:00"
   },
   {
     "id": "159",
@@ -183158,7 +183165,8 @@ const TRACKER_DATA = [
         "ev_pct": -0.6,
         "cotizada": true
       }
-    ]
+    ],
+    "hora": "15:00"
   },
   {
     "id": "160",
@@ -185386,12 +185394,13 @@ const TRACKER_DATA = [
         "ev_pct": 1.2,
         "cotizada": true
       }
-    ]
+    ],
+    "hora": "07:30"
   },
   {
     "id": "161",
     "fecha": "2026-11-07",
-    "jornada": 10,
+    "jornada": 11,
     "liga": "I1",
     "partido": "Cagliari vs Frosinone",
     "lambda_forma_l": 1.4165,
@@ -187607,12 +187616,13 @@ const TRACKER_DATA = [
         "ev_pct": null,
         "cotizada": false
       }
-    ]
+    ],
+    "hora": "09:00"
   },
   {
     "id": "162",
     "fecha": "2026-11-07",
-    "jornada": 10,
+    "jornada": 9,
     "liga": "D1",
     "partido": "Mainz vs Bayern Munich",
     "lambda_forma_l": 1.4915,
@@ -189300,12 +189310,13 @@ const TRACKER_DATA = [
         "ev_pct": -5.3,
         "cotizada": true
       }
-    ]
+    ],
+    "hora": "09:30"
   },
   {
     "id": "163",
     "fecha": "2026-11-07",
-    "jornada": 10,
+    "jornada": 9,
     "liga": "D1",
     "partido": "Borussia Dortmund vs Elversberg",
     "lambda_forma_l": 2.2904,
@@ -190310,12 +190321,13 @@ const TRACKER_DATA = [
         "ev_pct": -6.4,
         "cotizada": true
       }
-    ]
+    ],
+    "hora": "09:30"
   },
   {
     "id": "164",
     "fecha": "2026-11-07",
-    "jornada": 10,
+    "jornada": 9,
     "liga": "D1",
     "partido": "RB Leipzig vs Augsburg",
     "lambda_forma_l": 2.4466,
@@ -191718,12 +191730,13 @@ const TRACKER_DATA = [
         "ev_pct": -2.8,
         "cotizada": true
       }
-    ]
+    ],
+    "hora": "09:30"
   },
   {
     "id": "165",
     "fecha": "2026-11-07",
-    "jornada": 10,
+    "jornada": 9,
     "liga": "D1",
     "partido": "Paderborn vs Eintracht Frankfurt",
     "lambda_forma_l": 1.6129,
@@ -194217,7 +194230,8 @@ const TRACKER_DATA = [
         "ev_pct": -4.8,
         "cotizada": true
       }
-    ]
+    ],
+    "hora": "09:30"
   },
   {
     "id": "166",
@@ -195305,7 +195319,8 @@ const TRACKER_DATA = [
         "ev_pct": -17.6,
         "cotizada": true
       }
-    ]
+    ],
+    "hora": "10:00"
   },
   {
     "id": "167",
@@ -197448,12 +197463,13 @@ const TRACKER_DATA = [
         "ev_pct": -5.2,
         "cotizada": true
       }
-    ]
+    ],
+    "hora": "10:15"
   },
   {
     "id": "168",
     "fecha": "2026-11-07",
-    "jornada": 10,
+    "jornada": 9,
     "liga": "D1",
     "partido": "VfB Stuttgart vs Werder Bremen",
     "lambda_forma_l": 1.8684,
@@ -199078,7 +199094,8 @@ const TRACKER_DATA = [
         "ev_pct": -12.1,
         "cotizada": true
       }
-    ]
+    ],
+    "hora": "12:30"
   },
   {
     "id": "169",
@@ -201254,7 +201271,8 @@ const TRACKER_DATA = [
         "ev_pct": null,
         "cotizada": false
       }
-    ]
+    ],
+    "hora": "12:30"
   },
   {
     "id": "170",
@@ -203090,7 +203108,8 @@ const TRACKER_DATA = [
         "ev_pct": -4.0,
         "cotizada": true
       }
-    ]
+    ],
+    "hora": "12:30"
   },
   {
     "id": "171",
@@ -204733,7 +204752,8 @@ const TRACKER_DATA = [
         "ev_pct": -16.4,
         "cotizada": true
       }
-    ]
+    ],
+    "hora": "13:00"
   },
   {
     "id": "172",
@@ -205800,7 +205820,8 @@ const TRACKER_DATA = [
         "ev_pct": -7.3,
         "cotizada": true
       }
-    ]
+    ],
+    "hora": "14:45"
   },
   {
     "id": "173",
@@ -207404,7 +207425,8 @@ const TRACKER_DATA = [
         "ev_pct": 8.1,
         "cotizada": true
       }
-    ]
+    ],
+    "hora": "15:00"
   },
   {
     "id": "174",
@@ -208379,6 +208401,7 @@ const TRACKER_DATA = [
         "ev_pct": 13.0,
         "cotizada": true
       }
-    ]
+    ],
+    "hora": "15:05"
   }
 ];
