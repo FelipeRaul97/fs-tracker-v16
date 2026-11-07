@@ -4962,7 +4962,7 @@ const MEJ_HIP=[
   ['H1','Over 1.5 con λ total ≥ 3.0','over15',(c,i)=>c.lt>=3.0],
   ['H2','Over 2.5 con λ total ≥ 3.0','over25',(c,i)=>c.lt>=3.0],
   ['H3','Over 3.5 con λ total ≥ 3.4','over35',(c,i)=>c.lt>=3.4],
-  ['H4','BTTS con λ total ≥ 2.6','btts',(c,i)=>c.lt>=2.6],
+  ['H4','BTTS con λ total ≥ 3.0','btts',(c,i)=>c.lt>=3.0],
   ['H5a','Under 3.5, sin barrera de λ','under35',(c,i)=>true],
   ['H5b','Under 2.5, sin barrera de λ','under25',(c,i)=>true],
   ['H6','DO del favorito (si tiene línea validada, debe cruzarla)',['do1x','dox2'],(c,i)=>{
@@ -5243,7 +5243,7 @@ function renderMejoras(){
 // En el d2 no se apuesta nada: cada PICK / COMBO / REMATE es una HIPÓTESIS (H1–H7, C1/C2, R1) que el engine marca en
 // `hipotesis`. Este tab mide lo que esas reglas habrían dado, y el de Watchlist explica por qué lo demás no se apostó.
 const HIP_MERCADOS=['victoria_local','empate','victoria_visit','corners65','corners75','over15','over25','over35','under25','under35','under45','btts','do1x','dox2','hcp2_des','hcp3_des','over05_local','over05_visit'];
-const HIP_LBL={H1:'Over 1.5 · λ total ≥ 3.0',H2:'Over 2.5 · λ total ≥ 3.0',H3:'Over 3.5 · λ total ≥ 3.4',H4:'BTTS · λ total ≥ 2.6',
+const HIP_LBL={H1:'Over 1.5 · λ total ≥ 3.0',H2:'Over 2.5 · λ total ≥ 3.0',H3:'Over 3.5 · λ total ≥ 3.4',H4:'BTTS · λ total ≥ 3.0',
   H5a:'Under 3.5 · sin barrera de λ',H5b:'Under 2.5 · sin barrera de λ',H6:'Doble oportunidad del favorito',H7:'Hándicap +2 / +3 · λ total < 3.0'};
 function _hipCel(s){
   return s?'<td class="num" style="'+(s.n<10?'opacity:.55':'')+'">'+s.n+'</td><td class="num">'+Math.round(s.ac)+'%</td><td class="num">'+s.cuota.toFixed(2)+'</td><td class="num">'+_mejRoi(s)+' '+_mejMoe(s)+'</td><td class="num">'+_mejU(s.u)+'</td><td class="num">'+_mejPP(s)+'</td>'
@@ -5397,7 +5397,7 @@ function _hipRazon(p,w){
   if(cu<1.10) return 'Cuota < 1.10 (piso)';
   if(m==='over15'||m==='over25') return lt<3.0?'Over 1.5 / 2.5 con λ total < 3.0':null;
   if(m==='over35') return lt<3.4?'Over 3.5 con λ total < 3.4':null;
-  if(m==='btts') return lt<2.6?'BTTS con λ total < 2.6':null;
+  if(m==='btts') return lt<3.0?'BTTS con λ total < 3.0':null;
   if(m==='hcp2_des'||m==='hcp3_des') return lt>=3.0?'Hándicap con λ total ≥ 3.0':null;
   if(m==='do1x'||m==='dox2'){
     if((m==='do1x')!==(ll>=lv)) return 'Doble oportunidad del desfavorecido';

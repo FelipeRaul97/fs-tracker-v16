@@ -3914,22 +3914,6 @@ const TRACKER_DATA = [
       },
       {
         "tipo": "PICK",
-        "mercado": "btts",
-        "linea": null,
-        "etiqueta": "BTTS",
-        "cuota": 1.7,
-        "prob": 57.5,
-        "ev_pct": -2.3,
-        "cuota_justa": 1.7,
-        "cuota_segura": 1.83,
-        "acierto_hist": 58.7,
-        "n_hist": 606,
-        "hipotesis": "H4",
-        "estado": "PENDIENTE",
-        "pl": null
-      },
-      {
-        "tipo": "PICK",
         "mercado": "hcp2_des",
         "linea": null,
         "etiqueta": "HCP +2 Tottenham",
@@ -4006,6 +3990,19 @@ const TRACKER_DATA = [
     ],
     "watchlist": [
       {
+        "mercado": "btts",
+        "linea": null,
+        "etiqueta": "BTTS",
+        "cuota": 1.7,
+        "prob": 57.5,
+        "ev_pct": -2.3,
+        "cuota_justa": 1.7,
+        "cuota_segura": 1.83,
+        "acierto_hist": 58.7,
+        "n_hist": 606,
+        "hipotesis": "H4"
+      },
+      {
         "mercado": "over15",
         "linea": null,
         "etiqueta": "Over 1.5",
@@ -4068,6 +4065,14 @@ const TRACKER_DATA = [
         "cuota_segura": 2.17,
         "acierto_hist": 51.3,
         "n_hist": 359
+      },
+      {
+        "mercado": "under25",
+        "linea": null,
+        "etiqueta": "Under 2.5",
+        "cuota": 1.87,
+        "prob": 47.9,
+        "ev_pct": -10.4
       },
       {
         "mercado": "victoria_local",
@@ -4734,14 +4739,6 @@ const TRACKER_DATA = [
         "prob": 80.9,
         "ev_pct": 0.3,
         "tipo": "POR_EQUIPO"
-      },
-      {
-        "mercado": "under25",
-        "linea": null,
-        "etiqueta": "Under 2.5",
-        "cuota": 1.87,
-        "prob": 47.9,
-        "ev_pct": -10.4
       }
     ],
     "mercados_snapshot": {
@@ -16200,22 +16197,6 @@ const TRACKER_DATA = [
     "apuestas": [
       {
         "tipo": "PICK",
-        "mercado": "btts",
-        "linea": null,
-        "etiqueta": "BTTS",
-        "cuota": 1.78,
-        "prob": 57.0,
-        "ev_pct": 1.5,
-        "cuota_justa": 1.7,
-        "cuota_segura": 1.83,
-        "acierto_hist": 58.7,
-        "n_hist": 606,
-        "hipotesis": "H4",
-        "estado": "PENDIENTE",
-        "pl": null
-      },
-      {
-        "tipo": "PICK",
         "mercado": "do1x",
         "linea": null,
         "etiqueta": "DO Espanyol o Empate",
@@ -16287,6 +16268,19 @@ const TRACKER_DATA = [
       }
     ],
     "watchlist": [
+      {
+        "mercado": "btts",
+        "linea": null,
+        "etiqueta": "BTTS",
+        "cuota": 1.78,
+        "prob": 57.0,
+        "ev_pct": 1.5,
+        "cuota_justa": 1.7,
+        "cuota_segura": 1.83,
+        "acierto_hist": 58.7,
+        "n_hist": 606,
+        "hipotesis": "H4"
+      },
       {
         "mercado": "over15",
         "linea": null,
@@ -26799,22 +26793,6 @@ const TRACKER_DATA = [
         "pl": null
       },
       {
-        "tipo": "PICK",
-        "mercado": "btts",
-        "linea": null,
-        "etiqueta": "BTTS",
-        "cuota": 1.87,
-        "prob": 55.6,
-        "ev_pct": 4.0,
-        "cuota_justa": 1.7,
-        "cuota_segura": 1.83,
-        "acierto_hist": 58.7,
-        "n_hist": 606,
-        "hipotesis": "H4",
-        "estado": "PENDIENTE",
-        "pl": null
-      },
-      {
         "tipo": "COMBO",
         "mercado": "over15+hcp3_local",
         "etiqueta": "Over 1.5 + HCP +3 L",
@@ -26871,6 +26849,19 @@ const TRACKER_DATA = [
       }
     ],
     "watchlist": [
+      {
+        "mercado": "btts",
+        "linea": null,
+        "etiqueta": "BTTS",
+        "cuota": 1.87,
+        "prob": 55.6,
+        "ev_pct": 4.0,
+        "cuota_justa": 1.7,
+        "cuota_segura": 1.83,
+        "acierto_hist": 58.7,
+        "n_hist": 606,
+        "hipotesis": "H4"
+      },
       {
         "mercado": "over05_local",
         "linea": null,
