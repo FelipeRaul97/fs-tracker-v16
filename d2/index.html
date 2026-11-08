@@ -352,6 +352,14 @@
       <div class="chart-note">P modelo = probabilidad media que el engine daba a esa línea; Acierto = lo que pasó. Las líneas largas
         (cuota alta) son donde se concentra el retorno y donde la muestra es más frágil.</div>
     </div>
+    <div class="card card-full" id="card-puerta-mercados" style="margin-bottom:16px;display:none">
+      <div class="card-title">A PUERTA — lado × rango de cuota — WR% y ROI% (remates a puerta de un equipo)</div>
+      <div style="overflow-x:auto" id="hm-puerta-cuota"></div>
+      <div class="chart-note">Hasta una apuesta A PUERTA por equipo (la línea de mayor EV×prob con cuota mínima 1.60). Celdas coloreadas por ROI%.</div>
+      <div style="font-size:12px;color:var(--text3);margin:16px 0 4px;font-weight:600">Por línea — ¿el modelo acierta lo que dice en cada línea?</div>
+      <div style="overflow-x:auto" id="puerta-lineas"></div>
+      <div class="chart-note">P modelo = probabilidad media que el engine daba a esa línea; Acierto = lo que pasó.</div>
+    </div>
     <div class="grid2">
       <div class="card"><div class="card-title">Rendimiento por tipo</div><div id="tipo-stats"></div></div>
       <div class="card"><div class="card-title">Mercados más frecuentes</div><div id="mercado-freq"></div></div>
@@ -2330,14 +2338,11 @@ function renderMercadoCuotaHeatmap(){
 // REMATE (2026-10-26, a pedido): mismo heatmap que el de PICKs pero para la apuesta REMATE
 // (remates totales de un equipo). Filas = lado, columnas = rango de cuota (sin tope: hay 2.00-3.00 y 3.00+),
 // y debajo una tabla por linea con P modelo vs acierto real.
-function renderRemateMercados(){
-  const el=document.getElementById('hm-remate-cuota'), el2=document.getElementById('remate-lineas');
+function _hmRemateTipo(tipo, idHm, idLin, filas, bands, minN){
+  const el=document.getElementById(idHm), el2=document.getElementById(idLin);
   if(!el) return;
-  const bets=flatBets().filter(a=>a.tipo==='REMATE'&&(a.estado==='GANADA'||a.estado==='PERDIDA'));
-  if(bets.length<3){ el.innerHTML='<p class="empty">Mínimo 3 apuestas REMATE confirmadas</p>'; if(el2) el2.innerHTML=''; return; }
-  const bands=[{l:'< 1.40',min:0,max:1.40},{l:'1.40-1.60',min:1.40,max:1.60},{l:'1.60-2.00',min:1.60,max:2.00},
-    {l:'2.00-3.00',min:2.00,max:3.00},{l:'3.00+',min:3.00,max:999}];
-  const filas=[['local_remates','Remates · local'],['visit_remates','Remates · visita']];
+  const bets=flatBets().filter(a=>a.tipo===tipo&&(a.estado==='GANADA'||a.estado==='PERDIDA'));
+  if(bets.length<minN){ el.innerHTML='<p class="empty">Mínimo '+minN+' apuestas '+(tipo==='PUERTA'?'A PUERTA':tipo)+' confirmadas</p>'; if(el2) el2.innerHTML=''; return; }
   const celda=(en,tit)=>{
     if(!en.length) return '<td style="background:var(--surface2);color:var(--text3);text-align:center">--</td>';
     const cs=calcStats(en), roi=cs.roi||0, pl=cs.pl||0, wr=cs.wr||0;
@@ -2371,6 +2376,15 @@ function renderRemateMercados(){
   });
   h2+='</tbody></table>';
   el2.innerHTML=h2;
+}
+function renderRemateMercados(){
+  _hmRemateTipo('REMATE','hm-remate-cuota','remate-lineas',[['local_remates','Remates · local'],['visit_remates','Remates · visita']],
+    [{l:'< 1.40',min:0,max:1.40},{l:'1.40-1.60',min:1.40,max:1.60},{l:'1.60-2.00',min:1.60,max:2.00},{l:'2.00-3.00',min:2.00,max:3.00},{l:'3.00+',min:3.00,max:999}],3);
+  // A PUERTA (solo d2): misma tabla; la apuesta exige cuota >= 1.60, por eso no hay rangos por debajo
+  const c=document.getElementById('card-puerta-mercados');
+  if(c) c.style.display=ES_D2?'':'none';
+  if(ES_D2) _hmRemateTipo('PUERTA','hm-puerta-cuota','puerta-lineas',[['local_remates_puerta','A puerta · local'],['visit_remates_puerta','A puerta · visita']],
+    [{l:'1.60-2.00',min:1.60,max:2.00},{l:'2.00-3.00',min:2.00,max:3.00},{l:'3.00+',min:3.00,max:999}],3);
 }
 
 // Mercado x Liga (2026-09-21, a pedido -- "cuales son los mercados que mas me
