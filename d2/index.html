@@ -269,6 +269,7 @@
     <div class="tab" data-tab="hipotesis">Hipótesis</div>
     <div class="tab" data-tab="h4">H4 · BTTS</div>
     <div class="tab" data-tab="h7">H7 · Hándicap</div>
+    <div class="tab" data-tab="remates">Remates</div>
     <div class="tab" data-tab="tendencias">Tendencias</div>
     <div class="tab" data-tab="mercados">Mercados</div>
     <div class="tab" data-tab="ligas">Por liga</div>
@@ -342,6 +343,39 @@
       <div style="overflow-x:auto" id="hm-mercado-cuota"></div>
       <div class="chart-note">Celdas coloreadas por ROI%. Verde = rentable, rojo = negativo. Solo celdas con N >= 1. Un PICK no pasa de cuota 2.00 (tope vigente), por eso el último rango es 1.60-2.00.</div>
     </div>
+    <div class="grid2">
+      <div class="card"><div class="card-title">Rendimiento por tipo</div><div id="tipo-stats"></div></div>
+      <div class="card"><div class="card-title">Mercados más frecuentes</div><div id="mercado-freq"></div></div>
+    </div>
+    <div class="card card-full" style="margin-top:16px">
+      <div class="card-title">COMBOs por par de mercados</div>
+      <p style="font-size:12px;color:var(--text3);margin:0 0 10px">
+        Cada COMBO se analiza como una unidad (su cuota ya incluye la correlación entre patas),
+        agrupado por el par de mercados sin las líneas. <b>Prob. modelo vs WR</b> mide si la
+        probabilidad conjunta del engine es honesta; <b>margen</b> es cuánto superó la cuota
+        a la línea justa validada; <b>pata que falló</b> sale de los 60 resultados del partido.
+        Con menos de 5 cerrados por par, solo orienta.</p>
+      <div id="combos-por-par" style="overflow-x:auto"></div>
+    </div>
+  </div>
+
+  <!-- Remates: REMATE (remates totales por equipo) y A PUERTA; reune lo que estaba en Mercados, Mejoras y (d2) Hipótesis -->
+  <div class="tab-panel" id="tab-remates">
+    <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">REMATE R1</div>
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
+        <div class="card-title">¿Acierta R1 al quedarse con la zona de hasta 4 por debajo de la media, sin pasar la línea promedio?</div>
+        <div id="hip-remate"></div>
+      </div>
+    </div>
+    <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">Remates a puerta S1</div>
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
+        <div class="card-title">¿Qué bandas de cuota y de distancia a la media rinden en remates a puerta por equipo?</div>
+        <div id="hip-puerta"></div>
+      </div>
+    </div>
+    <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">Rendimiento por cuota y por línea</div>
     <div class="card card-full" style="margin-bottom:16px">
       <div class="card-title">REMATE — lado × rango de cuota — WR% y ROI% (remates totales de un equipo)</div>
       <div style="overflow-x:auto" id="hm-remate-cuota"></div>
@@ -360,19 +394,90 @@
       <div style="overflow-x:auto" id="puerta-lineas"></div>
       <div class="chart-note">P modelo = probabilidad media que el engine daba a esa línea; Acierto = lo que pasó.</div>
     </div>
-    <div class="grid2">
-      <div class="card"><div class="card-title">Rendimiento por tipo</div><div id="tipo-stats"></div></div>
-      <div class="card"><div class="card-title">Mercados más frecuentes</div><div id="mercado-freq"></div></div>
+    <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">Cómo elegir la línea — REMATE y mercados por equipo</div>
+    <p style="font-size:12px;color:var(--text3);margin:0 0 10px">Reglas candidatas, detalle de la regla R1 del dashboard 2 y qué mercados por equipo rinden si pasaran el filtro de PICK.</p>
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
+        <div class="card-title">REMATE y mercados por equipo — reglas candidatas</div>
+        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">
+          Misma lectura que la tabla de arriba. Cada regla parte de las líneas Over de los remates totales
+          de un equipo. Es el único mercado donde el EV separó ganadores de perdedores en los tres tercios del histórico, y donde la elección de línea
+          por EV×P le ganó al azar entre candidatas con EV &gt; 0. «Línea − media» usa <code>mu_equipo</code>, la media de remates que espera el modelo.
+          Los controles no deberían pagar: si lo hacen, la hipótesis correspondiente se debilita. La simulación usa solo el filtro de EV &gt; 0
+          (no las Vías A/B de <code>add_bet.py</code>), por eso difiere un poco del REMATE real.</p>
+        <div id="mej-reglas-eq"></div>
+      </div>
     </div>
-    <div class="card card-full" style="margin-top:16px">
-      <div class="card-title">COMBOs por par de mercados</div>
-      <p style="font-size:12px;color:var(--text3);margin:0 0 10px">
-        Cada COMBO se analiza como una unidad (su cuota ya incluye la correlación entre patas),
-        agrupado por el par de mercados sin las líneas. <b>Prob. modelo vs WR</b> mide si la
-        probabilidad conjunta del engine es honesta; <b>margen</b> es cuánto superó la cuota
-        a la línea justa validada; <b>pata que falló</b> sale de los 60 resultados del partido.
-        Con menos de 5 cerrados por par, solo orienta.</p>
-      <div id="combos-por-par" style="overflow-x:auto"></div>
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
+        <div class="card-title">REMATE — rendimiento de los remates totales por equipo (todo el histórico)</div>
+        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">
+          Cada partido cerrado cuenta como si la regla hubiera existido desde el inicio. Cambia el criterio de
+          línea y el lado para ver cómo responde el mercado; las bandas de cuota muestran de dónde sale el ROI.</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;font-size:12px;margin-bottom:10px;align-items:center">
+          <label>Línea por
+            <select id="seg-rem-crit" onchange="_segRemate()" style="font-size:12px">
+              <option value="evp">Mayor EV×prob (regla)</option><option value="p">Mayor probabilidad</option></select></label>
+          <label>Lado
+            <select id="seg-rem-lado" onchange="_segRemate()" style="font-size:12px">
+              <option value="regla">Un lado por partido (mayor P%)</option><option value="local">Solo local</option>
+              <option value="visita">Solo visita</option><option value="ambos">Los dos lados</option></select></label>
+        </div>
+        <div id="seg-remate"></div>
+        <div style="font-size:12px;color:var(--text3);margin:18px 0 4px;font-weight:600">
+          Por distancia a la media del modelo — ¿qué líneas pagan según lo lejos que están de lo que el modelo espera?</div>
+        <p style="font-size:12px;color:var(--text3);margin:0 0 8px">
+          Cada fila agrupa <b>todas las líneas de remates totales que pasan el filtro de PICK</b> (se apuesten o no), según
+          <b>línea − media esperada de remates de ese equipo</b>. Negativo = línea por debajo de lo que espera el modelo (cuota baja,
+          probabilidad alta); positivo = por encima. Hipótesis en observación (2026-10-26): las líneas muy por debajo de la media
+          (&lt; −4) no pagan porque el modelo las sobreestima, y las cercanas a la media (±2) o algo por encima son las que rinden.</p>
+        <div style="margin-bottom:8px;font-size:12px"><label>Partidos
+          <select id="seg-dist-cob" onchange="_segRemateDist()" style="font-size:12px">
+            <option value="todos">Todos</option><option value="completa">Solo con 5 o más líneas de remates cotizadas</option></select></label></div>
+        <div id="seg-remate-dist"></div>
+        <div style="font-size:12px;color:var(--text3);margin:22px 0 4px;font-weight:600">
+          Reglas para elegir UNA línea de remates por equipo y partido — ¿cuál rinde más?</div>
+        <p style="font-size:12px;color:var(--text3);margin:0 0 8px">
+          Cada regla elige una sola línea de remates totales por equipo en cada partido, entre todas las cotizadas, y mide qué habría pasado
+          (1u por apuesta). Sirve para comparar criterios de elección: por cuota objetivo, por probabilidad o por distancia a la media del modelo.
+          Con «Solo EV &gt; 0» las candidatas son únicamente las líneas con EV positivo. Provisional: son criterios medidos sobre los partidos cerrados, no reglas activas.</p>
+        <div style="margin-bottom:8px;font-size:12px"><label>Candidatas
+          <select id="seg-reg-ev" onchange="_segReglasLinea()" style="font-size:12px">
+            <option value="todas">Todas las líneas cotizadas</option><option value="pos">Solo EV &gt; 0</option></select></label></div>
+        <div id="seg-reglas-linea"></div>
+      </div>
+    </div>
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
+        <div class="card-title">Mercados por equipo — ¿cuáles rinden si pasaran los filtros de PICK?</div>
+        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">
+          Los mercados por equipo nunca se apuestan (siempre van a watchlist). Esta tabla simula
+          qué habría pasado si se hubiera podido apostar los que pasan el mismo filtro de un PICK:
+          EV&gt;0 y, si tienen línea validada, cruzar su <code>cuota_justa</code>; si no la tienen,
+          EV ≥ <span id="seg-minev"></span>%. Se cuenta <b>una sola línea por partido y mercado</b>
+          (la de mayor EV×prob), como en un PICK. "Sin filtro" = la mejor línea por partido y mercado
+          sin exigir el filtro.</p>
+        <div id="seg-equipo"></div>
+        <div style="margin-top:18px;display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+          <b style="font-size:13px">Local vs Visita, favorito vs no favorito</b>
+          <select id="seg-lambda-modo" onchange="renderSegLambda()" style="font-size:12px">
+            <option value="filtro">Solo las que pasan el filtro de PICK</option>
+            <option value="todas">Sin filtro (más muestra)</option></select>
+        </div>
+        <p style="font-size:12px;color:var(--text3);margin:6px 0 8px">
+          Las mismas líneas de arriba, partidas según si el equipo del mercado jugaba de local o de visita y si era el
+          <b>favorito</b> (su <code>lambda_final</code> es mayor que la del rival en ese partido). <b>λ equipo</b> y <b>λ rival</b> son
+          los promedios de cada grupo. Atenuadas: menos de 10 casos, no concluyen.</p>
+        <div id="seg-equipo-lambda"></div>
+      </div>
+    </div>
+    <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">Diagnóstico de la selección — ¿por qué rinden o no los Over de remates? (en observación)</div>
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
+        <div class="card-title">Posición frente a la línea promedio, EV contra ROI y equipos de ataque débil</div>
+        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">Todo se calcula con las líneas Over de remates por equipo que ya están en el watchlist (se apuesten o no), 1 unidad por línea. <b>Línea promedio</b>: con media X,Y es Over (X−1),5 («X o más»). Son cortes hechos mirando los mismos datos: <b>orientan, no prueban</b>. Solo cuentan los partidos con la cotización completa (en el d1, los posteriores al #129: antes se registraban pocas líneas por equipo y la muestra salía sesgada). <b>Ojo:</b> los partidos del d2 son copias de los #158–194 del d1, así que el d1 posterior al #129 incluye al d2; las dos vistas no son muestras independientes.</p>
+        <div id="rem-diag"></div>
+      </div>
     </div>
   </div>
 
@@ -597,7 +702,7 @@
         <p style="font-size:12px;color:var(--text3);margin:0 0 10px">
           Aquí <b>no se apuesta nada</b>: cada PICK, COMBO y REMATE es una <b>hipótesis</b> con reglas propias (distintas a las del dashboard 1), elegida con datos del dashboard 1
           y que solo se confirma o se descarta con los partidos que se acumulen aquí. 1 unidad por apuesta. <b>u / partido</b> suma las unidades de todas las apuestas de un partido
-          y usa ese total como un dato: es la lectura honesta cuando las apuestas de un mismo partido se parecen entre sí.</p>
+          y usa ese total como un dato: es la lectura honesta cuando las apuestas de un mismo partido se parecen entre sí. El detalle de REMATE R1 y A PUERTA S1 está en el tab <b>Remates</b>.</p>
         <div id="hip-progreso"></div>
         <div id="hip-resumen"></div>
       </div>
@@ -685,20 +790,6 @@
         <div id="mej-extra"></div>
       </div>
     </div>
-    <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">REMATE R1</div>
-    <div class="grid2" style="margin-bottom:16px">
-      <div class="card card-full">
-        <div class="card-title">¿Acierta R1 al quedarse con la zona de hasta 4 por debajo de la media, sin pasar la línea promedio?</div>
-        <div id="hip-remate"></div>
-      </div>
-    </div>
-    <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">Remates a puerta S1</div>
-    <div class="grid2" style="margin-bottom:16px">
-      <div class="card card-full">
-        <div class="card-title">¿Qué bandas de cuota y de distancia a la media rinden en remates a puerta por equipo?</div>
-        <div id="hip-puerta"></div>
-      </div>
-    </div>
   </div>
 
   <!-- Confianza -->
@@ -746,83 +837,7 @@
         <div id="mej-reglas"></div>
       </div>
     </div>
-    <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">REMATE y mercados por equipo</div>
-    <p style="font-size:12px;color:var(--text3);margin:0 0 10px">Reglas candidatas, detalle de la regla R1 del dashboard 2 y qué mercados por equipo rinden si pasaran el filtro de PICK.</p>
-    <div class="grid2" style="margin-bottom:16px">
-      <div class="card card-full">
-        <div class="card-title">REMATE y mercados por equipo — reglas candidatas</div>
-        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">
-          Misma lectura que la tabla de arriba. Cada regla parte de las líneas Over de los remates totales
-          de un equipo. Es el único mercado donde el EV separó ganadores de perdedores en los tres tercios del histórico, y donde la elección de línea
-          por EV×P le ganó al azar entre candidatas con EV &gt; 0. «Línea − media» usa <code>mu_equipo</code>, la media de remates que espera el modelo.
-          Los controles no deberían pagar: si lo hacen, la hipótesis correspondiente se debilita. La simulación usa solo el filtro de EV &gt; 0
-          (no las Vías A/B de <code>add_bet.py</code>), por eso difiere un poco del REMATE real.</p>
-        <div id="mej-reglas-eq"></div>
-      </div>
-    </div>
-    <div class="grid2" style="margin-bottom:16px">
-      <div class="card card-full">
-        <div class="card-title">REMATE — rendimiento de los remates totales por equipo (todo el histórico)</div>
-        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">
-          Cada partido cerrado cuenta como si la regla hubiera existido desde el inicio. Cambia el criterio de
-          línea y el lado para ver cómo responde el mercado; las bandas de cuota muestran de dónde sale el ROI.</p>
-        <div style="display:flex;gap:12px;flex-wrap:wrap;font-size:12px;margin-bottom:10px;align-items:center">
-          <label>Línea por
-            <select id="seg-rem-crit" onchange="_segRemate()" style="font-size:12px">
-              <option value="evp">Mayor EV×prob (regla)</option><option value="p">Mayor probabilidad</option></select></label>
-          <label>Lado
-            <select id="seg-rem-lado" onchange="_segRemate()" style="font-size:12px">
-              <option value="regla">Un lado por partido (mayor P%)</option><option value="local">Solo local</option>
-              <option value="visita">Solo visita</option><option value="ambos">Los dos lados</option></select></label>
-        </div>
-        <div id="seg-remate"></div>
-        <div style="font-size:12px;color:var(--text3);margin:18px 0 4px;font-weight:600">
-          Por distancia a la media del modelo — ¿qué líneas pagan según lo lejos que están de lo que el modelo espera?</div>
-        <p style="font-size:12px;color:var(--text3);margin:0 0 8px">
-          Cada fila agrupa <b>todas las líneas de remates totales que pasan el filtro de PICK</b> (se apuesten o no), según
-          <b>línea − media esperada de remates de ese equipo</b>. Negativo = línea por debajo de lo que espera el modelo (cuota baja,
-          probabilidad alta); positivo = por encima. Hipótesis en observación (2026-10-26): las líneas muy por debajo de la media
-          (&lt; −4) no pagan porque el modelo las sobreestima, y las cercanas a la media (±2) o algo por encima son las que rinden.</p>
-        <div style="margin-bottom:8px;font-size:12px"><label>Partidos
-          <select id="seg-dist-cob" onchange="_segRemateDist()" style="font-size:12px">
-            <option value="todos">Todos</option><option value="completa">Solo con 5 o más líneas de remates cotizadas</option></select></label></div>
-        <div id="seg-remate-dist"></div>
-        <div style="font-size:12px;color:var(--text3);margin:22px 0 4px;font-weight:600">
-          Reglas para elegir UNA línea de remates por equipo y partido — ¿cuál rinde más?</div>
-        <p style="font-size:12px;color:var(--text3);margin:0 0 8px">
-          Cada regla elige una sola línea de remates totales por equipo en cada partido, entre todas las cotizadas, y mide qué habría pasado
-          (1u por apuesta). Sirve para comparar criterios de elección: por cuota objetivo, por probabilidad o por distancia a la media del modelo.
-          Con «Solo EV &gt; 0» las candidatas son únicamente las líneas con EV positivo. Provisional: son criterios medidos sobre los partidos cerrados, no reglas activas.</p>
-        <div style="margin-bottom:8px;font-size:12px"><label>Candidatas
-          <select id="seg-reg-ev" onchange="_segReglasLinea()" style="font-size:12px">
-            <option value="todas">Todas las líneas cotizadas</option><option value="pos">Solo EV &gt; 0</option></select></label></div>
-        <div id="seg-reglas-linea"></div>
-      </div>
-    </div>
-    <div class="grid2" style="margin-bottom:16px">
-      <div class="card card-full">
-        <div class="card-title">Mercados por equipo — ¿cuáles rinden si pasaran los filtros de PICK?</div>
-        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">
-          Los mercados por equipo nunca se apuestan (siempre van a watchlist). Esta tabla simula
-          qué habría pasado si se hubiera podido apostar los que pasan el mismo filtro de un PICK:
-          EV&gt;0 y, si tienen línea validada, cruzar su <code>cuota_justa</code>; si no la tienen,
-          EV ≥ <span id="seg-minev"></span>%. Se cuenta <b>una sola línea por partido y mercado</b>
-          (la de mayor EV×prob), como en un PICK. "Sin filtro" = la mejor línea por partido y mercado
-          sin exigir el filtro.</p>
-        <div id="seg-equipo"></div>
-        <div style="margin-top:18px;display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-          <b style="font-size:13px">Local vs Visita, favorito vs no favorito</b>
-          <select id="seg-lambda-modo" onchange="renderSegLambda()" style="font-size:12px">
-            <option value="filtro">Solo las que pasan el filtro de PICK</option>
-            <option value="todas">Sin filtro (más muestra)</option></select>
-        </div>
-        <p style="font-size:12px;color:var(--text3);margin:6px 0 8px">
-          Las mismas líneas de arriba, partidas según si el equipo del mercado jugaba de local o de visita y si era el
-          <b>favorito</b> (su <code>lambda_final</code> es mayor que la del rival en ese partido). <b>λ equipo</b> y <b>λ rival</b> son
-          los promedios de cada grupo. Atenuadas: menos de 10 casos, no concluyen.</p>
-        <div id="seg-equipo-lambda"></div>
-      </div>
-    </div>
+    <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">Mercados por equipo y combinadas</div>
     <div class="grid2" style="margin-bottom:16px">
       <div class="card card-full">
         <div class="card-title">Por equipo y combinadas — ¿las que pasan el filtro rinden mejor?</div>
@@ -5577,6 +5592,61 @@ function renderTabsDif(){
   if(b) _difBloque(b,'hcp2_des',{h:'H7',barrera:x=>x.tot<3.0,regla:x=>x.tot<3.0&&x.df<1.2});
   if(c) _difBloque(c,'hcp3_des',{h:'H7',barrera:x=>x.tot<3.0,regla:x=>x.tot<3.0});
 }
+// ── Tab Remates (2026-11-08, a pedido) ────────────────────────────────────────
+// Reúne lo de remates que estaba repartido: Mercados (REMATE y A PUERTA por cuota y línea), Mejoras (reglas de elección de línea,
+// mercados por equipo) y, en el d2, Hipótesis (R1 y S1). Aquí además: posición frente a la línea promedio, EV contra ROI y equipos débiles.
+// Líneas Over de remates por equipo YA CERRADAS del watchlist. sufijo: 'remates' (totales) | 'remates_puerta' (a puerta).
+function _remLineas(sufijo){
+  const L=[];
+  // Solo partidos con la cotización completa: hasta MEJ_CORTE_ID el d1 registraba pocas líneas por equipo (2.7–3.1 de media frente a ~6 después), y
+  // eso sesga posición, EV y cuota (se cotizaba lo que parecía interesante). En el d2 MEJ_CORTE_ID=0: entra todo.
+  _DATA.filter(p=>p.resultado_partido&&p.mu_equipo&&+p.id>MEJ_CORTE_ID).forEach(p=>{
+    const ll=+p.lambda_final_l, lv=+p.lambda_final_v;
+    (p.watchlist||[]).forEach(w=>{
+      if(w.tipo!=='POR_EQUIPO'||!(w.mercado==='local_'+sufijo||w.mercado==='visit_'+sufijo)||w.acerto==null||!w.cuota||w.linea==null) return;
+      const lado=w.mercado.startsWith('local')?'local':'visit', mu=((p.mu_equipo[lado])||{})[sufijo]; if(mu==null) return;
+      L.push({id:+p.id,cuota:+w.cuota,win:!!w.acerto,ev:+w.ev_pct||0,prob:+w.prob||0,mu,k:w.linea-(Math.floor(mu)-0.5),own:lado==='local'?ll:lv,fav:lado==='local'?ll>lv:lv>ll,lado});
+    });
+  });
+  return L;
+}
+function _remRenderDiag(){
+  const el=document.getElementById('rem-diag'); if(!el) return;
+  const R=_remLineas('remates'), S=_remLineas('remates_puerta');
+  if(!R.length&&!S.length){ el.innerHTML='<p class="empty">Sin líneas de remates cerradas todavía.</p>'; return; }
+  const tt=(t,x)=>'<div style="font-size:12px;color:var(--text3);margin:16px 0 6px;font-weight:600">'+t+'</div>'+x;
+  const mp=l=>l.length?' <span style="color:var(--text3);font-size:11px">· el modelo daba '+Math.round(l.reduce((t,x)=>t+x.prob,0)/l.length)+'%</span>':'';
+  const ki=[['3 o más líneas por debajo',x=>x.k<=-3,0],['2 por debajo',x=>x.k===-2,0],['1 por debajo (X−1,5)',x=>x.k===-1,0],['LÍNEA PROMEDIO (X−0,5)',x=>x.k===0,1],['1 por encima',x=>x.k===1,0],['2 por encima',x=>x.k===2,0],['3 o más por encima',x=>x.k>=3,0]];
+  const pos=l=>_hipTabla('Posición',ki.map(([n,f,b])=>_hipFila(n,l.filter(f),{b})).join('')+_hipFila('Todas',l,{sub:1}));
+  const Rp=R.filter(x=>x.ev>0), Sp=S.filter(x=>x.ev>0&&x.cuota>=1.60);
+  const eb=[['EV ≤ −20 %',x=>x.ev<=-20],['−20 a −10 %',x=>x.ev>-20&&x.ev<=-10],['−10 a 0 %',x=>x.ev>-10&&x.ev<=0],['0 a +10 %',x=>x.ev>0&&x.ev<=10],['+10 a +20 %',x=>x.ev>10&&x.ev<=20],['+20 a +40 %',x=>x.ev>20&&x.ev<=40],['más de +40 %',x=>x.ev>40]];
+  const ev=_hipTabla('EV que veía el modelo',eb.map(([n,f])=>{const l=R.filter(f); return _hipFila(n+mp(l),l);}).join('')+_hipFila('Todas las líneas',R,{sub:1}));
+  const debil=x=>x.own<1.0||x.mu<11, Ex=Rp.filter(debil), ok=Rp.filter(x=>!debil(x));
+  const hx=_hipTabla('Selección',_hipFila('Referencia: todas las líneas con EV &gt; 0',Rp,{b:1})
+    +_hipFila('H-excluir: sin λ propio &lt; 1.0 ni media esperada &lt; 11',ok,{b:1})
+    +_hipFila('Lo que H-excluir deja fuera',Ex,{sub:1}));
+  const nEx=new Set(Ex.map(x=>x.id)).size;
+  el.innerHTML=
+    tt('① Remates TOTALES (EV &gt; 0) por posición frente a la línea promedio (media X,Y → promedio = X, línea promedio = Over (X−1),5)',pos(Rp))
+   +tt('② Remates A PUERTA (EV &gt; 0 y cuota ≥ 1.60) por posición frente a la línea promedio',pos(Sp))
+   +tt('③ Remates totales: ROI según el EV que veía el modelo (todas las líneas cotizadas). Si el EV ordenara, el ROI subiría hacia abajo; el modelo ve “más ventaja” justo donde más se aleja del mercado',ev)
+   +tt('④ H-excluir (hipótesis en observación): no apostar Over de remates de equipos de ataque débil',hx)
+   +tt('⑤ Remates A PUERTA (EV &gt; 0 y cuota ≥ 1.60) por cuota, rol del equipo, lado y media esperada de remates a puerta',_hipTabla('Corte',
+      [['cuota 1.60 – 2.20',x=>x.cuota<2.2],['cuota 2.20 – 3.50',x=>x.cuota>=2.2&&x.cuota<3.5],['cuota 3.50 o más',x=>x.cuota>=3.5],
+       ['equipo favorito (mayor λ)',x=>x.fav],['equipo no favorito',x=>!x.fav],['local',x=>x.lado==='local'],['visita',x=>x.lado==='visit'],
+       ['media esperada &lt; 3.5',x=>x.mu<3.5],['media 3.5 – 5',x=>x.mu>=3.5&&x.mu<5],['media ≥ 5',x=>x.mu>=5]].map(([n,f])=>_hipFila(n,Sp.filter(f))).join('')+_hipFila('Todas',Sp,{sub:1})))
+   +tt('⑥ Remates A PUERTA: ROI según el EV que veía el modelo (todas las líneas con cuota ≥ 1.60, con y sin EV positivo)',_hipTabla('EV que veía el modelo',
+      [['EV ≤ 0 % · no se apostaría',x=>x.ev<=0],['0 a +10 %',x=>x.ev>0&&x.ev<=10],['+10 a +25 %',x=>x.ev>10&&x.ev<=25],['más de +25 %',x=>x.ev>25]]
+      .map(([n,f])=>{const l=S.filter(x=>x.cuota>=1.60&&f(x)); return _hipFila(n+mp(l),l);}).join('')))
+   +'<p style="font-size:12px;color:var(--text3);margin:8px 0 0">Las '+Ex.length+' líneas que H-excluir deja fuera vienen de solo <b>'+nEx+'</b> partido'+(nEx===1?'':'s')
+   +': la muestra independiente es esa, no el número de líneas. No concluir hasta acumular más partidos con equipos débiles.</p>';
+}
+function renderRemates(){
+  renderRemateMercados();      // REMATE y A PUERTA por cuota y por línea
+  _remRenderDiag();
+  renderMejoras();             // reglas de elección de línea y mercados por equipo (viven en este tab desde 2026-11-08)
+  if(ES_D2) renderHipotesis(); // R1 y S1 (en el d2)
+}
 function renderAll(){
   _d2OcultarReglasD1();
   renderMetrics();
@@ -5585,7 +5655,8 @@ function renderAll(){
   const active=document.querySelector('.tab.active')?.dataset.tab;
   if(active==='tendencias'){renderPLChart();renderPLDist();renderHighEVLost();renderRacha();}
   if(active==='calibracion'){renderEVScatter();renderCalibBands();renderCalibByMarket();}
-  if(active==='mercados'){renderCuotaROI();renderMercadoCuotaHeatmap();renderRemateMercados();renderTipoStats();renderMercadoFreq();renderCombosPorPar();}
+  if(active==='mercados'){renderCuotaROI();renderMercadoCuotaHeatmap();renderTipoStats();renderMercadoFreq();renderCombosPorPar();}
+  if(active==='remates'){renderRemates();}
   if(active==='ligas'){renderLigaTipo();renderLigaRollingROI();renderMercadoLigaHeatmap();renderLigaCards();}
   if(active==='watchlist'){renderWatchlist(); _hipRenderRazon();}
   if(active==='hipotesis'){renderHipotesis();}
@@ -5614,7 +5685,7 @@ document.querySelectorAll('.tab').forEach(tab=>{
 // ── Índice de secciones de los tabs largos (Hipótesis y Mejoras) ──────────────
 // Cada sección es un rótulo en negrita de 14px seguido de su tarjeta; el índice se arma una sola vez, desde esos rótulos.
 (function(){
-  ['hipotesis','mejoras'].forEach(id=>{
+  ['hipotesis','mejoras','remates'].forEach(id=>{
     const p=document.getElementById('tab-'+id); if(!p) return;
     const rot=[...p.children].filter(e=>e.tagName==='DIV' && !e.className && /font-size:14px;font-weight:700/.test(e.getAttribute('style')||'') && e.textContent.trim());
     if(rot.length<3) return;
