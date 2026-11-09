@@ -5552,7 +5552,7 @@ function _remLineas(sufijo){
     (p.watchlist||[]).forEach(w=>{
       if(w.tipo!=='POR_EQUIPO'||!(w.mercado==='local_'+sufijo||w.mercado==='visit_'+sufijo)||w.acerto==null||!w.cuota||w.linea==null) return;
       const lado=w.mercado.startsWith('local')?'local':'visit', mu=((p.mu_equipo[lado])||{})[sufijo]; if(mu==null) return;
-      L.push({id:+p.id,cuota:+w.cuota,win:!!w.acerto,ev:+w.ev_pct||0,prob:+w.prob||0,mu,k:w.linea-(Math.floor(mu)-0.5),own:lado==='local'?ll:lv,fav:lado==='local'?ll>lv:lv>ll,lado,eq:lado+'|'+p.id,pm:(+w.prob||0)/100,pk:Math.min(0.99,(1/+w.cuota)/1.06),linea:+w.linea,et:w.etiqueta,nom:p.partido});
+      L.push({id:+p.id,cuota:+w.cuota,win:!!w.acerto,ev:+w.ev_pct||0,prob:+w.prob||0,mu,k:w.linea-(Math.floor(mu)-0.5),own:lado==='local'?ll:lv,fav:lado==='local'?ll>lv:lv>ll,lado,eq:lado+'|'+p.id,pm:(+w.prob||0)/100,pk:Math.min(0.99,(1/+w.cuota)/1.06),linea:+w.linea,et:w.etiqueta,nom:p.partido,riv:lado==='local'?lv:ll,home:lado==='local'?1:0,d:w.linea-mu});
     });
   });
   return L;
@@ -5810,9 +5810,77 @@ function _remFbRender(t){
     +'<details style="margin-top:10px"><summary style="cursor:pointer;font-size:12px;color:var(--text2)">Ver cada apuesta de la selección con retroalimentación ('+sel.length+')</summary><div class="table-wrap table-wrap-scroll" style="max-height:300px;overflow-y:auto;margin-top:6px"><table class="hm-table"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">Partido</th><th style="text-align:left">Línea</th><th class="num">Cuota</th><th class="num">Resultado</th></tr></thead><tbody>'
     +(det||'<tr><td colspan="5" class="empty">Todavía no apostó: ningún grupo llega al mínimo de líneas con ROI positivo.</td></tr>')+'</tbody></table></div></details>';
 }
+// ── Validación (solo d2, 2026-11-09, a pedido): confianza del modelo y qué predice mejor, la cuota o una mezcla con las demás variables ────────────────
+// Se recalcula sola con cada partido cerrado del d2. Regresión logística con penalización L2 y validación cruzada POR PARTIDO (5 grupos, id % 5): cada partido se predice
+// con un modelo entrenado en los otros, así ninguna línea se evalúa con modelos que la hayan visto. «Δ frente a la cuota» es la diferencia de log-loss por partido con su ±90%.
+function _remSolve(A,b){   // Gauss con pivoteo parcial
+  const n=b.length, M=A.map((r,i)=>r.concat([b[i]]));
+  for(let c=0;c<n;c++){ let p=c; for(let r=c+1;r<n;r++) if(Math.abs(M[r][c])>Math.abs(M[p][c])) p=r; [M[c],M[p]]=[M[p],M[c]];
+    const d=M[c][c]||1e-12; for(let r=c+1;r<n;r++){ const f=M[r][c]/d; for(let k=c;k<=n;k++) M[r][k]-=f*M[c][k]; } }
+  const x=new Array(n).fill(0); for(let r=n-1;r>=0;r--){ let s=M[r][n]; for(let k=r+1;k<n;k++) s-=M[r][k]*x[k]; x[r]=s/(M[r][r]||1e-12); } return x;
+}
+function _remLogitFit(X,y,lam){
+  const n=X.length, p=X[0].length; let b=new Array(p+1).fill(0);
+  for(let it=0;it<40;it++){
+    const g=new Array(p+1).fill(0), H=Array.from({length:p+1},()=>new Array(p+1).fill(0));
+    for(let i=0;i<n;i++){ let z=b[0]; for(let j=0;j<p;j++) z+=b[j+1]*X[i][j]; const pr=1/(1+Math.exp(-z)), w=pr*(1-pr), r=pr-y[i];
+      g[0]+=r; H[0][0]+=w; for(let j=0;j<p;j++){ g[j+1]+=r*X[i][j]; H[0][j+1]+=w*X[i][j]; H[j+1][0]+=w*X[i][j]; for(let l=0;l<p;l++) H[j+1][l+1]+=w*X[i][j]*X[i][l]; } }
+    for(let j=1;j<=p;j++){ g[j]+=lam*b[j]; H[j][j]+=lam; }
+    const d=_remSolve(H,g); let m=0; for(let j=0;j<=p;j++){ b[j]-=d[j]; m=Math.max(m,Math.abs(d[j])); } if(m<1e-6) break;
+  }
+  return b;
+}
+function _remLg(p){ p=Math.min(0.99,Math.max(0.01,p)); return Math.log(p/(1-p)); }
+function _remLL(y,p){ p=Math.min(1-1e-4,Math.max(1e-4,p)); return -(y?Math.log(p):Math.log(1-p)); }
+function _remValTabla(L){
+  const bands=[[0,.35],[.35,.5],[.5,.65],[.65,.8],[.8,1.01]], pc=v=>Math.round(v*100)+'%';
+  const mean=a=>a.reduce((t,x)=>t+x,0)/a.length;
+  const fila=([a,b])=>{ const m=L.filter(x=>x.pm>=a&&x.pm<b), m2=m.filter(x=>x.ev>0); if(!m.length) return '';
+    return '<tr><td style="text-align:left">'+Math.round(a*100)+'–'+Math.min(100,Math.round(b*100))+'%</td><td class="num">'+m.length+'</td><td class="num">'+pc(mean(m.map(x=>x.pm)))+'</td><td class="num">'+pc(mean(m.map(x=>x.pk)))+'</td><td class="num"><b>'+pc(mean(m.map(x=>x.win?1:0)))+'</b></td>'
+      +(m2.length?'<td class="num">'+m2.length+'</td><td class="num">'+pc(mean(m2.map(x=>x.pm)))+'</td><td class="num"><b>'+pc(mean(m2.map(x=>x.win?1:0)))+'</b></td>':'<td class="num" style="color:var(--text3)">0</td><td class="num">—</td><td class="num">—</td>')+'</tr>'; };
+  const ev=L.filter(x=>x.ev>0);
+  const tot=ev.length?'<tr style="background:var(--surface2);font-weight:600"><td style="text-align:left">Solo EV &gt; 0, en total</td><td class="num" colspan="4" style="text-align:right"></td><td class="num">'+ev.length+'</td><td class="num">'+pc(mean(ev.map(x=>x.pm)))+'</td><td class="num">'+pc(mean(ev.map(x=>x.win?1:0)))+'</td></tr>':'';
+  return '<div class="table-wrap"><table class="hm-table"><thead><tr><th style="text-align:left">Probabilidad del modelo</th><th class="num">Líneas</th><th class="num">Modelo daba</th><th class="num">Cuota implícita</th><th class="num">Acierto real</th><th class="num">EV &gt; 0: líneas</th><th class="num">Modelo daba</th><th class="num">Acierto real</th></tr></thead><tbody>'
+    +bands.map(fila).join('')+tot+'</tbody></table></div>';
+}
+function _remValCV(L){
+  const y=L.map(x=>x.win), n=L.length, ids=[...new Set(L.map(x=>x.id))];
+  const base=x=>[_remLg(x.pm),_remLg(x.pk)], extra=x=>[_remLg(x.pm),_remLg(x.pk),x.own,x.riv,x.fav,x.home,x.k,x.d,x.mu,Math.log(x.cuota)];
+  const cv=f=>{ const pred=new Array(n).fill(0.5);
+    for(let fo=0;fo<5;fo++){ const tr=[],te=[]; L.forEach((x,i)=>{ (x.id%5===fo?te:tr).push(i); }); if(!tr.length||!te.length) continue;
+      const Xtr=tr.map(i=>f(L[i])), p=Xtr[0].length, mu=new Array(p).fill(0), sd=new Array(p).fill(0);
+      Xtr.forEach(r=>r.forEach((v,j)=>mu[j]+=v/Xtr.length)); Xtr.forEach(r=>r.forEach((v,j)=>sd[j]+=(v-mu[j])**2/Xtr.length)); sd.forEach((v,j)=>sd[j]=Math.sqrt(v)+1e-9);
+      const st=r=>r.map((v,j)=>(v-mu[j])/sd[j]), b=_remLogitFit(Xtr.map(st),tr.map(i=>y[i]),3.3);
+      te.forEach(i=>{ const r=st(f(L[i])); let z=b[0]; r.forEach((v,j)=>z+=b[j+1]*v); pred[i]=1/(1+Math.exp(-z)); }); }
+    return pred; };
+  const tasa=y.reduce((t,v)=>t+v,0)/n;
+  const modelos=[['Tasa base (siempre el acierto medio)',L.map(()=>tasa)],['Solo la cuota (probabilidad implícita)',L.map(x=>x.pk)],['Solo el modelo',L.map(x=>Math.min(.99,Math.max(.01,x.pm)))],
+    ['Mezcla modelo + cuota',cv(base)],['Mezcla + λ, rol, lado, posición, media y cuota',cv(extra)]];
+  const llC=L.map((x,i)=>_remLL(y[i],modelos[1][1][i]));
+  return modelos.map(([nom,p],k)=>{ const li=L.map((x,i)=>_remLL(y[i],p[i])), ll=li.reduce((t,v)=>t+v,0)/n;
+    const por=new Map(); li.forEach((v,i)=>{ const o=por.get(L[i].id)||{s:0,c:0}; o.s+=v-llC[i]; o.c++; por.set(L[i].id,o); });
+    const d=[...por.values()].map(o=>o.s/o.c), m=d.reduce((t,v)=>t+v,0)/d.length, sdv=Math.sqrt(d.reduce((t,v)=>t+(v-m)**2,0)/Math.max(d.length-1,1)), moe=1.645*sdv/Math.sqrt(d.length);
+    return {nom,ll,m,moe,ref:k===1}; });
+}
+function _remValRender(){
+  const el=document.getElementById('val-out'); if(!el) return;
+  const nP=_DATA.filter(p=>p.resultado_partido).length;
+  let h='<p style="font-size:12px;color:var(--text3);margin:0 0 8px">Con <b>'+nP+'</b> partidos cerrados. Se recalcula sola con cada partido que se cierre. Cuota implícita = 1/cuota quitando un margen supuesto del 6 %.</p>';
+  [['remates','REMATES totales (R1)'],['remates_puerta','REMATES A PUERTA (S1)']].forEach(([suf,nom])=>{
+    const L=_remLineas(suf); if(L.length<40){ h+='<p class="empty">'+nom+': todavía pocas líneas.</p>'; return; }
+    h+='<div style="font-size:12px;color:var(--text3);margin:16px 0 6px;font-weight:600">'+nom+' · ¿es honesta la probabilidad del modelo? (acierto real frente a lo que decía, por tramo)</div>'+_remValTabla(L);
+    const res=_remValCV(L);
+    h+='<div style="font-size:12px;color:var(--text3);margin:14px 0 6px;font-weight:600">'+nom+' · ¿qué predice mejor? log-loss con validación cruzada por partido (menor es mejor)</div>'
+      +'<div class="table-wrap"><table class="hm-table"><thead><tr><th style="text-align:left">Predictor</th><th class="num">Log-loss</th><th class="num" title="Diferencia de log-loss frente a la cuota sola, media por partido con ±90%. Negativo = mejor que la cuota">Δ frente a la cuota (±90%)</th><th style="text-align:left">Lectura</th></tr></thead><tbody>'
+      +res.map(o=>{ const lec=o.ref?'referencia':(o.m+o.moe<0?'<span class="pl-pos">mejor que la cuota</span>':(o.m-o.moe>0?'<span class="pl-neg">peor que la cuota</span>':'<span style="color:var(--text3)">sin diferencia clara</span>'));
+        return '<tr style="'+(o.ref?'background:var(--surface2);font-weight:600':'')+'"><td style="text-align:left">'+o.nom+'</td><td class="num">'+o.ll.toFixed(4)+'</td><td class="num">'+(o.ref?'—':(o.m>=0?'+':'')+o.m.toFixed(4)+' <span style="color:var(--text3);font-size:11px">±'+o.moe.toFixed(4)+'</span>')+'</td><td style="text-align:left;font-size:12px">'+lec+'</td></tr>'; }).join('')
+      +'</tbody></table></div>';
+  });
+  el.innerHTML=h;
+}
 function renderRemates(){
   renderRemateMercados();      // REMATE y A PUERTA por cuota y por línea
-  _remRenderDiag(); _remRenderCand(); _remSimRender('r'); _remSimRender('s'); _remFbRender('r'); _remFbRender('s');
+  _remRenderDiag(); _remRenderCand(); _remSimRender('r'); _remSimRender('s'); _remFbRender('r'); _remFbRender('s'); _remValRender();
   renderMejoras();             // reglas de elección de línea y mercados por equipo (viven en este tab desde 2026-11-08)
   if(ES_D2) renderHipotesis(); // R1 y S1 (en el d2)
 }
