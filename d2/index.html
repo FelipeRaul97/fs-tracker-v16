@@ -375,6 +375,14 @@
         <div id="hip-puerta"></div>
       </div>
     </div>
+    <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">Diagnóstico de la selección — ¿por qué rinden o no los Over de remates? (en observación)</div>
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
+        <div class="card-title">Posición frente a la línea promedio, EV contra ROI y equipos de ataque débil</div>
+        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">Todo se calcula con las líneas Over de remates por equipo que ya están en el watchlist (se apuesten o no), 1 unidad por línea. <b>Línea promedio</b>: con media X,Y es Over (X−1),5 («X o más»). Son cortes hechos mirando los mismos datos: <b>orientan, no prueban</b>. Solo se usan los partidos de este dashboard.</p>
+        <div id="rem-diag"></div>
+      </div>
+    </div>
     <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">Rendimiento por cuota y por línea</div>
     <div class="card card-full" style="margin-bottom:16px">
       <div class="card-title">REMATE — lado × rango de cuota — WR% y ROI% (remates totales de un equipo)</div>
@@ -469,14 +477,6 @@
           <b>favorito</b> (su <code>lambda_final</code> es mayor que la del rival en ese partido). <b>λ equipo</b> y <b>λ rival</b> son
           los promedios de cada grupo. Atenuadas: menos de 10 casos, no concluyen.</p>
         <div id="seg-equipo-lambda"></div>
-      </div>
-    </div>
-    <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">Diagnóstico de la selección — ¿por qué rinden o no los Over de remates? (en observación)</div>
-    <div class="grid2" style="margin-bottom:16px">
-      <div class="card card-full">
-        <div class="card-title">Posición frente a la línea promedio, EV contra ROI y equipos de ataque débil</div>
-        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">Todo se calcula con las líneas Over de remates por equipo que ya están en el watchlist (se apuesten o no), 1 unidad por línea. <b>Línea promedio</b>: con media X,Y es Over (X−1),5 («X o más»). Son cortes hechos mirando los mismos datos: <b>orientan, no prueban</b>. Solo cuentan los partidos con la cotización completa (en el d1, los posteriores al #129: antes se registraban pocas líneas por equipo y la muestra salía sesgada). <b>Ojo:</b> los partidos del d2 son copias de los #158–194 del d1, así que el d1 posterior al #129 incluye al d2; las dos vistas no son muestras independientes.</p>
-        <div id="rem-diag"></div>
       </div>
     </div>
   </div>
@@ -5598,9 +5598,8 @@ function renderTabsDif(){
 // Líneas Over de remates por equipo YA CERRADAS del watchlist. sufijo: 'remates' (totales) | 'remates_puerta' (a puerta).
 function _remLineas(sufijo){
   const L=[];
-  // Solo partidos con la cotización completa: hasta MEJ_CORTE_ID el d1 registraba pocas líneas por equipo (2.7–3.1 de media frente a ~6 después), y
-  // eso sesga posición, EV y cuota (se cotizaba lo que parecía interesante). En el d2 MEJ_CORTE_ID=0: entra todo.
-  _DATA.filter(p=>p.resultado_partido&&p.mu_equipo&&+p.id>MEJ_CORTE_ID).forEach(p=>{
+  // Solo del dashboard 2 (el diagnóstico existe únicamente allí): no se mezcla con datos del d1.
+  _DATA.filter(p=>p.resultado_partido&&p.mu_equipo).forEach(p=>{
     const ll=+p.lambda_final_l, lv=+p.lambda_final_v;
     (p.watchlist||[]).forEach(w=>{
       if(w.tipo!=='POR_EQUIPO'||!(w.mercado==='local_'+sufijo||w.mercado==='visit_'+sufijo)||w.acerto==null||!w.cuota||w.linea==null) return;
