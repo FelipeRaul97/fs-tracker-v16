@@ -2601,6 +2601,15 @@ function renderLigaCards(){
       <div class="stat-row"><span class="stat-label">Win Rate</span><span>${s.wr!=null?s.wr.toFixed(1)+'%':'—'}</span></div>
       <div class="stat-row"><span class="stat-label">P&amp;L</span><span class="${plC}">${fmtL(s.pl)}</span></div>
       <div class="stat-row"><span class="stat-label">ROI%</span><span>${s.roi!=null?s.roi.toFixed(1)+'%':'—'}</span></div>
+      <div style="font-size:11px;color:var(--text3);margin:10px 0 2px;text-transform:uppercase;letter-spacing:.04em">P&amp;L por tipo</div>
+      ${TIPOS_APUESTA.map(tipo=>{
+        const t=calcStats(flatBets({liga,tipo}).filter(a=>a.estado==='GANADA'||a.estado==='PERDIDA'));
+        return`<div class="stat-row"><span>${tipoBadge(tipo)}</span>
+          <span style="display:flex;gap:12px;font-size:12px"><span style="color:var(--text3)">${t.settled}x</span>
+          <span>WR: ${t.wr!=null?t.wr.toFixed(0)+'%':'—'}</span>
+          <span class="${t.pl>=0?'pl-pos':'pl-neg'}">${fmtL(t.pl)}</span>
+          <span style="color:var(--text3)">ROI ${t.roi!=null?t.roi.toFixed(0)+'%':'—'}</span></span></div>`;
+      }).join('')}
     </div>`;
   }).join('');
 }
