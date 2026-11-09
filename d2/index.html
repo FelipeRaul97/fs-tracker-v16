@@ -383,6 +383,19 @@
         <div id="rem-diag"></div>
       </div>
     </div>
+    <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">Elegir la línea — calibración por posición y candidatas fijadas el 2026-11-08</div>
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
+        <div class="card-title">REMATES y A PUERTA: ¿dónde le gana el modelo a la cuota y qué regla de elección rinde más?</div>
+        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">
+          <b>① y ②</b> comparan el Brier del modelo con el de la cuota (probabilidad implícita quitando un margen supuesto del 6 %) en <b>todas</b> las líneas cotizadas, no solo las apostadas.
+          Es la forma más eficiente de saber si el modelo ve algo que el mercado no, y en qué posición de la línea: con las cuotas reales del d2 separa «el modelo acierta» de «la cuota acierta» con 2 a 4 veces menos partidos que el ROI.
+          <b>③ a ⑥</b> comparan reglas de elección de UNA línea por equipo y partido, por partido y contra la vigente: si el margen de la última columna cruza el cero, no hay diferencia demostrada.
+          Las candidatas se <b>fijaron el 2026-11-08</b>; ④ y ⑥ (solo partidos posteriores) son la única prueba real. Cambiar o añadir candidatas después de ver esos partidos la invalida.
+          Para decidir una regla se necesitan del orden de 100 a 150 partidos nuevos.</p>
+        <div id="rem-cand"></div>
+      </div>
+    </div>
     <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">Rendimiento por cuota y por línea</div>
     <div class="card card-full" style="margin-bottom:16px">
       <div class="card-title">REMATE — lado × rango de cuota — WR% y ROI% (remates totales de un equipo)</div>
@@ -5604,7 +5617,7 @@ function _remLineas(sufijo){
     (p.watchlist||[]).forEach(w=>{
       if(w.tipo!=='POR_EQUIPO'||!(w.mercado==='local_'+sufijo||w.mercado==='visit_'+sufijo)||w.acerto==null||!w.cuota||w.linea==null) return;
       const lado=w.mercado.startsWith('local')?'local':'visit', mu=((p.mu_equipo[lado])||{})[sufijo]; if(mu==null) return;
-      L.push({id:+p.id,cuota:+w.cuota,win:!!w.acerto,ev:+w.ev_pct||0,prob:+w.prob||0,mu,k:w.linea-(Math.floor(mu)-0.5),own:lado==='local'?ll:lv,fav:lado==='local'?ll>lv:lv>ll,lado});
+      L.push({id:+p.id,cuota:+w.cuota,win:!!w.acerto,ev:+w.ev_pct||0,prob:+w.prob||0,mu,k:w.linea-(Math.floor(mu)-0.5),own:lado==='local'?ll:lv,fav:lado==='local'?ll>lv:lv>ll,lado,eq:lado+'|'+p.id,pm:(+w.prob||0)/100,pk:Math.min(0.99,(1/+w.cuota)/1.06)});
     });
   });
   return L;
@@ -5640,9 +5653,87 @@ function _remRenderDiag(){
    +'<p style="font-size:12px;color:var(--text3);margin:8px 0 0">Las '+Ex.length+' líneas que H-excluir deja fuera vienen de solo <b>'+nEx+'</b> partido'+(nEx===1?'':'s')
    +': la muestra independiente es esa, no el número de líneas. No concluir hasta acumular más partidos con equipos débiles.</p>';
 }
+// ── Remates (solo d2): calibración por posición de línea y candidatas fijadas (2026-11-08, a pedido) ─────────────────────
+// Dos preguntas distintas. (1) ¿Dónde le gana el modelo al mercado? Se compara el Brier del modelo con el del mercado (probabilidad implícita 1/cuota
+// quitando un margen supuesto del 6 %) en TODAS las líneas cotizadas, por posición frente a la línea promedio: usa todas las líneas, no solo las apostadas,
+// y separa «modelo» de «mercado» con bastante menos muestra que el ROI (simulado con las cuotas reales del d2: entre 2 y 4 veces menos partidos).
+// Ojo: el simple «acierto real − implícita» NO es más eficiente que el ROI. (2) ¿Qué regla de elección rinde más? Cada candidata elige UNA línea por equipo y
+// partido; se compara por partido contra la vigente (diferencia pareada de unidades por partido). Las candidatas se fijaron el REM_CAND_FECHA:
+// los partidos posteriores a REM_CAND_CORTE_ID son la única prueba real; los anteriores son la muestra en la que se pensaron.
+const REM_CAND_FECHA='2026-11-08', REM_CAND_CORTE_ID=37, REM_CAND_N=100;
+function _remMedCl(arr){      // arr:[{id,e}] -> media y margen ±90% agrupando por partido (las líneas de un mismo partido se parecen)
+  const n=arr.length; if(!n) return null;
+  const m=arr.reduce((t,x)=>t+x.e,0)/n, by=new Map();
+  arr.forEach(x=>by.set(x.id,(by.get(x.id)||0)+(x.e-m)));
+  return {n,m,moe:1.645*Math.sqrt([...by.values()].reduce((t,v)=>t+v*v,0))/n,np:by.size};
+}
+function _remCalibTabla(L){
+  const ki=[['3 o más líneas por debajo',x=>x.k<=-3],['2 por debajo',x=>x.k===-2],['1 por debajo (X−1,5)',x=>x.k===-1],['LÍNEA PROMEDIO (X−0,5)',x=>x.k===0],['1 por encima',x=>x.k===1],['2 por encima',x=>x.k===2],['3 o más por encima',x=>x.k>=3]];
+  const fila=(n,l,sub)=>{
+    if(!l.length) return '<tr><td style="text-align:left">'+n+'</td><td class="num" style="color:var(--text3)">0</td><td colspan="6" style="color:var(--text3);text-align:center">sin líneas</td></tr>';
+    const pm=l.reduce((t,x)=>t+x.pm,0)/l.length*100, pk=l.reduce((t,x)=>t+x.pk,0)/l.length*100, re=l.filter(x=>x.win).length/l.length*100;
+    const c=_remMedCl(l.map(x=>({id:x.id,e:(x.pm-(x.win?1:0))**2-(x.pk-(x.win?1:0))**2})));
+    const v=c.m+c.moe<0?'<span class="pl-pos">el modelo gana</span>':(c.m-c.moe>0?'<span class="pl-neg">el mercado gana</span>':'<span style="color:var(--text3)">sin diferencia clara</span>');
+    return '<tr style="'+(sub?'background:var(--surface2);font-weight:600;':'')+(l.length<15?'opacity:.6':'')+'"><td style="text-align:left">'+n+'</td><td class="num">'+l.length+'</td><td class="num">'+c.np+'</td>'
+      +'<td class="num">'+pm.toFixed(0)+'%</td><td class="num">'+pk.toFixed(0)+'%</td><td class="num">'+re.toFixed(0)+'%</td>'
+      +'<td class="num"><b>'+(c.m*100>=0?'+':'')+(c.m*100).toFixed(1)+'</b> <span style="color:var(--text3);font-size:11px">±'+(c.moe*100).toFixed(1)+'</span></td><td style="text-align:left;font-size:12px">'+v+'</td></tr>';
+  };
+  return '<div class="table-wrap table-wrap-scroll"><table class="hm-table"><thead><tr><th style="text-align:left">Posición de la línea</th><th class="num">Líneas</th><th class="num">Partidos</th>'
+    +'<th class="num">Modelo daba</th><th class="num">Implícita (cuota)</th><th class="num">Acierto real</th>'
+    +'<th class="num" title="(Brier modelo − Brier mercado) × 100, media por línea con margen ±90% agrupado por partido. Negativo = el modelo acierta mejor que la cuota">Δ Brier ×100 (±90%)</th><th style="text-align:left">Lectura</th></tr></thead><tbody>'
+    +ki.map(([n,f])=>fila(n,L.filter(f))).join('')+fila('Todas las líneas cotizadas',L,1)+'</tbody></table></div>';
+}
+// una línea por equipo y partido: la de mayor puntuación entre las que pasan el filtro
+function _remUna(L,f,sc){
+  const g=new Map();
+  L.filter(f).forEach(x=>{ const a=g.get(x.eq); if(!a||sc(x)>sc(a)||(sc(x)===sc(a)&&x.prob>a.prob)) g.set(x.eq,x); });
+  return [...g.values()];
+}
+function _remCandTabla(cands,soloNuevos){
+  const sel=cands.map(c=>({n:c.n,l:c.l.filter(x=>!soloNuevos||x.id>REM_CAND_CORTE_ID)}));
+  const u=l=>{const m=new Map(); l.forEach(x=>m.set(x.id,(m.get(x.id)||0)+(x.win?x.cuota-1:-1))); return m;};
+  const ref=u(sel[0].l);
+  const filas=sel.map((c,i)=>{
+    const st=_mejSt(c.l), um=u(c.l);
+    let d='<td class="num" style="color:var(--text3)">'+(i===0?'referencia':'—')+'</td>';
+    if(i>0){
+      const ids=new Set([...um.keys(),...ref.keys()]);
+      const dd=_remMedCl([...ids].map(id=>({id,e:(um.get(id)||0)-(ref.get(id)||0)})));
+      if(dd) d='<td class="num"><span class="'+_mejCl(dd.m)+'"><b>'+_mejSg(dd.m,2)+'</b></span> <span style="color:var(--text3);font-size:11px">±'+dd.moe.toFixed(2)+' ('+dd.n+')</span></td>';
+    }
+    return '<tr style="'+(i===0?'background:var(--surface2);font-weight:600':'')+'"><td style="text-align:left">'+c.n+'</td>'+_hipCel(st)+d+'</tr>';
+  }).join('');
+  return '<div class="table-wrap table-wrap-scroll"><table class="hm-table"><thead><tr><th style="text-align:left">Candidata (una línea por equipo y partido, EV &gt; 0)</th><th class="num">Apuestas</th><th class="num">Acierto</th><th class="num">Cuota</th>'
+    +'<th class="num">ROI ±90%</th><th class="num">P&amp;L</th><th class="num" title="Unidades por partido (un dato por partido) y su ±90%; entre paréntesis, partidos">u / partido (±90%)</th>'
+    +'<th class="num" title="Diferencia de unidades por partido frente a la primera fila, sobre los mismos partidos, con margen ±90%. Si el margen cruza el cero, no hay diferencia demostrada">Δ u / partido frente a la vigente</th></tr></thead><tbody>'+filas+'</tbody></table></div>';
+}
+function _remRenderCand(){
+  const el=document.getElementById('rem-cand'); if(!el) return;
+  const R=_remLineas('remates'), S=_remLineas('remates_puerta');
+  const tt=(t,x)=>'<div style="font-size:12px;color:var(--text3);margin:16px 0 6px;font-weight:600">'+t+'</div>'+x;
+  const nuevos=_DATA.filter(p=>p.resultado_partido&&+p.id>REM_CAND_CORTE_ID).length, pct=Math.min(100,nuevos/REM_CAND_N*100);
+  const prog='<div style="display:flex;align-items:center;gap:10px;font-size:12px;margin:0 0 10px"><div style="flex:0 0 200px;height:8px;border-radius:4px;background:var(--surface2);overflow:hidden"><div style="width:'+pct+'%;height:100%;background:var(--accent,#378add)"></div></div>'
+    +'<span><b>'+nuevos+'</b> de '+REM_CAND_N+' partidos cerrados desde que se fijaron las candidatas ('+REM_CAND_FECHA+', partido #'+String(REM_CAND_CORTE_ID+1).padStart(3,'0')+' en adelante)</span></div>';
+  const P=R.filter(x=>x.ev>0), Q=S.filter(x=>x.ev>0&&x.cuota>=1.60), ev=x=>x.ev*x.prob;
+  const cr=[{n:'Vigente (B): línea − media ≥ −4 y no por encima de la línea promedio · mejor EV×P',l:_remUna(P,x=>x.k<=0&&(x.k+Math.floor(x.mu)-0.5-x.mu)>=-4,ev)},
+    {n:'Solo la línea promedio exacta · mejor EV×P',l:_remUna(P,x=>x.k===0,ev)},
+    {n:'La de mayor probabilidad entre las EV &gt; 0',l:_remUna(P,x=>true,x=>x.prob)},
+    {n:'Mejor EV×P sin filtro de posición',l:_remUna(P,x=>true,ev)}];
+  const cp=[{n:'Vigente (S1): cuota ≥ 1.60 · mejor EV×P',l:_remUna(Q,x=>true,ev)},
+    {n:'S1 con cuota ≤ 2.20',l:_remUna(Q,x=>x.cuota<=2.2,ev)},
+    {n:'S1 solo del equipo favorito (mayor λ)',l:_remUna(Q,x=>x.fav,ev)},
+    {n:'S1 en la línea promedio o por debajo',l:_remUna(Q,x=>x.k<=0,ev)}];
+  el.innerHTML=prog
+    +tt('① ¿Dónde le gana el modelo al mercado? REMATES totales, todas las líneas cotizadas, por posición frente a la línea promedio',_remCalibTabla(R))
+    +tt('② ¿Dónde le gana el modelo al mercado? REMATES A PUERTA, todas las líneas cotizadas',_remCalibTabla(S))
+    +tt('③ Candidatas de REMATES totales — todos los partidos del d2 (muestra en la que se pensaron: orienta, no prueba)',_remCandTabla(cr,false))
+    +tt('④ Candidatas de REMATES totales — solo partidos posteriores a la fijación (la prueba real)',_remCandTabla(cr,true))
+    +tt('⑤ Candidatas de A PUERTA — todos los partidos del d2',_remCandTabla(cp,false))
+    +tt('⑥ Candidatas de A PUERTA — solo partidos posteriores a la fijación (la prueba real)',_remCandTabla(cp,true));
+}
 function renderRemates(){
   renderRemateMercados();      // REMATE y A PUERTA por cuota y por línea
-  _remRenderDiag();
+  _remRenderDiag(); _remRenderCand();
   renderMejoras();             // reglas de elección de línea y mercados por equipo (viven en este tab desde 2026-11-08)
   if(ES_D2) renderHipotesis(); // R1 y S1 (en el d2)
 }
