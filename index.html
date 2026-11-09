@@ -5551,7 +5551,7 @@ function _remLineas(sufijo){
     (p.watchlist||[]).forEach(w=>{
       if(w.tipo!=='POR_EQUIPO'||!(w.mercado==='local_'+sufijo||w.mercado==='visit_'+sufijo)||w.acerto==null||!w.cuota||w.linea==null) return;
       const lado=w.mercado.startsWith('local')?'local':'visit', mu=((p.mu_equipo[lado])||{})[sufijo]; if(mu==null) return;
-      L.push({id:+p.id,cuota:+w.cuota,win:!!w.acerto,ev:+w.ev_pct||0,prob:+w.prob||0,mu,k:w.linea-(Math.floor(mu)-0.5),own:lado==='local'?ll:lv,fav:lado==='local'?ll>lv:lv>ll,lado,eq:lado+'|'+p.id,pm:(+w.prob||0)/100,pk:Math.min(0.99,(1/+w.cuota)/1.06)});
+      L.push({id:+p.id,cuota:+w.cuota,win:!!w.acerto,ev:+w.ev_pct||0,prob:+w.prob||0,mu,k:w.linea-(Math.floor(mu)-0.5),own:lado==='local'?ll:lv,fav:lado==='local'?ll>lv:lv>ll,lado,eq:lado+'|'+p.id,pm:(+w.prob||0)/100,pk:Math.min(0.99,(1/+w.cuota)/1.06),linea:+w.linea,et:w.etiqueta,nom:p.partido});
     });
   });
   return L;
@@ -5669,9 +5669,76 @@ function _remRenderCand(){
     +tt('⑤ Candidatas de A PUERTA — todos los partidos del d2',_remCandTabla(cp,false,'s'))
     +tt('⑥ Candidatas de A PUERTA — solo partidos posteriores a la fijación (la prueba real)',_remCandTabla(cp,true,'s'));
 }
+// ── Simulador de selección (solo d2, 2026-11-09, a pedido) ─────────────────────────────────────────────────────────────
+// «¿Qué habría pasado con los partidos jugados si se hubiera elegido así?» Una línea por equipo y partido, con filtros que se pueden mover:
+// cuota, posición frente a la línea promedio, distancia a la media, EV, probabilidad, media esperada, rol, lado y criterio de elección.
+// Se compara con la regla vigente, con elegir al azar entre las líneas que pasan los filtros y con el techo (la mejor línea de cada equipo
+// sabiendo el resultado, no alcanzable). Ojo: ajustar filtros mirando estos mismos partidos es sobreajuste; vale lo que pase en «solo partidos
+// posteriores a la fijación».
+const _SIM_DEF={r:{'cu-min':'','cu-max':'','k-min':'','k-max':'0','d-min':'-4','d-max':'','ev-min':'0','ev-max':'','p-min':'','p-max':'','mu-min':'','mu-max':'','rol':'todos','lado':'todos','crit':'evp','muestra':'todos'},
+  s:{'cu-min':'1.6','cu-max':'','k-min':'','k-max':'','d-min':'','d-max':'','ev-min':'0','ev-max':'','p-min':'','p-max':'','mu-min':'','mu-max':'','rol':'todos','lado':'todos','crit':'evp','muestra':'todos'}};
+const _SIM_VACIO={'cu-min':'','cu-max':'','k-min':'','k-max':'','d-min':'','d-max':'','ev-min':'','ev-max':'','p-min':'','p-max':'','mu-min':'','mu-max':'','rol':'todos','lado':'todos','crit':'evp','muestra':'todos'};
+function _remSimPon(t,vals){ Object.keys(vals).forEach(k=>{ const e=document.getElementById('sim-'+t+'-'+k); if(e) e.value=vals[k]; }); _remSimRender(t); }
+function _remSimUI(t){
+  const pref='sim-'+t+'-', num=(id,lbl,w)=>'<label style="display:flex;flex-direction:column;gap:2px;color:var(--text2)">'+lbl+'<input type="number" step="any" id="'+pref+id+'" oninput="_remSimRender(\''+t+'\')" style="width:'+(w||70)+'px;font-size:12px"></label>';
+  const sel=(id,lbl,opts)=>'<label style="display:flex;flex-direction:column;gap:2px;color:var(--text2)">'+lbl+'<select id="'+pref+id+'" onchange="_remSimRender(\''+t+'\')" style="font-size:12px">'+opts.map(o=>'<option value="'+o[0]+'">'+o[1]+'</option>').join('')+'</select></label>';
+  return '<div style="display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;font-size:12px;margin:0 0 8px">'
+    +num('cu-min','Cuota desde')+num('cu-max','Cuota hasta')
+    +num('k-min','Posición desde','82')+num('k-max','Posición hasta','82')
+    +num('d-min','Línea − media desde','100')+num('d-max','Línea − media hasta','100')
+    +num('ev-min','EV mayor que (%)','90')+num('ev-max','EV hasta (%)','80')
+    +num('p-min','Prob. desde (%)','80')+num('p-max','Prob. hasta (%)','80')
+    +num('mu-min','Media esperada desde','110')+num('mu-max','Media esperada hasta','110')+'</div>'
+    +'<div style="display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;font-size:12px;margin:0 0 10px">'
+    +sel('rol','Equipo',[['todos','Favorito y no favorito'],['fav','Solo favorito (mayor λ)'],['nofav','Solo no favorito']])
+    +sel('lado','Lado',[['todos','Local y visita'],['local','Solo local'],['visit','Solo visita']])
+    +sel('crit','Entre las que pasan, elegir la de',[['evp','mayor EV×P (como hoy)'],['prob','mayor probabilidad'],['ev','mayor EV'],['cumin','menor cuota'],['cumax','mayor cuota'],['prom','más cercana a la línea promedio'],['lbaja','línea más baja'],['lalta','línea más alta']])
+    +sel('muestra','Partidos',[['todos','Todos los del d2'],['nuevos','Solo posteriores a la fijación (#'+String(REM_CAND_CORTE_ID+1).padStart(3,'0')+' en adelante)']])
+    +'<button type="button" onclick="_remSimPon(\''+t+'\',_SIM_DEF.'+t+')" style="font-size:12px;padding:3px 10px">Volver a la regla vigente</button>'
+    +'<button type="button" onclick="_remSimPon(\''+t+'\',_SIM_VACIO)" style="font-size:12px;padding:3px 10px">Quitar todos los filtros</button></div>'
+    +'<div id="'+pref+'out"></div>';
+}
+function _remSimRender(t){
+  const cont=document.getElementById('sim-'+t); if(!cont) return;
+  const pref='sim-'+t+'-';
+  if(!document.getElementById(pref+'out')){ cont.innerHTML=_remSimUI(t); Object.keys(_SIM_DEF[t]).forEach(k=>{ const e=document.getElementById(pref+k); if(e) e.value=_SIM_DEF[t][k]; }); }
+  const g=id=>document.getElementById(pref+id).value, n=id=>{ const v=g(id); return v===''?null:+v; };
+  const f={cuMin:n('cu-min'),cuMax:n('cu-max'),kMin:n('k-min'),kMax:n('k-max'),dMin:n('d-min'),dMax:n('d-max'),evMin:n('ev-min'),evMax:n('ev-max'),pMin:n('p-min'),pMax:n('p-max'),muMin:n('mu-min'),muMax:n('mu-max'),rol:g('rol'),lado:g('lado'),crit:g('crit'),muestra:g('muestra')};
+  let L=_remLineas(t==='r'?'remates':'remates_puerta'); if(f.muestra==='nuevos') L=L.filter(x=>x.id>REM_CAND_CORTE_ID);
+  const ok=(v,a,b)=>(a==null||v>=a)&&(b==null||v<=b);
+  const pasa=x=>ok(x.cuota,f.cuMin,f.cuMax)&&ok(x.k,f.kMin,f.kMax)&&ok(x.linea-x.mu,f.dMin,f.dMax)&&(f.evMin==null||x.ev>f.evMin)&&(f.evMax==null||x.ev<=f.evMax)
+    &&ok(x.prob,f.pMin,f.pMax)&&ok(x.mu,f.muMin,f.muMax)&&(f.rol==='todos'||(f.rol==='fav'?x.fav:!x.fav))&&(f.lado==='todos'||x.lado===f.lado);
+  const SC={evp:x=>x.ev*x.prob,prob:x=>x.prob,ev:x=>x.ev,cumin:x=>-x.cuota,cumax:x=>x.cuota,prom:x=>-Math.abs(x.k),lbaja:x=>-x.linea,lalta:x=>x.linea};
+  const pas=L.filter(pasa), sel=_remUna(L,pasa,SC[f.crit]||SC.evp);
+  const equipos=new Set(L.map(x=>x.eq)).size, conLinea=new Set(pas.map(x=>x.eq)).size;
+  // referencia: la regla vigente (misma muestra)
+  const vig=t==='r'?_remUna(L,x=>x.ev>0&&(x.linea-x.mu)>=-4&&x.k<=0,x=>x.ev*x.prob):_remUna(L,x=>x.ev>0&&x.cuota>=1.60,x=>x.ev*x.prob);
+  // azar: esperanza exacta de elegir UNA línea al azar entre las que pasan, por equipo y partido
+  const g2=new Map(); pas.forEach(x=>{ (g2.get(x.eq)||g2.set(x.eq,[]).get(x.eq)).push(x); });
+  let plA=0, acA=0, cuA=0; g2.forEach(a=>{ plA+=a.reduce((s,x)=>s+(x.win?x.cuota-1:-1),0)/a.length; acA+=a.filter(x=>x.win).length/a.length; cuA+=a.reduce((s,x)=>s+x.cuota,0)/a.length; });
+  const nT=g2.size;
+  const filaAzar=nT?'<tr style="opacity:.9"><td style="text-align:left;padding-left:22px;font-size:12px">Al azar entre las que pasan (esperanza exacta, una por equipo y partido)</td><td class="num">'+nT+'</td><td class="num">'+Math.round(acA/nT*100)+'%</td><td class="num">'+(cuA/nT).toFixed(2)+'</td><td class="num"><span class="'+_mejCl(plA)+'">'+(plA/nT*100>=0?'+':'')+(plA/nT*100).toFixed(1)+'%</span></td><td class="num">'+_mejU(plA)+'</td><td class="num" style="color:var(--text3)">—</td></tr>'
+    :'<tr><td style="text-align:left;padding-left:22px;font-size:12px">Al azar entre las que pasan</td><td colspan="6" style="color:var(--text3);text-align:center">sin líneas</td></tr>';
+  // techo: la línea ganadora de mayor cuota de cada equipo, sabiendo el resultado
+  const techo=[]; g2.forEach(a=>{ const w=a.filter(x=>x.win).sort((p,q)=>q.cuota-p.cuota); techo.push(w.length?w[0]:a[0]); });
+  const filas=_hipFila('Tu selección: una línea por equipo y partido',sel,{b:1})
+    +_hipFila('Regla vigente ('+(t==='r'?'R1: EV > 0, línea − media ≥ −4, hasta la línea promedio':'S1: EV > 0 y cuota ≥ 1.60')+', mejor EV×P)',vig,{sub:1})
+    +filaAzar
+    +_hipFila('Techo: la línea ganadora de mayor cuota de cada equipo, sabiendo el resultado (no alcanzable)',techo,{sub:1})
+    +_hipFila('Todas las líneas que pasan los filtros (no es una apuesta: son varias por equipo)',pas,{sub:1});
+  const det=[...sel].sort((a,b)=>b.id-a.id||String(a.eq).localeCompare(String(b.eq))).map(x=>'<tr><td style="text-align:left">'+String(x.id).padStart(3,'0')+'</td><td style="text-align:left">'+(x.nom||'')+'</td><td style="text-align:left">'+(x.et||'')+'</td>'
+    +'<td class="num">'+x.cuota.toFixed(2)+'</td><td class="num">'+Math.round(x.prob)+'%</td><td class="num">'+(x.ev>=0?'+':'')+x.ev.toFixed(1)+'%</td><td class="num">'+(x.k>0?'+':'')+x.k+'</td>'
+    +'<td class="num '+(x.win?'pl-pos':'pl-neg')+'">'+(x.win?'acertó':'falló')+'</td><td class="num '+(x.win?'pl-pos':'pl-neg')+'">'+(x.win?'+':'')+(x.win?x.cuota-1:-1).toFixed(2)+'</td></tr>').join('');
+  document.getElementById(pref+'out').innerHTML=
+    '<p style="font-size:12px;color:var(--text3);margin:0 0 8px">Pasan los filtros <b>'+conLinea+'</b> de <b>'+equipos+'</b> equipos-partido ('+pas.length+' líneas). Posición: 0 = línea promedio, −1 = una línea por debajo, +1 = una por encima. «Línea − media» usa la media esperada de remates del modelo.</p>'
+    +_hipTabla('Selección',filas)
+    +'<details style="margin-top:10px"><summary style="cursor:pointer;font-size:12px;color:var(--text2)">Ver cada apuesta de «Tu selección» ('+sel.length+')</summary>'
+    +'<div class="table-wrap table-wrap-scroll" style="max-height:320px;overflow-y:auto;margin-top:6px"><table class="hm-table"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">Partido</th><th style="text-align:left">Línea</th><th class="num">Cuota</th><th class="num">Prob.</th><th class="num">EV</th><th class="num">Posición</th><th class="num">Resultado</th><th class="num">u</th></tr></thead><tbody>'
+    +(det||'<tr><td colspan="9" class="empty">Ninguna línea pasa los filtros.</td></tr>')+'</tbody></table></div></details>';
+}
 function renderRemates(){
   renderRemateMercados();      // REMATE y A PUERTA por cuota y por línea
-  _remRenderDiag(); _remRenderCand();
+  _remRenderDiag(); _remRenderCand(); _remSimRender('r'); _remSimRender('s');
   renderMejoras();             // reglas de elección de línea y mercados por equipo (viven en este tab desde 2026-11-08)
   if(ES_D2) renderHipotesis(); // R1 y S1 (en el d2)
 }
