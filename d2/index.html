@@ -508,6 +508,20 @@
         <div id="seg-equipo-lambda"></div>
       </div>
     </div>
+    <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">Selección con retroalimentación — aprende del acierto de los partidos anteriores</div>
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
+        <div class="card-title">R1 · remates totales: elegir la línea del grupo que mejor rindió hasta ese partido</div>
+        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">Recorre los partidos en orden. Para cada equipo y partido elige <b>una línea</b>: la del grupo (posición frente a la línea promedio × banda de cuota) que tuvo mejor ROI en los partidos <b>anteriores</b>, si el grupo tiene el mínimo de líneas y su ROI pasado supera el umbral. Recién después de apostar aprende del resultado. Aprende de todas las líneas cotizadas, no solo de las que elige. Con pocos partidos casi ningún grupo llega al mínimo y lo que aprende es ruido; <b>este cuadro se actualiza solo y irá cobrando sentido a medida que se acumulen partidos</b>.</p>
+        <div id="fb-r"></div>
+      </div>
+    </div>
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
+        <div class="card-title">S1 · remates a puerta: elegir la línea del grupo que mejor rindió hasta ese partido</div>
+        <div id="fb-s"></div>
+      </div>
+    </div>
   </div>
 
   <!-- Ligas -->
@@ -5829,9 +5843,81 @@ function _remSimRender(t){
     +'<div class="table-wrap table-wrap-scroll" style="max-height:320px;overflow-y:auto;margin-top:6px"><table class="hm-table"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">Partido</th><th style="text-align:left">Línea</th><th class="num">Cuota</th><th class="num">Prob.</th><th class="num">EV</th><th class="num">Posición</th><th class="num">Resultado</th><th class="num">u</th></tr></thead><tbody>'
     +(det||'<tr><td colspan="9" class="empty">Ninguna línea pasa los filtros.</td></tr>')+'</tbody></table></div></details>';
 }
+// ── Selección con retroalimentación (solo d2, 2026-11-09, a pedido) ────────────────────────────────────────────────────
+// Camina los partidos en orden. Para cada equipo y partido elige UNA línea: la del grupo (posición × banda de cuota, u otra agrupación) que tuvo mejor ROI en los
+// partidos ANTERIORES, siempre que el grupo tenga al menos «mínimo de líneas» y su ROI pasado supere el umbral. Recién después de apostar aprende del resultado:
+// nunca ve el resultado antes de elegir. Aprende de TODAS las líneas cotizadas (no solo las que apostó), así no se sesga por lo que eligió.
+// Con pocos partidos casi ningún grupo llega al mínimo y aprende ruido; a medida que se acumulen partidos este cuadro irá cobrando sentido (se actualiza solo).
+const _FB_DEF={r:{min:'20',roi:'0',cu:'',grp:'pc'},s:{min:'20',roi:'0',cu:'1.6',grp:'pc'}};
+function _remFbUI(t){
+  const pref='fb-'+t+'-', num=(id,lbl,w)=>'<label style="display:flex;flex-direction:column;gap:2px;color:var(--text2)">'+lbl+'<input type="number" step="any" id="'+pref+id+'" oninput="_remFbRender(\''+t+'\')" style="width:'+(w||80)+'px;font-size:12px"></label>';
+  return '<div style="display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;font-size:12px;margin:0 0 10px">'
+    +num('min','Líneas mínimas por grupo','150')+num('roi','ROI pasado mayor que (%)','130')+num('cu','Cuota desde (solo líneas con esa cuota)','230')
+    +'<label style="display:flex;flex-direction:column;gap:2px;color:var(--text2)">Los grupos se arman por<select id="'+pref+'grp" onchange="_remFbRender(\''+t+'\')" style="font-size:12px">'
+    +'<option value="pc">Posición × banda de cuota</option><option value="p">Solo posición frente a la línea promedio</option><option value="c">Solo banda de cuota</option><option value="pcr">Posición × cuota × rol (favorito o no)</option></select></label>'
+    +'<button type="button" onclick="_remFbPon(\''+t+'\')" style="font-size:12px;padding:3px 10px">Valores por defecto</button></div>'
+    +'<div id="'+pref+'out"></div>';
+}
+function _remFbPon(t){ Object.keys(_FB_DEF[t]).forEach(k=>{ const e=document.getElementById('fb-'+t+'-'+k); if(e) e.value=_FB_DEF[t][k]; }); _remFbRender(t); }
+function _remFbRender(t){
+  const cont=document.getElementById('fb-'+t); if(!cont) return;
+  const pref='fb-'+t+'-';
+  if(!document.getElementById(pref+'out')){ cont.innerHTML=_remFbUI(t); Object.keys(_FB_DEF[t]).forEach(k=>{ const e=document.getElementById(pref+k); if(e) e.value=_FB_DEF[t][k]; }); }
+  const num=id=>{ const v=document.getElementById(pref+id).value; return v===''?null:+v; };
+  const minN=num('min')||1, roiMin=num('roi')==null?0:num('roi'), cuMin=num('cu'), grp=document.getElementById(pref+'grp').value;
+  const Lall=_remLineas(t==='r'?'remates':'remates_puerta'), L=Lall.filter(x=>cuMin==null||x.cuota>=cuMin);
+  const kb=k=>Math.max(-2,Math.min(2,k)), kl=k=>k<=-2?'2 o más por debajo':(k===-1?'1 por debajo':(k===0?'línea promedio':(k===1?'1 por encima':'2 o más por encima')));
+  const cb=c=>c<1.6?0:(c<2.2?1:(c<3.5?2:3)), cl=['cuota &lt; 1.60','1.60–2.20','2.20–3.50','3.50 o más'];
+  const lab=new Map();
+  const key=x=>{
+    const kk=kb(x.k), c=cb(x.cuota), r=x.fav?'favorito':'no favorito'; let k,l;
+    if(grp==='p'){ k='p'+kk; l=kl(x.k); } else if(grp==='c'){ k='c'+c; l=cl[c]; }
+    else if(grp==='pcr'){ k='pcr'+kk+'|'+c+'|'+x.fav; l=kl(x.k)+' · '+cl[c]+' · '+r; } else { k='pc'+kk+'|'+c; l=kl(x.k)+' · '+cl[c]; }
+    lab.set(k,l); return k;
+  };
+  const ids=[...new Set(Lall.map(x=>x.id))].sort((a,b)=>a-b);
+  const hist=new Map(), sel=[], vig=[], porId=new Map(); let eqTot=0, eqHist=0;
+  ids.forEach(id=>{
+    const hoy=L.filter(x=>x.id===id), byEq=new Map();
+    hoy.forEach(x=>{ (byEq.get(x.eq)||byEq.set(x.eq,[]).get(x.eq)).push(x); });
+    byEq.forEach(a=>{
+      eqTot++; let best=null, bs=-1e9;
+      a.forEach(x=>{ const h=hist.get(key(x)); if(!h||h.n<minN) return; const r=h.u/h.n*100; if(r>bs){ bs=r; best=x; } });
+      if(best){ eqHist++; if(bs>roiMin){ sel.push(best); (porId.get(id)||porId.set(id,{s:0,v:0}).get(id)).s+=best.win?best.cuota-1:-1; } }
+    });
+    // regla vigente en esos mismos partidos
+    const bv=new Map();
+    Lall.filter(x=>x.id===id&&x.ev>0&&(t==='r'?((x.linea-x.mu)>=-4&&x.k<=0):x.cuota>=1.60)).forEach(x=>{ const c=bv.get(x.eq); if(!c||x.ev*x.prob>c.ev*c.prob) bv.set(x.eq,x); });
+    bv.forEach(x=>{ vig.push(x); (porId.get(id)||porId.set(id,{s:0,v:0}).get(id)).v+=x.win?x.cuota-1:-1; });
+    // recién ahora aprende del resultado
+    hoy.forEach(x=>{ const k=key(x), h=hist.get(k)||{n:0,u:0,w:0,c:0}; h.n++; h.u+=x.win?x.cuota-1:-1; h.w+=x.win?1:0; h.c+=x.cuota; hist.set(k,h); });
+  });
+  const filas=_hipFila('Selección con retroalimentación (aprende de los partidos anteriores)',sel,{b:1})
+    +_hipFila('Regla vigente ('+(t==='r'?'R1':'S1')+'), en los mismos partidos',vig,{sub:1});
+  // evolución por bloques de 10 partidos
+  let acS=0, acV=0, ev='';
+  for(let i=0;i<ids.length;i+=10){
+    let s=0,v=0; ids.slice(i,i+10).forEach(id=>{ const o=porId.get(id); if(o){ s+=o.s; v+=o.v; } }); acS+=s; acV+=v;
+    ev+='<tr><td style="text-align:left">Partidos '+(i+1)+'–'+Math.min(i+10,ids.length)+'</td><td class="num">'+_mejU(s)+'</td><td class="num">'+_mejU(v)+'</td><td class="num">'+_mejU(acS)+'</td><td class="num">'+_mejU(acV)+'</td></tr>';
+  }
+  const evTab='<div class="table-wrap"><table class="hm-table"><thead><tr><th style="text-align:left">Bloque de 10 partidos cerrados</th><th class="num">Retroalimentación</th><th class="num">Regla vigente</th><th class="num">Acum. retroalimentación</th><th class="num">Acum. vigente</th></tr></thead><tbody>'+ev+'</tbody></table></div>';
+  // lo que ha aprendido hasta hoy
+  const rows=[...hist.entries()].map(([k,h])=>({l:lab.get(k)||k,n:h.n,ac:h.w/h.n*100,cu:h.c/h.n,roi:h.u/h.n*100})).sort((a,b)=>b.roi-a.roi);
+  const aprendido='<div class="table-wrap table-wrap-scroll" style="max-height:300px;overflow-y:auto"><table class="hm-table"><thead style="position:sticky;top:0;background:var(--bg2)"><tr><th style="text-align:left">Grupo</th><th class="num">Líneas</th><th class="num">Acierto</th><th class="num">Cuota media</th><th class="num">ROI hasta hoy</th></tr></thead><tbody>'
+    +rows.map(o=>'<tr style="'+(o.n<minN?'opacity:.5':'')+'"><td style="text-align:left">'+o.l+'</td><td class="num">'+o.n+'</td><td class="num">'+Math.round(o.ac)+'%</td><td class="num">'+o.cu.toFixed(2)+'</td><td class="num"><span class="'+_mejCl(o.roi)+'">'+(o.roi>=0?'+':'')+o.roi.toFixed(1)+'%</span></td></tr>').join('')+'</tbody></table></div>';
+  const det=[...sel].sort((a,b)=>b.id-a.id).map(x=>'<tr><td style="text-align:left">'+String(x.id).padStart(3,'0')+'</td><td style="text-align:left">'+(x.nom||'')+'</td><td style="text-align:left">'+(x.et||'')+'</td><td class="num">'+x.cuota.toFixed(2)+'</td><td class="num '+(x.win?'pl-pos':'pl-neg')+'">'+(x.win?'acertó':'falló')+'</td></tr>').join('');
+  document.getElementById(pref+'out').innerHTML=
+    '<p style="font-size:12px;color:var(--text3);margin:0 0 8px">Con historia suficiente (grupos con al menos '+minN+' líneas) en <b>'+eqHist+'</b> de <b>'+eqTot+'</b> equipos-partido; apostó en <b>'+sel.length+'</b>. '
+    +'Aprende de todas las líneas cotizadas'+(cuMin!=null?' con cuota desde '+cuMin:'')+', no solo de las que elige, y siempre después de apostar.</p>'
+    +_hipTabla('Selección',filas)
+    +'<div style="font-size:12px;color:var(--text3);margin:14px 0 6px;font-weight:600">Evolución por bloques de 10 partidos (unidades)</div>'+evTab
+    +'<div style="font-size:12px;color:var(--text3);margin:14px 0 6px;font-weight:600">Lo que ha aprendido hasta hoy: ROI de cada grupo con todas las líneas vistas (atenuados: aún sin el mínimo de líneas)</div>'+aprendido
+    +'<details style="margin-top:10px"><summary style="cursor:pointer;font-size:12px;color:var(--text2)">Ver cada apuesta de la selección con retroalimentación ('+sel.length+')</summary><div class="table-wrap table-wrap-scroll" style="max-height:300px;overflow-y:auto;margin-top:6px"><table class="hm-table"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">Partido</th><th style="text-align:left">Línea</th><th class="num">Cuota</th><th class="num">Resultado</th></tr></thead><tbody>'
+    +(det||'<tr><td colspan="5" class="empty">Todavía no apostó: ningún grupo llega al mínimo de líneas con ROI positivo.</td></tr>')+'</tbody></table></div></details>';
+}
 function renderRemates(){
   renderRemateMercados();      // REMATE y A PUERTA por cuota y por línea
-  _remRenderDiag(); _remRenderCand(); _remSimRender('r'); _remSimRender('s');
+  _remRenderDiag(); _remRenderCand(); _remSimRender('r'); _remSimRender('s'); _remFbRender('r'); _remFbRender('s');
   renderMejoras();             // reglas de elección de línea y mercados por equipo (viven en este tab desde 2026-11-08)
   if(ES_D2) renderHipotesis(); // R1 y S1 (en el d2)
 }
