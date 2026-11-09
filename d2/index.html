@@ -5412,12 +5412,13 @@ function _hipRenderResumen(B){
 }
 function _hipRenderRemate(B){
   const el=document.getElementById('hip-remate'); if(!el) return;
-  const L=[];
+  const Lall=[];
   _DATA.filter(p=>p.resultado_partido&&p.mu_equipo).forEach(p=>(p.watchlist||[]).forEach(w=>{
-    if(w.tipo!=='POR_EQUIPO'||!(w.mercado==='local_remates'||w.mercado==='visit_remates')||w.acerto==null||!w.cuota||w.linea==null||!_remEvOk(+w.ev_pct||0,'r')) return;
+    if(w.tipo!=='POR_EQUIPO'||!(w.mercado==='local_remates'||w.mercado==='visit_remates')||w.acerto==null||!w.cuota||w.linea==null) return;
     const mu=((p.mu_equipo[w.mercado==='local_remates'?'local':'visit'])||{}).remates; if(mu==null) return;
-    L.push({id:+p.id,cuota:+w.cuota,win:!!w.acerto,d:w.linea-mu});
+    Lall.push({id:+p.id,cuota:+w.cuota,win:!!w.acerto,d:w.linea-mu,k:w.linea-(Math.floor(mu)-0.5),ev:+w.ev_pct||0});
   }));
+  const L=Lall.filter(x=>_remEvOk(x.ev,'r'));
   const bandas=[['< −4 (el modelo las sobreestima)',x=>x.d<-4],['−4 a −2 · zona R1',x=>x.d>=-4&&x.d<-2,1],['−2 a 0 · zona R1',x=>x.d>=-2&&x.d<0,1],['0 a +2 (solo entran si siguen en la línea promedio)',x=>x.d>=0&&x.d<2],['+2 o más (nunca se apuestan)',x=>x.d>=2]];
   const f1=bandas.map(([l,f,z])=>_hipFila(l,L.filter(f),{b:z})).join('')+_hipFila('Todas las líneas con '+_remEvTxt('r'),L,{sub:1});
   const f2=[['Local favorito',x=>x.a.lado==='local'&&x.a.equipo_favorito===true],['Local no favorito',x=>x.a.lado==='local'&&x.a.equipo_favorito===false],
@@ -5453,7 +5454,13 @@ function _hipRenderRemate(B){
   el.innerHTML='<div style="font-size:12px;color:var(--text3);margin:0 0 6px;font-weight:600">① Todas las líneas de remates totales con '+_remEvTxt('r')+', según su distancia a la media esperada del modelo (se apuesten o no)</div>'
     +_hipTabla('Línea − media',f1)
     +'<div style="font-size:12px;color:var(--text3);margin:16px 0 6px;font-weight:600">② Lo realmente elegido por R1, por lado y por rol del equipo (favorito = mayor λ)</div>'+_hipTabla('REMATE R1',f2)
-    +'<div style="font-size:12px;color:var(--text3);margin:16px 0 6px;font-weight:600">③ Regla A (anterior) frente a regla B (vigente): misma muestra, misma forma de elegir; solo cambia el tope superior (línea − media &lt; 0 frente a la línea promedio)</div>'+_hipTabla('Regla',f3);
+    +'<div style="font-size:12px;color:var(--text3);margin:16px 0 6px;font-weight:600">③ Regla A (anterior) frente a regla B (vigente): misma muestra, misma forma de elegir; solo cambia el tope superior (línea − media &lt; 0 frente a la línea promedio)</div>'+_hipTabla('Regla',f3)
+    +'<div style="font-size:12px;color:var(--text3);margin:16px 0 6px;font-weight:600">④ Todas las líneas de remates totales con '+_remEvTxt('r')+', por cuota (se apuesten o no): ¿qué bandas de cuota rinden y cuáles no? Con el contraste de las líneas con EV ≤ 0</div>'
+    +_hipTabla('Cuota',[['cuota &lt; 1.40',x=>x.cuota<1.40],['1.40 – 1.60',x=>x.cuota>=1.40&&x.cuota<1.60],['1.60 – 2.00',x=>x.cuota>=1.60&&x.cuota<2.00],['2.00 – 3.00',x=>x.cuota>=2.00&&x.cuota<3.00],['3.00 o más',x=>x.cuota>=3.00]]
+      .map(([l,f])=>_hipFila(l,L.filter(f))).join('')+_hipFila('Todas las líneas con '+_remEvTxt('r'),L,{sub:1})+_hipFila('Contraste: líneas con EV ≤ 0 (no se apuestan)',Lall.filter(x=>x.ev<=0),{sub:1}))
+    +'<div style="font-size:12px;color:var(--text3);margin:16px 0 6px;font-weight:600">⑤ Las mismas líneas por posición respecto a la LÍNEA PROMEDIO (media X,Y → promedio = X, línea promedio = Over (X−1),5; ej. media 12,3 → Over 11,5)</div>'
+    +_hipTabla('Posición',[['3 o más líneas por debajo',x=>x.k<=-3,0],['2 por debajo',x=>x.k===-2,0],['1 por debajo (X−1,5)',x=>x.k===-1,0],['LÍNEA PROMEDIO (X−0,5): media X,Y → Over (X−1),5 = «X o más»',x=>x.k===0,1],['1 por encima (X+0,5)',x=>x.k===1,0],['2 por encima',x=>x.k===2,0],['3 o más por encima',x=>x.k>=3,0]]
+      .map(([l,f,b])=>_hipFila(l,L.filter(f),{b})).join('')+_hipFila('Todas las líneas con '+_remEvTxt('r'),L,{sub:1}));
 }
 function _hipRenderCuota(B){
   const el=document.getElementById('hip-cuota'); if(!el) return;
@@ -5655,6 +5662,10 @@ function _remRenderDiag(){
    +tt('⑥ Remates A PUERTA: ROI según el EV que veía el modelo (todas las líneas con cuota ≥ 1.60, con y sin EV positivo)',_hipTabla('EV que veía el modelo',
       [['EV ≤ 0 % · no se apostaría',x=>x.ev<=0],['0 a +10 %',x=>x.ev>0&&x.ev<=10],['+10 a +25 %',x=>x.ev>10&&x.ev<=25],['más de +25 %',x=>x.ev>25]]
       .map(([n,f])=>{const l=S.filter(x=>x.cuota>=1.60&&f(x)); return _hipFila(n+mp(l),l);}).join('')))
+   +tt('⑦ Remates TOTALES ('+_remEvTxt('r')+') por cuota, rol del equipo, lado y media esperada de remates',_hipTabla('Corte',
+      [['cuota menos de 1.60',x=>x.cuota<1.60],['cuota 1.60 – 2.50',x=>x.cuota>=1.60&&x.cuota<2.50],['cuota 2.50 – 4.00',x=>x.cuota>=2.50&&x.cuota<4.00],['cuota 4.00 o más',x=>x.cuota>=4.00],
+       ['equipo favorito (mayor λ)',x=>x.fav],['equipo no favorito',x=>!x.fav],['local',x=>x.lado==='local'],['visita',x=>x.lado==='visit'],
+       ['media esperada &lt; 11',x=>x.mu<11],['media 11 – 13',x=>x.mu>=11&&x.mu<13],['media 13 – 15',x=>x.mu>=13&&x.mu<15],['media ≥ 15',x=>x.mu>=15]].map(([n,f])=>_hipFila(n,Rp.filter(f))).join('')+_hipFila('Todas',Rp,{sub:1})))
    +'<p style="font-size:12px;color:var(--text3);margin:8px 0 0">Las '+Ex.length+' líneas que H-excluir deja fuera vienen de solo <b>'+nEx+'</b> partido'+(nEx===1?'':'s')
    +': la muestra independiente es esa, no el número de líneas. No concluir hasta acumular más partidos con equipos débiles.</p>';
 }
