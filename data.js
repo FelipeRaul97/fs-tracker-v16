@@ -258020,7 +258020,16 @@ const TRACKER_DATA = [
         "acerto": true
       }
     ],
-    "stats_reales": null,
+    "stats_reales": {
+      "local_S": 22,
+      "local_ST": 6,
+      "local_C": 5,
+      "local_GF": 2,
+      "visit_S": 18,
+      "visit_ST": 6,
+      "visit_C": 12,
+      "visit_GF": 2
+    },
     "snapshot_resultados": {
       "victoria_local": false,
       "empate": true,
@@ -260396,7 +260405,16 @@ const TRACKER_DATA = [
         "acerto": true
       }
     ],
-    "stats_reales": null,
+    "stats_reales": {
+      "local_S": 9,
+      "local_ST": 4,
+      "local_C": 4,
+      "local_GF": 1,
+      "visit_S": 19,
+      "visit_ST": 4,
+      "visit_C": 2,
+      "visit_GF": 2
+    },
     "snapshot_resultados": {
       "victoria_local": false,
       "empate": false,
