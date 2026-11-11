@@ -270,6 +270,7 @@
     <div class="tab" data-tab="h4">H4 · BTTS</div>
     <div class="tab" data-tab="h7">H7 · Hándicap</div>
     <div class="tab" data-tab="remates">Remates</div>
+    <div class="tab" data-tab="m2">M2</div>
     <div class="tab" data-tab="tendencias">Tendencias</div>
     <div class="tab" data-tab="mercados">Mercados</div>
     <div class="tab" data-tab="ligas">Por liga</div>
@@ -1134,6 +1135,20 @@
     </div>
   </div>
 
+  <div class="tab-panel" id="tab-m2">
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
+        <div class="card-title">M2 en modo sombra — remates, a puerta y córners por equipo</div>
+        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">M2 es un segundo modelo de la <b>media esperada</b> de remates, remates a puerta y córners de cada equipo
+          (regresión con ~75 datos previos al partido, entrenada con 2023-26; ver <code>experimentos/ml_lambda/</code>). En el experimento predijo mejor que el engine en los tres
+          mercados, pero <b>no decide ninguna apuesta</b>: solo se guarda al lado (<code>mu_ml</code>, y <code>prob_ml</code> / <code>ev_ml</code> en cada línea). Este tab compara, con las mismas
+          líneas cotizadas en Betano, lo que da el engine y lo que habría dado M2, desde el partido #1. Con <b>100 partidos</b> se decide: M2 pasa al engine solo si el u/partido pareado de ④
+          mejora con un ±90% que no cruce 0.</p>
+        <div id="m2-cob"></div>
+        <div id="m2-out"></div>
+      </div>
+    </div>
+  </div>
   <div class="tab-panel" id="tab-diagnostico">
     <div class="grid2" style="margin-bottom:16px">
       <div class="card card-full">
@@ -6000,6 +6015,159 @@ function _remValRender(){
   });
   el.innerHTML=h;
 }
+// ── Tab M2 (solo dashboard 2, 2026-11-10) ─────────────────────────────────────
+// M2 = segundo modelo de remates / a puerta / córners por equipo (GLM, experimentos/ml_lambda/), en MODO SOMBRA:
+// no decide ninguna apuesta. Cada entrada guarda mu_ml y cada línea por equipo prob_ml / ev_ml. Este tab compara,
+// con las mismas líneas cotizadas, lo que da el engine y lo que habría dado M2. Solo datos del d2, desde el partido #1
+// (a pedido, una sola muestra: como si M2 se hubiera planteado desde el inicio).
+const M2_N=100, M2_MARGEN=0.06;
+let _m2Partido=null;   // partido elegido en ⑦
+const M2_MERC=[['remates','Remates'],['remates_puerta','A puerta'],['corners_equipo','Córners']];
+function _m2Entradas(){ return _DATA.filter(p=>p.resultado_partido&&p.mu_ml&&p.mu_equipo); }
+function _m2Lineas(E){
+  const L=[];
+  E.forEach(p=>(p.watchlist||[]).forEach(w=>{
+    if(w.tipo!=='POR_EQUIPO'||w.acerto==null||!w.cuota||w.linea==null||w.prob_ml==null) return;
+    const lado=w.mercado.startsWith('local')?'local':'visit', merc=w.mercado.slice(lado.length+1);
+    const mue=(p.mu_equipo[lado]||{})[merc], mum=(p.mu_ml[lado]||{})[merc];
+    if(mue==null||mum==null) return;
+    L.push({id:+p.id,partido:p.partido,lado,merc,linea:+w.linea,cuota:+w.cuota,win:!!w.acerto,et:w.etiqueta,
+      pe:(+w.prob||0)/100,pm:(+w.prob_ml)/100,eve:+w.ev_pct||0,evm:+w.ev_ml||0,mue,mum,pk:Math.min(0.995,1/(+w.cuota*(1+M2_MARGEN)))});
+  }));
+  return L;
+}
+// diferencia por línea agrupada por partido: estimador de razón (Σd/Σn) con su ±90% (linealización)
+function _m2Dif(L,f){
+  const by={}; L.forEach(x=>{ const o=by[x.id]||(by[x.id]={d:0,n:0}); o.d+=f(x); o.n++; });
+  const v=Object.values(by), np=v.length; if(!np) return null;
+  const D=v.reduce((a,o)=>a+o.d,0), N=v.reduce((a,o)=>a+o.n,0), est=D/N;
+  const ss=v.reduce((a,o)=>a+Math.pow(o.d-est*o.n,2),0);
+  return {est,moe:np>1?1.645*Math.sqrt(ss*np/(np-1))/N:null,np};
+}
+function _m2Fmt(o,esc,dec){ if(!o) return '<span style="color:var(--text3)">—</span>'; const v=o.est*esc;
+  return '<span class="'+(v<=0?'pl-pos':'pl-neg')+'"><b>'+(v>=0?'+':'')+v.toFixed(dec)+'</b></span> <span style="color:var(--text3);font-size:11px">'+(o.moe!=null?'±'+(o.moe*esc).toFixed(dec):'')+'</span>'; }
+// Regla de una línea por equipo y partido. src 'e' = engine, 'm' = M2.
+//   R1 (remates):   EV > 0, línea − media ≥ −4 y línea ≤ línea promedio ((⌊media⌋−1),5); mayor EV×P.
+//   S1 (a puerta):  EV > 0 y cuota ≥ 1.60; mayor EV×P.
+//   K1 (córners):   igual que S1 (hipotética, fijada el 2026-11-10; no se apuesta).
+function _m2Elegir(L,merc,src){
+  const by={};
+  L.filter(x=>x.merc===merc).forEach(x=>{
+    const p=src==='e'?x.pe:x.pm, ev=src==='e'?x.eve:x.evm, mu=src==='e'?x.mue:x.mum;
+    let ok=ev>0;
+    if(merc==='remates') ok=ok&&(x.linea-mu>=-4)&&(x.linea-(Math.floor(mu)-0.5)<=0);
+    else ok=ok&&x.cuota>=1.60;
+    if(!ok) return;
+    const k=x.id+'|'+x.lado, sc=[ev*p,p], cur=by[k];
+    if(!cur||sc[0]>cur.sc[0]||(sc[0]===cur.sc[0]&&sc[1]>cur.sc[1])) by[k]={x,sc};
+  });
+  return Object.values(by).map(o=>o.x);
+}
+function renderM2(){
+  const el=document.getElementById('m2-out'); if(!el) return;
+  const E=_m2Entradas(), L=_m2Lineas(E), n=E.length;
+  const cob=document.getElementById('m2-cob');
+  if(cob) cob.innerHTML='<div style="display:flex;align-items:center;gap:10px;font-size:12px;flex-wrap:wrap"><div style="flex:0 0 200px;height:8px;border-radius:4px;background:var(--surface2);overflow:hidden">'
+    +'<div style="width:'+Math.min(100,n/M2_N*100)+'%;height:100%;background:var(--accent,#378add)"></div></div>'
+    +'<span><b>'+n+'</b> de '+M2_N+' partidos cerrados con M2'+(_DATA.filter(p=>!p.mu_ml).length?' · '+_DATA.filter(p=>!p.mu_ml).length+' entradas sin M2':'')+'</span></div>';
+  if(!L.length){ el.innerHTML='<p class="empty">Sin líneas por equipo cerradas con M2 todavía.</p>'; return; }
+  const sec=(t,x,nota)=>'<div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">'+t+'</div>'+(nota?'<p style="font-size:12px;color:var(--text3);margin:0 0 8px">'+nota+'</p>':'')+x;
+  const f2=v=>v==null?'—':v.toFixed(2), sg=v=>(v>=0?'+':'')+v.toFixed(2);
+
+  // ① media esperada frente a la real
+  const real={remates:'S',remates_puerta:'ST',corners_equipo:'C'};
+  let h1='';
+  M2_MERC.forEach(([m,nom])=>{
+    const r=[]; E.forEach(p=>{ const sr=p.stats_reales||{}; ['local','visit'].forEach(l=>{ const y=sr[l+'_'+real[m]], e=(p.mu_equipo[l]||{})[m], q=(p.mu_ml[l]||{})[m]; if(y!=null&&e!=null&&q!=null) r.push({y:+y,e:+e,q:+q}); }); });
+    if(!r.length) return;
+    const n=r.length, mean=f=>r.reduce((a,o)=>a+f(o),0)/n;
+    h1+='<tr><td style="text-align:left">'+nom+'</td><td class="num">'+n+'</td><td class="num">'+f2(mean(o=>o.y))+'</td><td class="num">'+f2(mean(o=>o.e))+'</td><td class="num">'+f2(mean(o=>o.q))+'</td>'
+      +'<td class="num">'+sg(mean(o=>o.e-o.y))+'</td><td class="num">'+sg(mean(o=>o.q-o.y))+'</td><td class="num">'+f2(mean(o=>Math.abs(o.e-o.y)))+'</td><td class="num">'+f2(mean(o=>Math.abs(o.q-o.y)))+'</td></tr>';
+  });
+  const t1='<div class="table-wrap"><table class="hm-table"><thead><tr><th style="text-align:left">Mercado</th><th class="num">Equipos</th><th class="num">Real</th><th class="num">Esperado engine</th><th class="num">Esperado M2</th>'
+    +'<th class="num">Sesgo engine</th><th class="num">Sesgo M2</th><th class="num">Error abs. engine</th><th class="num">Error abs. M2</th></tr></thead><tbody>'+h1+'</tbody></table></div>';
+
+  // ② Brier: engine, M2 y la cuota
+  const br=(l,k)=>l.reduce((a,x)=>a+Math.pow(x[k]-(x.win?1:0),2),0)/l.length;
+  const filaB=(nom,l,b)=>{ if(!l.length) return ''; const dE=_m2Dif(l,x=>Math.pow(x.pm-(x.win?1:0),2)-Math.pow(x.pe-(x.win?1:0),2)), dK=_m2Dif(l,x=>Math.pow(x.pm-(x.win?1:0),2)-Math.pow(x.pk-(x.win?1:0),2));
+    const vals=[br(l,'pe'),br(l,'pm'),br(l,'pk')], mn=Math.min(...vals), c=v=>'<td class="num"'+(v===mn?' style="font-weight:700"':'')+'>'+v.toFixed(4)+'</td>';
+    return '<tr style="'+(b?'background:var(--surface2);font-weight:600':'')+'"><td style="text-align:left">'+nom+'</td><td class="num">'+l.length+'</td><td class="num">'+new Set(l.map(x=>x.id)).size+'</td>'+vals.map(c).join('')
+      +'<td class="num">'+_m2Fmt(dE,100,2)+'</td><td class="num">'+_m2Fmt(dK,100,2)+'</td></tr>'; };
+  const t2='<div class="table-wrap"><table class="hm-table"><thead><tr><th style="text-align:left">Mercado</th><th class="num">Líneas</th><th class="num">Partidos</th><th class="num">Brier engine</th><th class="num">Brier M2</th><th class="num">Brier cuota</th>'
+    +'<th class="num" title="Diferencia de Brier ×100 por línea, ±90% agrupado por partido; negativo = M2 mejor">M2 − engine</th><th class="num" title="negativo = M2 mejor que la cuota">M2 − cuota</th></tr></thead><tbody>'
+    +M2_MERC.map(([m,nom])=>filaB(nom,L.filter(x=>x.merc===m))).join('')+filaB('Todas',L,1)+'</tbody></table></div>';
+
+  // ③ calibración: prometido frente a real por tramo
+  const tr=[[0,.3,'menos de 30%'],[.3,.5,'30–50%'],[.5,.7,'50–70%'],[.7,1.01,'70% o más']];
+  const mSel=(document.getElementById('m2-merc')||{}).value||'todas', Lc=mSel==='todas'?L:L.filter(x=>x.merc===mSel);
+  const celC=(l,k)=>l.length?'<td class="num"'+(l.length<15?' style="opacity:.55"':'')+'>'+l.length+'</td><td class="num">'+Math.round(100*l.reduce((a,x)=>a+x[k],0)/l.length)+'%</td><td class="num"><b>'+Math.round(100*l.filter(x=>x.win).length/l.length)+'%</b></td>'
+    :'<td class="num" style="color:var(--text3)">0</td><td colspan="2" style="color:var(--text3);text-align:center">—</td>';
+  const t3='<div style="font-size:12px;margin:0 0 8px"><label>Mercado <select id="m2-merc" onchange="renderM2()" style="font-size:12px"><option value="todas">Todos</option>'
+    +M2_MERC.map(([m,n])=>'<option value="'+m+'"'+(m===mSel?' selected':'')+'>'+n+'</option>').join('')+'</select></label></div>'
+    +'<div class="table-wrap"><table class="hm-table"><thead><tr><th style="text-align:left">Probabilidad del modelo</th><th class="num">Líneas engine</th><th class="num">Engine prometía</th><th class="num">Real</th>'
+    +'<th class="num">Líneas M2</th><th class="num">M2 prometía</th><th class="num">Real</th></tr></thead><tbody>'
+    +tr.map(([a,b,n])=>'<tr><td style="text-align:left">'+n+'</td>'+celC(Lc.filter(x=>x.pe>=a&&x.pe<b),'pe')+celC(Lc.filter(x=>x.pm>=a&&x.pm<b),'pm')+'</tr>').join('')+'</tbody></table></div>';
+
+  // ④ selección: una línea por equipo con la regla de cada mercado
+  const ids=[...new Set(L.map(x=>x.id))];
+  const reglas=[['remates','REMATE · R1','EV &gt; 0, línea − media ≥ −4 y no por encima de la línea promedio; mayor EV×P'],
+                ['remates_puerta','A PUERTA · S1','EV &gt; 0 y cuota ≥ 1.60; mayor EV×P'],
+                ['corners_equipo','CÓRNERS · K1 (hipotética, no se apuesta)','EV &gt; 0 y cuota ≥ 1.60; mayor EV×P (la misma forma que S1)']];
+  let t4='', camb=[], selE={}, selM={}, elegM=[];
+  reglas.forEach(([m,nom,def])=>{
+    const se=_m2Elegir(L,m,'e'), sm=_m2Elegir(L,m,'m');
+    const u=s=>{ const by={}; s.forEach(x=>{ by[x.id]=(by[x.id]||0)+(x.win?x.cuota-1:-1); }); return by; };
+    const ue=u(se), um=u(sm), d=ids.map(i=>(um[i]||0)-(ue[i]||0)), np=d.length, md=d.reduce((a,b)=>a+b,0)/np;
+    const sd=np>1?Math.sqrt(d.reduce((a,b)=>a+(b-md)*(b-md),0)/(np-1)):0, moe=np>1?1.645*sd/Math.sqrt(np):null;
+    t4+='<tr><td colspan="7" style="text-align:left;background:var(--surface2);font-size:12px;font-weight:600">'+nom+' <span style="font-weight:400;color:var(--text3)">· '+def+'</span></td></tr>'
+      +_hipFila('con el engine'+(m!=='corners_equipo'?' (= lo apostado en el d2)':''),se.map(x=>({id:x.id,cuota:x.cuota,win:x.win})),{sub:1})
+      +_hipFila('con M2',sm.map(x=>({id:x.id,cuota:x.cuota,win:x.win})),{sub:1})
+      +'<tr><td style="text-align:left;padding-left:22px;font-size:12px">M2 − engine, u/partido pareado ('+np+' partidos)</td><td colspan="5"></td><td class="num"><span class="'+_mejCl(md)+'"><b>'+_mejSg(md,2)+'</b></span> <span style="color:var(--text3);font-size:11px">'+(moe!=null?'±'+moe.toFixed(2):'')+'</span></td></tr>';
+    const ke={}; se.forEach(x=>{ ke[x.id+'|'+x.lado]=x; }); const km={}; sm.forEach(x=>{ km[x.id+'|'+x.lado]=x; });
+    se.forEach(x=>{ selE[x.id+'|'+x.et]=nom.split(' ·')[0]; }); sm.forEach(x=>{ selM[x.id+'|'+x.et]=nom.split(' ·')[0]; elegM.push({x,tipo:nom.split(' ·')[0],igual:!!(ke[x.id+'|'+x.lado]&&ke[x.id+'|'+x.lado].et===x.et)}); });
+    new Set([...Object.keys(ke),...Object.keys(km)]).forEach(k=>{ const a=ke[k], b=km[k]; if(a&&b&&a.et===b.et) return; const x=a||b; camb.push({id:x.id,partido:x.partido,nom:nom.split(' ·')[0],a,b}); });
+  });
+  t4=_hipTabla('Regla',t4);
+
+  // ⑤ partidos donde cambia la elección
+  const ch=x=>x?x.et+' @'+x.cuota.toFixed(2)+' <span class="'+(x.win?'pl-pos':'pl-neg')+'">'+(x.win?'G':'P')+'</span>':'<span style="color:var(--text3)">no apuesta</span>';
+  camb.sort((a,b)=>b.id-a.id);
+  const t5=camb.length?'<div class="table-wrap table-wrap-scroll" style="max-height:360px;overflow-y:auto"><table class="hm-table"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">Partido</th><th style="text-align:left">Tipo</th><th style="text-align:left">Engine elige</th><th style="text-align:left">M2 elegiría</th></tr></thead><tbody>'
+    +camb.map(c=>'<tr><td style="text-align:left">'+String(c.id).padStart(3,'0')+'</td><td style="text-align:left">'+c.partido+'</td><td style="text-align:left">'+c.nom+'</td><td style="text-align:left">'+ch(c.a)+'</td><td style="text-align:left">'+ch(c.b)+'</td></tr>').join('')+'</tbody></table></div>'
+    :'<p class="empty">Ninguna diferencia todavía.</p>';
+
+  // ⑥ todo lo que eligió M2
+  const pct=v=>Math.round(v*100)+'%', evf=v=>'<span class="'+(v>0?'pl-pos':'pl-neg')+'">'+(v>=0?'+':'')+v.toFixed(1)+'%</span>';
+  const res=x=>'<span class="'+(x.win?'pl-pos':'pl-neg')+'">'+(x.win?'G':'P')+'</span>', pl=x=>_mejU(x.win?x.cuota-1:-1);
+  elegM.sort((a,b)=>b.x.id-a.x.id||a.tipo.localeCompare(b.tipo));
+  const t6=elegM.length?'<div class="table-wrap table-wrap-scroll" style="max-height:420px;overflow-y:auto"><table class="hm-table"><thead><tr><th style="text-align:left">#</th><th style="text-align:left">Partido</th><th style="text-align:left">Tipo</th><th style="text-align:left">Línea</th>'
+    +'<th class="num">Cuota</th><th class="num">P M2</th><th class="num">EV M2</th><th class="num">P engine</th><th class="num">EV engine</th><th class="num">Engine también</th><th class="num">Resultado</th><th class="num">P&amp;L</th></tr></thead><tbody>'
+    +elegM.map(({x,tipo,igual})=>'<tr><td style="text-align:left">'+String(x.id).padStart(3,'0')+'</td><td style="text-align:left">'+x.partido+'</td><td style="text-align:left">'+tipo+'</td><td style="text-align:left">'+x.et+'</td>'
+      +'<td class="num">'+x.cuota.toFixed(2)+'</td><td class="num">'+pct(x.pm)+'</td><td class="num">'+evf(x.evm)+'</td><td class="num">'+pct(x.pe)+'</td><td class="num">'+evf(x.eve)+'</td><td class="num">'+(igual?'sí':'<span style="color:var(--text3)">no</span>')+'</td><td class="num">'+res(x)+'</td><td class="num">'+pl(x)+'</td></tr>').join('')
+    +'</tbody></table></div>':'<p class="empty">M2 no eligió ninguna línea todavía.</p>';
+
+  // ⑦ todas las líneas cotizadas de un partido
+  const pids=[...new Set(L.map(x=>x.id))].sort((a,b)=>b-a);
+  if(!pids.includes(+_m2Partido)) _m2Partido=String(pids[0]);
+  const Lp=L.filter(x=>x.id===+_m2Partido).sort((a,b)=>a.lado.localeCompare(b.lado)||a.merc.localeCompare(b.merc)||a.linea-b.linea);
+  const marca=(d,x)=>{ const t=d[x.id+'|'+x.et]; return t?'<b>'+t.replace('A PUERTA','S1').replace('REMATE','R1').replace('CÓRNERS','K1')+'</b>':''; };
+  const t7='<div style="font-size:12px;margin:0 0 8px"><label>Partido <select id="m2-partido" style="font-size:12px">'
+    +pids.map(i=>{ const p=L.find(x=>x.id===i); return '<option value="'+i+'"'+(String(i)===String(_m2Partido)?' selected':'')+'>#'+String(i).padStart(3,'0')+' '+p.partido+'</option>'; }).join('')+'</select></label></div>'
+    +'<div class="table-wrap table-wrap-scroll" style="max-height:480px;overflow-y:auto"><table class="hm-table"><thead><tr><th style="text-align:left">Línea</th><th class="num">Cuota</th>'
+    +'<th class="num">P engine</th><th class="num">EV engine</th><th class="num">Elige engine</th><th class="num">P M2</th><th class="num">EV M2</th><th class="num">Elige M2</th><th class="num">Resultado</th></tr></thead><tbody>'
+    +Lp.map(x=>'<tr><td style="text-align:left">'+x.et+'</td><td class="num">'+x.cuota.toFixed(2)+'</td><td class="num">'+pct(x.pe)+'</td><td class="num">'+evf(x.eve)+'</td><td class="num">'+marca(selE,x)+'</td>'
+      +'<td class="num">'+pct(x.pm)+'</td><td class="num">'+evf(x.evm)+'</td><td class="num">'+marca(selM,x)+'</td><td class="num">'+res(x)+'</td></tr>').join('')
+    +'</tbody></table></div>';
+
+  el.innerHTML=sec('① Media esperada frente a la real',t1,'Por equipo y partido. Sesgo = esperado − real (positivo = el modelo espera de más). Error abs. = distancia media al valor real.')
+    +sec('② Calidad de la probabilidad: engine, M2 y la cuota',t2,'Todas las líneas Over cotizadas y cerradas. Brier: más bajo es mejor (en negrita el mejor de los tres). La cuota se pasa a probabilidad quitando un margen supuesto de '+Math.round(M2_MARGEN*100)+'%. Las diferencias van ×100 por línea, con ±90% agrupado por partido; negativo = M2 mejor.')
+    +sec('③ ¿Cumple lo que promete? Acierto real por tramo de probabilidad',t3,'Si «prometía» supera a «real», ese modelo sobreestima ese tramo. Filas con menos de 15 líneas, atenuadas.')
+    +sec('④ Qué se habría elegido: una línea por equipo y partido',t4,'Misma regla y mismas líneas cotizadas; solo cambia la probabilidad (y en R1 la media) que se usa. «u/partido pareado» compara partido a partido, contando los partidos sin apuesta como 0. K1 no es un tipo de apuesta: mide el impacto que tendría.')
+    +sec('⑤ Partidos donde cambia la elección',t5,'G = ganó, P = perdió. Más reciente primero.')
+    +sec('⑥ Todo lo que eligió M2',t6,'Cada línea que M2 habría elegido con R1, S1 y K1, con su probabilidad y EV según M2 y según el engine. «Engine también» = el engine eligió la misma línea para ese equipo. Más reciente primero.')
+    +sec('⑦ Todas las líneas cotizadas de un partido',t7,'Cada línea por equipo que se cotizó en Betano, con la probabilidad y el EV del engine y de M2. Marca qué eligió cada uno (R1 / S1 / K1).');
+  const ps=document.getElementById('m2-partido'); if(ps) ps.onchange=()=>{ _m2Partido=ps.value; renderM2(); };
+}
 function renderRemates(){
   renderRemateMercados();      // REMATE y A PUERTA por cuota y por línea
   _remRenderDiag(); _remRenderCand(); _remSimRender('r'); _remSimRender('s'); _remFbRender('r'); _remFbRender('s'); _remValRender();
@@ -6016,6 +6184,7 @@ function renderAll(){
   if(active==='calibracion'){renderEVScatter();renderCalibBands();renderCalibByMarket();}
   if(active==='mercados'){renderCuotaROI();renderMercadoCuotaHeatmap();renderTipoStats();renderMercadoFreq();renderCombosPorPar();}
   if(active==='remates'){renderRemates();}
+  if(active==='m2'){renderM2();}
   if(active==='ligas'){renderLigaTipo();renderLigaRollingROI();renderMercadoLigaHeatmap();renderLigaCards();}
   if(active==='watchlist'){renderWatchlist(); _hipRenderRazon();}
   if(active==='hipotesis'){renderHipotesis();}
