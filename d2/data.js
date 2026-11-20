@@ -87126,7 +87126,7 @@ const TRACKER_DATA = [
   },
   {
     "id": "038",
-    "fecha": "2026-11-21",
+    "fecha": "2026-11-20",
     "jornada": 13,
     "hora": "15:00",
     "liga": "SP1",
@@ -89073,7 +89073,7 @@ const TRACKER_DATA = [
   },
   {
     "id": "039",
-    "fecha": "2026-11-21",
+    "fecha": "2026-11-20",
     "jornada": 10,
     "hora": "14:30",
     "liga": "D1",
