@@ -5926,14 +5926,18 @@ function _m2Dif(L,f){
 function _m2Fmt(o,esc,dec){ if(!o) return '<span style="color:var(--text3)">—</span>'; const v=o.est*esc;
   return '<span class="'+(v<=0?'pl-pos':'pl-neg')+'"><b>'+(v>=0?'+':'')+v.toFixed(dec)+'</b></span> <span style="color:var(--text3);font-size:11px">'+(o.moe!=null?'±'+(o.moe*esc).toFixed(dec):'')+'</span>'; }
 // Regla de una línea por equipo y partido con el modelo s ('e' engine, 'm' M2, '3' M3).
+//   El filtro de EV (selector del punto ④) es 'pos' por defecto = la regla vigente; 'todas' / 'neg' son contrastes (el EV×P menos malo).
 //   R1 (remates):   EV > 0, línea − media ≥ −4 y línea ≤ línea promedio ((⌊media⌋−1),5); mayor EV×P.
 //   S1 (a puerta):  EV > 0 y cuota ≥ 1.60; mayor EV×P.
 //   K1 (córners):   igual que S1 (hipotética, fijada el 2026-11-10; no se apuesta).
-function _m2Elegir(L,merc,s){
-  const by={};
+function _m2EvMode(){ return (document.getElementById('m2-ev')||{}).value||'pos'; }
+function _m2EvTxt(m){ return m==='todas'?'cualquier EV':(m==='neg'?'EV ≤ 0':'EV &gt; 0'); }
+function _m2Elegir(L,merc,s,modo){
+  const by={}; modo=modo||'pos';
   L.filter(x=>x.merc===merc).forEach(x=>{
     const p=x['p'+s], ev=x['ev'+s], mu=x['mu'+s];
-    let ok=ev>0;
+    // el EV es el de CADA modelo (engine, M2 o M3) con su propia probabilidad; 'pos' = la regla vigente
+    let ok=modo==='todas'||(modo==='neg'?ev<=0:ev>0);
     if(merc==='remates') ok=ok&&(x.linea-mu>=-4)&&(x.linea-(Math.floor(mu)-0.5)<=0);
     else ok=ok&&x.cuota>=1.60;
     if(!ok) return;
@@ -5986,6 +5990,7 @@ function renderM2(){
 
   // ③ calibración: prometido frente a real por tramo
   const tr=[[0,.3,'menos de 30%'],[.3,.5,'30–50%'],[.5,.7,'50–70%'],[.7,1.01,'70% o más']];
+  const evM=_m2EvMode();
   const mSel=(document.getElementById('m2-merc')||{}).value||'todas', Lc=mSel==='todas'?L:L.filter(x=>x.merc===mSel);
   const celC=(l,k)=>l.length?'<td class="num"'+(l.length<15?' style="opacity:.55"':'')+'>'+l.length+'</td><td class="num">'+Math.round(100*l.reduce((a,x)=>a+x[k],0)/l.length)+'%</td><td class="num"><b>'+Math.round(100*l.filter(x=>x.win).length/l.length)+'%</b></td>'
     :'<td class="num" style="color:var(--text3)">0</td><td colspan="2" style="color:var(--text3);text-align:center">—</td>';
@@ -5996,9 +6001,10 @@ function renderM2(){
 
   // ④ selección: una línea por equipo con la regla de cada mercado
   const ids=[...new Set(L.map(x=>x.id))];
-  const reglas=[['remates','REMATE · R1','EV &gt; 0, línea − media ≥ −4 y no por encima de la línea promedio; mayor EV×P'],
-                ['remates_puerta','A PUERTA · S1','EV &gt; 0 y cuota ≥ 1.60; mayor EV×P'],
-                ['corners_equipo','CÓRNERS · K1 (hipotética, no se apuesta)','EV &gt; 0 y cuota ≥ 1.60; mayor EV×P (la misma forma que S1)']];
+  const et=_m2EvTxt(evM);
+  const reglas=[['remates','REMATE · R1',et+', línea − media ≥ −4 y no por encima de la línea promedio; mayor EV×P'],
+                ['remates_puerta','A PUERTA · S1',et+' y cuota ≥ 1.60; mayor EV×P'],
+                ['corners_equipo','CÓRNERS · K1 (hipotética, no se apuesta)',et+' y cuota ≥ 1.60; mayor EV×P (la misma forma que S1)']];
   const sel={e:{},m:{},'3':{}}, porLado={e:{},m:{},'3':{}};
   const uPorPartido=s=>{ const by={}; s.forEach(x=>{ by[x.id]=(by[x.id]||0)+(x.win?x.cuota-1:-1); }); return by; };
   const pareado=(a,b)=>{ const d=ids.map(i=>(b[i]||0)-(a[i]||0)), np=d.length, md=d.reduce((s,v)=>s+v,0)/np;
@@ -6006,16 +6012,18 @@ function renderM2(){
   let t4='';
   reglas.forEach(([m,nom,def])=>{
     const tipo=nom.split(' ·')[0], S={};
-    M2_MODS.forEach(([s])=>{ S[s]=_m2Elegir(L,m,s); S[s].forEach(x=>{ sel[s][x.id+'|'+x.et]=tipo; porLado[s][tipo+'|'+x.id+'|'+x.lado]=x; }); });
+    M2_MODS.forEach(([s])=>{ S[s]=_m2Elegir(L,m,s,evM); S[s].forEach(x=>{ sel[s][x.id+'|'+x.et]=tipo; porLado[s][tipo+'|'+x.id+'|'+x.lado]=x; }); });
     const U={}; M2_MODS.forEach(([s])=>{ U[s]=uPorPartido(S[s]); });
     t4+='<tr><td colspan="7" style="text-align:left;background:var(--surface2);font-size:12px;font-weight:600">'+nom+' <span style="font-weight:400;color:var(--text3)">· '+def+'</span></td></tr>'
-      +_hipFila('con el engine'+(m!=='corners_equipo'?' (= lo apostado en el d2)':''),S.e.map(x=>({id:x.id,cuota:x.cuota,win:x.win})),{sub:1})
+      +_hipFila('con el engine'+(m!=='corners_equipo'&&evM==='pos'?' (= lo apostado en el d2)':''),S.e.map(x=>({id:x.id,cuota:x.cuota,win:x.win})),{sub:1})
       +_hipFila('con M2',S.m.map(x=>({id:x.id,cuota:x.cuota,win:x.win})),{sub:1})
       +_hipFila('con M3',S['3'].map(x=>({id:x.id,cuota:x.cuota,win:x.win})),{sub:1})
       +[['m','M2'],['3','M3']].map(([s,nn])=>{ const o=pareado(U.e,U[s]);
         return '<tr><td style="text-align:left;padding-left:22px;font-size:12px">'+nn+' − engine, u/partido pareado ('+o.np+' partidos)</td><td colspan="5"></td><td class="num"><span class="'+_mejCl(o.md)+'"><b>'+_mejSg(o.md,2)+'</b></span> <span style="color:var(--text3);font-size:11px">'+(o.moe!=null?'±'+o.moe.toFixed(2):'')+'</span></td></tr>'; }).join('');
   });
-  t4=_hipTabla('Regla',t4);
+  t4='<div style="font-size:12px;margin:0 0 8px"><label>Líneas que pueden elegirse (por el EV de cada modelo) <select id="m2-ev" onchange="renderM2()" style="font-size:12px">'
+    +[['pos','Solo EV > 0 (como elige la regla vigente)'],['todas','Todas las líneas, sin filtro de EV'],['neg','Solo EV ≤ 0 (contraste)']].map(([v,t])=>'<option value="'+v+'"'+(v===evM?' selected':'')+'>'+t+'</option>').join('')
+    +'</select></label></div>'+_hipTabla('Regla',t4);
 
   // ⑤ partidos donde cambia la elección (alguno de los tres elige distinto)
   const ch=x=>x?x.et+' @'+x.cuota.toFixed(2)+' <span class="'+(x.win?'pl-pos':'pl-neg')+'">'+(x.win?'G':'P')+'</span>':'<span style="color:var(--text3)">no apuesta</span>';
@@ -6056,7 +6064,7 @@ function renderM2(){
   el.innerHTML=sec('① Media esperada frente a la real',t1,'Por equipo y partido. Sesgo = esperado − real (positivo = el modelo espera de más). Error abs. = distancia media al valor real.')
     +sec('② Calidad de la probabilidad: engine, M2, M3 y la cuota',t2,'Todas las líneas Over cotizadas y cerradas. Brier: más bajo es mejor (en negrita el mejor de los cuatro). La cuota se pasa a probabilidad quitando un margen supuesto de '+Math.round(M2_MARGEN*100)+'%. Las diferencias van ×100 por línea, con ±90% agrupado por partido; negativo = el modelo mejor.')
     +sec('③ ¿Cumple lo que promete? Acierto real por tramo de probabilidad',t3,'Si «prometía» supera a «real», ese modelo sobreestima ese tramo. Filas con menos de 15 líneas, atenuadas.')
-    +sec('④ Qué se habría elegido: una línea por equipo y partido',t4,'Misma regla y mismas líneas cotizadas; solo cambia la probabilidad (y en R1 la media) que se usa. «u/partido pareado» compara partido a partido, contando los partidos sin apuesta como 0. K1 no es un tipo de apuesta: mide el impacto que tendría.')
+    +sec('④ Qué se habría elegido: una línea por equipo y partido',t4,'Misma regla y mismas líneas cotizadas; solo cambia la probabilidad (y en R1 la media) que se usa. El filtro de EV cambia también los puntos ⑤ y ⑥; con «Todas» o «EV ≤ 0», «mayor EV×P» elige la línea con el EV×P menos malo (el EV se calcula con la probabilidad de cada modelo, así que una línea puede tener EV&gt;0 para M2 y ≤0 para el engine). Lo realmente apostado en el d2 solo coincide con «engine» en «Solo EV &gt; 0». «u/partido pareado» compara partido a partido, contando los partidos sin apuesta como 0. K1 no es un tipo de apuesta: mide el impacto que tendría.')
     +sec('⑤ Partidos donde cambia la elección',t5,'Cuando al menos uno de los tres elige distinto. G = ganó, P = perdió. Más reciente primero.')
     +sec('⑥ Todo lo que eligieron M2 y M3',t6,'Cada línea que M2 o M3 habrían elegido con R1, S1 y K1, con la probabilidad y el EV de los tres. «Elegida por» dice cuál la eligió; «Engine también» = el engine eligió esa misma línea. Más reciente primero.')
     +sec('⑦ Todas las líneas cotizadas de un partido',t7,'Cada línea por equipo que se cotizó en Betano, con la probabilidad y el EV de cada modelo, y qué eligió cada uno (R1 / S1 / K1).');
