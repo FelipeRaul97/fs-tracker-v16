@@ -5685,6 +5685,67 @@ function _remRenderCand(){
     +tt((REM_FIJACION?'⑤':'④')+' Candidatas de A PUERTA: una línea por equipo y partido, comparadas por partido con la vigente',_remCandTabla(cp,false,'s'))
     +(REM_FIJACION?tt('⑥ Candidatas de A PUERTA — solo partidos posteriores a la fijación (la prueba real)',_remCandTabla(cp,true,'s')):'');
 }
+// ── Candidatas M2 · M3 fijadas el 2026-11-23 (solo d2, a pedido) ───────────────────────────────────────────────────────
+// Reglas escritas ANTES de ver partidos nuevos: no se cambian umbrales ni coeficientes. La muestra en la que se pensaron son los partidos
+// #001–#073 del d2 (su ROI sale optimista, sobre todo T1 porque sus coeficientes se ajustaron con esas mismas líneas); la prueba real son los
+// partidos con id > M2C_CORTE_ID. Cada regla elige UNA línea por equipo y partido. «Cuota sin margen» = (1/cuota)/M2C_MARGEN.
+//   T1 · remates totales: línea central (cuota 1.40–3.00) con EV de la mezcla (cuota + M2 + M3 + engine) > +6 %.
+//   T2 · remates totales: línea central con (M2+M3)/2 − cuota sin margen ≥ 0.06.
+//   P1 · a puerta: M2 y M3 con EV > +5 % a la vez.
+//   P2 · a puerta: línea central con (M2+M3)/2 − cuota sin margen ≥ 0.06.
+const M2C_FECHA='2026-11-23', M2C_CORTE_ID=73, M2C_N=100, M2C_MARGEN=1.045;
+// logit(P) = b0 + b1·logit(1/cuota) + b2·logit(M2) + b3·logit(M3) + b4·logit(engine), regresión logística con ridge (l2=1) sobre las 845 líneas de remates totales cerradas (#001–#073).
+// Ojo: b3 sale negativo por colinealidad entre M2, M3 y el engine; la mezcla se congeló tal cual.
+const M2C_B=[-0.2873,1.1218,0.6086,-1.0163,0.1154];
+function _m2cLineas(sufijo){
+  const L=[];
+  _DATA.filter(p=>p.resultado_partido).forEach(p=>(p.watchlist||[]).forEach(w=>{
+    if(w.tipo!=='POR_EQUIPO'||!(w.mercado==='local_'+sufijo||w.mercado==='visit_'+sufijo)||w.acerto==null||!w.cuota||w.prob==null||w.prob_ml==null||w.prob_m3==null) return;
+    const lado=w.mercado.startsWith('local')?'local':'visit';
+    L.push({id:+p.id,cuota:+w.cuota,win:!!w.acerto,p:w.prob/100,p2:w.prob_ml/100,p3:w.prob_m3/100,q:1/+w.cuota,eq:lado+'|'+p.id,nom:p.partido});
+  }));
+  return L;
+}
+function _m2cMezcla(x){
+  const lg=v=>{ v=Math.min(1-1e-4,Math.max(1e-4,v)); return Math.log(v/(1-v)); };
+  const z=M2C_B[0]+M2C_B[1]*lg(x.q)+M2C_B[2]*lg(x.p2)+M2C_B[3]*lg(x.p3)+M2C_B[4]*lg(x.p);
+  return 1/(1+Math.exp(-z));
+}
+function _m2cUna(L,f,sc){        // una línea por equipo y partido: la de mayor puntuación entre las que pasan
+  const g=new Map();
+  L.filter(f).forEach(x=>{ const a=g.get(x.eq); if(!a||sc(x)>sc(a)) g.set(x.eq,x); });
+  return [...g.values()];
+}
+function _remRenderM2C(){
+  const el=document.getElementById('m2c-out'); if(!el) return;
+  const R=_m2cLineas('remates'), S=_m2cLineas('remates_puerta'), B=_hipBets();
+  const cen=x=>x.cuota>=1.4&&x.cuota<3.0, dif=x=>(x.p2+x.p3)/2-x.q/M2C_MARGEN;
+  const evm=x=>_m2cMezcla(x)*x.cuota-1, ev2=x=>x.p2*x.cuota-1, ev3=x=>x.p3*x.cuota-1;
+  const rT=[['T1 · línea central (cuota 1.40–3.00) con EV de la mezcla cuota + M2 + M3 + engine &gt; +6 %',_m2cUna(R,x=>cen(x)&&evm(x)>0.06,evm)],
+            ['T2 · línea central con (M2+M3)/2 − cuota sin margen ≥ 0.06',_m2cUna(R,x=>cen(x)&&dif(x)>=0.06,dif)]];
+  const rP=[['P1 · M2 y M3 con EV &gt; +5 % a la vez',_m2cUna(S,x=>ev2(x)>0.05&&ev3(x)>0.05,x=>(ev2(x)+ev3(x))/2)],
+            ['P2 · línea central con (M2+M3)/2 − cuota sin margen ≥ 0.06',_m2cUna(S,x=>cen(x)&&dif(x)>=0.06,dif)]];
+  const pre=l=>l.filter(x=>x.id<=M2C_CORTE_ID), nue=l=>l.filter(x=>x.id>M2C_CORTE_ID);
+  const bloque=(nombre,todas,vig,vigLbl,cands)=>{
+    let f=_hipFila('Referencia · todas las líneas cotizadas ('+nombre+')',pre(todas),{sub:1}).replace('Referencia · ','Referencia (#001–#'+String(M2C_CORTE_ID).padStart(3,'0')+') · ')
+      +_hipFila('Referencia · '+vigLbl+' (#001–#'+String(M2C_CORTE_ID).padStart(3,'0')+')',pre(vig),{sub:1});
+    cands.forEach(([n,l])=>{
+      f+=_hipFila(n+' <span style="color:var(--text3);font-size:11px">· muestra en la que se pensó (#001–#'+String(M2C_CORTE_ID).padStart(3,'0')+')</span>',pre(l),{sub:1})
+        +_hipFila('<b>'+n+'</b> <span style="color:var(--text3);font-size:11px">· PRUEBA REAL (#'+String(M2C_CORTE_ID+1).padStart(3,'0')+' en adelante)</span>',nue(l),{b:1});
+    });
+    f+=_hipFila('Referencia · todas las líneas cotizadas — PRUEBA REAL',nue(todas),{sub:1})+_hipFila('Referencia · '+vigLbl+' — PRUEBA REAL',nue(vig),{sub:1});
+    return _hipTabla('Regla (una línea por equipo y partido)',f);
+  };
+  const nuevos=_DATA.filter(p=>p.resultado_partido&&+p.id>M2C_CORTE_ID).length, pct=Math.min(100,nuevos/M2C_N*100);
+  const prog='<div style="display:flex;align-items:center;gap:10px;font-size:12px;margin:0 0 10px"><div style="flex:0 0 200px;height:8px;border-radius:4px;background:var(--surface2);overflow:hidden"><div style="width:'+pct+'%;height:100%;background:var(--accent,#378add)"></div></div>'
+    +'<span><b>'+nuevos+'</b> de '+M2C_N+' partidos cerrados desde la fijación ('+M2C_FECHA+', partido #'+String(M2C_CORTE_ID+1).padStart(3,'0')+' en adelante)</span></div>'
+    +'<p style="font-size:12px;margin:0 0 10px">'+(nuevos<M2C_N?'Faltan <b>'+(M2C_N-nuevos)+'</b> partidos cerrados para decidir. Una regla se sostiene si su ROI menos el ±90% sigue siendo positivo <b>y</b> su u/partido menos el ±90% también, solo en la fila PRUEBA REAL.'
+      :'Con <b>'+nuevos+'</b> partidos: se sostiene solo si ROI − ±90% &gt; 0 y u/partido − ±90% &gt; 0 en la fila PRUEBA REAL.')+'</p>';
+  const tt=(t,x)=>'<div style="font-size:12px;color:var(--text3);margin:16px 0 6px;font-weight:600">'+t+'</div>'+x;
+  el.innerHTML=prog
+    +tt('REMATES TOTALES · candidatas T1 y T2 frente a la vigente R1',bloque('remates totales',R,B.rem,'R1 vigente (lo realmente registrado)',rT))
+    +tt('REMATES A PUERTA · candidatas P1 y P2 frente a la vigente S1',bloque('a puerta',S,B.puerta,'S1 vigente (lo realmente registrado)',rP));
+}
 // ── Simulador de selección (solo d2, 2026-11-09, a pedido) ─────────────────────────────────────────────────────────────
 // «¿Qué habría pasado con los partidos jugados si se hubiera elegido así?» Una línea por equipo y partido, con filtros que se pueden mover:
 // cuota, posición frente a la línea promedio, distancia a la media, EV, probabilidad, media esperada, rol, lado y criterio de elección.
@@ -6072,7 +6133,7 @@ function renderM2(){
 }
 function renderRemates(){
   renderRemateMercados();      // REMATE y A PUERTA por cuota y por línea
-  _remRenderDiag(); _remRenderCand(); _remSimRender('r'); _remSimRender('s'); _remFbRender('r'); _remFbRender('s'); _remValRender();
+  _remRenderDiag(); _remRenderCand(); _remRenderM2C(); _remSimRender('r'); _remSimRender('s'); _remFbRender('r'); _remFbRender('s'); _remValRender();
   renderMejoras();             // reglas de elección de línea y mercados por equipo (viven en este tab desde 2026-11-08)
   if(ES_D2) renderHipotesis(); // R1 y S1 (en el d2)
 }
