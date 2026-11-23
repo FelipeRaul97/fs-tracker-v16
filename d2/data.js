@@ -124981,7 +124981,16 @@ const TRACKER_DATA = [
     ],
     "id_origen": "211",
     "reglas_d2": "hipotesis-2026-11-02",
-    "stats_reales": null,
+    "stats_reales": {
+      "local_S": 21,
+      "local_ST": 7,
+      "local_C": 4,
+      "local_GF": 0,
+      "visit_S": 15,
+      "visit_ST": 4,
+      "visit_C": 5,
+      "visit_GF": 0
+    },
     "snapshot_resultados": {
       "victoria_local": false,
       "empate": true,
@@ -130527,7 +130536,16 @@ const TRACKER_DATA = [
     ],
     "id_origen": "213",
     "reglas_d2": "hipotesis-2026-11-02",
-    "stats_reales": null,
+    "stats_reales": {
+      "local_S": 25,
+      "local_ST": 6,
+      "local_C": 7,
+      "local_GF": 1,
+      "visit_S": 6,
+      "visit_ST": 3,
+      "visit_C": 2,
+      "visit_GF": 1
+    },
     "snapshot_resultados": {
       "victoria_local": false,
       "empate": true,
@@ -133499,7 +133517,16 @@ const TRACKER_DATA = [
     ],
     "id_origen": "214",
     "reglas_d2": "hipotesis-2026-11-02",
-    "stats_reales": null,
+    "stats_reales": {
+      "local_S": 14,
+      "local_ST": 5,
+      "local_C": 7,
+      "local_GF": 0,
+      "visit_S": 9,
+      "visit_ST": 6,
+      "visit_C": 7,
+      "visit_GF": 1
+    },
     "snapshot_resultados": {
       "victoria_local": false,
       "empate": false,
@@ -135711,7 +135738,16 @@ const TRACKER_DATA = [
     ],
     "id_origen": "215",
     "reglas_d2": "hipotesis-2026-11-02",
-    "stats_reales": null,
+    "stats_reales": {
+      "local_S": 15,
+      "local_ST": 4,
+      "local_C": 3,
+      "local_GF": 1,
+      "visit_S": 6,
+      "visit_ST": 2,
+      "visit_C": 0,
+      "visit_GF": 1
+    },
     "snapshot_resultados": {
       "victoria_local": false,
       "empate": true,
@@ -138512,7 +138548,16 @@ const TRACKER_DATA = [
     ],
     "id_origen": "216",
     "reglas_d2": "hipotesis-2026-11-02",
-    "stats_reales": null,
+    "stats_reales": {
+      "local_S": 15,
+      "local_ST": 5,
+      "local_C": 8,
+      "local_GF": 0,
+      "visit_S": 16,
+      "visit_ST": 2,
+      "visit_C": 1,
+      "visit_GF": 1
+    },
     "snapshot_resultados": {
       "victoria_local": false,
       "empate": false,
@@ -140402,7 +140447,16 @@ const TRACKER_DATA = [
     ],
     "id_origen": "217",
     "reglas_d2": "hipotesis-2026-11-02",
-    "stats_reales": null,
+    "stats_reales": {
+      "local_S": 24,
+      "local_ST": 7,
+      "local_C": 8,
+      "local_GF": 2,
+      "visit_S": 8,
+      "visit_ST": 4,
+      "visit_C": 3,
+      "visit_GF": 1
+    },
     "snapshot_resultados": {
       "victoria_local": true,
       "empate": false,
@@ -141899,7 +141953,16 @@ const TRACKER_DATA = [
     ],
     "id_origen": "218",
     "reglas_d2": "hipotesis-2026-11-02",
-    "stats_reales": null,
+    "stats_reales": {
+      "local_S": 12,
+      "local_ST": 8,
+      "local_C": 5,
+      "local_GF": 4,
+      "visit_S": 13,
+      "visit_ST": 1,
+      "visit_C": 2,
+      "visit_GF": 0
+    },
     "snapshot_resultados": {
       "victoria_local": true,
       "empate": false,
@@ -143595,7 +143658,16 @@ const TRACKER_DATA = [
     ],
     "id_origen": "219",
     "reglas_d2": "hipotesis-2026-11-02",
-    "stats_reales": null,
+    "stats_reales": {
+      "local_S": 30,
+      "local_ST": 9,
+      "local_C": 10,
+      "local_GF": 3,
+      "visit_S": 4,
+      "visit_ST": 2,
+      "visit_C": 0,
+      "visit_GF": 2
+    },
     "snapshot_resultados": {
       "victoria_local": true,
       "empate": false,
@@ -145839,7 +145911,16 @@ const TRACKER_DATA = [
     ],
     "id_origen": "220",
     "reglas_d2": "hipotesis-2026-11-02",
-    "stats_reales": null,
+    "stats_reales": {
+      "local_S": 11,
+      "local_ST": 5,
+      "local_C": 3,
+      "local_GF": 2,
+      "visit_S": 15,
+      "visit_ST": 8,
+      "visit_C": 4,
+      "visit_GF": 0
+    },
     "snapshot_resultados": {
       "victoria_local": true,
       "empate": false,
@@ -147357,7 +147438,16 @@ const TRACKER_DATA = [
     ],
     "id_origen": "221",
     "reglas_d2": "hipotesis-2026-11-02",
-    "stats_reales": null,
+    "stats_reales": {
+      "local_S": 18,
+      "local_ST": 9,
+      "local_C": 10,
+      "local_GF": 4,
+      "visit_S": 9,
+      "visit_ST": 1,
+      "visit_C": 2,
+      "visit_GF": 0
+    },
     "snapshot_resultados": {
       "victoria_local": true,
       "empate": false,
@@ -149635,7 +149725,16 @@ const TRACKER_DATA = [
     ],
     "id_origen": "222",
     "reglas_d2": "hipotesis-2026-11-02",
-    "stats_reales": null,
+    "stats_reales": {
+      "local_S": 18,
+      "local_ST": 4,
+      "local_C": 8,
+      "local_GF": 1,
+      "visit_S": 11,
+      "visit_ST": 3,
+      "visit_C": 4,
+      "visit_GF": 1
+    },
     "snapshot_resultados": {
       "victoria_local": false,
       "empate": true,
@@ -152790,7 +152889,16 @@ const TRACKER_DATA = [
     ],
     "id_origen": "223",
     "reglas_d2": "hipotesis-2026-11-02",
-    "stats_reales": null,
+    "stats_reales": {
+      "local_S": 12,
+      "local_ST": 8,
+      "local_C": 7,
+      "local_GF": 3,
+      "visit_S": 31,
+      "visit_ST": 7,
+      "visit_C": 14,
+      "visit_GF": 2
+    },
     "snapshot_resultados": {
       "victoria_local": true,
       "empate": false,
@@ -155745,7 +155853,16 @@ const TRACKER_DATA = [
     ],
     "id_origen": "224",
     "reglas_d2": "hipotesis-2026-11-02",
-    "stats_reales": null,
+    "stats_reales": {
+      "local_S": 12,
+      "local_ST": 3,
+      "local_C": 7,
+      "local_GF": 1,
+      "visit_S": 13,
+      "visit_ST": 3,
+      "visit_C": 5,
+      "visit_GF": 1
+    },
     "snapshot_resultados": {
       "victoria_local": false,
       "empate": true,
@@ -157924,7 +158041,16 @@ const TRACKER_DATA = [
     ],
     "id_origen": "225",
     "reglas_d2": "hipotesis-2026-11-02",
-    "stats_reales": null,
+    "stats_reales": {
+      "local_S": 18,
+      "local_ST": 7,
+      "local_C": 1,
+      "local_GF": 4,
+      "visit_S": 17,
+      "visit_ST": 2,
+      "visit_C": 8,
+      "visit_GF": 0
+    },
     "snapshot_resultados": {
       "victoria_local": true,
       "empate": false,
@@ -160560,7 +160686,16 @@ const TRACKER_DATA = [
     ],
     "id_origen": "226",
     "reglas_d2": "hipotesis-2026-11-02",
-    "stats_reales": null,
+    "stats_reales": {
+      "local_S": 28,
+      "local_ST": 11,
+      "local_C": 15,
+      "local_GF": 4,
+      "visit_S": 10,
+      "visit_ST": 3,
+      "visit_C": 5,
+      "visit_GF": 0
+    },
     "snapshot_resultados": {
       "victoria_local": true,
       "empate": false,
@@ -162780,7 +162915,16 @@ const TRACKER_DATA = [
     ],
     "id_origen": "227",
     "reglas_d2": "hipotesis-2026-11-02",
-    "stats_reales": null,
+    "stats_reales": {
+      "local_S": 12,
+      "local_ST": 8,
+      "local_C": 2,
+      "local_GF": 5,
+      "visit_S": 15,
+      "visit_ST": 3,
+      "visit_C": 9,
+      "visit_GF": 1
+    },
     "snapshot_resultados": {
       "victoria_local": true,
       "empate": false,
@@ -168887,7 +169031,16 @@ const TRACKER_DATA = [
     ],
     "id_origen": "230",
     "reglas_d2": "hipotesis-2026-11-02",
-    "stats_reales": null,
+    "stats_reales": {
+      "local_S": 11,
+      "local_ST": 1,
+      "local_C": 2,
+      "local_GF": 0,
+      "visit_S": 20,
+      "visit_ST": 10,
+      "visit_C": 7,
+      "visit_GF": 3
+    },
     "snapshot_resultados": {
       "victoria_local": false,
       "empate": false,
