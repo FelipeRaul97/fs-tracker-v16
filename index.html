@@ -5758,13 +5758,14 @@ function _remRenderM2C(){
 const LF_FECHA='2026-11-26', LF_CORTE_ID=74, LF_N=40, LF_MARGEN=1.06;
 const LF_REGLAS=[['c145','Principal · línea 1 a 3 por debajo de la casa con cuota más cercana a 1.45'],['f3','Variante · fija 3 por debajo'],['f2','Variante · fija 2 por debajo'],['f1','Variante · fija 1 por debajo'],
   ['c130','Variante · cuota más cercana a 1.30 (entre −3 y −1)'],['c160','Variante · cuota más cercana a 1.60 (entre −3 y −1)'],['f0','Referencia · la línea de la casa (0)']];
-function _lfEscaleras(){
+function _lfEscaleras(suf){
+  suf=suf||'remates';
   const out=[];
   _DATA.filter(p=>p.resultado_partido&&p.lambda_final_l!=null&&p.lambda_final_v!=null).forEach(p=>{
     const ll=+p.lambda_final_l, lv=+p.lambda_final_v;
     ['local','visit'].forEach(lado=>{
       const lad=new Map();
-      (p.watchlist||[]).forEach(w=>{ if(w.tipo==='POR_EQUIPO'&&w.mercado===lado+'_remates'&&w.acerto!=null&&w.cuota&&w.linea!=null) lad.set(+w.linea,{cuota:+w.cuota,win:!!w.acerto}); });
+      (p.watchlist||[]).forEach(w=>{ if(w.tipo==='POR_EQUIPO'&&w.mercado===lado+'_'+suf&&w.acerto!=null&&w.cuota&&w.linea!=null) lad.set(+w.linea,{cuota:+w.cuota,win:!!w.acerto}); });
       if(lad.size<4) return;
       const ls=[...lad.keys()].sort((a,b)=>a-b); let ref=ls[0], best=9;
       ls.forEach(l=>{ const d=Math.abs(1/lad.get(l).cuota/LF_MARGEN-0.5); if(d<best){ best=d; ref=l; } });
@@ -5775,7 +5776,8 @@ function _lfEscaleras(){
 }
 function _lfElige(e,key){
   const g=off=>e.lad.get(e.ref+off), mk=x=>x?{id:e.id,cuota:x.cuota,win:x.win}:null;
-  if(key[0]==='f') return mk(g({f3:-3,f2:-2,f1:-1,f0:0}[key]));
+  const OFF={f3:-3,f2:-2,f1:-1,f0:0,p1:1,p2:2};
+  if(key in OFF) return mk(g(OFF[key]));
   const c={c130:1.30,c145:1.45,c160:1.60}[key]; let b=null;
   [-3,-2,-1].forEach(o=>{ const x=g(o); if(x&&(!b||Math.abs(x.cuota-c)<Math.abs(b.cuota-c))) b=x; });
   return mk(b);
@@ -5800,6 +5802,41 @@ function _remRenderLF(){
     +_hipTabla('Local favorito: una línea por partido',f1)
     +'<div style="font-size:12px;color:var(--text3);margin:16px 0 6px;font-weight:600">Controles: la misma regla en los otros tres grupos</div>'
     +_hipTabla('Grupo de control (una línea por equipo y partido)',f2);
+}
+// ── Candidata A puerta LOCAL: línea +1 sobre la casa y S1 solo local (solo d2, 2026-11-26, a pedido) ─────────────────────────
+// Regla escrita ANTES de ver partidos nuevos: no se cambian umbrales. Salió de mirar #001–#074 (muestra en la que se pensó: optimista); la prueba
+// real son los partidos con id > LP_CORTE_ID. Hallazgo: en remates A PUERTA la casa parece subestimar al local (acierto 43 % frente a 34 % implícito en la
+// línea +1; ROI +21.3 % ±32, z = 1.4, no concluyente) y sobrevalorar al visitante (las líneas de la visita pierden en las dos mitades).
+// «Línea de la casa» = la de remates a puerta del equipo cuya probabilidad implícita (1/cuota ÷ LF_MARGEN) queda más cerca de 50 %; escalera de ≥ 4 líneas.
+//   A (principal) · local, UNA línea por partido: la línea 1 por encima de la de la casa.   Referencias descriptivas: local en la línea 0 y en la +2.
+//   B · S1 solo local: las apuestas PUERTA que ya registra el d2 (EV > 0, cuota ≥ 1.60, mayor EV×P) restringidas al local.
+//   CONTROLES: visita en la línea +1 y S1 solo visita (se espera que no ganen). Referencia: S1 completo.
+const LP_FECHA='2026-11-26', LP_CORTE_ID=74, LP_N=40;
+function _remRenderLP(){
+  const el=document.getElementById('lp-out'); if(!el) return;
+  const E=_lfEscaleras('remates_puerta'), cn=String(LP_CORTE_ID).padStart(3,'0'), cn1=String(LP_CORTE_ID+1).padStart(3,'0');
+  const sel=(lado,key)=>E.filter(e=>e.lado===lado).map(e=>_lfElige(e,key)).filter(Boolean);
+  const s1=lado=>{ const L=[]; _DATA.forEach(p=>(p.apuestas||[]).forEach(a=>{
+    if(a.tipo!=='PUERTA'||(a.estado!=='GANADA'&&a.estado!=='PERDIDA')) return;
+    if(lado&&(a.mercado.startsWith('local')?'local':'visit')!==lado) return;
+    L.push({id:+p.id,cuota:+a.cuota,win:a.estado==='GANADA'}); })); return L; };
+  const pre=l=>l.filter(x=>x.id<=LP_CORTE_ID), nue=l=>l.filter(x=>x.id>LP_CORTE_ID);
+  const par2=(n,l,b)=>_hipFila(n+' <span style="color:var(--text3);font-size:11px">· muestra en la que se pensó (#001–#'+cn+')</span>',pre(l),{sub:1})
+    +_hipFila((b?'<b>':'')+n+(b?'</b>':'')+' <span style="color:var(--text3);font-size:11px">· PRUEBA REAL (#'+cn1+' en adelante)</span>',nue(l),b?{b:1}:{sub:1});
+  const f1=par2('A · local, línea 1 por encima de la casa (principal)',sel('local','p1'),true)
+    +par2('Referencia · local, línea 2 por encima',sel('local','p2'),false)
+    +par2('Referencia · local, la línea de la casa (0)',sel('local','f0'),false)
+    +par2('B · S1 solo local (lo realmente registrado)',s1('local'),true)
+    +par2('Referencia · S1 completo (local y visita)',s1(null),false);
+  const f2=par2('Control · visita, línea 1 por encima de la casa',sel('visit','p1'),false)+par2('Control · S1 solo visita',s1('visit'),false);
+  const elegibles=nue(sel('local','p1')).length, nuevos=_DATA.filter(p=>p.resultado_partido&&+p.id>LP_CORTE_ID).length, pct=Math.min(100,elegibles/LP_N*100);
+  el.innerHTML='<div style="display:flex;align-items:center;gap:10px;font-size:12px;margin:0 0 10px"><div style="flex:0 0 200px;height:8px;border-radius:4px;background:var(--surface2);overflow:hidden"><div style="width:'+pct+'%;height:100%;background:var(--accent,#378add)"></div></div>'
+    +'<span><b>'+elegibles+'</b> de '+LP_N+' partidos de local con escalera desde la fijación ('+LP_FECHA+', partido #'+cn1+' en adelante); '+nuevos+' partidos cerrados en total</span></div>'
+    +'<p style="font-size:12px;margin:0 0 10px">'+(elegibles<LP_N?'Faltan <b>'+(LP_N-elegibles)+'</b> partidos para decidir. ':'')
+    +'Deciden <b>A y B</b>: cada una se sostiene si en su fila PRUEBA REAL ROI − ±90% &gt; 0 y u/partido − ±90% &gt; 0, <b>y</b> los controles de visita no ganan. Las referencias muestran si el resultado depende de la línea; no se elige otra después. La muestra en la que se pensó sale optimista y A y B comparten en parte las mismas líneas: no son dos pruebas independientes.</p>'
+    +_hipTabla('Local: una línea por partido',f1)
+    +'<div style="font-size:12px;color:var(--text3);margin:16px 0 6px;font-weight:600">Controles: la visita con las mismas reglas</div>'
+    +_hipTabla('Grupo de control',f2);
 }
 // ── Candidata U-λ: Under cuando las λ están parejas (solo d2, 2026-11-26, a pedido) ────────────────────────────────────────
 // Regla escrita ANTES de ver partidos nuevos: no se cambian umbrales. Salió de mirar los partidos #001–#074 del d2 (la muestra en la que se
@@ -6234,7 +6271,7 @@ function renderM2(){
 }
 function renderRemates(){
   renderRemateMercados();      // REMATE y A PUERTA por cuota y por línea
-  _remRenderDiag(); _remRenderCand(); _remRenderM2C(); _remRenderLF();_remSimRender('r'); _remSimRender('s'); _remFbRender('r'); _remFbRender('s'); _remValRender();
+  _remRenderDiag(); _remRenderCand(); _remRenderM2C(); _remRenderLF(); _remRenderLP(); _remSimRender('r'); _remSimRender('s'); _remFbRender('r'); _remFbRender('s'); _remValRender();
   renderMejoras();             // reglas de elección de línea y mercados por equipo (viven en este tab desde 2026-11-08)
   if(ES_D2) renderHipotesis(); // R1 y S1 (en el d2)
 }
