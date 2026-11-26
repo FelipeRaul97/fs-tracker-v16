@@ -5452,7 +5452,7 @@ function renderHipotesis(){
   if(!document.getElementById('hip-resumen')) return;
   const B=_hipBets(), D=_mejDatos();
   _mejRenderHipotesis(D); _mejRenderD2Combo();      // tarjetas que viven en este tab; la de hipotesis fija _hipBajas
-  _hipRenderResumen(B); _hipRenderRemate(B); _hipRenderPuerta(B); _hipRenderCuota(B); _hipRenderAcum(B);
+  _hipRenderResumen(B); _hipRenderRemate(B); _hipRenderPuerta(B); _hipRenderCuota(B); _hipRenderAcum(B); _hipRenderUnderEq();
 }
 // Por que NO se apostó cada selección de goles del watchlist (lo contrario de una hipótesis). ROI < 0 = el descarte acertó.
 function _hipRazon(p,w){
@@ -5745,6 +5745,107 @@ function _remRenderM2C(){
   el.innerHTML=prog
     +tt('REMATES TOTALES · candidatas T1 y T2 frente a la vigente R1',bloque('remates totales',R,B.rem,'R1 vigente (lo realmente registrado)',rT))
     +tt('REMATES A PUERTA · candidatas P1 y P2 frente a la vigente S1',bloque('a puerta',S,B.puerta,'S1 vigente (lo realmente registrado)',rP));
+}
+// ── Candidata L-fav: remates del LOCAL FAVORITO, una línea bajo la que fija la casa (solo d2, 2026-11-26, a pedido) ──────────
+// Regla escrita ANTES de ver partidos nuevos: no se cambian umbrales. Salió de mirar los partidos #001–#074 del d2 (la muestra en la que se
+// pensó: optimista); la prueba real son los partidos con id > LF_CORTE_ID. Sin el filtro «local favorito» el efecto desaparece (local en general ≈ 0%).
+// «Línea de la casa» = la línea de remates totales del equipo cuya probabilidad implícita (1/cuota ÷ LF_MARGEN) queda más cerca de 50 %.
+// Se elige UNA línea por equipo y partido (las líneas de un mismo equipo y partido son casi el mismo evento).
+//   PRINCIPAL (c145): entre las líneas 1, 2 y 3 por debajo de la de la casa, la de cuota más cercana a 1.45.
+//   VARIANTES (solo descriptivas, mismos partidos): fija −3, −2, −1, la línea de la casa (0) y cuota más cercana a 1.30 o 1.60. No se elige la mejor después.
+//   CONTROLES (misma regla principal): local no favorito, visita favorita, visita no favorita (se espera que no ganen).
+// Favorito = mayor λ final (empate: local). Se necesita una escalera de al menos 4 líneas.
+const LF_FECHA='2026-11-26', LF_CORTE_ID=74, LF_N=40, LF_MARGEN=1.06;
+const LF_REGLAS=[['c145','Principal · línea 1 a 3 por debajo de la casa con cuota más cercana a 1.45'],['f3','Variante · fija 3 por debajo'],['f2','Variante · fija 2 por debajo'],['f1','Variante · fija 1 por debajo'],
+  ['c130','Variante · cuota más cercana a 1.30 (entre −3 y −1)'],['c160','Variante · cuota más cercana a 1.60 (entre −3 y −1)'],['f0','Referencia · la línea de la casa (0)']];
+function _lfEscaleras(){
+  const out=[];
+  _DATA.filter(p=>p.resultado_partido&&p.lambda_final_l!=null&&p.lambda_final_v!=null).forEach(p=>{
+    const ll=+p.lambda_final_l, lv=+p.lambda_final_v;
+    ['local','visit'].forEach(lado=>{
+      const lad=new Map();
+      (p.watchlist||[]).forEach(w=>{ if(w.tipo==='POR_EQUIPO'&&w.mercado===lado+'_remates'&&w.acerto!=null&&w.cuota&&w.linea!=null) lad.set(+w.linea,{cuota:+w.cuota,win:!!w.acerto}); });
+      if(lad.size<4) return;
+      const ls=[...lad.keys()].sort((a,b)=>a-b); let ref=ls[0], best=9;
+      ls.forEach(l=>{ const d=Math.abs(1/lad.get(l).cuota/LF_MARGEN-0.5); if(d<best){ best=d; ref=l; } });
+      out.push({id:+p.id,lado,fav:lado==='local'?ll>=lv:lv>ll,lad,ref});
+    });
+  });
+  return out;
+}
+function _lfElige(e,key){
+  const g=off=>e.lad.get(e.ref+off), mk=x=>x?{id:e.id,cuota:x.cuota,win:x.win}:null;
+  if(key[0]==='f') return mk(g({f3:-3,f2:-2,f1:-1,f0:0}[key]));
+  const c={c130:1.30,c145:1.45,c160:1.60}[key]; let b=null;
+  [-3,-2,-1].forEach(o=>{ const x=g(o); if(x&&(!b||Math.abs(x.cuota-c)<Math.abs(b.cuota-c))) b=x; });
+  return mk(b);
+}
+function _remRenderLF(){
+  const el=document.getElementById('lf-out'); if(!el) return;
+  const E=_lfEscaleras(), cn=String(LF_CORTE_ID).padStart(3,'0'), cn1=String(LF_CORTE_ID+1).padStart(3,'0');
+  const sel=(f,key)=>E.filter(f).map(e=>_lfElige(e,key)).filter(Boolean);
+  const pre=l=>l.filter(x=>x.id<=LF_CORTE_ID), nue=l=>l.filter(x=>x.id>LF_CORTE_ID);
+  const LFav=e=>e.lado==='local'&&e.fav;
+  const par2=(n,l,b)=>_hipFila(n+' <span style="color:var(--text3);font-size:11px">· muestra en la que se pensó (#001–#'+cn+')</span>',pre(l),{sub:1})
+    +_hipFila((b?'<b>':'')+n+(b?'</b>':'')+' <span style="color:var(--text3);font-size:11px">· PRUEBA REAL (#'+cn1+' en adelante)</span>',nue(l),b?{b:1}:{sub:1});
+  let f1='';
+  LF_REGLAS.forEach(([k,n],i)=>{ f1+=par2('Local favorito · '+n,sel(LFav,k),i===0); });
+  const ctrl=[['Control · local NO favorito (regla principal)',e=>e.lado==='local'&&!e.fav],['Control · visita favorita (regla principal)',e=>e.lado==='visit'&&e.fav],['Control · visita NO favorita (regla principal)',e=>e.lado==='visit'&&!e.fav]];
+  let f2=''; ctrl.forEach(([n,f])=>{ f2+=par2(n,sel(f,'c145'),false); });
+  const elegibles=nue(sel(LFav,'c145')).length, nuevos=_DATA.filter(p=>p.resultado_partido&&+p.id>LF_CORTE_ID).length, pct=Math.min(100,elegibles/LF_N*100);
+  el.innerHTML='<div style="display:flex;align-items:center;gap:10px;font-size:12px;margin:0 0 10px"><div style="flex:0 0 200px;height:8px;border-radius:4px;background:var(--surface2);overflow:hidden"><div style="width:'+pct+'%;height:100%;background:var(--accent,#378add)"></div></div>'
+    +'<span><b>'+elegibles+'</b> de '+LF_N+' partidos de local favorito con escalera desde la fijación ('+LF_FECHA+', partido #'+cn1+' en adelante); '+nuevos+' partidos cerrados en total</span></div>'
+    +'<p style="font-size:12px;margin:0 0 10px">'+(elegibles<LF_N?'Faltan <b>'+(LF_N-elegibles)+'</b> partidos para decidir. ':'')
+    +'Decide <b>solo la regla principal</b>: se sostiene si en su fila PRUEBA REAL ROI − ±90% &gt; 0 y u/partido − ±90% &gt; 0, <b>y</b> los tres controles no ganan. Las variantes se muestran para ver si el resultado depende de la regla; no se elige la mejor después. La muestra en la que se pensó sale optimista (el grupo se aisló mirando esos partidos).</p>'
+    +_hipTabla('Local favorito: una línea por partido',f1)
+    +'<div style="font-size:12px;color:var(--text3);margin:16px 0 6px;font-weight:600">Controles: la misma regla en los otros tres grupos</div>'
+    +_hipTabla('Grupo de control (una línea por equipo y partido)',f2);
+}
+// ── Candidata U-λ: Under cuando las λ están parejas (solo d2, 2026-11-26, a pedido) ────────────────────────────────────────
+// Regla escrita ANTES de ver partidos nuevos: no se cambian umbrales. Salió de mirar los partidos #001–#074 del d2 (la muestra en la que se
+// pensó: su ROI sale optimista); la prueba real son los partidos con id > UEQ_CORTE_ID. Mecanismo: con |λ local − λ visita| < 0.4 salen menos
+// goles de los que proyecta el engine (en esos partidos real − λ total fue −0.3 y −0.7 en las dos mitades del d1), así que el Under queda subestimado.
+//   A · todos los Under 2.5 / 3.5 / 4.5 cotizados con diferencia < 0.4.
+//   B · un Under por partido (2.5 o 3.5, el de mayor probabilidad del modelo) con diferencia < 0.4.
+//   C · control: Over 1.5 / 2.5 / 3.5 y BTTS con diferencia < 0.4 (se espera que pierdan; si ganan, el mecanismo no es el que se cree).
+//   D · contraste: los mismos Under con diferencia ≥ 0.4 (si rinden igual, el efecto no es la diferencia sino el Under en general).
+// No se apuesta: se calcula sola desde el watchlist. Se decide con UEQ_N partidos elegibles (diferencia < 0.4) posteriores a la fijación.
+const UEQ_FECHA='2026-11-26', UEQ_CORTE_ID=74, UEQ_N=40, UEQ_DIF=0.4;
+function _ueqLineas(){
+  const L=[];
+  _DATA.filter(p=>p.resultado_partido&&p.lambda_final_l!=null&&p.lambda_final_v!=null).forEach(p=>{
+    const df=Math.abs(+p.lambda_final_l-+p.lambda_final_v);
+    (p.watchlist||[]).forEach(w=>{
+      if(w.tipo||w.acerto==null||!w.cuota||w.prob==null) return;      // solo goles simples (sin tipo)
+      L.push({id:+p.id,cuota:+w.cuota,win:!!w.acerto,p:w.prob/100,m:w.mercado,df});
+    });
+  });
+  return L;
+}
+function _hipRenderUnderEq(){
+  const el=document.getElementById('hip-ueq'); if(!el) return;
+  const L=_ueqLineas(), U=['under25','under35','under45'], O=['over15','over25','over35','btts'], par=x=>x.df<UEQ_DIF;
+  const A=L.filter(x=>U.includes(x.m)&&par(x));
+  const g=new Map(); L.filter(x=>(x.m==='under25'||x.m==='under35')&&par(x)).forEach(x=>{ const a=g.get(x.id); if(!a||x.p>a.p) g.set(x.id,x); });
+  const B=[...g.values()], C=L.filter(x=>O.includes(x.m)&&par(x)), Dd=L.filter(x=>U.includes(x.m)&&!par(x));
+  const refU=L.filter(x=>U.includes(x.m)), refO=L.filter(x=>O.includes(x.m));
+  const pre=l=>l.filter(x=>x.id<=UEQ_CORTE_ID), nue=l=>l.filter(x=>x.id>UEQ_CORTE_ID);
+  const cn=String(UEQ_CORTE_ID).padStart(3,'0'), cn1=String(UEQ_CORTE_ID+1).padStart(3,'0');
+  const par2=(n,l,b)=>_hipFila(n+' <span style="color:var(--text3);font-size:11px">· muestra en la que se pensó (#001–#'+cn+')</span>',pre(l),{sub:1})
+    +_hipFila('<b>'+n+'</b> <span style="color:var(--text3);font-size:11px">· PRUEBA REAL (#'+cn1+' en adelante)</span>',nue(l),{b:1});
+  const filas=par2('A · todos los Under 2.5 / 3.5 / 4.5 con diferencia de λ &lt; '+UEQ_DIF,A)
+    +par2('B · un Under por partido (2.5 o 3.5, el de mayor probabilidad) con diferencia &lt; '+UEQ_DIF,B)
+    +par2('C · control: Over 1.5 / 2.5 / 3.5 y BTTS con diferencia &lt; '+UEQ_DIF+' (se espera que pierdan)',C)
+    +par2('D · contraste: los mismos Under con diferencia ≥ '+UEQ_DIF,Dd)
+    +_hipFila('Referencia · todos los Under cotizados (#001–#'+cn+')',pre(refU),{sub:1})+_hipFila('Referencia · todos los Under cotizados — PRUEBA REAL',nue(refU),{sub:1})
+    +_hipFila('Referencia · todos los Over 1.5 / 2.5 / 3.5 y BTTS (#001–#'+cn+')',pre(refO),{sub:1})+_hipFila('Referencia · todos los Over 1.5 / 2.5 / 3.5 y BTTS — PRUEBA REAL',nue(refO),{sub:1});
+  const elegibles=_DATA.filter(p=>p.resultado_partido&&+p.id>UEQ_CORTE_ID&&p.lambda_final_l!=null&&Math.abs(+p.lambda_final_l-+p.lambda_final_v)<UEQ_DIF).length;
+  const nuevos=_DATA.filter(p=>p.resultado_partido&&+p.id>UEQ_CORTE_ID).length, pct=Math.min(100,elegibles/UEQ_N*100);
+  el.innerHTML='<div style="display:flex;align-items:center;gap:10px;font-size:12px;margin:0 0 10px"><div style="flex:0 0 200px;height:8px;border-radius:4px;background:var(--surface2);overflow:hidden"><div style="width:'+pct+'%;height:100%;background:var(--accent,#378add)"></div></div>'
+    +'<span><b>'+elegibles+'</b> de '+UEQ_N+' partidos elegibles (diferencia de λ &lt; '+UEQ_DIF+') desde la fijación ('+UEQ_FECHA+', partido #'+cn1+' en adelante); '+nuevos+' partidos cerrados en total</span></div>'
+    +'<p style="font-size:12px;margin:0 0 10px">'+(elegibles<UEQ_N?'Faltan <b>'+(UEQ_N-elegibles)+'</b> partidos elegibles para decidir. ':'')
+    +'Se sostiene solo si, en la fila PRUEBA REAL de A (y de B), ROI − ±90% &gt; 0 y u/partido − ±90% &gt; 0, <b>y además</b> C pierde y D no rinde lo mismo que A. Los umbrales (0.4, Under 2.5/3.5/4.5) salieron de mirar #001–#'+cn+': esa fila es optimista.</p>'
+    +_hipTabla('Regla (todas las líneas cotizadas de goles simples)',filas);
 }
 // ── Simulador de selección (solo d2, 2026-11-09, a pedido) ─────────────────────────────────────────────────────────────
 // «¿Qué habría pasado con los partidos jugados si se hubiera elegido así?» Una línea por equipo y partido, con filtros que se pueden mover:
@@ -6133,7 +6234,7 @@ function renderM2(){
 }
 function renderRemates(){
   renderRemateMercados();      // REMATE y A PUERTA por cuota y por línea
-  _remRenderDiag(); _remRenderCand(); _remRenderM2C(); _remSimRender('r'); _remSimRender('s'); _remFbRender('r'); _remFbRender('s'); _remValRender();
+  _remRenderDiag(); _remRenderCand(); _remRenderM2C(); _remRenderLF();_remSimRender('r'); _remSimRender('s'); _remFbRender('r'); _remFbRender('s'); _remValRender();
   renderMejoras();             // reglas de elección de línea y mercados por equipo (viven en este tab desde 2026-11-08)
   if(ES_D2) renderHipotesis(); // R1 y S1 (en el d2)
 }
