@@ -345057,51 +345057,59 @@ const TRACKER_DATA = [
       "local": 17,
       "visit": 8
     },
-    "notas": "",
+    "notas": "2026-11-27 09:05 (Lima): cuotas re-tomadas en Betano antes del saque. Antes: [('PICK', 'Over 1.5', 1.27), ('PICK', 'Over 0.5 Nottingham Forest', 1.26), ('COMBO', 'L Remates a puerta Over 2.5 + Over 0.5 L', 1.38), ('REMATE', 'Nottingham Forest Remates Over 15.5', 2.87)]. Ahora: [('PICK', 'Over 2.5', 1.82), ('PICK', 'Over 0.5 Chelsea', 1.3), ('COMBO', 'Over 1.5 + Over 0.5 L', 1.39), ('REMATE', 'Nottingham Forest Remates Over 15.5', 2.67)].",
     "resultado_partido": null,
     "goles_esperados": "3.06",
     "apuestas": [
       {
         "tipo": "PICK",
-        "mercado": "over15",
+        "mercado": "over25",
         "linea": null,
-        "etiqueta": "Over 1.5",
-        "cuota": 1.27,
-        "prob": 81.8,
-        "ev_pct": 3.9,
+        "etiqueta": "Over 2.5",
+        "cuota": 1.82,
+        "prob": 59.2,
+        "ev_pct": 7.7,
         "estado": "PENDIENTE",
-        "pl": null
+        "pl": null,
+        "cuota_justa": 1.82,
+        "cuota_segura": 2.0,
+        "acierto_hist": 55.1,
+        "n_hist": 354
       },
       {
         "tipo": "PICK",
-        "mercado": "over05_local",
+        "mercado": "over05_visit",
         "linea": null,
-        "etiqueta": "Over 0.5 Nottingham Forest",
-        "cuota": 1.26,
-        "prob": 80.6,
-        "ev_pct": 1.6,
+        "etiqueta": "Over 0.5 Chelsea",
+        "cuota": 1.3,
+        "prob": 78.0,
+        "ev_pct": 1.4,
         "estado": "PENDIENTE",
-        "pl": null
+        "pl": null,
+        "cuota_justa": 1.29,
+        "cuota_segura": 1.39,
+        "acierto_hist": 77.7,
+        "n_hist": 233
       },
       {
         "tipo": "COMBO",
-        "mercado": "local_remates_puerta_over2.5+over05_local",
-        "etiqueta": "L Remates a puerta Over 2.5 + Over 0.5 L",
-        "cuota": 1.38,
-        "prob": 73.4,
-        "ev_pct": 1.3,
+        "mercado": "over15+over05_local",
+        "etiqueta": "Over 1.5 + Over 0.5 L",
+        "cuota": 1.39,
+        "prob": 71.4,
+        "ev_pct": -0.7,
         "estado": "PENDIENTE",
         "pl": null,
         "patas": [
-          "local_remates_puerta_over2.5",
+          "over15",
           "over05_local"
         ],
         "promovida_combinada": true,
         "nivel_cruce": "justa",
         "cuota_justa": 1.37,
-        "cuota_segura": 1.49,
+        "cuota_segura": 1.48,
         "acierto_hist": 73.0,
-        "n_hist": 230
+        "n_hist": 289
       },
       {
         "tipo": "REMATE",
@@ -345109,89 +345117,117 @@ const TRACKER_DATA = [
         "linea": 15.5,
         "etiqueta": "Nottingham Forest Remates Over 15.5",
         "lado": "local",
-        "cuota": 2.87,
+        "cuota": 2.67,
         "prob": 47.1,
-        "ev_pct": 35.2,
+        "ev_pct": 25.8,
         "estado": "PENDIENTE",
         "pl": null,
-        "lineas_pasan": 5,
+        "lineas_pasan": 4,
         "cruzaron_ambos": false
       }
     ],
     "watchlist": [
       {
+        "mercado": "over05_local",
+        "linea": null,
+        "etiqueta": "Over 0.5 Nottingham Forest",
+        "cuota": 1.25,
+        "prob": 80.6,
+        "ev_pct": 0.7,
+        "filtro_edge": "EV=+0.7% < 1.5"
+      },
+      {
+        "mercado": "local_remates_puerta_over2.5+over05_local",
+        "linea": null,
+        "etiqueta": "L Remates a puerta Over 2.5 + Over 0.5 L",
+        "cuota": 1.36,
+        "prob": 73.4,
+        "ev_pct": -0.2,
+        "tipo": "COMBINADA",
+        "patas": [
+          "local_remates_puerta_over2.5",
+          "over05_local"
+        ],
+        "lift": 1.081,
+        "cuota_justa": 1.37,
+        "cuota_segura": 1.49,
+        "acierto_hist": 73.0,
+        "n_hist": 230
+      },
+      {
+        "mercado": "local_remates",
+        "linea": 15.5,
+        "etiqueta": "Nottingham Forest Remates Over 15.5",
+        "cuota": 2.67,
+        "prob": 47.1,
+        "ev_pct": 25.8,
+        "tipo": "POR_EQUIPO",
+        "prob_ml": 30.1,
+        "ev_ml": -19.5,
+        "prob_m3": 38.4,
+        "ev_m3": 2.6,
+        "es_remate": true
+      },
+      {
         "mercado": "victoria_local",
         "linea": null,
         "etiqueta": "Victoria Nottingham Forest",
-        "cuota": 2.52,
+        "cuota": 2.45,
         "prob": 38.7,
-        "ev_pct": -2.5
+        "ev_pct": -5.2
       },
       {
         "mercado": "empate",
         "linea": null,
         "etiqueta": "Empate",
-        "cuota": 3.4,
+        "cuota": 3.45,
         "prob": 26.6,
-        "ev_pct": -9.6
+        "ev_pct": -8.2
       },
       {
         "mercado": "victoria_visit",
         "linea": null,
         "etiqueta": "Victoria Chelsea",
-        "cuota": 2.77,
+        "cuota": 2.87,
         "prob": 36.7,
-        "ev_pct": 1.7,
+        "ev_pct": 5.3,
         "regla_1x2_no_pick": true
       },
       {
         "mercado": "do1x",
         "linea": null,
         "etiqueta": "DO Nottingham Forest o Empate",
-        "cuota": 1.47,
+        "cuota": 1.44,
         "prob": 63.3,
-        "ev_pct": -6.9
+        "ev_pct": -8.8
       },
       {
         "mercado": "dox2",
         "linea": null,
         "etiqueta": "DO Empate o Chelsea",
-        "cuota": 1.55,
+        "cuota": 1.57,
         "prob": 61.3,
-        "ev_pct": -5.0,
+        "ev_pct": -3.8,
         "cuota_justa": 1.64,
         "cuota_segura": 1.87,
         "acierto_hist": 61.1,
         "n_hist": 167
       },
       {
-        "mercado": "over25",
-        "linea": null,
-        "etiqueta": "Over 2.5",
-        "cuota": 1.8,
-        "prob": 59.2,
-        "ev_pct": 6.6,
-        "filtro_edge": "no cruza validada (justa 1.82)",
-        "cuota_justa": 1.82,
-        "cuota_segura": 2.0,
-        "acierto_hist": 55.1,
-        "n_hist": 354
-      },
-      {
         "mercado": "under25",
         "linea": null,
         "etiqueta": "Under 2.5",
-        "cuota": 2.02,
+        "cuota": 2.0,
         "prob": 40.8,
-        "ev_pct": -17.6
+        "ev_pct": -18.4
       },
       {
         "mercado": "under35",
         "linea": null,
         "etiqueta": "Under 3.5",
-        "cuota": 1.42,
+        "cuota": 1.4,
         "prob": 63.4,
-        "ev_pct": -10.0,
+        "ev_pct": -11.2,
         "cuota_justa": 1.57,
         "cuota_segura": 1.73,
         "acierto_hist": 63.8,
@@ -345209,109 +345245,97 @@ const TRACKER_DATA = [
         "mercado": "btts",
         "linea": null,
         "etiqueta": "BTTS",
-        "cuota": 1.6,
+        "cuota": 1.62,
         "prob": 61.4,
-        "ev_pct": -1.8,
+        "ev_pct": -0.5,
         "cuota_justa": 1.6,
         "cuota_segura": 1.76,
         "acierto_hist": 62.7,
         "n_hist": 260
       },
       {
-        "mercado": "over05_visit",
-        "linea": null,
-        "etiqueta": "Over 0.5 Chelsea",
-        "cuota": 1.28,
-        "prob": 78.0,
-        "ev_pct": -0.2,
-        "cuota_justa": 1.29,
-        "cuota_segura": 1.39,
-        "acierto_hist": 77.7,
-        "n_hist": 233
-      },
-      {
         "mercado": "hcp2_des",
         "linea": null,
         "etiqueta": "HCP +2 Chelsea",
-        "cuota": 1.18,
+        "cuota": 1.19,
         "prob": 81.1,
-        "ev_pct": -4.3
+        "ev_pct": -3.5
       },
       {
         "mercado": "hcp3_des",
         "linea": null,
         "etiqueta": "HCP +3 Chelsea",
-        "cuota": 1.05,
+        "cuota": 1.06,
         "prob": 92.6,
-        "ev_pct": -2.8
+        "ev_pct": -1.8
       },
       {
         "mercado": "corners65",
         "linea": null,
         "etiqueta": "Over 6.5 corners",
-        "cuota": 1.11,
+        "cuota": 1.12,
         "prob": 82.0,
-        "ev_pct": -9.0
+        "ev_pct": -8.2
       },
       {
         "mercado": "corners75",
         "linea": null,
         "etiqueta": "Over 7.5 corners",
-        "cuota": 1.22,
+        "cuota": 1.24,
         "prob": 71.6,
-        "ev_pct": -12.6
+        "ev_pct": -11.2
       },
       {
         "mercado": "local_remates",
         "linea": 10.5,
         "etiqueta": "Nottingham Forest Remates Over 10.5",
-        "cuota": 1.2,
+        "cuota": 1.18,
         "prob": 83.3,
-        "ev_pct": -0.0,
+        "ev_pct": -1.7,
         "tipo": "POR_EQUIPO",
         "prob_ml": 71.0,
-        "ev_ml": -14.8,
+        "ev_ml": -16.2,
         "prob_m3": 77.7,
-        "ev_m3": -6.8
+        "ev_m3": -8.4
       },
       {
         "mercado": "local_remates",
         "linea": 11.5,
         "etiqueta": "Nottingham Forest Remates Over 11.5",
-        "cuota": 1.34,
+        "cuota": 1.31,
         "prob": 77.1,
-        "ev_pct": 3.3,
+        "ev_pct": 1.0,
         "tipo": "POR_EQUIPO",
         "prob_ml": 62.6,
-        "ev_ml": -16.1,
+        "ev_ml": -17.9,
         "prob_m3": 70.3,
-        "ev_m3": -5.8
+        "ev_m3": -7.9
       },
       {
         "mercado": "local_corners_equipo",
         "linea": 3.5,
         "etiqueta": "Nottingham Forest Corners equipo Over 3.5",
-        "cuota": 1.29,
+        "cuota": 1.3,
         "prob": 72.9,
-        "ev_pct": -6.0,
+        "ev_pct": -5.2,
         "tipo": "POR_EQUIPO",
         "prob_ml": 71.2,
-        "ev_ml": -8.2,
+        "ev_ml": -7.5,
         "prob_m3": 72.4,
-        "ev_m3": -6.6
+        "ev_m3": -5.9
       },
       {
         "mercado": "visit_corners_equipo",
         "linea": 2.5,
         "etiqueta": "Chelsea Corners equipo Over 2.5",
-        "cuota": 1.13,
+        "cuota": 1.14,
         "prob": 72.9,
-        "ev_pct": -17.6,
+        "ev_pct": -16.9,
         "tipo": "POR_EQUIPO",
         "prob_ml": 79.3,
-        "ev_ml": -10.4,
+        "ev_ml": -9.6,
         "prob_m3": 78.6,
-        "ev_m3": -11.2
+        "ev_m3": -10.4
       },
       {
         "mercado": "local_remates_puerta",
@@ -345351,61 +345375,61 @@ const TRACKER_DATA = [
         "mercado": "local_remates",
         "linea": 12.5,
         "etiqueta": "Nottingham Forest Remates Over 12.5",
-        "cuota": 1.55,
+        "cuota": 1.5,
         "prob": 70.1,
-        "ev_pct": 8.7,
+        "ev_pct": 5.1,
         "tipo": "POR_EQUIPO",
         "prob_ml": 54.0,
-        "ev_ml": -16.3,
+        "ev_ml": -19.0,
         "prob_m3": 62.4,
-        "ev_m3": -3.3
+        "ev_m3": -6.4
       },
       {
         "mercado": "local_remates",
         "linea": 13.5,
         "etiqueta": "Nottingham Forest Remates Over 13.5",
-        "cuota": 1.83,
+        "cuota": 1.75,
         "prob": 62.6,
-        "ev_pct": 14.6,
+        "ev_pct": 9.5,
         "tipo": "POR_EQUIPO",
         "prob_ml": 45.5,
-        "ev_ml": -16.8,
+        "ev_ml": -20.4,
         "prob_m3": 54.2,
-        "ev_m3": -0.8
+        "ev_m3": -5.2
       },
       {
         "mercado": "local_corners_equipo",
         "linea": 4.5,
         "etiqueta": "Nottingham Forest Corners equipo Over 4.5",
-        "cuota": 1.62,
+        "cuota": 1.65,
         "prob": 58.4,
-        "ev_pct": -5.4,
+        "ev_pct": -3.6,
         "tipo": "POR_EQUIPO",
         "cuota_justa": 1.69,
         "cuota_segura": 1.88,
         "acierto_hist": 59.1,
         "n_hist": 286,
         "prob_ml": 56.4,
-        "ev_ml": -8.6,
+        "ev_ml": -7.0,
         "prob_m3": 57.9,
-        "ev_m3": -6.3
+        "ev_m3": -4.5
       },
       {
         "mercado": "visit_corners_equipo",
         "linea": 3.5,
         "etiqueta": "Chelsea Corners equipo Over 3.5",
-        "cuota": 1.33,
+        "cuota": 1.34,
         "prob": 55.5,
-        "ev_pct": -26.2,
+        "ev_pct": -25.6,
         "tipo": "POR_EQUIPO",
         "cuota_justa": 1.74,
         "cuota_segura": 1.93,
         "acierto_hist": 57.6,
         "n_hist": 290,
         "prob_ml": 64.0,
-        "ev_ml": -14.9,
+        "ev_ml": -14.2,
         "prob_m3": 63.0,
-        "ev_m3": -16.2
+        "ev_m3": -15.6
       },
       {
         "mercado": "local_remates_puerta",
@@ -345428,27 +345452,27 @@ const TRACKER_DATA = [
         "mercado": "visit_remates",
         "linea": 9.5,
         "etiqueta": "Chelsea Remates Over 9.5",
-        "cuota": 1.19,
+        "cuota": 1.22,
         "prob": 54.9,
-        "ev_pct": -34.7,
+        "ev_pct": -33.0,
         "tipo": "POR_EQUIPO",
         "prob_ml": 65.5,
-        "ev_ml": -22.1,
+        "ev_ml": -20.1,
         "prob_m3": 67.2,
-        "ev_m3": -20.0
+        "ev_m3": -18.0
       },
       {
         "mercado": "local_remates",
         "linea": 14.5,
         "etiqueta": "Nottingham Forest Remates Over 14.5",
-        "cuota": 2.27,
+        "cuota": 2.15,
         "prob": 54.8,
-        "ev_pct": 24.4,
+        "ev_pct": 17.8,
         "tipo": "POR_EQUIPO",
         "prob_ml": 37.4,
-        "ev_ml": -15.0,
+        "ev_ml": -19.5,
         "prob_m3": 46.1,
-        "ev_m3": 4.7
+        "ev_m3": -0.9
       },
       {
         "mercado": "visit_remates_puerta",
@@ -345464,57 +345488,43 @@ const TRACKER_DATA = [
         "ev_m3": -4.6
       },
       {
-        "mercado": "local_remates",
-        "linea": 15.5,
-        "etiqueta": "Nottingham Forest Remates Over 15.5",
-        "cuota": 2.87,
-        "prob": 47.1,
-        "ev_pct": 35.2,
-        "tipo": "POR_EQUIPO",
-        "prob_ml": 30.1,
-        "ev_ml": -13.5,
-        "prob_m3": 38.4,
-        "ev_m3": 10.3,
-        "es_remate": true
-      },
-      {
         "mercado": "visit_remates",
         "linea": 10.5,
         "etiqueta": "Chelsea Remates Over 10.5",
-        "cuota": 1.33,
+        "cuota": 1.37,
         "prob": 44.7,
-        "ev_pct": -40.5,
+        "ev_pct": -38.8,
         "tipo": "POR_EQUIPO",
         "prob_ml": 55.9,
-        "ev_ml": -25.6,
+        "ev_ml": -23.4,
         "prob_m3": 57.8,
-        "ev_m3": -23.1
+        "ev_m3": -20.8
       },
       {
         "mercado": "local_corners_equipo",
         "linea": 5.5,
         "etiqueta": "Nottingham Forest Corners equipo Over 5.5",
-        "cuota": 2.25,
+        "cuota": 2.3,
         "prob": 44.2,
-        "ev_pct": -0.5,
+        "ev_pct": 1.7,
         "tipo": "POR_EQUIPO",
         "prob_ml": 42.0,
-        "ev_ml": -5.4,
+        "ev_ml": -3.3,
         "prob_m3": 43.6,
-        "ev_m3": -2.0
+        "ev_m3": 0.2
       },
       {
         "mercado": "visit_corners_equipo",
         "linea": 4.5,
         "etiqueta": "Chelsea Corners equipo Over 4.5",
-        "cuota": 1.72,
+        "cuota": 1.75,
         "prob": 38.9,
-        "ev_pct": -33.1,
+        "ev_pct": -31.9,
         "tipo": "POR_EQUIPO",
         "prob_ml": 48.0,
-        "ev_ml": -17.4,
+        "ev_ml": -16.0,
         "prob_m3": 46.9,
-        "ev_m3": -19.3
+        "ev_m3": -17.9
       },
       {
         "mercado": "local_remates_puerta",
@@ -345533,14 +345543,14 @@ const TRACKER_DATA = [
         "mercado": "visit_remates",
         "linea": 11.5,
         "etiqueta": "Chelsea Remates Over 11.5",
-        "cuota": 1.53,
+        "cuota": 1.6,
         "prob": 35.2,
-        "ev_pct": -46.1,
+        "ev_pct": -43.7,
         "tipo": "POR_EQUIPO",
         "prob_ml": 46.4,
-        "ev_ml": -29.0,
+        "ev_ml": -25.7,
         "prob_m3": 48.4,
-        "ev_m3": -26.0
+        "ev_m3": -22.6
       },
       {
         "mercado": "visit_remates_puerta",
@@ -345559,40 +345569,40 @@ const TRACKER_DATA = [
         "mercado": "local_corners_equipo",
         "linea": 6.5,
         "etiqueta": "Nottingham Forest Corners equipo Over 6.5",
-        "cuota": 3.3,
+        "cuota": 3.4,
         "prob": 31.6,
-        "ev_pct": 4.3,
+        "ev_pct": 7.4,
         "tipo": "POR_EQUIPO",
         "prob_ml": 29.7,
-        "ev_ml": -2.1,
+        "ev_ml": 0.9,
         "prob_m3": 31.1,
-        "ev_m3": 2.6
+        "ev_m3": 5.7
       },
       {
         "mercado": "visit_remates",
         "linea": 12.5,
         "etiqueta": "Chelsea Remates Over 12.5",
-        "cuota": 1.83,
+        "cuota": 1.93,
         "prob": 27.0,
-        "ev_pct": -50.6,
+        "ev_pct": -47.9,
         "tipo": "POR_EQUIPO",
         "prob_ml": 37.5,
-        "ev_ml": -31.4,
+        "ev_ml": -27.7,
         "prob_m3": 39.4,
-        "ev_m3": -28.0
+        "ev_m3": -24.0
       },
       {
         "mercado": "visit_corners_equipo",
         "linea": 5.5,
         "etiqueta": "Chelsea Corners equipo Over 5.5",
-        "cuota": 2.4,
+        "cuota": 2.45,
         "prob": 25.4,
-        "ev_pct": -39.0,
+        "ev_pct": -37.8,
         "tipo": "POR_EQUIPO",
         "prob_ml": 33.7,
-        "ev_ml": -19.1,
+        "ev_ml": -17.4,
         "prob_m3": 32.6,
-        "ev_m3": -21.7
+        "ev_m3": -20.0
       },
       {
         "mercado": "local_remates_puerta",
@@ -345611,27 +345621,27 @@ const TRACKER_DATA = [
         "mercado": "local_corners_equipo",
         "linea": 7.5,
         "etiqueta": "Nottingham Forest Corners equipo Over 7.5",
-        "cuota": 5.0,
+        "cuota": 5.1,
         "prob": 21.6,
-        "ev_pct": 8.0,
+        "ev_pct": 10.2,
         "tipo": "POR_EQUIPO",
         "prob_ml": 19.9,
-        "ev_ml": -0.5,
+        "ev_ml": 1.5,
         "prob_m3": 21.1,
-        "ev_m3": 5.5
+        "ev_m3": 7.6
       },
       {
         "mercado": "visit_remates",
         "linea": 13.5,
         "etiqueta": "Chelsea Remates Over 13.5",
-        "cuota": 2.3,
+        "cuota": 2.42,
         "prob": 20.0,
-        "ev_pct": -54.0,
+        "ev_pct": -51.6,
         "tipo": "POR_EQUIPO",
         "prob_ml": 29.4,
-        "ev_ml": -32.3,
+        "ev_ml": -28.8,
         "prob_m3": 31.2,
-        "ev_m3": -28.3
+        "ev_m3": -24.5
       },
       {
         "mercado": "visit_remates_puerta",
@@ -345650,22 +345660,22 @@ const TRACKER_DATA = [
         "mercado": "visit_corners_equipo",
         "linea": 6.5,
         "etiqueta": "Chelsea Corners equipo Over 6.5",
-        "cuota": 3.6,
+        "cuota": 3.65,
         "prob": 15.5,
-        "ev_pct": -44.2,
+        "ev_pct": -43.4,
         "tipo": "POR_EQUIPO",
         "prob_ml": 22.3,
-        "ev_ml": -19.8,
+        "ev_ml": -18.6,
         "prob_m3": 21.4,
-        "ev_m3": -23.0
+        "ev_m3": -21.9
       },
       {
         "mercado": "over15+under45",
         "linea": null,
         "etiqueta": "Over 1.5 + Under 4.5",
-        "cuota": 1.53,
+        "cuota": 1.55,
         "prob": 61.5,
-        "ev_pct": -5.9,
+        "ev_pct": -4.7,
         "tipo": "COMBINADA",
         "patas": [
           "over15",
@@ -345699,9 +345709,9 @@ const TRACKER_DATA = [
         "mercado": "dox2+under45",
         "linea": null,
         "etiqueta": "DO Empate o V + Under 4.5",
-        "cuota": 1.75,
+        "cuota": 1.78,
         "prob": 50.8,
-        "ev_pct": -11.1,
+        "ev_pct": -9.6,
         "tipo": "COMBINADA",
         "patas": [
           "dox2",
@@ -345717,9 +345727,9 @@ const TRACKER_DATA = [
         "mercado": "over25+btts",
         "linea": null,
         "etiqueta": "Over 2.5 + BTTS",
-        "cuota": 2.02,
+        "cuota": 2.05,
         "prob": 50.4,
-        "ev_pct": 1.7,
+        "ev_pct": 3.3,
         "tipo": "COMBINADA",
         "patas": [
           "over25",
@@ -345735,9 +345745,9 @@ const TRACKER_DATA = [
         "mercado": "over05_local+hcp2_visit",
         "linea": null,
         "etiqueta": "Over 0.5 L + HCP +2 V",
-        "cuota": 1.57,
+        "cuota": 1.6,
         "prob": 59.8,
-        "ev_pct": -6.2,
+        "ev_pct": -4.4,
         "tipo": "COMBINADA",
         "patas": [
           "over05_local",
@@ -345753,9 +345763,9 @@ const TRACKER_DATA = [
         "mercado": "over15+visit_remates_puerta_over2.5",
         "linea": null,
         "etiqueta": "Over 1.5 + V Remates a puerta Over 2.5",
-        "cuota": 1.47,
+        "cuota": 1.5,
         "prob": 61.3,
-        "ev_pct": -9.9,
+        "ev_pct": -8.0,
         "tipo": "COMBINADA",
         "patas": [
           "over15",
@@ -345807,9 +345817,9 @@ const TRACKER_DATA = [
         "mercado": "visit_corners_equipo_over2.5+visit_remates_over9.5",
         "linea": null,
         "etiqueta": "V Corners Over 2.5 + V Remates Over 9.5",
-        "cuota": 1.29,
+        "cuota": 1.34,
         "prob": 50.0,
-        "ev_pct": -35.5,
+        "ev_pct": -33.0,
         "tipo": "COMBINADA",
         "patas": [
           "visit_corners_equipo_over2.5",
@@ -345825,9 +345835,9 @@ const TRACKER_DATA = [
         "mercado": "under45+over05_visit",
         "linea": null,
         "etiqueta": "Under 4.5 + Over 0.5 V",
-        "cuota": 1.57,
+        "cuota": 1.6,
         "prob": 59.0,
-        "ev_pct": -7.4,
+        "ev_pct": -5.6,
         "tipo": "COMBINADA",
         "patas": [
           "under45",
@@ -345840,30 +345850,12 @@ const TRACKER_DATA = [
         "n_hist": 308
       },
       {
-        "mercado": "over15+over05_local",
-        "linea": null,
-        "etiqueta": "Over 1.5 + Over 0.5 L",
-        "cuota": 1.39,
-        "prob": 71.4,
-        "ev_pct": -0.7,
-        "tipo": "COMBINADA",
-        "patas": [
-          "over15",
-          "over05_local"
-        ],
-        "lift": 1.158,
-        "cuota_justa": 1.37,
-        "cuota_segura": 1.48,
-        "acierto_hist": 73.0,
-        "n_hist": 289
-      },
-      {
         "mercado": "over15+hcp3_visit",
         "linea": null,
         "etiqueta": "Over 1.5 + HCP +3 V",
-        "cuota": 1.34,
+        "cuota": 1.38,
         "prob": 73.5,
-        "ev_pct": -1.5,
+        "ev_pct": 1.4,
         "tipo": "COMBINADA",
         "patas": [
           "over15",
@@ -345879,9 +345871,9 @@ const TRACKER_DATA = [
         "mercado": "under45+over05_local",
         "linea": null,
         "etiqueta": "Under 4.5 + Over 0.5 L",
-        "cuota": 1.53,
+        "cuota": 1.5,
         "prob": 59.6,
-        "ev_pct": -8.8,
+        "ev_pct": -10.6,
         "tipo": "COMBINADA",
         "patas": [
           "under45",
@@ -345897,9 +345889,9 @@ const TRACKER_DATA = [
         "mercado": "local_corners_equipo_over2.5+local_remates_over10.5",
         "linea": null,
         "etiqueta": "L Corners Over 2.5 + L Remates Over 10.5",
-        "cuota": 1.29,
+        "cuota": 1.27,
         "prob": 76.6,
-        "ev_pct": -1.1,
+        "ev_pct": -2.7,
         "tipo": "COMBINADA",
         "patas": [
           "local_corners_equipo_over2.5",
@@ -345915,9 +345907,9 @@ const TRACKER_DATA = [
         "mercado": "local_corners_equipo_over4.5+local_remates_over10.5",
         "linea": null,
         "etiqueta": "L Corners Over 4.5 + L Remates Over 10.5",
-        "cuota": 1.8,
+        "cuota": 1.82,
         "prob": 55.5,
-        "ev_pct": -0.2,
+        "ev_pct": 1.0,
         "tipo": "COMBINADA",
         "patas": [
           "local_corners_equipo_over4.5",
@@ -345951,9 +345943,9 @@ const TRACKER_DATA = [
         "mercado": "over25+over05_visit",
         "linea": null,
         "etiqueta": "Over 2.5 + Over 0.5 V",
-        "cuota": 1.9,
+        "cuota": 1.93,
         "prob": 54.5,
-        "ev_pct": 3.6,
+        "ev_pct": 5.2,
         "tipo": "COMBINADA",
         "patas": [
           "over25",
@@ -345969,9 +345961,9 @@ const TRACKER_DATA = [
         "mercado": "under45+hcp2_visit",
         "linea": null,
         "etiqueta": "Under 4.5 + HCP +2 V",
-        "cuota": 1.36,
+        "cuota": 1.37,
         "prob": 66.5,
-        "ev_pct": -9.5,
+        "ev_pct": -8.8,
         "tipo": "COMBINADA",
         "patas": [
           "under45",
@@ -345987,9 +345979,9 @@ const TRACKER_DATA = [
         "mercado": "under35+hcp2_visit",
         "linea": null,
         "etiqueta": "Under 3.5 + HCP +2 V",
-        "cuota": 1.6,
+        "cuota": 1.57,
         "prob": 54.9,
-        "ev_pct": -12.1,
+        "ev_pct": -13.8,
         "tipo": "COMBINADA",
         "patas": [
           "under35",
@@ -346005,9 +345997,9 @@ const TRACKER_DATA = [
         "mercado": "btts+hcp2_visit",
         "linea": null,
         "etiqueta": "BTTS + HCP +2 V",
-        "cuota": 1.8,
+        "cuota": 1.85,
         "prob": 52.5,
-        "ev_pct": -5.5,
+        "ev_pct": -2.9,
         "tipo": "COMBINADA",
         "patas": [
           "btts",
@@ -346023,9 +346015,9 @@ const TRACKER_DATA = [
         "mercado": "local_corners_equipo_over2.5+local_remates_over11.5",
         "linea": null,
         "etiqueta": "L Corners Over 2.5 + L Remates Over 11.5",
-        "cuota": 1.42,
+        "cuota": 1.4,
         "prob": 71.4,
-        "ev_pct": 1.4,
+        "ev_pct": -0.1,
         "tipo": "COMBINADA",
         "patas": [
           "local_corners_equipo_over2.5",
@@ -346041,9 +346033,9 @@ const TRACKER_DATA = [
         "mercado": "do1x+under45",
         "linea": null,
         "etiqueta": "DO L o Empate + Under 4.5",
-        "cuota": 1.67,
+        "cuota": 1.65,
         "prob": 51.8,
-        "ev_pct": -13.5,
+        "ev_pct": -14.5,
         "tipo": "COMBINADA",
         "patas": [
           "do1x",
@@ -346059,9 +346051,9 @@ const TRACKER_DATA = [
         "mercado": "visit_remates_over9.5+visit_remates_puerta_over2.5",
         "linea": null,
         "etiqueta": "V Remates Over 9.5 + V Remates a puerta Over 2.5",
-        "cuota": 1.37,
+        "cuota": 1.4,
         "prob": 51.1,
-        "ev_pct": -30.0,
+        "ev_pct": -28.5,
         "tipo": "COMBINADA",
         "patas": [
           "visit_remates_over9.5",
@@ -346095,9 +346087,9 @@ const TRACKER_DATA = [
         "mercado": "local_remates_puerta_over3.5+over15",
         "linea": null,
         "etiqueta": "L Remates a puerta Over 3.5 + Over 1.5",
-        "cuota": 1.67,
+        "cuota": 1.7,
         "prob": 63.5,
-        "ev_pct": 6.0,
+        "ev_pct": 7.9,
         "tipo": "COMBINADA",
         "patas": [
           "local_remates_puerta_over3.5",
@@ -346113,9 +346105,9 @@ const TRACKER_DATA = [
         "mercado": "local_corners_equipo_over3.5+local_remates_over13.5",
         "linea": null,
         "etiqueta": "L Corners Over 3.5 + L Remates Over 13.5",
-        "cuota": 2.1,
+        "cuota": 2.07,
         "prob": 53.5,
-        "ev_pct": 12.3,
+        "ev_pct": 10.7,
         "tipo": "COMBINADA",
         "patas": [
           "local_corners_equipo_over3.5",
@@ -346131,9 +346123,9 @@ const TRACKER_DATA = [
         "mercado": "over15+hcp2_visit",
         "linea": null,
         "etiqueta": "Over 1.5 + HCP +2 V",
-        "cuota": 1.57,
+        "cuota": 1.62,
         "prob": 62.0,
-        "ev_pct": -2.6,
+        "ev_pct": 0.5,
         "tipo": "COMBINADA",
         "patas": [
           "over15",
@@ -346149,9 +346141,9 @@ const TRACKER_DATA = [
         "mercado": "local_remates_puerta_over3.5+over05_local",
         "linea": null,
         "etiqueta": "L Remates a puerta Over 3.5 + Over 0.5 L",
-        "cuota": 1.65,
+        "cuota": 1.62,
         "prob": 63.3,
-        "ev_pct": 4.5,
+        "ev_pct": 2.6,
         "tipo": "COMBINADA",
         "patas": [
           "local_remates_puerta_over3.5",
@@ -346167,9 +346159,9 @@ const TRACKER_DATA = [
         "mercado": "do1x+over05_local",
         "linea": null,
         "etiqueta": "DO L o Empate + Over 0.5 L",
-        "cuota": 1.6,
+        "cuota": 1.57,
         "prob": 58.0,
-        "ev_pct": -7.2,
+        "ev_pct": -8.9,
         "tipo": "COMBINADA",
         "patas": [
           "do1x",
@@ -346185,9 +346177,9 @@ const TRACKER_DATA = [
         "mercado": "local_corners_equipo_over3.5+local_remates_over12.5",
         "linea": null,
         "etiqueta": "L Corners Over 3.5 + L Remates Over 12.5",
-        "cuota": 1.82,
+        "cuota": 1.8,
         "prob": 58.4,
-        "ev_pct": 6.2,
+        "ev_pct": 5.0,
         "tipo": "COMBINADA",
         "patas": [
           "local_corners_equipo_over3.5",
@@ -346203,9 +346195,9 @@ const TRACKER_DATA = [
         "mercado": "over25+hcp3_visit",
         "linea": null,
         "etiqueta": "Over 2.5 + HCP +3 V",
-        "cuota": 1.98,
+        "cuota": 2.05,
         "prob": 51.5,
-        "ev_pct": 2.0,
+        "ev_pct": 5.7,
         "tipo": "COMBINADA",
         "patas": [
           "over25",
@@ -346239,9 +346231,9 @@ const TRACKER_DATA = [
         "mercado": "dox2+over05_visit",
         "linea": null,
         "etiqueta": "DO Empate o V + Over 0.5 V",
-        "cuota": 1.7,
+        "cuota": 1.75,
         "prob": 56.6,
-        "ev_pct": -3.7,
+        "ev_pct": -0.9,
         "tipo": "COMBINADA",
         "patas": [
           "dox2",
@@ -346257,10 +346249,19 @@ const TRACKER_DATA = [
         "mercado": "over35",
         "linea": null,
         "etiqueta": "Over 3.5",
-        "cuota": 2.9,
+        "cuota": 2.95,
         "prob": 36.6,
-        "ev_pct": 6.1,
-        "regla_cuota_max_pick": "cuota 2.90 > tope 2.00"
+        "ev_pct": 8.0,
+        "regla_cuota_max_pick": "cuota 2.95 > tope 2.00"
+      },
+      {
+        "mercado": "over15",
+        "linea": null,
+        "etiqueta": "Over 1.5",
+        "cuota": 1.28,
+        "prob": 81.8,
+        "ev_pct": 4.7,
+        "regla_unicidad_totales": "cede ante over25 (score EV/prob 4.6)"
       }
     ],
     "mercados_snapshot": {
@@ -346366,9 +346367,20 @@ const TRACKER_DATA = [
     "mu_m3_version": "M3-2026-11-11",
     "cruces_validados": [
       {
+        "mercado": "local_remates_puerta_over2.5+over05_local",
+        "etiqueta": "L Remates a puerta Over 2.5 + Over 0.5 L",
+        "cuota": 1.36,
+        "justa": 1.37,
+        "segura": 1.49,
+        "hist": 73.0,
+        "n": 230,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
         "mercado": "dox2",
         "etiqueta": "DO Empate o V",
-        "cuota": 1.55,
+        "cuota": 1.57,
         "justa": 1.64,
         "segura": 1.87,
         "hist": 61.1,
@@ -346379,18 +346391,18 @@ const TRACKER_DATA = [
       {
         "mercado": "over25",
         "etiqueta": "Over 2.5",
-        "cuota": 1.8,
+        "cuota": 1.82,
         "justa": 1.82,
         "segura": 2.0,
         "hist": 55.1,
         "n": 354,
-        "cruza": false,
+        "cruza": true,
         "cruza_segura": false
       },
       {
         "mercado": "under35",
         "etiqueta": "Under 3.5",
-        "cuota": 1.42,
+        "cuota": 1.4,
         "justa": 1.57,
         "segura": 1.73,
         "hist": 63.8,
@@ -346401,7 +346413,7 @@ const TRACKER_DATA = [
       {
         "mercado": "btts",
         "etiqueta": "BTTS",
-        "cuota": 1.6,
+        "cuota": 1.62,
         "justa": 1.6,
         "segura": 1.76,
         "hist": 62.7,
@@ -346412,12 +346424,12 @@ const TRACKER_DATA = [
       {
         "mercado": "over05_visit",
         "etiqueta": "Over 0.5 V",
-        "cuota": 1.28,
+        "cuota": 1.3,
         "justa": 1.29,
         "segura": 1.39,
         "hist": 77.7,
         "n": 233,
-        "cruza": false,
+        "cruza": true,
         "cruza_segura": false
       },
       {
@@ -346445,7 +346457,7 @@ const TRACKER_DATA = [
       {
         "mercado": "local_corners_equipo_over4.5",
         "etiqueta": "Nottingham Forest Corners Over 4.5",
-        "cuota": 1.62,
+        "cuota": 1.65,
         "justa": 1.69,
         "segura": 1.88,
         "hist": 59.1,
@@ -346456,7 +346468,7 @@ const TRACKER_DATA = [
       {
         "mercado": "visit_corners_equipo_over3.5",
         "etiqueta": "Chelsea Corners Over 3.5",
-        "cuota": 1.33,
+        "cuota": 1.34,
         "justa": 1.74,
         "segura": 1.93,
         "hist": 57.6,
@@ -346478,7 +346490,7 @@ const TRACKER_DATA = [
       {
         "mercado": "over15+under45",
         "etiqueta": "Over 1.5 + Under 4.5",
-        "cuota": 1.53,
+        "cuota": 1.55,
         "justa": 1.59,
         "segura": 1.64,
         "hist": 62.9,
@@ -346500,7 +346512,7 @@ const TRACKER_DATA = [
       {
         "mercado": "dox2+under45",
         "etiqueta": "DO Empate o V + Under 4.5",
-        "cuota": 1.75,
+        "cuota": 1.78,
         "justa": 1.91,
         "segura": 2.08,
         "hist": 52.5,
@@ -346511,7 +346523,7 @@ const TRACKER_DATA = [
       {
         "mercado": "over25+btts",
         "etiqueta": "Over 2.5 + BTTS",
-        "cuota": 2.02,
+        "cuota": 2.05,
         "justa": 1.82,
         "segura": 2.0,
         "hist": 54.8,
@@ -346522,7 +346534,7 @@ const TRACKER_DATA = [
       {
         "mercado": "over05_local+hcp2_visit",
         "etiqueta": "Over 0.5 L + HCP +2 V",
-        "cuota": 1.57,
+        "cuota": 1.6,
         "justa": 1.75,
         "segura": 1.89,
         "hist": 57.2,
@@ -346533,7 +346545,7 @@ const TRACKER_DATA = [
       {
         "mercado": "over15+visit_remates_puerta_over2.5",
         "etiqueta": "Over 1.5 + V Remates a puerta Over 2.5",
-        "cuota": 1.47,
+        "cuota": 1.5,
         "justa": 1.65,
         "segura": 1.81,
         "hist": 60.4,
@@ -346566,7 +346578,7 @@ const TRACKER_DATA = [
       {
         "mercado": "visit_corners_equipo_over2.5+visit_remates_over9.5",
         "etiqueta": "V Corners Over 2.5 + V Remates Over 9.5",
-        "cuota": 1.29,
+        "cuota": 1.34,
         "justa": 1.99,
         "segura": 2.23,
         "hist": 50.3,
@@ -346577,7 +346589,7 @@ const TRACKER_DATA = [
       {
         "mercado": "under45+over05_visit",
         "etiqueta": "Under 4.5 + Over 0.5 V",
-        "cuota": 1.57,
+        "cuota": 1.6,
         "justa": 1.66,
         "segura": 1.83,
         "hist": 60.1,
@@ -346599,7 +346611,7 @@ const TRACKER_DATA = [
       {
         "mercado": "over15+hcp3_visit",
         "etiqueta": "Over 1.5 + HCP +3 V",
-        "cuota": 1.34,
+        "cuota": 1.38,
         "justa": 1.44,
         "segura": 1.56,
         "hist": 69.6,
@@ -346610,7 +346622,7 @@ const TRACKER_DATA = [
       {
         "mercado": "under45+over05_local",
         "etiqueta": "Under 4.5 + Over 0.5 L",
-        "cuota": 1.53,
+        "cuota": 1.5,
         "justa": 1.71,
         "segura": 1.91,
         "hist": 58.4,
@@ -346621,7 +346633,7 @@ const TRACKER_DATA = [
       {
         "mercado": "local_corners_equipo_over2.5+local_remates_over10.5",
         "etiqueta": "L Corners Over 2.5 + L Remates Over 10.5",
-        "cuota": 1.29,
+        "cuota": 1.27,
         "justa": 1.34,
         "segura": 1.44,
         "hist": 74.9,
@@ -346632,7 +346644,7 @@ const TRACKER_DATA = [
       {
         "mercado": "local_corners_equipo_over4.5+local_remates_over10.5",
         "etiqueta": "L Corners Over 4.5 + L Remates Over 10.5",
-        "cuota": 1.8,
+        "cuota": 1.82,
         "justa": 1.72,
         "segura": 1.92,
         "hist": 58.2,
@@ -346654,7 +346666,7 @@ const TRACKER_DATA = [
       {
         "mercado": "over25+over05_visit",
         "etiqueta": "Over 2.5 + Over 0.5 V",
-        "cuota": 1.9,
+        "cuota": 1.93,
         "justa": 1.82,
         "segura": 2.05,
         "hist": 54.9,
@@ -346665,7 +346677,7 @@ const TRACKER_DATA = [
       {
         "mercado": "under45+hcp2_visit",
         "etiqueta": "Under 4.5 + HCP +2 V",
-        "cuota": 1.36,
+        "cuota": 1.37,
         "justa": 1.49,
         "segura": 1.64,
         "hist": 67.1,
@@ -346676,7 +346688,7 @@ const TRACKER_DATA = [
       {
         "mercado": "under35+hcp2_visit",
         "etiqueta": "Under 3.5 + HCP +2 V",
-        "cuota": 1.6,
+        "cuota": 1.57,
         "justa": 1.87,
         "segura": 2.12,
         "hist": 53.5,
@@ -346687,7 +346699,7 @@ const TRACKER_DATA = [
       {
         "mercado": "btts+hcp2_visit",
         "etiqueta": "BTTS + HCP +2 V",
-        "cuota": 1.8,
+        "cuota": 1.85,
         "justa": 1.93,
         "segura": 2.2,
         "hist": 51.9,
@@ -346696,20 +346708,9 @@ const TRACKER_DATA = [
         "cruza_segura": false
       },
       {
-        "mercado": "local_remates_puerta_over2.5+over05_local",
-        "etiqueta": "L Remates a puerta Over 2.5 + Over 0.5 L",
-        "cuota": 1.38,
-        "justa": 1.37,
-        "segura": 1.49,
-        "hist": 73.0,
-        "n": 230,
-        "cruza": true,
-        "cruza_segura": false
-      },
-      {
         "mercado": "local_corners_equipo_over2.5+local_remates_over11.5",
         "etiqueta": "L Corners Over 2.5 + L Remates Over 11.5",
-        "cuota": 1.42,
+        "cuota": 1.4,
         "justa": 1.35,
         "segura": 1.47,
         "hist": 74.3,
@@ -346720,7 +346721,7 @@ const TRACKER_DATA = [
       {
         "mercado": "do1x+under45",
         "etiqueta": "DO L o Empate + Under 4.5",
-        "cuota": 1.67,
+        "cuota": 1.65,
         "justa": 1.83,
         "segura": 2.1,
         "hist": 54.7,
@@ -346731,7 +346732,7 @@ const TRACKER_DATA = [
       {
         "mercado": "visit_remates_over9.5+visit_remates_puerta_over2.5",
         "etiqueta": "V Remates Over 9.5 + V Remates a puerta Over 2.5",
-        "cuota": 1.37,
+        "cuota": 1.4,
         "justa": 1.89,
         "segura": 2.18,
         "hist": 52.9,
@@ -346753,7 +346754,7 @@ const TRACKER_DATA = [
       {
         "mercado": "local_remates_puerta_over3.5+over15",
         "etiqueta": "L Remates a puerta Over 3.5 + Over 1.5",
-        "cuota": 1.67,
+        "cuota": 1.7,
         "justa": 1.61,
         "segura": 1.82,
         "hist": 62.1,
@@ -346764,40 +346765,40 @@ const TRACKER_DATA = [
       {
         "mercado": "local_corners_equipo_over3.5+local_remates_over13.5",
         "etiqueta": "L Corners Over 3.5 + L Remates Over 13.5",
-        "cuota": 2.1,
+        "cuota": 2.07,
         "justa": 1.81,
         "segura": 2.08,
         "hist": 55.2,
         "n": 181,
         "cruza": true,
-        "cruza_segura": true
+        "cruza_segura": false
       },
       {
         "mercado": "over15+hcp2_visit",
         "etiqueta": "Over 1.5 + HCP +2 V",
-        "cuota": 1.57,
+        "cuota": 1.62,
         "justa": 1.58,
         "segura": 1.79,
         "hist": 63.1,
         "n": 179,
-        "cruza": false,
+        "cruza": true,
         "cruza_segura": false
       },
       {
         "mercado": "local_remates_puerta_over3.5+over05_local",
         "etiqueta": "L Remates a puerta Over 3.5 + Over 0.5 L",
-        "cuota": 1.65,
+        "cuota": 1.62,
         "justa": 1.65,
         "segura": 1.88,
         "hist": 60.5,
         "n": 177,
-        "cruza": true,
+        "cruza": false,
         "cruza_segura": false
       },
       {
         "mercado": "do1x+over05_local",
         "etiqueta": "DO L o Empate + Over 0.5 L",
-        "cuota": 1.6,
+        "cuota": 1.57,
         "justa": 1.69,
         "segura": 1.93,
         "hist": 59.3,
@@ -346808,7 +346809,7 @@ const TRACKER_DATA = [
       {
         "mercado": "local_corners_equipo_over3.5+local_remates_over12.5",
         "etiqueta": "L Corners Over 3.5 + L Remates Over 12.5",
-        "cuota": 1.82,
+        "cuota": 1.8,
         "justa": 1.77,
         "segura": 2.04,
         "hist": 56.5,
@@ -346819,7 +346820,7 @@ const TRACKER_DATA = [
       {
         "mercado": "over25+hcp3_visit",
         "etiqueta": "Over 2.5 + HCP +3 V",
-        "cuota": 1.98,
+        "cuota": 2.05,
         "justa": 1.92,
         "segura": 2.25,
         "hist": 52.2,
@@ -346841,7 +346842,7 @@ const TRACKER_DATA = [
       {
         "mercado": "dox2+over05_visit",
         "etiqueta": "DO Empate o V + Over 0.5 V",
-        "cuota": 1.7,
+        "cuota": 1.75,
         "justa": 1.76,
         "segura": 2.04,
         "hist": 57.0,
@@ -347868,39 +347869,43 @@ const TRACKER_DATA = [
       "local": 6,
       "visit": 18
     },
-    "notas": "",
+    "notas": "2026-11-27 09:05 (Lima): cuotas re-tomadas en Betano antes del saque. Antes: [('PICK', 'Under 4.5', 1.27), ('PICK', 'HCP +2 Borussia M.Gladbach', 1.47), ('COMBO', 'Over 1.5 + HCP +3 V', 1.44), ('REMATE', 'Borussia M.Gladbach Remates Over 15.5', 4.45)]. Ahora: [('PICK', 'HCP +2 Borussia M.Gladbach', 1.45), ('PICK', 'Under 3.5', 1.6), ('COMBO', 'Over 1.5 + HCP +3 V', 1.42)].",
     "resultado_partido": null,
     "goles_esperados": "3.05",
     "apuestas": [
       {
         "tipo": "PICK",
-        "mercado": "under45",
+        "mercado": "hcp2_des",
         "linea": null,
-        "etiqueta": "Under 4.5",
-        "cuota": 1.27,
-        "prob": 80.7,
-        "ev_pct": 2.5,
+        "etiqueta": "HCP +2 Borussia M.Gladbach",
+        "cuota": 1.45,
+        "prob": 71.1,
+        "ev_pct": 3.1,
         "estado": "PENDIENTE",
         "pl": null
       },
       {
         "tipo": "PICK",
-        "mercado": "hcp2_des",
+        "mercado": "under35",
         "linea": null,
-        "etiqueta": "HCP +2 Borussia M.Gladbach",
-        "cuota": 1.47,
-        "prob": 71.1,
-        "ev_pct": 4.5,
+        "etiqueta": "Under 3.5",
+        "cuota": 1.6,
+        "prob": 63.6,
+        "ev_pct": 1.8,
         "estado": "PENDIENTE",
-        "pl": null
+        "pl": null,
+        "cuota_justa": 1.57,
+        "cuota_segura": 1.73,
+        "acierto_hist": 63.8,
+        "n_hist": 246
       },
       {
         "tipo": "COMBO",
         "mercado": "over15+hcp3_visit",
         "etiqueta": "Over 1.5 + HCP +3 V",
-        "cuota": 1.44,
+        "cuota": 1.42,
         "prob": 67.6,
-        "ev_pct": -2.7,
+        "ev_pct": -4.0,
         "estado": "PENDIENTE",
         "pl": null,
         "patas": [
@@ -347913,56 +347918,64 @@ const TRACKER_DATA = [
         "cuota_segura": 1.54,
         "acierto_hist": 70.2,
         "n_hist": 332
-      },
-      {
-        "tipo": "REMATE",
-        "mercado": "visit_remates",
-        "linea": 15.5,
-        "etiqueta": "Borussia M.Gladbach Remates Over 15.5",
-        "lado": "visit",
-        "cuota": 4.45,
-        "prob": 24.1,
-        "ev_pct": 7.2,
-        "estado": "PENDIENTE",
-        "pl": null,
-        "lineas_pasan": 2,
-        "cruzaron_ambos": false
       }
     ],
     "watchlist": [
       {
+        "mercado": "under45",
+        "linea": null,
+        "etiqueta": "Under 4.5",
+        "cuota": 1.25,
+        "prob": 80.7,
+        "ev_pct": 0.9,
+        "filtro_edge": "EV=+0.9% < 1.5"
+      },
+      {
+        "mercado": "visit_remates",
+        "linea": 15.5,
+        "etiqueta": "Borussia M.Gladbach Remates Over 15.5",
+        "cuota": 3.9,
+        "prob": 24.1,
+        "ev_pct": -6.0,
+        "tipo": "POR_EQUIPO",
+        "prob_ml": 16.6,
+        "ev_ml": -35.2,
+        "prob_m3": 20.2,
+        "ev_m3": -21.3
+      },
+      {
         "mercado": "victoria_local",
         "linea": null,
         "etiqueta": "Victoria Werder Bremen",
-        "cuota": 1.7,
+        "cuota": 1.72,
         "prob": 51.6,
-        "ev_pct": -12.3
+        "ev_pct": -11.2
       },
       {
         "mercado": "empate",
         "linea": null,
         "etiqueta": "Empate",
-        "cuota": 4.3,
+        "cuota": 4.15,
         "prob": 25.3,
-        "ev_pct": 8.8,
+        "ev_pct": 5.0,
         "regla_1x2_no_pick": true
       },
       {
         "mercado": "victoria_visit",
         "linea": null,
         "etiqueta": "Victoria Borussia M.Gladbach",
-        "cuota": 4.35,
+        "cuota": 4.4,
         "prob": 23.4,
-        "ev_pct": 1.8,
+        "ev_pct": 3.0,
         "regla_1x2_no_pick": true
       },
       {
         "mercado": "do1x",
         "linea": null,
         "etiqueta": "DO Werder Bremen o Empate",
-        "cuota": 1.24,
+        "cuota": 1.23,
         "prob": 76.6,
-        "ev_pct": -5.0,
+        "ev_pct": -5.8,
         "cuota_justa": 1.31,
         "cuota_segura": 1.44,
         "acierto_hist": 76.2,
@@ -347972,26 +347985,26 @@ const TRACKER_DATA = [
         "mercado": "dox2",
         "linea": null,
         "etiqueta": "DO Empate o Borussia M.Gladbach",
-        "cuota": 2.2,
+        "cuota": 2.18,
         "prob": 48.4,
-        "ev_pct": 6.5,
+        "ev_pct": 5.5,
         "regla_no_elegible": true
       },
       {
         "mercado": "over15",
         "linea": null,
         "etiqueta": "Over 1.5",
-        "cuota": 1.17,
+        "cuota": 1.18,
         "prob": 81.7,
-        "ev_pct": -4.4
+        "ev_pct": -3.6
       },
       {
         "mercado": "over25",
         "linea": null,
         "etiqueta": "Over 2.5",
-        "cuota": 1.53,
+        "cuota": 1.55,
         "prob": 59.0,
-        "ev_pct": -9.7,
+        "ev_pct": -8.6,
         "cuota_justa": 1.82,
         "cuota_segura": 2.0,
         "acierto_hist": 55.1,
@@ -348001,9 +348014,9 @@ const TRACKER_DATA = [
         "mercado": "over35",
         "linea": null,
         "etiqueta": "Over 3.5",
-        "cuota": 2.3,
+        "cuota": 2.35,
         "prob": 36.4,
-        "ev_pct": -16.3
+        "ev_pct": -14.5
       },
       {
         "mercado": "btts",
@@ -348029,9 +348042,9 @@ const TRACKER_DATA = [
         "mercado": "over05_visit",
         "linea": null,
         "etiqueta": "Over 0.5 Borussia M.Gladbach",
-        "cuota": 1.37,
+        "cuota": 1.38,
         "prob": 70.5,
-        "ev_pct": -3.4
+        "ev_pct": -2.7
       },
       {
         "mercado": "corners65",
@@ -348109,18 +348122,18 @@ const TRACKER_DATA = [
         "mercado": "visit_remates",
         "linea": 9.5,
         "etiqueta": "Borussia M.Gladbach Remates Over 9.5",
-        "cuota": 1.24,
+        "cuota": 1.2,
         "prob": 73.6,
-        "ev_pct": -8.7,
+        "ev_pct": -11.7,
         "tipo": "POR_EQUIPO",
         "cuota_justa": 1.4,
         "cuota_segura": 1.57,
         "acierto_hist": 71.3,
         "n_hist": 157,
         "prob_ml": 65.3,
-        "ev_ml": -19.1,
+        "ev_ml": -21.7,
         "prob_m3": 69.6,
-        "ev_m3": -13.7
+        "ev_m3": -16.5
       },
       {
         "mercado": "local_remates_puerta",
@@ -348139,14 +348152,14 @@ const TRACKER_DATA = [
         "mercado": "local_remates",
         "linea": 14.5,
         "etiqueta": "Werder Bremen Remates Over 14.5",
-        "cuota": 1.24,
+        "cuota": 1.28,
         "prob": 70.4,
-        "ev_pct": -12.7,
+        "ev_pct": -9.9,
         "tipo": "POR_EQUIPO",
         "prob_ml": 64.2,
-        "ev_ml": -20.3,
+        "ev_ml": -17.8,
         "prob_m3": 57.7,
-        "ev_m3": -28.4
+        "ev_m3": -26.1
       },
       {
         "mercado": "local_corners_equipo",
@@ -348165,27 +348178,27 @@ const TRACKER_DATA = [
         "mercado": "visit_remates",
         "linea": 10.5,
         "etiqueta": "Borussia M.Gladbach Remates Over 10.5",
-        "cuota": 1.4,
+        "cuota": 1.34,
         "prob": 65.0,
-        "ev_pct": -9.0,
+        "ev_pct": -12.9,
         "tipo": "POR_EQUIPO",
         "prob_ml": 55.7,
-        "ev_ml": -22.1,
+        "ev_ml": -25.4,
         "prob_m3": 60.5,
-        "ev_m3": -15.3
+        "ev_m3": -19.0
       },
       {
         "mercado": "local_remates",
         "linea": 15.5,
         "etiqueta": "Werder Bremen Remates Over 15.5",
-        "cuota": 1.36,
+        "cuota": 1.42,
         "prob": 63.7,
-        "ev_pct": -13.4,
+        "ev_pct": -9.5,
         "tipo": "POR_EQUIPO",
         "prob_ml": 57.0,
-        "ev_ml": -22.5,
+        "ev_ml": -19.1,
         "prob_m3": 50.1,
-        "ev_m3": -31.8
+        "ev_m3": -28.8
       },
       {
         "mercado": "visit_corners_equipo",
@@ -348238,40 +348251,40 @@ const TRACKER_DATA = [
         "mercado": "visit_remates",
         "linea": 11.5,
         "etiqueta": "Borussia M.Gladbach Remates Over 11.5",
-        "cuota": 1.65,
+        "cuota": 1.55,
         "prob": 56.0,
-        "ev_pct": -7.6,
+        "ev_pct": -13.2,
         "tipo": "POR_EQUIPO",
         "prob_ml": 46.2,
-        "ev_ml": -23.9,
+        "ev_ml": -28.5,
         "prob_m3": 51.1,
-        "ev_m3": -15.6
+        "ev_m3": -20.7
       },
       {
         "mercado": "local_corners_equipo",
         "linea": 5.5,
         "etiqueta": "Werder Bremen Corners equipo Over 5.5",
-        "cuota": 2.02,
+        "cuota": 2.05,
         "prob": 52.3,
-        "ev_pct": 5.6,
+        "ev_pct": 7.2,
         "tipo": "POR_EQUIPO",
         "prob_ml": 52.4,
-        "ev_ml": 5.9,
+        "ev_ml": 7.4,
         "prob_m3": 54.4,
-        "ev_m3": 9.9
+        "ev_m3": 11.5
       },
       {
         "mercado": "visit_remates",
         "linea": 12.5,
         "etiqueta": "Borussia M.Gladbach Remates Over 12.5",
-        "cuota": 2.02,
+        "cuota": 1.85,
         "prob": 47.1,
-        "ev_pct": -4.9,
+        "ev_pct": -12.9,
         "tipo": "POR_EQUIPO",
         "prob_ml": 37.2,
-        "ev_ml": -24.9,
+        "ev_ml": -31.2,
         "prob_m3": 42.1,
-        "ev_m3": -14.9
+        "ev_m3": -22.1
       },
       {
         "mercado": "visit_corners_equipo",
@@ -348303,14 +348316,14 @@ const TRACKER_DATA = [
         "mercado": "visit_remates",
         "linea": 13.5,
         "etiqueta": "Borussia M.Gladbach Remates Over 13.5",
-        "cuota": 2.55,
+        "cuota": 2.32,
         "prob": 38.6,
-        "ev_pct": -1.6,
+        "ev_pct": -10.4,
         "tipo": "POR_EQUIPO",
         "prob_ml": 29.2,
-        "ev_ml": -25.6,
+        "ev_ml": -32.3,
         "prob_m3": 33.8,
-        "ev_m3": -13.8
+        "ev_m3": -21.6
       },
       {
         "mercado": "visit_remates_puerta",
@@ -348342,14 +348355,14 @@ const TRACKER_DATA = [
         "mercado": "visit_remates",
         "linea": 14.5,
         "etiqueta": "Borussia M.Gladbach Remates Over 14.5",
-        "cuota": 3.35,
+        "cuota": 2.95,
         "prob": 30.8,
-        "ev_pct": 3.2,
+        "ev_pct": -9.1,
         "tipo": "POR_EQUIPO",
         "prob_ml": 22.3,
-        "ev_ml": -25.3,
+        "ev_ml": -34.3,
         "prob_m3": 26.4,
-        "ev_m3": -11.5
+        "ev_m3": -22.0
       },
       {
         "mercado": "local_corners_equipo",
@@ -348363,20 +348376,6 @@ const TRACKER_DATA = [
         "ev_ml": 23.1,
         "prob_m3": 30.5,
         "ev_m3": 31.1
-      },
-      {
-        "mercado": "visit_remates",
-        "linea": 15.5,
-        "etiqueta": "Borussia M.Gladbach Remates Over 15.5",
-        "cuota": 4.45,
-        "prob": 24.1,
-        "ev_pct": 7.2,
-        "tipo": "POR_EQUIPO",
-        "prob_ml": 16.6,
-        "ev_ml": -26.1,
-        "prob_m3": 20.2,
-        "ev_m3": -10.2,
-        "es_remate": true
       },
       {
         "mercado": "visit_remates_puerta",
@@ -348408,9 +348407,9 @@ const TRACKER_DATA = [
         "mercado": "over15+under45",
         "linea": null,
         "etiqueta": "Over 1.5 + Under 4.5",
-        "cuota": 1.57,
+        "cuota": 1.55,
         "prob": 61.5,
-        "ev_pct": -3.4,
+        "ev_pct": -4.7,
         "tipo": "COMBINADA",
         "patas": [
           "over15",
@@ -348426,9 +348425,9 @@ const TRACKER_DATA = [
         "mercado": "over15+over05_visit",
         "linea": null,
         "etiqueta": "Over 1.5 + Over 0.5 V",
-        "cuota": 1.45,
+        "cuota": 1.47,
         "prob": 64.7,
-        "ev_pct": -6.2,
+        "ev_pct": -4.9,
         "tipo": "COMBINADA",
         "patas": [
           "over15",
@@ -348444,9 +348443,9 @@ const TRACKER_DATA = [
         "mercado": "over25+over05_local",
         "linea": null,
         "etiqueta": "Over 2.5 + Over 0.5 L",
-        "cuota": 1.55,
+        "cuota": 1.57,
         "prob": 56.7,
-        "ev_pct": -12.1,
+        "ev_pct": -10.9,
         "tipo": "COMBINADA",
         "patas": [
           "over25",
@@ -348462,9 +348461,9 @@ const TRACKER_DATA = [
         "mercado": "do1x+over05_local",
         "linea": null,
         "etiqueta": "DO L o Empate + Over 0.5 L",
-        "cuota": 1.29,
+        "cuota": 1.28,
         "prob": 69.8,
-        "ev_pct": -10.0,
+        "ev_pct": -10.7,
         "tipo": "COMBINADA",
         "patas": [
           "do1x",
@@ -348498,9 +348497,9 @@ const TRACKER_DATA = [
         "mercado": "do1x+hcp3_visit",
         "linea": null,
         "etiqueta": "DO L o Empate + HCP +3 V",
-        "cuota": 1.55,
+        "cuota": 1.5,
         "prob": 61.3,
-        "ev_pct": -4.9,
+        "ev_pct": -8.0,
         "tipo": "COMBINADA",
         "patas": [
           "do1x",
@@ -348552,9 +348551,9 @@ const TRACKER_DATA = [
         "mercado": "over25+over05_visit",
         "linea": null,
         "etiqueta": "Over 2.5 + Over 0.5 V",
-        "cuota": 1.75,
+        "cuota": 1.8,
         "prob": 50.6,
-        "ev_pct": -11.5,
+        "ev_pct": -9.0,
         "tipo": "COMBINADA",
         "patas": [
           "over25",
@@ -348570,9 +348569,9 @@ const TRACKER_DATA = [
         "mercado": "under35+hcp2_visit",
         "linea": null,
         "etiqueta": "Under 3.5 + HCP +2 V",
-        "cuota": 2.12,
+        "cuota": 2.05,
         "prob": 50.9,
-        "ev_pct": 7.9,
+        "ev_pct": 4.4,
         "tipo": "COMBINADA",
         "patas": [
           "under35",
@@ -348606,9 +348605,9 @@ const TRACKER_DATA = [
         "mercado": "visit_remates_over9.5+visit_remates_puerta_over2.5",
         "linea": null,
         "etiqueta": "V Remates Over 9.5 + V Remates a puerta Over 2.5",
-        "cuota": 1.4,
+        "cuota": 1.36,
         "prob": 66.0,
-        "ev_pct": -7.5,
+        "ev_pct": -10.2,
         "tipo": "COMBINADA",
         "patas": [
           "visit_remates_over9.5",
@@ -348624,9 +348623,9 @@ const TRACKER_DATA = [
         "mercado": "visit_corners_equipo_over2.5+visit_remates_over9.5",
         "linea": null,
         "etiqueta": "V Corners Over 2.5 + V Remates Over 9.5",
-        "cuota": 1.45,
+        "cuota": 1.42,
         "prob": 62.7,
-        "ev_pct": -9.1,
+        "ev_pct": -11.0,
         "tipo": "COMBINADA",
         "patas": [
           "visit_corners_equipo_over2.5",
@@ -348642,9 +348641,9 @@ const TRACKER_DATA = [
         "mercado": "do1x+over15",
         "linea": null,
         "etiqueta": "DO L o Empate + Over 1.5",
-        "cuota": 1.44,
+        "cuota": 1.42,
         "prob": 61.1,
-        "ev_pct": -12.0,
+        "ev_pct": -13.2,
         "tipo": "COMBINADA",
         "patas": [
           "do1x",
@@ -348660,9 +348659,9 @@ const TRACKER_DATA = [
         "mercado": "over15+hcp2_local",
         "linea": null,
         "etiqueta": "Over 1.5 + HCP +2 L",
-        "cuota": 1.28,
+        "cuota": 1.27,
         "prob": 70.5,
-        "ev_pct": -9.8,
+        "ev_pct": -10.5,
         "tipo": "COMBINADA",
         "patas": [
           "over15",
@@ -348696,9 +348695,9 @@ const TRACKER_DATA = [
         "mercado": "visit_corners_equipo_over2.5+visit_remates_over10.5",
         "linea": null,
         "etiqueta": "V Corners Over 2.5 + V Remates Over 10.5",
-        "cuota": 1.62,
+        "cuota": 1.57,
         "prob": 57.4,
-        "ev_pct": -7.1,
+        "ev_pct": -9.9,
         "tipo": "COMBINADA",
         "patas": [
           "visit_corners_equipo_over2.5",
@@ -348727,32 +348726,19 @@ const TRACKER_DATA = [
         "mercado": "under25",
         "linea": null,
         "etiqueta": "Under 2.5",
-        "cuota": 2.52,
+        "cuota": 2.45,
         "prob": 41.0,
-        "ev_pct": 3.3,
-        "regla_cuota_max_pick": "cuota 2.52 > tope 2.00"
-      },
-      {
-        "mercado": "under35",
-        "linea": null,
-        "etiqueta": "Under 3.5",
-        "cuota": 1.62,
-        "prob": 63.6,
-        "ev_pct": 3.0,
-        "cuota_justa": 1.57,
-        "cuota_segura": 1.73,
-        "acierto_hist": 63.8,
-        "n_hist": 246,
-        "regla_unicidad_totales": "cede ante under45 (score EV/prob 2.0)"
+        "ev_pct": 0.4,
+        "filtro_edge": "EV=+0.4% < 1.5"
       },
       {
         "mercado": "hcp3_des",
         "linea": null,
         "etiqueta": "HCP +3 Borussia M.Gladbach",
-        "cuota": 1.18,
+        "cuota": 1.17,
         "prob": 86.8,
-        "ev_pct": 2.4,
-        "regla_unicidad_handicap": "cede ante hcp2_des (EV 4.5%)"
+        "ev_pct": 1.6,
+        "regla_unicidad_handicap": "cede ante hcp2_des (EV 3.1%)"
       }
     ],
     "mercados_snapshot": {
@@ -348858,9 +348844,20 @@ const TRACKER_DATA = [
     "mu_m3_version": "M3-2026-11-11",
     "cruces_validados": [
       {
+        "mercado": "over15+hcp3_visit",
+        "etiqueta": "Over 1.5 + HCP +3 V",
+        "cuota": 1.42,
+        "justa": 1.42,
+        "segura": 1.54,
+        "hist": 70.2,
+        "n": 332,
+        "cruza": true,
+        "cruza_segura": false
+      },
+      {
         "mercado": "do1x",
         "etiqueta": "DO L o Empate",
-        "cuota": 1.24,
+        "cuota": 1.23,
         "justa": 1.31,
         "segura": 1.44,
         "hist": 76.2,
@@ -348871,23 +348868,12 @@ const TRACKER_DATA = [
       {
         "mercado": "over25",
         "etiqueta": "Over 2.5",
-        "cuota": 1.53,
+        "cuota": 1.55,
         "justa": 1.82,
         "segura": 2.0,
         "hist": 55.1,
         "n": 354,
         "cruza": false,
-        "cruza_segura": false
-      },
-      {
-        "mercado": "under35",
-        "etiqueta": "Under 3.5",
-        "cuota": 1.62,
-        "justa": 1.57,
-        "segura": 1.73,
-        "hist": 63.8,
-        "n": 246,
-        "cruza": true,
         "cruza_segura": false
       },
       {
@@ -348915,7 +348901,7 @@ const TRACKER_DATA = [
       {
         "mercado": "visit_remates_over9.5",
         "etiqueta": "Borussia M.Gladbach Remates Over 9.5",
-        "cuota": 1.24,
+        "cuota": 1.2,
         "justa": 1.4,
         "segura": 1.57,
         "hist": 71.3,
@@ -348948,7 +348934,7 @@ const TRACKER_DATA = [
       {
         "mercado": "over15+under45",
         "etiqueta": "Over 1.5 + Under 4.5",
-        "cuota": 1.57,
+        "cuota": 1.55,
         "justa": 1.59,
         "segura": 1.64,
         "hist": 62.9,
@@ -348959,7 +348945,7 @@ const TRACKER_DATA = [
       {
         "mercado": "over15+over05_visit",
         "etiqueta": "Over 1.5 + Over 0.5 V",
-        "cuota": 1.45,
+        "cuota": 1.47,
         "justa": 1.55,
         "segura": 1.65,
         "hist": 64.5,
@@ -348970,7 +348956,7 @@ const TRACKER_DATA = [
       {
         "mercado": "over25+over05_local",
         "etiqueta": "Over 2.5 + Over 0.5 L",
-        "cuota": 1.55,
+        "cuota": 1.57,
         "justa": 1.72,
         "segura": 1.86,
         "hist": 58.2,
@@ -348981,7 +348967,7 @@ const TRACKER_DATA = [
       {
         "mercado": "do1x+over05_local",
         "etiqueta": "DO L o Empate + Over 0.5 L",
-        "cuota": 1.29,
+        "cuota": 1.28,
         "justa": 1.44,
         "segura": 1.54,
         "hist": 69.4,
@@ -349003,12 +348989,12 @@ const TRACKER_DATA = [
       {
         "mercado": "do1x+hcp3_visit",
         "etiqueta": "DO L o Empate + HCP +3 V",
-        "cuota": 1.55,
+        "cuota": 1.5,
         "justa": 1.54,
         "segura": 1.65,
         "hist": 65.1,
         "n": 498,
-        "cruza": true,
+        "cruza": false,
         "cruza_segura": false
       },
       {
@@ -349020,17 +349006,6 @@ const TRACKER_DATA = [
         "hist": 54.1,
         "n": 338,
         "cruza": false,
-        "cruza_segura": false
-      },
-      {
-        "mercado": "over15+hcp3_visit",
-        "etiqueta": "Over 1.5 + HCP +3 V",
-        "cuota": 1.44,
-        "justa": 1.42,
-        "segura": 1.54,
-        "hist": 70.2,
-        "n": 332,
-        "cruza": true,
         "cruza_segura": false
       },
       {
@@ -349047,7 +349022,7 @@ const TRACKER_DATA = [
       {
         "mercado": "over25+over05_visit",
         "etiqueta": "Over 2.5 + Over 0.5 V",
-        "cuota": 1.75,
+        "cuota": 1.8,
         "justa": 1.82,
         "segura": 2.05,
         "hist": 54.9,
@@ -349058,13 +349033,13 @@ const TRACKER_DATA = [
       {
         "mercado": "under35+hcp2_visit",
         "etiqueta": "Under 3.5 + HCP +2 V",
-        "cuota": 2.12,
+        "cuota": 2.05,
         "justa": 1.87,
         "segura": 2.12,
         "hist": 53.5,
         "n": 243,
         "cruza": true,
-        "cruza_segura": true
+        "cruza_segura": false
       },
       {
         "mercado": "over15+over05_local",
@@ -349080,7 +349055,7 @@ const TRACKER_DATA = [
       {
         "mercado": "visit_remates_over9.5+visit_remates_puerta_over2.5",
         "etiqueta": "V Remates Over 9.5 + V Remates a puerta Over 2.5",
-        "cuota": 1.4,
+        "cuota": 1.36,
         "justa": 1.51,
         "segura": 1.7,
         "hist": 66.1,
@@ -349091,7 +349066,7 @@ const TRACKER_DATA = [
       {
         "mercado": "visit_corners_equipo_over2.5+visit_remates_over9.5",
         "etiqueta": "V Corners Over 2.5 + V Remates Over 9.5",
-        "cuota": 1.45,
+        "cuota": 1.42,
         "justa": 1.65,
         "segura": 1.88,
         "hist": 60.6,
@@ -349102,7 +349077,7 @@ const TRACKER_DATA = [
       {
         "mercado": "do1x+over15",
         "etiqueta": "DO L o Empate + Over 1.5",
-        "cuota": 1.44,
+        "cuota": 1.42,
         "justa": 1.63,
         "segura": 1.86,
         "hist": 61.3,
@@ -349113,7 +349088,7 @@ const TRACKER_DATA = [
       {
         "mercado": "over15+hcp2_local",
         "etiqueta": "Over 1.5 + HCP +2 L",
-        "cuota": 1.28,
+        "cuota": 1.27,
         "justa": 1.34,
         "segura": 1.47,
         "hist": 74.9,
@@ -349135,12 +349110,23 @@ const TRACKER_DATA = [
       {
         "mercado": "visit_corners_equipo_over2.5+visit_remates_over10.5",
         "etiqueta": "V Corners Over 2.5 + V Remates Over 10.5",
-        "cuota": 1.62,
+        "cuota": 1.57,
         "justa": 1.77,
         "segura": 2.05,
         "hist": 56.5,
         "n": 161,
         "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "under35",
+        "etiqueta": "Under 3.5",
+        "cuota": 1.6,
+        "justa": 1.57,
+        "segura": 1.73,
+        "hist": 63.8,
+        "n": 246,
+        "cruza": true,
         "cruza_segura": false
       }
     ],
@@ -350063,17 +350049,43 @@ const TRACKER_DATA = [
       "local": 6,
       "visit": 2
     },
-    "notas": "",
+    "notas": "2026-11-27 09:05 (Lima): cuotas re-tomadas en Betano antes del saque. Antes: [('COMBO', 'L Remates a puerta Over 2.5 + Over 0.5 L', 1.55), ('REMATE', 'Brest Remates Over 15.5', 3.85)]. Ahora: [('PICK', 'Over 0.5 Brest', 1.4), ('PICK', 'HCP +2 Brest', 1.25), ('COMBO', 'L Remates a puerta Over 2.5 + Over 0.5 L', 1.57), ('REMATE', 'Brest Remates Over 15.5', 3.85)].",
     "resultado_partido": null,
     "goles_esperados": "2.57",
     "apuestas": [
       {
+        "tipo": "PICK",
+        "mercado": "over05_local",
+        "linea": null,
+        "etiqueta": "Over 0.5 Brest",
+        "cuota": 1.4,
+        "prob": 71.8,
+        "ev_pct": 0.5,
+        "estado": "PENDIENTE",
+        "pl": null,
+        "cuota_justa": 1.38,
+        "cuota_segura": 1.51,
+        "acierto_hist": 72.3,
+        "n_hist": 238
+      },
+      {
+        "tipo": "PICK",
+        "mercado": "hcp2_des",
+        "linea": null,
+        "etiqueta": "HCP +2 Brest",
+        "cuota": 1.25,
+        "prob": 81.5,
+        "ev_pct": 1.9,
+        "estado": "PENDIENTE",
+        "pl": null
+      },
+      {
         "tipo": "COMBO",
         "mercado": "local_remates_puerta_over2.5+over05_local",
         "etiqueta": "L Remates a puerta Over 2.5 + Over 0.5 L",
-        "cuota": 1.55,
+        "cuota": 1.57,
         "prob": 60.9,
-        "ev_pct": -5.6,
+        "ev_pct": -4.4,
         "estado": "PENDIENTE",
         "pl": null,
         "patas": [
@@ -350104,12 +350116,26 @@ const TRACKER_DATA = [
     ],
     "watchlist": [
       {
+        "mercado": "local_remates",
+        "linea": 15.5,
+        "etiqueta": "Brest Remates Over 15.5",
+        "cuota": 3.85,
+        "prob": 28.5,
+        "ev_pct": 9.7,
+        "tipo": "POR_EQUIPO",
+        "prob_ml": 21.8,
+        "ev_ml": -16.3,
+        "prob_m3": 25.0,
+        "ev_m3": -3.9,
+        "es_remate": true
+      },
+      {
         "mercado": "victoria_local",
         "linea": null,
         "etiqueta": "Victoria Brest",
-        "cuota": 3.4,
+        "cuota": 3.55,
         "prob": 33.3,
-        "ev_pct": 13.2,
+        "ev_pct": 18.2,
         "regla_1x2_no_pick": true
       },
       {
@@ -350125,26 +350151,26 @@ const TRACKER_DATA = [
         "mercado": "victoria_visit",
         "linea": null,
         "etiqueta": "Victoria Paris FC",
-        "cuota": 2.18,
+        "cuota": 2.12,
         "prob": 40.1,
-        "ev_pct": -12.6
+        "ev_pct": -15.0
       },
       {
         "mercado": "do1x",
         "linea": null,
         "etiqueta": "DO Brest o Empate",
-        "cuota": 1.72,
+        "cuota": 1.75,
         "prob": 60.0,
-        "ev_pct": 3.2,
+        "ev_pct": 5.0,
         "regla_no_elegible": true
       },
       {
         "mercado": "dox2",
         "linea": null,
         "etiqueta": "DO Empate o Paris FC",
-        "cuota": 1.34,
+        "cuota": 1.32,
         "prob": 66.7,
-        "ev_pct": -10.6,
+        "ev_pct": -12.0,
         "cuota_justa": 1.43,
         "cuota_segura": 1.59,
         "acierto_hist": 70.1,
@@ -350194,18 +350220,19 @@ const TRACKER_DATA = [
         "mercado": "under35",
         "linea": null,
         "etiqueta": "Under 3.5",
-        "cuota": 1.35,
+        "cuota": 1.36,
         "prob": 74.3,
-        "ev_pct": 0.3,
-        "filtro_edge": "EV=+0.3% < 1.5"
+        "ev_pct": 1.0,
+        "filtro_edge": "EV=+1.0% < 1.5"
       },
       {
         "mercado": "under45",
         "linea": null,
         "etiqueta": "Under 4.5",
-        "cuota": 1.13,
+        "cuota": 1.14,
         "prob": 88.2,
-        "ev_pct": -0.3
+        "ev_pct": 0.5,
+        "filtro_edge": "EV=+0.5% < 1.5"
       },
       {
         "mercado": "btts",
@@ -350220,33 +350247,12 @@ const TRACKER_DATA = [
         "n_hist": 606
       },
       {
-        "mercado": "over05_local",
-        "linea": null,
-        "etiqueta": "Over 0.5 Brest",
-        "cuota": 1.39,
-        "prob": 71.8,
-        "ev_pct": -0.2,
-        "cuota_justa": 1.38,
-        "cuota_segura": 1.51,
-        "acierto_hist": 72.3,
-        "n_hist": 238
-      },
-      {
         "mercado": "over05_visit",
         "linea": null,
         "etiqueta": "Over 0.5 Paris FC",
-        "cuota": 1.23,
+        "cuota": 1.22,
         "prob": 74.2,
-        "ev_pct": -8.7
-      },
-      {
-        "mercado": "hcp2_des",
-        "linea": null,
-        "etiqueta": "HCP +2 Brest",
-        "cuota": 1.23,
-        "prob": 81.5,
-        "ev_pct": 0.2,
-        "filtro_edge": "EV=+0.2% < 1.5"
+        "ev_pct": -9.5
       },
       {
         "mercado": "hcp3_des",
@@ -350268,9 +350274,9 @@ const TRACKER_DATA = [
         "mercado": "corners75",
         "linea": null,
         "etiqueta": "Over 7.5 corners",
-        "cuota": 1.47,
+        "cuota": 1.45,
         "prob": 67.0,
-        "ev_pct": -1.5
+        "ev_pct": -2.8
       },
       {
         "mercado": "visit_remates_puerta",
@@ -350647,20 +350653,6 @@ const TRACKER_DATA = [
         "ev_m3": -20.0
       },
       {
-        "mercado": "local_remates",
-        "linea": 15.5,
-        "etiqueta": "Brest Remates Over 15.5",
-        "cuota": 3.85,
-        "prob": 28.5,
-        "ev_pct": 9.7,
-        "tipo": "POR_EQUIPO",
-        "prob_ml": 21.8,
-        "ev_ml": -16.3,
-        "prob_m3": 25.0,
-        "ev_m3": -3.9,
-        "es_remate": true
-      },
-      {
         "mercado": "visit_remates_puerta",
         "linea": 5.5,
         "etiqueta": "Paris FC Remates a puerta Over 5.5",
@@ -350716,14 +350708,14 @@ const TRACKER_DATA = [
         "mercado": "local_corners_equipo",
         "linea": 6.5,
         "etiqueta": "Brest Corners equipo Over 6.5",
-        "cuota": 6.0,
+        "cuota": 6.1,
         "prob": 19.9,
-        "ev_pct": 19.4,
+        "ev_pct": 21.4,
         "tipo": "POR_EQUIPO",
         "prob_ml": 18.4,
-        "ev_ml": 10.1,
+        "ev_ml": 12.0,
         "prob_m3": 20.7,
-        "ev_m3": 24.4
+        "ev_m3": 26.5
       },
       {
         "mercado": "visit_remates_puerta",
@@ -350742,9 +350734,9 @@ const TRACKER_DATA = [
         "mercado": "over15+under45",
         "linea": null,
         "etiqueta": "Over 1.5 + Under 4.5",
-        "cuota": 1.53,
+        "cuota": 1.57,
         "prob": 60.8,
-        "ev_pct": -6.9,
+        "ev_pct": -4.5,
         "tipo": "COMBINADA",
         "patas": [
           "over15",
@@ -350778,9 +350770,9 @@ const TRACKER_DATA = [
         "mercado": "over05_visit+hcp2_local",
         "linea": null,
         "etiqueta": "Over 0.5 V + HCP +2 L",
-        "cuota": 1.6,
+        "cuota": 1.62,
         "prob": 55.7,
-        "ev_pct": -10.8,
+        "ev_pct": -9.7,
         "tipo": "COMBINADA",
         "patas": [
           "over05_visit",
@@ -350814,9 +350806,9 @@ const TRACKER_DATA = [
         "mercado": "do1x+over05_local",
         "linea": null,
         "etiqueta": "DO L o Empate + Over 0.5 L",
-        "cuota": 1.91,
+        "cuota": 1.98,
         "prob": 52.2,
-        "ev_pct": -0.4,
+        "ev_pct": 3.3,
         "tipo": "COMBINADA",
         "patas": [
           "do1x",
@@ -350850,9 +350842,9 @@ const TRACKER_DATA = [
         "mercado": "under45+over05_visit",
         "linea": null,
         "etiqueta": "Under 4.5 + Over 0.5 V",
-        "cuota": 1.44,
+        "cuota": 1.45,
         "prob": 62.6,
-        "ev_pct": -9.8,
+        "ev_pct": -9.2,
         "tipo": "COMBINADA",
         "patas": [
           "under45",
@@ -350868,9 +350860,9 @@ const TRACKER_DATA = [
         "mercado": "under35+hcp2_local",
         "linea": null,
         "etiqueta": "Under 3.5 + HCP +2 L",
-        "cuota": 1.55,
+        "cuota": 1.6,
         "prob": 64.0,
-        "ev_pct": -0.8,
+        "ev_pct": 2.4,
         "tipo": "COMBINADA",
         "patas": [
           "under35",
@@ -350886,9 +350878,9 @@ const TRACKER_DATA = [
         "mercado": "dox2+hcp3_local",
         "linea": null,
         "etiqueta": "DO Empate o V + HCP +3 L",
-        "cuota": 1.5,
+        "cuota": 1.47,
         "prob": 59.9,
-        "ev_pct": -10.1,
+        "ev_pct": -11.9,
         "tipo": "COMBINADA",
         "patas": [
           "dox2",
@@ -350922,9 +350914,9 @@ const TRACKER_DATA = [
         "mercado": "under45+over05_local",
         "linea": null,
         "etiqueta": "Under 4.5 + Over 0.5 L",
-        "cuota": 1.65,
+        "cuota": 1.7,
         "prob": 58.8,
-        "ev_pct": -3.0,
+        "ev_pct": -0.1,
         "tipo": "COMBINADA",
         "patas": [
           "under45",
@@ -350940,9 +350932,9 @@ const TRACKER_DATA = [
         "mercado": "dox2+under45",
         "linea": null,
         "etiqueta": "DO Empate o V + Under 4.5",
-        "cuota": 1.5,
+        "cuota": 1.52,
         "prob": 59.6,
-        "ev_pct": -10.6,
+        "ev_pct": -9.4,
         "tipo": "COMBINADA",
         "patas": [
           "dox2",
@@ -350958,9 +350950,9 @@ const TRACKER_DATA = [
         "mercado": "do1x+under45",
         "linea": null,
         "etiqueta": "DO L o Empate + Under 4.5",
-        "cuota": 1.87,
+        "cuota": 1.93,
         "prob": 54.0,
-        "ev_pct": 1.1,
+        "ev_pct": 4.3,
         "tipo": "COMBINADA",
         "patas": [
           "do1x",
@@ -350976,9 +350968,9 @@ const TRACKER_DATA = [
         "mercado": "over05_local+hcp2_local",
         "linea": null,
         "etiqueta": "Over 0.5 L + HCP +2 L",
-        "cuota": 1.53,
+        "cuota": 1.57,
         "prob": 63.4,
-        "ev_pct": -3.0,
+        "ev_pct": -0.4,
         "tipo": "COMBINADA",
         "patas": [
           "over05_local",
@@ -351030,9 +351022,9 @@ const TRACKER_DATA = [
         "mercado": "hcp2_local+local_remates_puerta_over3.5",
         "linea": null,
         "etiqueta": "HCP +2 L + L Remates a puerta Over 3.5",
-        "cuota": 1.88,
+        "cuota": 1.91,
         "prob": 51.7,
-        "ev_pct": -2.9,
+        "ev_pct": -1.3,
         "tipo": "COMBINADA",
         "patas": [
           "hcp2_local",
@@ -351048,9 +351040,9 @@ const TRACKER_DATA = [
         "mercado": "local_corners_equipo_over2.5+local_remates_over11.5",
         "linea": null,
         "etiqueta": "L Corners Over 2.5 + L Remates Over 11.5",
-        "cuota": 1.82,
+        "cuota": 1.8,
         "prob": 51.3,
-        "ev_pct": -6.7,
+        "ev_pct": -7.7,
         "tipo": "COMBINADA",
         "patas": [
           "local_corners_equipo_over2.5",
@@ -351102,9 +351094,9 @@ const TRACKER_DATA = [
         "mercado": "local_corners_equipo_over3.5+local_remates_over9.5",
         "linea": null,
         "etiqueta": "L Corners Over 3.5 + L Remates Over 9.5",
-        "cuota": 1.87,
+        "cuota": 1.85,
         "prob": 52.4,
-        "ev_pct": -2.1,
+        "ev_pct": -3.1,
         "tipo": "COMBINADA",
         "patas": [
           "local_corners_equipo_over3.5",
@@ -351120,9 +351112,9 @@ const TRACKER_DATA = [
         "mercado": "dox2+over05_visit",
         "linea": null,
         "etiqueta": "DO Empate o V + Over 0.5 V",
-        "cuota": 1.47,
+        "cuota": 1.45,
         "prob": 59.0,
-        "ev_pct": -13.3,
+        "ev_pct": -14.5,
         "tipo": "COMBINADA",
         "patas": [
           "dox2",
@@ -351256,9 +351248,20 @@ const TRACKER_DATA = [
     "mu_m3_version": "M3-2026-11-11",
     "cruces_validados": [
       {
+        "mercado": "local_remates_puerta_over2.5+over05_local",
+        "etiqueta": "L Remates a puerta Over 2.5 + Over 0.5 L",
+        "cuota": 1.57,
+        "justa": 1.55,
+        "segura": 1.74,
+        "hist": 64.4,
+        "n": 205,
+        "cruza": true,
+        "cruza_segura": false
+      },
+      {
         "mercado": "dox2",
         "etiqueta": "DO Empate o V",
-        "cuota": 1.34,
+        "cuota": 1.32,
         "justa": 1.43,
         "segura": 1.59,
         "hist": 70.1,
@@ -351302,7 +351305,7 @@ const TRACKER_DATA = [
       {
         "mercado": "over05_local",
         "etiqueta": "Over 0.5 L",
-        "cuota": 1.39,
+        "cuota": 1.4,
         "justa": 1.38,
         "segura": 1.51,
         "hist": 72.3,
@@ -351412,7 +351415,7 @@ const TRACKER_DATA = [
       {
         "mercado": "over15+under45",
         "etiqueta": "Over 1.5 + Under 4.5",
-        "cuota": 1.53,
+        "cuota": 1.57,
         "justa": 1.59,
         "segura": 1.64,
         "hist": 62.9,
@@ -351434,7 +351437,7 @@ const TRACKER_DATA = [
       {
         "mercado": "over05_visit+hcp2_local",
         "etiqueta": "Over 0.5 V + HCP +2 L",
-        "cuota": 1.6,
+        "cuota": 1.62,
         "justa": 1.68,
         "segura": 1.8,
         "hist": 59.6,
@@ -351456,7 +351459,7 @@ const TRACKER_DATA = [
       {
         "mercado": "do1x+over05_local",
         "etiqueta": "DO L o Empate + Over 0.5 L",
-        "cuota": 1.91,
+        "cuota": 1.98,
         "justa": 1.83,
         "segura": 2.02,
         "hist": 54.6,
@@ -351478,7 +351481,7 @@ const TRACKER_DATA = [
       {
         "mercado": "under45+over05_visit",
         "etiqueta": "Under 4.5 + Over 0.5 V",
-        "cuota": 1.44,
+        "cuota": 1.45,
         "justa": 1.56,
         "segura": 1.7,
         "hist": 64.2,
@@ -351489,7 +351492,7 @@ const TRACKER_DATA = [
       {
         "mercado": "under35+hcp2_local",
         "etiqueta": "Under 3.5 + HCP +2 L",
-        "cuota": 1.55,
+        "cuota": 1.6,
         "justa": 1.68,
         "segura": 1.86,
         "hist": 59.5,
@@ -351500,7 +351503,7 @@ const TRACKER_DATA = [
       {
         "mercado": "dox2+hcp3_local",
         "etiqueta": "DO Empate o V + HCP +3 L",
-        "cuota": 1.5,
+        "cuota": 1.47,
         "justa": 1.72,
         "segura": 1.91,
         "hist": 58.1,
@@ -351522,7 +351525,7 @@ const TRACKER_DATA = [
       {
         "mercado": "under45+over05_local",
         "etiqueta": "Under 4.5 + Over 0.5 L",
-        "cuota": 1.65,
+        "cuota": 1.7,
         "justa": 1.71,
         "segura": 1.91,
         "hist": 58.4,
@@ -351533,7 +351536,7 @@ const TRACKER_DATA = [
       {
         "mercado": "dox2+under45",
         "etiqueta": "DO Empate o V + Under 4.5",
-        "cuota": 1.5,
+        "cuota": 1.52,
         "justa": 1.67,
         "segura": 1.88,
         "hist": 59.7,
@@ -351542,20 +351545,9 @@ const TRACKER_DATA = [
         "cruza_segura": false
       },
       {
-        "mercado": "local_remates_puerta_over2.5+over05_local",
-        "etiqueta": "L Remates a puerta Over 2.5 + Over 0.5 L",
-        "cuota": 1.55,
-        "justa": 1.55,
-        "segura": 1.74,
-        "hist": 64.4,
-        "n": 205,
-        "cruza": true,
-        "cruza_segura": false
-      },
-      {
         "mercado": "do1x+under45",
         "etiqueta": "DO L o Empate + Under 4.5",
-        "cuota": 1.87,
+        "cuota": 1.93,
         "justa": 1.83,
         "segura": 2.1,
         "hist": 54.7,
@@ -351566,7 +351558,7 @@ const TRACKER_DATA = [
       {
         "mercado": "over05_local+hcp2_local",
         "etiqueta": "Over 0.5 L + HCP +2 L",
-        "cuota": 1.53,
+        "cuota": 1.57,
         "justa": 1.66,
         "segura": 1.88,
         "hist": 60.2,
@@ -351599,7 +351591,7 @@ const TRACKER_DATA = [
       {
         "mercado": "hcp2_local+local_remates_puerta_over3.5",
         "etiqueta": "HCP +2 L + L Remates a puerta Over 3.5",
-        "cuota": 1.88,
+        "cuota": 1.91,
         "justa": 1.84,
         "segura": 2.13,
         "hist": 54.3,
@@ -351610,7 +351602,7 @@ const TRACKER_DATA = [
       {
         "mercado": "local_corners_equipo_over2.5+local_remates_over11.5",
         "etiqueta": "L Corners Over 2.5 + L Remates Over 11.5",
-        "cuota": 1.82,
+        "cuota": 1.8,
         "justa": 2.0,
         "segura": 2.35,
         "hist": 50.0,
@@ -351643,18 +351635,18 @@ const TRACKER_DATA = [
       {
         "mercado": "local_corners_equipo_over3.5+local_remates_over9.5",
         "etiqueta": "L Corners Over 3.5 + L Remates Over 9.5",
-        "cuota": 1.87,
+        "cuota": 1.85,
         "justa": 1.86,
         "segura": 2.17,
         "hist": 53.8,
         "n": 156,
-        "cruza": true,
+        "cruza": false,
         "cruza_segura": false
       },
       {
         "mercado": "dox2+over05_visit",
         "etiqueta": "DO Empate o V + Over 0.5 V",
-        "cuota": 1.47,
+        "cuota": 1.45,
         "justa": 1.76,
         "segura": 2.04,
         "hist": 57.0,
@@ -352582,7 +352574,7 @@ const TRACKER_DATA = [
       "local": 20,
       "visit": 9
     },
-    "notas": "",
+    "notas": "2026-11-27 09:05 (Lima): cuotas re-tomadas en Betano antes del saque. Antes: [('PICK', 'Over 1.5', 1.37), ('PICK', 'BTTS', 1.82), ('COMBO', 'Over 1.5 + Over 0.5 V', 1.47), ('REMATE', 'Venezia Remates Over 14.5', 3.7)]. Ahora: [('PICK', 'Over 1.5', 1.37), ('PICK', 'Over 0.5 Bologna', 1.3), ('COMBO', 'Over 1.5 + Over 0.5 V', 1.5), ('REMATE', 'Bologna Remates Over 15.5', 3.55)].",
     "resultado_partido": null,
     "goles_esperados": "2.67",
     "apuestas": [
@@ -352603,26 +352595,26 @@ const TRACKER_DATA = [
       },
       {
         "tipo": "PICK",
-        "mercado": "btts",
+        "mercado": "over05_visit",
         "linea": null,
-        "etiqueta": "BTTS",
-        "cuota": 1.82,
-        "prob": 56.5,
-        "ev_pct": 2.8,
+        "etiqueta": "Over 0.5 Bologna",
+        "cuota": 1.3,
+        "prob": 78.3,
+        "ev_pct": 1.8,
         "estado": "PENDIENTE",
         "pl": null,
-        "cuota_justa": 1.7,
-        "cuota_segura": 1.83,
-        "acierto_hist": 58.7,
-        "n_hist": 606
+        "cuota_justa": 1.29,
+        "cuota_segura": 1.39,
+        "acierto_hist": 77.7,
+        "n_hist": 233
       },
       {
         "tipo": "COMBO",
         "mercado": "over15+over05_visit",
         "etiqueta": "Over 1.5 + Over 0.5 V",
-        "cuota": 1.47,
+        "cuota": 1.5,
         "prob": 67.7,
-        "ev_pct": -0.5,
+        "ev_pct": 1.6,
         "estado": "PENDIENTE",
         "pl": null,
         "patas": [
@@ -352638,60 +352630,74 @@ const TRACKER_DATA = [
       },
       {
         "tipo": "REMATE",
-        "mercado": "local_remates",
-        "linea": 14.5,
-        "etiqueta": "Venezia Remates Over 14.5",
-        "lado": "local",
-        "cuota": 3.7,
-        "prob": 30.3,
-        "ev_pct": 12.1,
+        "mercado": "visit_remates",
+        "linea": 15.5,
+        "etiqueta": "Bologna Remates Over 15.5",
+        "lado": "visit",
+        "cuota": 3.55,
+        "prob": 28.8,
+        "ev_pct": 2.2,
         "estado": "PENDIENTE",
         "pl": null,
-        "lineas_pasan": 3,
+        "lineas_pasan": 1,
         "cruzaron_ambos": false
       }
     ],
     "watchlist": [
       {
+        "mercado": "local_remates",
+        "linea": 14.5,
+        "etiqueta": "Venezia Remates Over 14.5",
+        "cuota": 3.15,
+        "prob": 30.3,
+        "ev_pct": -4.6,
+        "tipo": "POR_EQUIPO",
+        "prob_ml": 19.8,
+        "ev_ml": -37.6,
+        "prob_m3": 24.3,
+        "ev_m3": -23.4
+      },
+      {
         "mercado": "victoria_local",
         "linea": null,
         "etiqueta": "Victoria Venezia",
-        "cuota": 3.4,
+        "cuota": 3.05,
         "prob": 28.4,
-        "ev_pct": -3.4
+        "ev_pct": -13.4
       },
       {
         "mercado": "empate",
         "linea": null,
         "etiqueta": "Empate",
-        "cuota": 3.3,
+        "cuota": 3.2,
         "prob": 28.3,
-        "ev_pct": -6.6
+        "ev_pct": -9.4
       },
       {
         "mercado": "victoria_visit",
         "linea": null,
         "etiqueta": "Victoria Bologna",
-        "cuota": 2.2,
+        "cuota": 2.45,
         "prob": 47.0,
-        "ev_pct": 3.4,
+        "ev_pct": 15.1,
         "regla_1x2_no_pick": true
       },
       {
         "mercado": "do1x",
         "linea": null,
         "etiqueta": "DO Venezia o Empate",
-        "cuota": 1.7,
+        "cuota": 1.57,
         "prob": 53.0,
-        "ev_pct": -9.9
+        "ev_pct": -16.8
       },
       {
         "mercado": "dox2",
         "linea": null,
         "etiqueta": "DO Empate o Bologna",
-        "cuota": 1.34,
+        "cuota": 1.4,
         "prob": 71.6,
-        "ev_pct": -4.1
+        "ev_pct": 0.2,
+        "filtro_edge": "EV=+0.2% < 1.5"
       },
       {
         "mercado": "under25",
@@ -352721,34 +352727,21 @@ const TRACKER_DATA = [
         "mercado": "over05_local",
         "linea": null,
         "etiqueta": "Over 0.5 Venezia",
-        "cuota": 1.44,
+        "cuota": 1.38,
         "prob": 69.5,
-        "ev_pct": 0.1,
-        "filtro_edge": "no cruza validada (justa 1.49)",
+        "ev_pct": -4.1,
         "cuota_justa": 1.49,
         "cuota_segura": 1.67,
         "acierto_hist": 67.3,
         "n_hist": 162
       },
       {
-        "mercado": "over05_visit",
-        "linea": null,
-        "etiqueta": "Over 0.5 Bologna",
-        "cuota": 1.27,
-        "prob": 78.3,
-        "ev_pct": -0.6,
-        "cuota_justa": 1.29,
-        "cuota_segura": 1.39,
-        "acierto_hist": 77.7,
-        "n_hist": 233
-      },
-      {
         "mercado": "hcp2_des",
         "linea": null,
         "etiqueta": "HCP +2 Venezia",
-        "cuota": 1.22,
+        "cuota": 1.18,
         "prob": 76.8,
-        "ev_pct": -6.3,
+        "ev_pct": -9.4,
         "cuota_justa": 1.33,
         "cuota_segura": 1.47,
         "acierto_hist": 75.3,
@@ -352758,9 +352751,9 @@ const TRACKER_DATA = [
         "mercado": "hcp3_des",
         "linea": null,
         "etiqueta": "HCP +3 Venezia",
-        "cuota": 1.06,
+        "cuota": 1.05,
         "prob": 90.7,
-        "ev_pct": -3.9
+        "ev_pct": -4.8
       },
       {
         "mercado": "corners65",
@@ -352782,14 +352775,14 @@ const TRACKER_DATA = [
         "mercado": "visit_remates_puerta",
         "linea": 2.5,
         "etiqueta": "Bologna Remates a puerta Over 2.5",
-        "cuota": 1.15,
+        "cuota": 1.19,
         "prob": 82.1,
-        "ev_pct": -5.6,
+        "ev_pct": -2.3,
         "tipo": "POR_EQUIPO",
         "prob_ml": 79.5,
-        "ev_ml": -8.6,
+        "ev_ml": -5.4,
         "prob_m3": 80.7,
-        "ev_m3": -7.2
+        "ev_m3": -3.9
       },
       {
         "mercado": "local_remates",
@@ -352808,14 +352801,14 @@ const TRACKER_DATA = [
         "mercado": "local_corners_equipo",
         "linea": 2.5,
         "etiqueta": "Venezia Corners equipo Over 2.5",
-        "cuota": 1.16,
+        "cuota": 1.17,
         "prob": 80.9,
-        "ev_pct": -6.2,
+        "ev_pct": -5.3,
         "tipo": "POR_EQUIPO",
         "prob_ml": 75.6,
-        "ev_ml": -12.3,
+        "ev_ml": -11.6,
         "prob_m3": 77.7,
-        "ev_m3": -9.9
+        "ev_m3": -9.1
       },
       {
         "mercado": "visit_corners_equipo",
@@ -352834,44 +352827,44 @@ const TRACKER_DATA = [
         "mercado": "local_remates_puerta",
         "linea": 2.5,
         "etiqueta": "Venezia Remates a puerta Over 2.5",
-        "cuota": 1.45,
+        "cuota": 1.36,
         "prob": 75.3,
-        "ev_pct": 9.2,
+        "ev_pct": 2.4,
         "tipo": "POR_EQUIPO",
         "cuota_justa": 1.28,
         "cuota_segura": 1.37,
         "acierto_hist": 78.2,
         "n_hist": 293,
         "prob_ml": 69.0,
-        "ev_ml": 0.0,
+        "ev_ml": -6.2,
         "prob_m3": 75.1,
-        "ev_m3": 8.9
+        "ev_m3": 2.1
       },
       {
         "mercado": "local_remates",
         "linea": 9.5,
         "etiqueta": "Venezia Remates Over 9.5",
-        "cuota": 1.28,
+        "cuota": 1.22,
         "prob": 73.2,
-        "ev_pct": -6.3,
+        "ev_pct": -10.7,
         "tipo": "POR_EQUIPO",
         "prob_ml": 62.3,
-        "ev_ml": -20.2,
+        "ev_ml": -23.9,
         "prob_m3": 67.4,
-        "ev_m3": -13.7
+        "ev_m3": -17.7
       },
       {
         "mercado": "visit_remates",
         "linea": 10.5,
         "etiqueta": "Bologna Remates Over 10.5",
-        "cuota": 1.28,
+        "cuota": 1.29,
         "prob": 69.8,
-        "ev_pct": -10.7,
+        "ev_pct": -10.0,
         "tipo": "POR_EQUIPO",
         "prob_ml": 71.9,
-        "ev_ml": -8.0,
+        "ev_ml": -7.3,
         "prob_m3": 71.9,
-        "ev_m3": -7.9
+        "ev_m3": -7.2
       },
       {
         "mercado": "local_corners_equipo",
@@ -352894,48 +352887,48 @@ const TRACKER_DATA = [
         "mercado": "visit_remates_puerta",
         "linea": 3.5,
         "etiqueta": "Bologna Remates a puerta Over 3.5",
-        "cuota": 1.39,
+        "cuota": 1.47,
         "prob": 65.9,
-        "ev_pct": -8.4,
+        "ev_pct": -3.1,
         "tipo": "POR_EQUIPO",
         "prob_ml": 62.1,
-        "ev_ml": -13.7,
+        "ev_ml": -8.7,
         "prob_m3": 63.9,
-        "ev_m3": -11.2
+        "ev_m3": -6.1
       },
       {
         "mercado": "visit_corners_equipo",
         "linea": 3.5,
         "etiqueta": "Bologna Corners equipo Over 3.5",
-        "cuota": 1.45,
+        "cuota": 1.44,
         "prob": 64.8,
-        "ev_pct": -6.0,
+        "ev_pct": -6.7,
         "tipo": "POR_EQUIPO",
         "cuota_justa": 1.64,
         "cuota_segura": 1.84,
         "acierto_hist": 60.9,
         "n_hist": 225,
         "prob_ml": 70.1,
-        "ev_ml": 1.6,
+        "ev_ml": 0.9,
         "prob_m3": 69.2,
-        "ev_m3": 0.3
+        "ev_m3": -0.4
       },
       {
         "mercado": "local_remates",
         "linea": 10.5,
         "etiqueta": "Venezia Remates Over 10.5",
-        "cuota": 1.47,
+        "cuota": 1.37,
         "prob": 64.5,
-        "ev_pct": -5.2,
+        "ev_pct": -11.6,
         "tipo": "POR_EQUIPO",
         "cuota_justa": 1.62,
         "cuota_segura": 1.85,
         "acierto_hist": 61.7,
         "n_hist": 162,
         "prob_ml": 52.5,
-        "ev_ml": -22.8,
+        "ev_ml": -28.0,
         "prob_m3": 58.1,
-        "ev_m3": -14.6
+        "ev_m3": -20.4
       },
       {
         "mercado": "visit_remates",
@@ -352954,27 +352947,27 @@ const TRACKER_DATA = [
         "mercado": "local_remates_puerta",
         "linea": 3.5,
         "etiqueta": "Venezia Remates a puerta Over 3.5",
-        "cuota": 2.07,
+        "cuota": 1.88,
         "prob": 56.4,
-        "ev_pct": 16.7,
+        "ev_pct": 6.0,
         "tipo": "POR_EQUIPO",
         "prob_ml": 48.5,
-        "ev_ml": 0.4,
+        "ev_ml": -8.8,
         "prob_m3": 56.1,
-        "ev_m3": 16.2
+        "ev_m3": 5.5
       },
       {
         "mercado": "local_remates",
         "linea": 11.5,
         "etiqueta": "Venezia Remates Over 11.5",
-        "cuota": 1.78,
+        "cuota": 1.6,
         "prob": 55.5,
-        "ev_pct": -1.2,
+        "ev_pct": -11.2,
         "tipo": "POR_EQUIPO",
         "prob_ml": 43.0,
-        "ev_ml": -23.5,
+        "ev_ml": -31.3,
         "prob_m3": 48.6,
-        "ev_m3": -13.4
+        "ev_m3": -22.2
       },
       {
         "mercado": "visit_remates",
@@ -352993,236 +352986,223 @@ const TRACKER_DATA = [
         "mercado": "local_corners_equipo",
         "linea": 4.5,
         "etiqueta": "Venezia Corners equipo Over 4.5",
-        "cuota": 1.9,
+        "cuota": 1.91,
         "prob": 50.5,
-        "ev_pct": -4.1,
+        "ev_pct": -3.5,
         "tipo": "POR_EQUIPO",
         "prob_ml": 42.5,
-        "ev_ml": -19.3,
+        "ev_ml": -18.9,
         "prob_m3": 45.5,
-        "ev_m3": -13.5
+        "ev_m3": -13.1
       },
       {
         "mercado": "visit_corners_equipo",
         "linea": 4.5,
         "etiqueta": "Bologna Corners equipo Over 4.5",
-        "cuota": 1.95,
+        "cuota": 1.93,
         "prob": 48.9,
-        "ev_pct": -4.6,
+        "ev_pct": -5.6,
         "tipo": "POR_EQUIPO",
         "prob_ml": 55.1,
-        "ev_ml": 7.4,
+        "ev_ml": 6.3,
         "prob_m3": 54.0,
-        "ev_m3": 5.3
+        "ev_m3": 4.2
       },
       {
         "mercado": "visit_remates_puerta",
         "linea": 4.5,
         "etiqueta": "Bologna Remates a puerta Over 4.5",
-        "cuota": 1.85,
+        "cuota": 2.02,
         "prob": 47.9,
-        "ev_pct": -11.4,
+        "ev_pct": -3.2,
         "tipo": "POR_EQUIPO",
         "prob_ml": 43.7,
-        "ev_ml": -19.1,
+        "ev_ml": -11.6,
         "prob_m3": 45.7,
-        "ev_m3": -15.5
+        "ev_m3": -7.7
       },
       {
         "mercado": "local_remates",
         "linea": 12.5,
         "etiqueta": "Venezia Remates Over 12.5",
-        "cuota": 2.2,
+        "cuota": 1.93,
         "prob": 46.5,
-        "ev_pct": 2.3,
+        "ev_pct": -10.3,
         "tipo": "POR_EQUIPO",
         "prob_ml": 34.1,
-        "ev_ml": -24.9,
+        "ev_ml": -34.1,
         "prob_m3": 39.6,
-        "ev_m3": -12.8
+        "ev_m3": -23.5
       },
       {
         "mercado": "visit_remates",
         "linea": 13.5,
         "etiqueta": "Bologna Remates Over 13.5",
-        "cuota": 2.12,
+        "cuota": 2.15,
         "prob": 44.0,
-        "ev_pct": -6.7,
+        "ev_pct": -5.4,
         "tipo": "POR_EQUIPO",
         "prob_ml": 46.6,
-        "ev_ml": -1.3,
+        "ev_ml": 0.1,
         "prob_m3": 46.6,
-        "ev_m3": -1.1
+        "ev_m3": 0.3
       },
       {
         "mercado": "local_remates",
         "linea": 13.5,
         "etiqueta": "Venezia Remates Over 13.5",
-        "cuota": 2.82,
+        "cuota": 2.42,
         "prob": 38.0,
-        "ev_pct": 7.2,
+        "ev_pct": -8.0,
         "tipo": "POR_EQUIPO",
         "prob_ml": 26.4,
-        "ev_ml": -25.7,
+        "ev_ml": -36.2,
         "prob_m3": 31.4,
-        "ev_m3": -11.4
+        "ev_m3": -23.9
       },
       {
         "mercado": "local_remates_puerta",
         "linea": 4.5,
         "etiqueta": "Venezia Remates a puerta Over 4.5",
-        "cuota": 3.35,
+        "cuota": 2.9,
         "prob": 37.8,
-        "ev_pct": 26.6,
+        "ev_pct": 9.6,
         "tipo": "POR_EQUIPO",
         "prob_ml": 30.2,
-        "ev_ml": 1.2,
+        "ev_ml": -12.4,
         "prob_m3": 37.5,
-        "ev_m3": 25.7
+        "ev_m3": 8.8
       },
       {
         "mercado": "local_corners_equipo",
         "linea": 5.5,
         "etiqueta": "Venezia Corners equipo Over 5.5",
-        "cuota": 2.77,
+        "cuota": 2.8,
         "prob": 36.1,
-        "ev_pct": -0.0,
+        "ev_pct": 1.1,
         "tipo": "POR_EQUIPO",
         "prob_ml": 28.5,
-        "ev_ml": -20.9,
+        "ev_ml": -20.1,
         "prob_m3": 31.3,
-        "ev_m3": -13.2
+        "ev_m3": -12.2
       },
       {
         "mercado": "visit_remates",
         "linea": 14.5,
         "etiqueta": "Bologna Remates Over 14.5",
-        "cuota": 2.67,
+        "cuota": 2.72,
         "prob": 36.0,
-        "ev_pct": -3.9,
+        "ev_pct": -2.1,
         "tipo": "POR_EQUIPO",
         "prob_ml": 38.5,
-        "ev_ml": 2.8,
+        "ev_ml": 4.8,
         "prob_m3": 38.6,
-        "ev_m3": 3.0
+        "ev_m3": 4.9
       },
       {
         "mercado": "visit_corners_equipo",
         "linea": 5.5,
         "etiqueta": "Bologna Corners equipo Over 5.5",
-        "cuota": 2.85,
+        "cuota": 2.82,
         "prob": 34.6,
-        "ev_pct": -1.4,
+        "ev_pct": -2.4,
         "tipo": "POR_EQUIPO",
         "prob_ml": 40.7,
-        "ev_ml": 15.9,
+        "ev_ml": 14.7,
         "prob_m3": 39.6,
-        "ev_m3": 12.8
+        "ev_m3": 11.6
       },
       {
         "mercado": "visit_remates_puerta",
         "linea": 5.5,
         "etiqueta": "Bologna Remates a puerta Over 5.5",
-        "cuota": 2.67,
+        "cuota": 3.0,
         "prob": 31.7,
-        "ev_pct": -15.4,
+        "ev_pct": -4.9,
         "tipo": "POR_EQUIPO",
         "prob_ml": 27.9,
-        "ev_ml": -25.6,
+        "ev_ml": -16.4,
         "prob_m3": 29.6,
-        "ev_m3": -21.0
-      },
-      {
-        "mercado": "local_remates",
-        "linea": 14.5,
-        "etiqueta": "Venezia Remates Over 14.5",
-        "cuota": 3.7,
-        "prob": 30.3,
-        "ev_pct": 12.1,
-        "tipo": "POR_EQUIPO",
-        "prob_ml": 19.8,
-        "ev_ml": -26.7,
-        "prob_m3": 24.3,
-        "ev_m3": -10.1,
-        "es_remate": true
+        "ev_m3": -11.3
       },
       {
         "mercado": "visit_remates",
         "linea": 15.5,
         "etiqueta": "Bologna Remates Over 15.5",
-        "cuota": 3.5,
+        "cuota": 3.55,
         "prob": 28.8,
-        "ev_pct": 0.8,
+        "ev_pct": 2.2,
         "tipo": "POR_EQUIPO",
         "prob_ml": 31.1,
-        "ev_ml": 9.0,
+        "ev_ml": 10.6,
         "prob_m3": 31.2,
-        "ev_m3": 9.2
+        "ev_m3": 10.8,
+        "es_remate": true
       },
       {
         "mercado": "local_corners_equipo",
         "linea": 6.5,
         "etiqueta": "Venezia Corners equipo Over 6.5",
-        "cuota": 4.2,
+        "cuota": 4.3,
         "prob": 24.4,
-        "ev_pct": 2.5,
+        "ev_pct": 4.9,
         "tipo": "POR_EQUIPO",
         "prob_ml": 18.0,
-        "ev_ml": -24.3,
+        "ev_ml": -22.5,
         "prob_m3": 20.3,
-        "ev_m3": -14.7
+        "ev_m3": -12.7
       },
       {
         "mercado": "visit_corners_equipo",
         "linea": 6.5,
         "etiqueta": "Bologna Corners equipo Over 6.5",
-        "cuota": 4.45,
+        "cuota": 4.35,
         "prob": 23.0,
-        "ev_pct": 2.4,
+        "ev_pct": 0.0,
         "tipo": "POR_EQUIPO",
         "prob_ml": 28.4,
-        "ev_ml": 26.4,
+        "ev_ml": 23.6,
         "prob_m3": 27.4,
-        "ev_m3": 22.0
+        "ev_m3": 19.3
       },
       {
         "mercado": "local_remates_puerta",
         "linea": 5.5,
         "etiqueta": "Venezia Remates a puerta Over 5.5",
-        "cuota": 5.6,
+        "cuota": 4.75,
         "prob": 22.8,
-        "ev_pct": 27.7,
+        "ev_pct": 8.3,
         "tipo": "POR_EQUIPO",
         "prob_ml": 16.8,
-        "ev_ml": -5.9,
+        "ev_ml": -20.2,
         "prob_m3": 22.5,
-        "ev_m3": 26.2
+        "ev_m3": 7.1
       },
       {
         "mercado": "visit_remates_puerta",
         "linea": 6.5,
         "etiqueta": "Bologna Remates a puerta Over 6.5",
-        "cuota": 4.15,
+        "cuota": 4.75,
         "prob": 19.1,
-        "ev_pct": -20.7,
+        "ev_pct": -9.3,
         "tipo": "POR_EQUIPO",
         "prob_ml": 16.1,
-        "ev_ml": -33.0,
+        "ev_ml": -23.3,
         "prob_m3": 17.5,
-        "ev_m3": -27.5
+        "ev_m3": -17.1
       },
       {
         "mercado": "local_corners_equipo",
         "linea": 7.5,
         "etiqueta": "Venezia Corners equipo Over 7.5",
-        "cuota": 6.5,
+        "cuota": 6.6,
         "prob": 15.6,
-        "ev_pct": 1.4,
+        "ev_pct": 3.0,
         "tipo": "POR_EQUIPO",
         "prob_ml": 10.8,
-        "ev_ml": -30.0,
+        "ev_ml": -29.0,
         "prob_m3": 12.5,
-        "ev_m3": -19.0
+        "ev_m3": -17.7
       },
       {
         "mercado": "over15+under45",
@@ -353246,9 +353226,9 @@ const TRACKER_DATA = [
         "mercado": "over05_visit+hcp2_local",
         "linea": null,
         "etiqueta": "Over 0.5 V + HCP +2 L",
-        "cuota": 1.67,
+        "cuota": 1.62,
         "prob": 55.1,
-        "ev_pct": -8.0,
+        "ev_pct": -10.8,
         "tipo": "COMBINADA",
         "patas": [
           "over05_visit",
@@ -353264,9 +353244,9 @@ const TRACKER_DATA = [
         "mercado": "under45+over05_visit",
         "linea": null,
         "etiqueta": "Under 4.5 + Over 0.5 V",
-        "cuota": 1.47,
+        "cuota": 1.5,
         "prob": 65.2,
-        "ev_pct": -4.2,
+        "ev_pct": -2.3,
         "tipo": "COMBINADA",
         "patas": [
           "under45",
@@ -353282,9 +353262,9 @@ const TRACKER_DATA = [
         "mercado": "dox2+under45",
         "linea": null,
         "etiqueta": "DO Empate o V + Under 4.5",
-        "cuota": 1.5,
+        "cuota": 1.57,
         "prob": 62.5,
-        "ev_pct": -6.2,
+        "ev_pct": -1.8,
         "tipo": "COMBINADA",
         "patas": [
           "dox2",
@@ -353300,9 +353280,9 @@ const TRACKER_DATA = [
         "mercado": "over05_local+hcp2_visit",
         "linea": null,
         "etiqueta": "Over 0.5 L + HCP +2 V",
-        "cuota": 1.65,
+        "cuota": 1.62,
         "prob": 56.8,
-        "ev_pct": -6.2,
+        "ev_pct": -8.0,
         "tipo": "COMBINADA",
         "patas": [
           "over05_local",
@@ -353318,9 +353298,9 @@ const TRACKER_DATA = [
         "mercado": "over15+dox2",
         "linea": null,
         "etiqueta": "Over 1.5 + DO Empate o V",
-        "cuota": 1.82,
+        "cuota": 1.91,
         "prob": 54.1,
-        "ev_pct": -1.6,
+        "ev_pct": 3.3,
         "tipo": "COMBINADA",
         "patas": [
           "over15",
@@ -353336,9 +353316,9 @@ const TRACKER_DATA = [
         "mercado": "under35+hcp2_visit",
         "linea": null,
         "etiqueta": "Under 3.5 + HCP +2 V",
-        "cuota": 1.39,
+        "cuota": 1.42,
         "prob": 65.8,
-        "ev_pct": -8.5,
+        "ev_pct": -6.5,
         "tipo": "COMBINADA",
         "patas": [
           "under35",
@@ -353354,9 +353334,9 @@ const TRACKER_DATA = [
         "mercado": "under45+over05_local",
         "linea": null,
         "etiqueta": "Under 4.5 + Over 0.5 L",
-        "cuota": 1.67,
+        "cuota": 1.6,
         "prob": 55.5,
-        "ev_pct": -7.4,
+        "ev_pct": -11.2,
         "tipo": "COMBINADA",
         "patas": [
           "under45",
@@ -353372,9 +353352,9 @@ const TRACKER_DATA = [
         "mercado": "under35+over05_visit",
         "linea": null,
         "etiqueta": "Under 3.5 + Over 0.5 V",
-        "cuota": 1.78,
+        "cuota": 1.87,
         "prob": 51.0,
-        "ev_pct": -9.2,
+        "ev_pct": -4.6,
         "tipo": "COMBINADA",
         "patas": [
           "under35",
@@ -353390,9 +353370,9 @@ const TRACKER_DATA = [
         "mercado": "over05_visit+visit_remates_puerta_over3.5",
         "linea": null,
         "etiqueta": "Over 0.5 V + V Remates a puerta Over 3.5",
-        "cuota": 1.57,
+        "cuota": 1.7,
         "prob": 57.2,
-        "ev_pct": -10.1,
+        "ev_pct": -2.7,
         "tipo": "COMBINADA",
         "patas": [
           "over05_visit",
@@ -353408,9 +353388,9 @@ const TRACKER_DATA = [
         "mercado": "over15+hcp2_visit",
         "linea": null,
         "etiqueta": "Over 1.5 + HCP +2 V",
-        "cuota": 1.57,
+        "cuota": 1.62,
         "prob": 63.3,
-        "ev_pct": -0.6,
+        "ev_pct": 2.6,
         "tipo": "COMBINADA",
         "patas": [
           "over15",
@@ -353426,9 +353406,9 @@ const TRACKER_DATA = [
         "mercado": "local_remates_puerta_over2.5+over05_local",
         "linea": null,
         "etiqueta": "L Remates a puerta Over 2.5 + Over 0.5 L",
-        "cuota": 1.78,
+        "cuota": 1.62,
         "prob": 58.8,
-        "ev_pct": 4.7,
+        "ev_pct": -4.7,
         "tipo": "COMBINADA",
         "patas": [
           "local_remates_puerta_over2.5",
@@ -353480,9 +353460,9 @@ const TRACKER_DATA = [
         "mercado": "local_corners_equipo_over3.5+local_remates_over9.5",
         "linea": null,
         "etiqueta": "L Corners Over 3.5 + L Remates Over 9.5",
-        "cuota": 1.67,
+        "cuota": 1.6,
         "prob": 53.5,
-        "ev_pct": -10.6,
+        "ev_pct": -14.4,
         "tipo": "COMBINADA",
         "patas": [
           "local_corners_equipo_over3.5",
@@ -353498,14 +353478,14 @@ const TRACKER_DATA = [
         "mercado": "local_remates",
         "linea": 15.5,
         "etiqueta": "Venezia Remates Over 15.5",
-        "cuota": 4.0,
+        "cuota": 4.15,
         "prob": 23.6,
-        "ev_pct": -5.6,
+        "ev_pct": -2.1,
         "tipo": "POR_EQUIPO",
         "prob_ml": 14.5,
-        "ev_ml": -41.9,
+        "ev_ml": -39.7,
         "prob_m3": 18.3,
-        "ev_m3": -26.7
+        "ev_m3": -23.9
       },
       {
         "mercado": "visit_remates",
@@ -353524,14 +353504,14 @@ const TRACKER_DATA = [
         "mercado": "visit_remates",
         "linea": 9.5,
         "etiqueta": "Bologna Remates Over 9.5",
-        "cuota": 1.15,
+        "cuota": 1.17,
         "prob": 77.6,
-        "ev_pct": -10.8,
+        "ev_pct": -9.2,
         "tipo": "POR_EQUIPO",
         "prob_ml": 79.4,
-        "ev_ml": -8.7,
+        "ev_ml": -7.1,
         "prob_m3": 79.4,
-        "ev_m3": -8.6
+        "ev_m3": -7.1
       },
       {
         "mercado": "visit_remates_over7.5+visit_remates_puerta_over2.5",
@@ -353552,6 +353532,51 @@ const TRACKER_DATA = [
         "n_hist": 185
       },
       {
+        "mercado": "over35",
+        "linea": null,
+        "etiqueta": "Over 3.5",
+        "cuota": 3.6,
+        "prob": 27.9,
+        "ev_pct": 0.4,
+        "filtro_edge": "EV=+0.4% < 1.5"
+      },
+      {
+        "mercado": "visit_remates_over9.5+visit_remates_puerta_over2.5",
+        "linea": null,
+        "etiqueta": "V Remates Over 9.5 + V Remates a puerta Over 2.5",
+        "cuota": 1.3,
+        "prob": 67.4,
+        "ev_pct": -12.4,
+        "tipo": "COMBINADA",
+        "patas": [
+          "visit_remates_over9.5",
+          "visit_remates_puerta_over2.5"
+        ],
+        "lift": 1.236,
+        "cuota_justa": 1.51,
+        "cuota_segura": 1.7,
+        "acierto_hist": 66.1,
+        "n_hist": 180
+      },
+      {
+        "mercado": "visit_remates_over9.5+visit_remates_puerta_over3.5",
+        "linea": null,
+        "etiqueta": "V Remates Over 9.5 + V Remates a puerta Over 3.5",
+        "cuota": 1.55,
+        "prob": 57.3,
+        "ev_pct": -11.2,
+        "tipo": "COMBINADA",
+        "patas": [
+          "visit_remates_over9.5",
+          "visit_remates_puerta_over3.5"
+        ],
+        "lift": 1.374,
+        "cuota_justa": 1.75,
+        "cuota_segura": 2.02,
+        "acierto_hist": 57.1,
+        "n_hist": 161
+      },
+      {
         "mercado": "over25",
         "linea": null,
         "etiqueta": "Over 2.5",
@@ -353565,13 +353590,17 @@ const TRACKER_DATA = [
         "regla_cuota_max_pick": "cuota 2.07 > tope 2.00"
       },
       {
-        "mercado": "over35",
+        "mercado": "btts",
         "linea": null,
-        "etiqueta": "Over 3.5",
-        "cuota": 3.65,
-        "prob": 27.9,
-        "ev_pct": 1.8,
-        "regla_cuota_max_pick": "cuota 3.65 > tope 2.00"
+        "etiqueta": "BTTS",
+        "cuota": 1.78,
+        "prob": 56.5,
+        "ev_pct": 0.6,
+        "cuota_justa": 1.7,
+        "cuota_segura": 1.83,
+        "acierto_hist": 58.7,
+        "n_hist": 606,
+        "regla_max_picks": "3 PICKs; se quedan los 2 de mayor P% (esta tenia 56.5%)"
       }
     ],
     "mercados_snapshot": {
@@ -353688,20 +353717,9 @@ const TRACKER_DATA = [
         "cruza_segura": true
       },
       {
-        "mercado": "over25",
-        "etiqueta": "Over 2.5",
-        "cuota": 2.07,
-        "justa": 1.95,
-        "segura": 2.17,
-        "hist": 51.3,
-        "n": 359,
-        "cruza": true,
-        "cruza_segura": false
-      },
-      {
         "mercado": "btts",
         "etiqueta": "BTTS",
-        "cuota": 1.82,
+        "cuota": 1.78,
         "justa": 1.7,
         "segura": 1.83,
         "hist": 58.7,
@@ -353710,9 +353728,20 @@ const TRACKER_DATA = [
         "cruza_segura": false
       },
       {
+        "mercado": "over15+over05_visit",
+        "etiqueta": "Over 1.5 + Over 0.5 V",
+        "cuota": 1.5,
+        "justa": 1.43,
+        "segura": 1.56,
+        "hist": 69.9,
+        "n": 269,
+        "cruza": true,
+        "cruza_segura": false
+      },
+      {
         "mercado": "over05_local",
         "etiqueta": "Over 0.5 L",
-        "cuota": 1.44,
+        "cuota": 1.38,
         "justa": 1.49,
         "segura": 1.67,
         "hist": 67.3,
@@ -353723,18 +353752,18 @@ const TRACKER_DATA = [
       {
         "mercado": "over05_visit",
         "etiqueta": "Over 0.5 V",
-        "cuota": 1.27,
+        "cuota": 1.3,
         "justa": 1.29,
         "segura": 1.39,
         "hist": 77.7,
         "n": 233,
-        "cruza": false,
+        "cruza": true,
         "cruza_segura": false
       },
       {
         "mercado": "hcp2_local",
         "etiqueta": "HCP +2 L",
-        "cuota": 1.22,
+        "cuota": 1.18,
         "justa": 1.33,
         "segura": 1.47,
         "hist": 75.3,
@@ -353745,13 +353774,13 @@ const TRACKER_DATA = [
       {
         "mercado": "local_remates_puerta_over2.5",
         "etiqueta": "Venezia Remates a puerta Over 2.5",
-        "cuota": 1.45,
+        "cuota": 1.36,
         "justa": 1.28,
         "segura": 1.37,
         "hist": 78.2,
         "n": 293,
         "cruza": true,
-        "cruza_segura": true
+        "cruza_segura": false
       },
       {
         "mercado": "local_corners_equipo_over3.5",
@@ -353767,7 +353796,7 @@ const TRACKER_DATA = [
       {
         "mercado": "visit_corners_equipo_over3.5",
         "etiqueta": "Bologna Corners Over 3.5",
-        "cuota": 1.45,
+        "cuota": 1.44,
         "justa": 1.64,
         "segura": 1.84,
         "hist": 60.9,
@@ -353778,7 +353807,7 @@ const TRACKER_DATA = [
       {
         "mercado": "local_remates_over10.5",
         "etiqueta": "Venezia Remates Over 10.5",
-        "cuota": 1.47,
+        "cuota": 1.37,
         "justa": 1.62,
         "segura": 1.85,
         "hist": 61.7,
@@ -353800,7 +353829,7 @@ const TRACKER_DATA = [
       {
         "mercado": "over05_visit+hcp2_local",
         "etiqueta": "Over 0.5 V + HCP +2 L",
-        "cuota": 1.67,
+        "cuota": 1.62,
         "justa": 1.68,
         "segura": 1.8,
         "hist": 59.6,
@@ -353811,7 +353840,7 @@ const TRACKER_DATA = [
       {
         "mercado": "under45+over05_visit",
         "etiqueta": "Under 4.5 + Over 0.5 V",
-        "cuota": 1.47,
+        "cuota": 1.5,
         "justa": 1.47,
         "segura": 1.57,
         "hist": 68.3,
@@ -353822,7 +353851,7 @@ const TRACKER_DATA = [
       {
         "mercado": "dox2+under45",
         "etiqueta": "DO Empate o V + Under 4.5",
-        "cuota": 1.5,
+        "cuota": 1.57,
         "justa": 1.6,
         "segura": 1.73,
         "hist": 62.7,
@@ -353833,7 +353862,7 @@ const TRACKER_DATA = [
       {
         "mercado": "over05_local+hcp2_visit",
         "etiqueta": "Over 0.5 L + HCP +2 V",
-        "cuota": 1.65,
+        "cuota": 1.62,
         "justa": 1.75,
         "segura": 1.89,
         "hist": 57.2,
@@ -353844,7 +353873,7 @@ const TRACKER_DATA = [
       {
         "mercado": "over15+dox2",
         "etiqueta": "Over 1.5 + DO Empate o V",
-        "cuota": 1.82,
+        "cuota": 1.91,
         "justa": 1.8,
         "segura": 2.0,
         "hist": 55.4,
@@ -353855,7 +353884,7 @@ const TRACKER_DATA = [
       {
         "mercado": "under35+hcp2_visit",
         "etiqueta": "Under 3.5 + HCP +2 V",
-        "cuota": 1.39,
+        "cuota": 1.42,
         "justa": 1.48,
         "segura": 1.62,
         "hist": 67.7,
@@ -353866,7 +353895,7 @@ const TRACKER_DATA = [
       {
         "mercado": "under45+over05_local",
         "etiqueta": "Under 4.5 + Over 0.5 L",
-        "cuota": 1.67,
+        "cuota": 1.6,
         "justa": 1.71,
         "segura": 1.91,
         "hist": 58.4,
@@ -353875,20 +353904,9 @@ const TRACKER_DATA = [
         "cruza_segura": false
       },
       {
-        "mercado": "over15+over05_visit",
-        "etiqueta": "Over 1.5 + Over 0.5 V",
-        "cuota": 1.47,
-        "justa": 1.43,
-        "segura": 1.56,
-        "hist": 69.9,
-        "n": 269,
-        "cruza": true,
-        "cruza_segura": false
-      },
-      {
         "mercado": "under35+over05_visit",
         "etiqueta": "Under 3.5 + Over 0.5 V",
-        "cuota": 1.78,
+        "cuota": 1.87,
         "justa": 1.91,
         "segura": 2.18,
         "hist": 52.4,
@@ -353899,7 +353917,7 @@ const TRACKER_DATA = [
       {
         "mercado": "over05_visit+visit_remates_puerta_over3.5",
         "etiqueta": "Over 0.5 V + V Remates a puerta Over 3.5",
-        "cuota": 1.57,
+        "cuota": 1.7,
         "justa": 1.74,
         "segura": 1.97,
         "hist": 57.6,
@@ -353910,18 +353928,18 @@ const TRACKER_DATA = [
       {
         "mercado": "over15+hcp2_visit",
         "etiqueta": "Over 1.5 + HCP +2 V",
-        "cuota": 1.57,
+        "cuota": 1.62,
         "justa": 1.58,
         "segura": 1.79,
         "hist": 63.1,
         "n": 179,
-        "cruza": false,
+        "cruza": true,
         "cruza_segura": false
       },
       {
         "mercado": "local_remates_puerta_over2.5+over05_local",
         "etiqueta": "L Remates a puerta Over 2.5 + Over 0.5 L",
-        "cuota": 1.78,
+        "cuota": 1.62,
         "justa": 1.82,
         "segura": 2.1,
         "hist": 55.1,
@@ -353954,7 +353972,7 @@ const TRACKER_DATA = [
       {
         "mercado": "local_corners_equipo_over3.5+local_remates_over9.5",
         "etiqueta": "L Corners Over 3.5 + L Remates Over 9.5",
-        "cuota": 1.67,
+        "cuota": 1.6,
         "justa": 1.86,
         "segura": 2.17,
         "hist": 53.8,
@@ -353970,6 +353988,39 @@ const TRACKER_DATA = [
         "segura": 1.49,
         "hist": 74.1,
         "n": 185,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "over25",
+        "etiqueta": "Over 2.5",
+        "cuota": 2.07,
+        "justa": 1.95,
+        "segura": 2.17,
+        "hist": 51.3,
+        "n": 359,
+        "cruza": true,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "visit_remates_over9.5+visit_remates_puerta_over2.5",
+        "etiqueta": "V Remates Over 9.5 + V Remates a puerta Over 2.5",
+        "cuota": 1.3,
+        "justa": 1.51,
+        "segura": 1.7,
+        "hist": 66.1,
+        "n": 180,
+        "cruza": false,
+        "cruza_segura": false
+      },
+      {
+        "mercado": "visit_remates_over9.5+visit_remates_puerta_over3.5",
+        "etiqueta": "V Remates Over 9.5 + V Remates a puerta Over 3.5",
+        "cuota": 1.55,
+        "justa": 1.75,
+        "segura": 2.02,
+        "hist": 57.1,
+        "n": 161,
         "cruza": false,
         "cruza_segura": false
       }
@@ -354215,7 +354266,7 @@ const TRACKER_DATA = [
         "cuota_segura": 1.7,
         "acierto_hist": 66.1,
         "n_hist": 180,
-        "cotizada": false
+        "cotizada": true
       },
       {
         "mercado": "over15+hcp2_visit",
@@ -354281,7 +354332,7 @@ const TRACKER_DATA = [
         "cuota_segura": 2.02,
         "acierto_hist": 57.1,
         "n_hist": 161,
-        "cotizada": false
+        "cotizada": true
       },
       {
         "mercado": "visit_corners_equipo_over2.5+visit_remates_over10.5",
@@ -354904,7 +354955,7 @@ const TRACKER_DATA = [
       "local": 15,
       "visit": 7
     },
-    "notas": "",
+    "notas": "2026-11-27 09:05 (Lima): cuotas re-tomadas en Betano antes del saque. Antes: [('PICK', 'Over 0.5 Levante', 1.13)]. Ahora: [('PICK', 'Over 0.5 Levante', 1.13), ('COMBO', 'DO L o Empate + Under 4.5', 1.83)].",
     "resultado_partido": null,
     "goles_esperados": "3.68",
     "apuestas": [
@@ -354918,6 +354969,26 @@ const TRACKER_DATA = [
         "ev_pct": 1.7,
         "estado": "PENDIENTE",
         "pl": null
+      },
+      {
+        "tipo": "COMBO",
+        "mercado": "do1x+under45",
+        "etiqueta": "DO L o Empate + Under 4.5",
+        "cuota": 1.83,
+        "prob": 50.4,
+        "ev_pct": -7.8,
+        "estado": "PENDIENTE",
+        "pl": null,
+        "patas": [
+          "do1x",
+          "under45"
+        ],
+        "promovida_combinada": true,
+        "nivel_cruce": "justa",
+        "cuota_justa": 1.83,
+        "cuota_segura": 2.1,
+        "acierto_hist": 54.7,
+        "n_hist": 192
       }
     ],
     "watchlist": [
@@ -354925,34 +354996,35 @@ const TRACKER_DATA = [
         "mercado": "victoria_local",
         "linea": null,
         "etiqueta": "Victoria Levante",
-        "cuota": 2.07,
+        "cuota": 2.02,
         "prob": 51.5,
-        "ev_pct": 6.6,
+        "ev_pct": 4.0,
         "regla_1x2_no_pick": true
       },
       {
         "mercado": "empate",
         "linea": null,
         "etiqueta": "Empate",
-        "cuota": 3.75,
+        "cuota": 3.95,
         "prob": 22.8,
-        "ev_pct": -14.5
+        "ev_pct": -9.9
       },
       {
         "mercado": "victoria_visit",
         "linea": null,
         "etiqueta": "Victoria Racing Santander",
-        "cuota": 3.35,
+        "cuota": 3.3,
         "prob": 25.9,
-        "ev_pct": -13.2
+        "ev_pct": -14.5
       },
       {
         "mercado": "do1x",
         "linea": null,
         "etiqueta": "DO Levante o Empate",
-        "cuota": 1.35,
+        "cuota": 1.36,
         "prob": 74.1,
-        "ev_pct": 0.0,
+        "ev_pct": 0.8,
+        "filtro_edge": "no cruza validada (justa 1.42)",
         "cuota_justa": 1.42,
         "cuota_segura": 1.57,
         "acierto_hist": 70.6,
@@ -354962,9 +355034,9 @@ const TRACKER_DATA = [
         "mercado": "dox2",
         "linea": null,
         "etiqueta": "DO Empate o Racing Santander",
-        "cuota": 1.8,
+        "cuota": 1.82,
         "prob": 48.5,
-        "ev_pct": -12.7
+        "ev_pct": -11.7
       },
       {
         "mercado": "over15",
@@ -354978,18 +355050,17 @@ const TRACKER_DATA = [
         "mercado": "over25",
         "linea": null,
         "etiqueta": "Over 2.5",
-        "cuota": 1.44,
+        "cuota": 1.42,
         "prob": 70.0,
-        "ev_pct": 0.8,
-        "filtro_edge": "EV=+0.8% < 1.5"
+        "ev_pct": -0.6
       },
       {
         "mercado": "under25",
         "linea": null,
         "etiqueta": "Under 2.5",
-        "cuota": 2.85,
+        "cuota": 2.87,
         "prob": 30.0,
-        "ev_pct": -14.5
+        "ev_pct": -13.9
       },
       {
         "mercado": "over35",
@@ -355020,17 +355091,17 @@ const TRACKER_DATA = [
         "mercado": "btts",
         "linea": null,
         "etiqueta": "BTTS",
-        "cuota": 1.37,
+        "cuota": 1.39,
         "prob": 66.4,
-        "ev_pct": -9.0
+        "ev_pct": -7.7
       },
       {
         "mercado": "over05_visit",
         "linea": null,
         "etiqueta": "Over 0.5 Racing Santander",
-        "cuota": 1.21,
+        "cuota": 1.22,
         "prob": 78.6,
-        "ev_pct": -4.9,
+        "ev_pct": -4.1,
         "cuota_justa": 1.29,
         "cuota_segura": 1.39,
         "acierto_hist": 77.7,
@@ -355040,17 +355111,17 @@ const TRACKER_DATA = [
         "mercado": "hcp2_des",
         "linea": null,
         "etiqueta": "HCP +2 Racing Santander",
-        "cuota": 1.3,
+        "cuota": 1.32,
         "prob": 69.3,
-        "ev_pct": -9.9
+        "ev_pct": -8.5
       },
       {
         "mercado": "hcp3_des",
         "linea": null,
         "etiqueta": "HCP +3 Racing Santander",
-        "cuota": 1.11,
+        "cuota": 1.12,
         "prob": 84.7,
-        "ev_pct": -6.0
+        "ev_pct": -5.1
       },
       {
         "mercado": "corners65",
@@ -355448,9 +355519,9 @@ const TRACKER_DATA = [
         "mercado": "do1x+over05_local",
         "linea": null,
         "etiqueta": "DO L o Empate + Over 0.5 L",
-        "cuota": 1.4,
+        "cuota": 1.42,
         "prob": 69.7,
-        "ev_pct": -2.4,
+        "ev_pct": -1.0,
         "tipo": "COMBINADA",
         "patas": [
           "do1x",
@@ -355466,9 +355537,9 @@ const TRACKER_DATA = [
         "mercado": "over05_local+hcp2_visit",
         "linea": null,
         "etiqueta": "Over 0.5 L + HCP +2 V",
-        "cuota": 1.55,
+        "cuota": 1.57,
         "prob": 57.5,
-        "ev_pct": -10.8,
+        "ev_pct": -9.7,
         "tipo": "COMBINADA",
         "patas": [
           "over05_local",
@@ -355484,9 +355555,9 @@ const TRACKER_DATA = [
         "mercado": "over15+hcp3_visit",
         "linea": null,
         "etiqueta": "Over 1.5 + HCP +3 V",
-        "cuota": 1.28,
+        "cuota": 1.3,
         "prob": 72.9,
-        "ev_pct": -6.7,
+        "ev_pct": -5.2,
         "tipo": "COMBINADA",
         "patas": [
           "over15",
@@ -355520,9 +355591,9 @@ const TRACKER_DATA = [
         "mercado": "over25+over05_visit",
         "linea": null,
         "etiqueta": "Over 2.5 + Over 0.5 V",
-        "cuota": 1.53,
+        "cuota": 1.52,
         "prob": 63.4,
-        "ev_pct": -3.0,
+        "ev_pct": -3.6,
         "tipo": "COMBINADA",
         "patas": [
           "over25",
@@ -355538,9 +355609,9 @@ const TRACKER_DATA = [
         "mercado": "over05_local+hcp3_visit",
         "linea": null,
         "etiqueta": "Over 0.5 L + HCP +3 V",
-        "cuota": 1.27,
+        "cuota": 1.29,
         "prob": 72.9,
-        "ev_pct": -7.4,
+        "ev_pct": -5.9,
         "tipo": "COMBINADA",
         "patas": [
           "over05_local",
@@ -355556,9 +355627,9 @@ const TRACKER_DATA = [
         "mercado": "btts+hcp2_visit",
         "linea": null,
         "etiqueta": "BTTS + HCP +2 V",
-        "cuota": 1.67,
+        "cuota": 1.72,
         "prob": 52.1,
-        "ev_pct": -12.9,
+        "ev_pct": -10.3,
         "tipo": "COMBINADA",
         "patas": [
           "btts",
@@ -355574,9 +355645,9 @@ const TRACKER_DATA = [
         "mercado": "over05_visit+hcp2_visit",
         "linea": null,
         "etiqueta": "Over 0.5 V + HCP +2 V",
-        "cuota": 1.45,
+        "cuota": 1.47,
         "prob": 61.4,
-        "ev_pct": -11.0,
+        "ev_pct": -9.8,
         "tipo": "COMBINADA",
         "patas": [
           "over05_visit",
@@ -355607,30 +355678,12 @@ const TRACKER_DATA = [
         "n_hist": 210
       },
       {
-        "mercado": "do1x+under45",
-        "linea": null,
-        "etiqueta": "DO L o Empate + Under 4.5",
-        "cuota": 1.82,
-        "prob": 50.4,
-        "ev_pct": -8.3,
-        "tipo": "COMBINADA",
-        "patas": [
-          "do1x",
-          "under45"
-        ],
-        "lift": 1.021,
-        "cuota_justa": 1.83,
-        "cuota_segura": 2.1,
-        "acierto_hist": 54.7,
-        "n_hist": 192
-      },
-      {
         "mercado": "over25+over05_local",
         "linea": null,
         "etiqueta": "Over 2.5 + Over 0.5 L",
-        "cuota": 1.47,
+        "cuota": 1.44,
         "prob": 68.8,
-        "ev_pct": 1.1,
+        "ev_pct": -1.0,
         "tipo": "COMBINADA",
         "patas": [
           "over25",
@@ -355646,9 +355699,9 @@ const TRACKER_DATA = [
         "mercado": "do1x+over15",
         "linea": null,
         "etiqueta": "DO L o Empate + Over 1.5",
-        "cuota": 1.52,
+        "cuota": 1.53,
         "prob": 64.3,
-        "ev_pct": -2.2,
+        "ev_pct": -1.6,
         "tipo": "COMBINADA",
         "patas": [
           "do1x",
@@ -355815,7 +355868,7 @@ const TRACKER_DATA = [
       {
         "mercado": "do1x",
         "etiqueta": "DO L o Empate",
-        "cuota": 1.35,
+        "cuota": 1.36,
         "justa": 1.42,
         "segura": 1.57,
         "hist": 70.6,
@@ -355826,7 +355879,7 @@ const TRACKER_DATA = [
       {
         "mercado": "over05_visit",
         "etiqueta": "Over 0.5 V",
-        "cuota": 1.21,
+        "cuota": 1.22,
         "justa": 1.29,
         "segura": 1.39,
         "hist": 77.7,
@@ -355870,7 +355923,7 @@ const TRACKER_DATA = [
       {
         "mercado": "do1x+over05_local",
         "etiqueta": "DO L o Empate + Over 0.5 L",
-        "cuota": 1.4,
+        "cuota": 1.42,
         "justa": 1.44,
         "segura": 1.54,
         "hist": 69.4,
@@ -355881,7 +355934,7 @@ const TRACKER_DATA = [
       {
         "mercado": "over05_local+hcp2_visit",
         "etiqueta": "Over 0.5 L + HCP +2 V",
-        "cuota": 1.55,
+        "cuota": 1.57,
         "justa": 1.75,
         "segura": 1.89,
         "hist": 57.2,
@@ -355892,7 +355945,7 @@ const TRACKER_DATA = [
       {
         "mercado": "over15+hcp3_visit",
         "etiqueta": "Over 1.5 + HCP +3 V",
-        "cuota": 1.28,
+        "cuota": 1.3,
         "justa": 1.44,
         "segura": 1.56,
         "hist": 69.6,
@@ -355914,7 +355967,7 @@ const TRACKER_DATA = [
       {
         "mercado": "over25+over05_visit",
         "etiqueta": "Over 2.5 + Over 0.5 V",
-        "cuota": 1.53,
+        "cuota": 1.52,
         "justa": 1.57,
         "segura": 1.75,
         "hist": 63.8,
@@ -355925,7 +355978,7 @@ const TRACKER_DATA = [
       {
         "mercado": "over05_local+hcp3_visit",
         "etiqueta": "Over 0.5 L + HCP +3 V",
-        "cuota": 1.27,
+        "cuota": 1.29,
         "justa": 1.37,
         "segura": 1.49,
         "hist": 72.9,
@@ -355936,7 +355989,7 @@ const TRACKER_DATA = [
       {
         "mercado": "btts+hcp2_visit",
         "etiqueta": "BTTS + HCP +2 V",
-        "cuota": 1.67,
+        "cuota": 1.72,
         "justa": 1.93,
         "segura": 2.2,
         "hist": 51.9,
@@ -355947,7 +356000,7 @@ const TRACKER_DATA = [
       {
         "mercado": "over05_visit+hcp2_visit",
         "etiqueta": "Over 0.5 V + HCP +2 V",
-        "cuota": 1.45,
+        "cuota": 1.47,
         "justa": 1.64,
         "segura": 1.85,
         "hist": 60.8,
@@ -355969,18 +356022,18 @@ const TRACKER_DATA = [
       {
         "mercado": "do1x+under45",
         "etiqueta": "DO L o Empate + Under 4.5",
-        "cuota": 1.82,
+        "cuota": 1.83,
         "justa": 1.83,
         "segura": 2.1,
         "hist": 54.7,
         "n": 192,
-        "cruza": false,
+        "cruza": true,
         "cruza_segura": false
       },
       {
         "mercado": "over25+over05_local",
         "etiqueta": "Over 2.5 + Over 0.5 L",
-        "cuota": 1.47,
+        "cuota": 1.44,
         "justa": 1.53,
         "segura": 1.75,
         "hist": 65.4,
@@ -355991,7 +356044,7 @@ const TRACKER_DATA = [
       {
         "mercado": "do1x+over15",
         "etiqueta": "DO L o Empate + Over 1.5",
-        "cuota": 1.52,
+        "cuota": 1.53,
         "justa": 1.63,
         "segura": 1.86,
         "hist": 61.3,
