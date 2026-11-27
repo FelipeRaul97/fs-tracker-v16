@@ -6257,6 +6257,7 @@ function _remValRender(){
 // el engine y lo que habrían dado M2 y M3. Solo datos del d2, desde el partido #1 (una sola muestra, a pedido).
 const M2_N=100, M2_MARGEN=0.06;
 let _m2Partido=null;   // partido elegido en ⑦
+let _m2Tipo='todos';   // filtro de TIPO de ⑤ y ⑥ (REMATE / A PUERTA / CÓRNERS)
 const M2_MERC=[['remates','Remates'],['remates_puerta','A puerta'],['corners_equipo','Córners']];
 const M2_MODS=[['e','Engine'],['m','M2'],['3','M3']];   // sufijos de campo: pe/pm/p3, eve/evm/ev3, mue/mum/mu3
 function _m2Entradas(){ return _DATA.filter(p=>p.resultado_partido&&p.mu_ml&&p.mu_m3&&p.mu_equipo); }
@@ -6389,15 +6390,22 @@ function renderM2(){
   claves.forEach(k=>{ const a=porLado.e[k], b=porLado.m[k], c=porLado['3'][k], et=o=>o?o.et:'';
     if(et(a)===et(b)&&et(a)===et(c)) return; const x=a||b||c; camb.push({id:x.id,partido:x.partido,tipo:k.split('|')[0],a,b,c}); });
   camb.sort((p,q)=>q.id-p.id);
-  const t5=camb.length?tbl(th('#')+th('Partido')+th('Tipo')+th('Engine elige')+th('M2 elegiría')+th('M3 elegiría'),
-    camb.map(c=>'<tr><td style="text-align:left">'+String(c.id).padStart(3,'0')+'</td><td style="text-align:left">'+c.partido+'</td><td style="text-align:left">'+c.tipo+'</td><td style="text-align:left">'+ch(c.a)+'</td><td style="text-align:left">'+ch(c.b)+'</td><td style="text-align:left">'+ch(c.c)+'</td></tr>').join(''),'max-height:360px;overflow-y:auto')
-    :'<p class="empty">Ninguna diferencia todavía.</p>';
+  // filtro de TIPO (compartido por ⑤ y ⑥; se pone un selector en cada sección y los dos quedan sincronizados)
+  const tipoSel=()=>'<div style="font-size:12px;margin:0 0 8px"><label>Tipo <select class="m2-tipo" style="font-size:12px">'
+    +[['todos','Todos'],['REMATE','REMATE (R1)'],['A PUERTA','A PUERTA (S1)'],['CÓRNERS','CÓRNERS (K1)']].map(([v,t])=>'<option value="'+v+'"'+(v===_m2Tipo?' selected':'')+'>'+t+'</option>').join('')
+    +'</select></label> <span style="color:var(--text3)">filtra los puntos ⑤ y ⑥</span></div>';
+  const okTipo=t=>_m2Tipo==='todos'||t===_m2Tipo;
+  const camb0=camb.length, cambF=camb.filter(c=>okTipo(c.tipo));
+  const t5=cambF.length?tbl(th('#')+th('Partido')+th('Tipo')+th('Engine elige')+th('M2 elegiría')+th('M3 elegiría'),
+    cambF.map(c=>'<tr><td style="text-align:left">'+String(c.id).padStart(3,'0')+'</td><td style="text-align:left">'+c.partido+'</td><td style="text-align:left">'+c.tipo+'</td><td style="text-align:left">'+ch(c.a)+'</td><td style="text-align:left">'+ch(c.b)+'</td><td style="text-align:left">'+ch(c.c)+'</td></tr>').join(''),'max-height:360px;overflow-y:auto')
+    :'<p class="empty">'+(camb0?'Ninguna diferencia de tipo '+_m2Tipo+'.':'Ninguna diferencia todavía.')+'</p>';
 
   // ⑥ todo lo que eligieron M2 y M3
   const pct=v=>Math.round(v*100)+'%', evf=v=>'<span class="'+(v>0?'pl-pos':'pl-neg')+'">'+(v>=0?'+':'')+v.toFixed(1)+'%</span>';
   const res=x=>'<span class="'+(x.win?'pl-pos':'pl-neg')+'">'+(x.win?'G':'P')+'</span>', pl=x=>_mejU(x.win?x.cuota-1:-1);
   const elegidas={}; ['m','3'].forEach(s=>Object.values(porLado[s]).forEach(x=>{ const k=x.id+'|'+x.et; (elegidas[k]=elegidas[k]||{x,por:[]}).por.push(s==='m'?'M2':'M3'); }));
-  const lista=Object.values(elegidas).sort((p,q)=>q.x.id-p.x.id||sel.m[p.x.id+'|'+p.x.et]?.localeCompare(sel.m[q.x.id+'|'+q.x.et]||'')||0);
+  const lista0=Object.values(elegidas).sort((p,q)=>q.x.id-p.x.id||sel.m[p.x.id+'|'+p.x.et]?.localeCompare(sel.m[q.x.id+'|'+q.x.et]||'')||0);
+  const lista=lista0.filter(({x})=>okTipo(sel.m[x.id+'|'+x.et]||sel['3'][x.id+'|'+x.et]));
   const t6=lista.length?tbl(th('#')+th('Partido')+th('Tipo')+th('Línea')+th('Cuota',1)+th('Elegida por',1)
       +M2_MODS.map(([,nn])=>th('P '+nn,1)+th('EV '+nn,1)).join('')+th('Engine también',1)+th('Resultado',1)+th('P&amp;L',1),
     lista.map(({x,por})=>{ const tipo=sel.m[x.id+'|'+x.et]||sel['3'][x.id+'|'+x.et];
@@ -6405,7 +6413,7 @@ function renderM2(){
         +'<td class="num">'+x.cuota.toFixed(2)+'</td><td class="num"><b>'+por.join(' · ')+'</b></td>'
         +M2_MODS.map(([s])=>'<td class="num">'+pct(x['p'+s])+'</td><td class="num">'+evf(x['ev'+s])+'</td>').join('')
         +'<td class="num">'+(sel.e[x.id+'|'+x.et]?'sí':'<span style="color:var(--text3)">no</span>')+'</td><td class="num">'+res(x)+'</td><td class="num">'+pl(x)+'</td></tr>'; }).join(''),'max-height:420px;overflow-y:auto')
-    :'<p class="empty">M2 y M3 no eligieron ninguna línea todavía.</p>';
+    :'<p class="empty">'+(lista0.length?'M2 y M3 no eligieron ninguna línea de tipo '+_m2Tipo+'.':'M2 y M3 no eligieron ninguna línea todavía.')+'</p>';
 
   // ⑦ todas las líneas cotizadas de un partido
   const pids=[...new Set(L.map(x=>x.id))].sort((a,b)=>b-a);
@@ -6423,10 +6431,11 @@ function renderM2(){
     +sec('② Calidad de la probabilidad: engine, M2, M3 y la cuota',t2,'Todas las líneas Over cotizadas y cerradas. Brier: más bajo es mejor (en negrita el mejor de los cuatro). La cuota se pasa a probabilidad quitando un margen supuesto de '+Math.round(M2_MARGEN*100)+'%. Las diferencias van ×100 por línea, con ±90% agrupado por partido; negativo = el modelo mejor.')
     +sec('③ ¿Cumple lo que promete? Acierto real por tramo de probabilidad',t3,'Si «prometía» supera a «real», ese modelo sobreestima ese tramo. Filas con menos de 15 líneas, atenuadas.')
     +sec('④ Qué se habría elegido: una línea por equipo y partido',t4,'Misma regla y mismas líneas cotizadas; solo cambia la probabilidad (y en R1 la media) que se usa. El filtro de EV cambia también los puntos ⑤ y ⑥; con «Todas» o «EV ≤ 0», «mayor EV×P» elige la línea con el EV×P menos malo (el EV se calcula con la probabilidad de cada modelo, así que una línea puede tener EV&gt;0 para M2 y ≤0 para el engine). Lo realmente apostado en el d2 solo coincide con «engine» en «Solo EV &gt; 0». «u/partido pareado» compara partido a partido, contando los partidos sin apuesta como 0. K1 no es un tipo de apuesta: mide el impacto que tendría.')
-    +sec('⑤ Partidos donde cambia la elección',t5,'Cuando al menos uno de los tres elige distinto. G = ganó, P = perdió. Más reciente primero.')
-    +sec('⑥ Todo lo que eligieron M2 y M3',t6,'Cada línea que M2 o M3 habrían elegido con R1, S1 y K1, con la probabilidad y el EV de los tres. «Elegida por» dice cuál la eligió; «Engine también» = el engine eligió esa misma línea. Más reciente primero.')
+    +sec('⑤ Partidos donde cambia la elección',tipoSel()+t5,'Cuando al menos uno de los tres elige distinto. G = ganó, P = perdió. Más reciente primero.')
+    +sec('⑥ Todo lo que eligieron M2 y M3',tipoSel()+t6,'Cada línea que M2 o M3 habrían elegido con R1, S1 y K1, con la probabilidad y el EV de los tres. «Elegida por» dice cuál la eligió; «Engine también» = el engine eligió esa misma línea. Más reciente primero.')
     +sec('⑦ Todas las líneas cotizadas de un partido',t7,'Cada línea por equipo que se cotizó en Betano, con la probabilidad y el EV de cada modelo, y qué eligió cada uno (R1 / S1 / K1).');
   const ps=document.getElementById('m2-partido'); if(ps) ps.onchange=()=>{ _m2Partido=ps.value; renderM2(); };
+  document.querySelectorAll('select.m2-tipo').forEach(s=>{ s.onchange=()=>{ _m2Tipo=s.value; const y=window.scrollY; renderM2(); window.scrollTo(0,y); }; });
 }
 function renderRemates(){
   renderRemateMercados();      // REMATE y A PUERTA por cuota y por línea
