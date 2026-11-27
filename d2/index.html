@@ -6402,11 +6402,20 @@ function renderM2(){
 
   // ⑥ todo lo que eligieron M2 y M3
   const pct=v=>Math.round(v*100)+'%', evf=v=>'<span class="'+(v>0?'pl-pos':'pl-neg')+'">'+(v>=0?'+':'')+v.toFixed(1)+'%</span>';
-  const res=x=>'<span class="'+(x.win?'pl-pos':'pl-neg')+'">'+(x.win?'G':'P')+'</span>', pl=x=>_mejU(x.win?x.cuota-1:-1);
+  const res=x=>'<span class="'+(x.win?'pl-pos':'pl-neg')+'">'+(x.win?'G':'P')+'</span>', pl=x=>{ const v=x.win?x.cuota-1:-1; return '<span class="'+_mejCl(v)+'">'+_mejSg(v,2)+'u</span>'; };
   const elegidas={}; ['m','3'].forEach(s=>Object.values(porLado[s]).forEach(x=>{ const k=x.id+'|'+x.et; (elegidas[k]=elegidas[k]||{x,por:[]}).por.push(s==='m'?'M2':'M3'); }));
   const lista0=Object.values(elegidas).sort((p,q)=>q.x.id-p.x.id||sel.m[p.x.id+'|'+p.x.et]?.localeCompare(sel.m[q.x.id+'|'+q.x.et]||'')||0);
   const lista=lista0.filter(({x})=>okTipo(sel.m[x.id+'|'+x.et]||sel['3'][x.id+'|'+x.et]));
-  const t6=lista.length?tbl(th('#')+th('Partido')+th('Tipo')+th('Línea')+th('Cuota',1)+th('Elegida por',1)
+  // totales de ⑥ (valores exactos, sin redondear cada fila; con el filtro de Tipo y de EV vigentes). Cada modelo suma las filas donde figura en «Elegida por».
+  const totF=(l,nom,b)=>{ const n=l.length; if(!n) return '<tr><td style="text-align:left">'+nom+'</td><td class="num">0</td><td colspan="5" style="color:var(--text3);text-align:center">—</td></tr>';
+    const g=l.filter(o=>o.x.win).length, u=l.reduce((a,o)=>a+(o.x.win?o.x.cuota-1:-1),0), np=new Set(l.map(o=>o.x.id)).size;
+    return '<tr style="'+(b?'background:var(--surface2);font-weight:600':'')+'"><td style="text-align:left">'+nom+'</td><td class="num">'+n+'</td><td class="num">'+np+'</td><td class="num">'+g+' G · '+(n-g)+' P</td>'
+      +'<td class="num">'+Math.round(100*g/n)+'%</td><td class="num"><span class="'+_mejCl(u)+'"><b>'+_mejSg(u,2)+'u</b></span></td><td class="num"><span class="'+_mejCl(u)+'">'+_mejSg(100*u/n,1)+'%</span></td></tr>'; };
+  const tot6=lista.length?tbl(th('Total de la tabla')+th('Líneas',1)+th('Partidos',1)+th('Ganadas / perdidas',1)+th('Acierto',1)+th('P&amp;L',1)+th('ROI',1),
+    totF(lista.filter(o=>o.por.includes('M2')),'Elegidas por M2 (incluye «M2 · M3»)')+totF(lista.filter(o=>o.por.includes('M3')),'Elegidas por M3 (incluye «M2 · M3»)')
+    +totF(lista.filter(o=>o.por.length===2),'Elegidas por M2 y M3 a la vez')+totF(lista,'Todas las filas (sin repetir)',1))
+    +'<p style="font-size:11px;color:var(--text3);margin:4px 0 10px">Una línea elegida por los dos cuenta en M2 y en M3, por eso esas dos filas no suman «Todas las filas». Los totales usan el P&amp;L exacto de cada línea; al elegir un Tipo, las filas de M2 / M3 coinciden con «con M2» / «con M3» de la regla de ese tipo en el punto ④ (R1, S1 o K1; con el mismo filtro de EV). Con «Todos» son la suma de las tres reglas.</p>':'';
+  const t6=lista.length?tot6+tbl(th('#')+th('Partido')+th('Tipo')+th('Línea')+th('Cuota',1)+th('Elegida por',1)
       +M2_MODS.map(([,nn])=>th('P '+nn,1)+th('EV '+nn,1)).join('')+th('Engine también',1)+th('Resultado',1)+th('P&amp;L',1),
     lista.map(({x,por})=>{ const tipo=sel.m[x.id+'|'+x.et]||sel['3'][x.id+'|'+x.et];
       return '<tr><td style="text-align:left">'+String(x.id).padStart(3,'0')+'</td><td style="text-align:left">'+x.partido+'</td><td style="text-align:left">'+tipo+'</td><td style="text-align:left">'+x.et+'</td>'
