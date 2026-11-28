@@ -366,6 +366,17 @@
 
   <!-- Remates: REMATE (remates totales por equipo) y A PUERTA; reune lo que estaba en Mercados, Mejoras y (d2) Hipótesis -->
   <div class="tab-panel" id="tab-remates">
+    <div data-ind="Resumen">
+    <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">Resumen — ¿qué regla de elección de línea rinde mejor? (todas, lado a lado)</div>
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
+        <div class="card-title">REMATES totales (R1) y A PUERTA (S1): la vigente frente a todas las candidatas, con la misma medida</div>
+        <div id="rem-resumen"></div>
+      </div>
+    </div>
+    </div>
+    <details class="rem-grupo" id="rem-g1" data-ind="1 · Vigentes" open>
+      <summary style="font-size:15px;font-weight:700;cursor:pointer;margin:26px 0 6px;padding:9px 12px;background:var(--surface2);border-radius:8px;color:var(--text)">1 · Reglas vigentes: REMATE R1 y A PUERTA S1 <span style="font-weight:400;font-size:12px;color:var(--text3)">· lo que hoy se apuesta y cómo le fue</span></summary>
     <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">REMATE R1</div>
     <div class="grid2" style="margin-bottom:16px">
       <div class="card card-full">
@@ -382,14 +393,44 @@
         <div id="hip-puerta"></div>
       </div>
     </div>
-    <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">Diagnóstico de la selección — ¿por qué rinden o no los Over de remates? (en observación)</div>
+    </details>
+    <details class="rem-grupo" id="rem-g2" data-ind="2 · Candidatas" open>
+      <summary style="font-size:15px;font-weight:700;cursor:pointer;margin:26px 0 6px;padding:9px 12px;background:var(--surface2);border-radius:8px;color:var(--text)">2 · Candidatas fijadas — se miden solo con partidos nuevos <span style="font-weight:400;font-size:12px;color:var(--text3)">· R-alta, L-fav, M2 · M3 y A puerta local; ninguna se apuesta</span></summary>
+    <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">Candidata R-alta — remates totales con la línea al menos 2 sobre la media (fijada el 2026-11-28)</div>
     <div class="grid2" style="margin-bottom:16px">
       <div class="card card-full">
-        <div class="card-title">Posición frente a la línea promedio, EV contra ROI y equipos de ataque débil</div>
-        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">Todo se calcula con las líneas Over de remates por equipo que ya están en el watchlist (se apuesten o no), 1 unidad por línea. <b>Línea promedio</b>: con media X,Y es Over (X−1),5 («X o más»). Son cortes hechos mirando los mismos datos: <b>orientan, no prueban</b>. Solo se usan los partidos de este dashboard.</p>
-        <div id="rem-diag"></div>
+        <div class="card-title">R1 sin su tope: una línea por equipo y partido con línea − media esperada ≥ +2, comparada con el REMATE R1 apostado</div>
+        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">Solo medición: no se apuesta nada. Las líneas altas (que R1 nunca elige) acertaron más de lo que decía el modelo en #001–#079 (+10.5 % ±35 con el criterio de R1, 77 líneas), pero depende de pocas jugadas largas. La regla está fijada y solo cuenta la fila PRUEBA REAL.</p>
+        <div id="ra-out"></div>
       </div>
     </div>
+    <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">Candidata L-fav — remates del local favorito bajo la línea de la casa (fijada el 2026-11-26)</div>
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
+        <div class="card-title">Local favorito: una línea 1 a 3 por debajo de la que fija la casa, con variantes y controles</div>
+        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">Solo medición: no se apuesta nada. La «línea de la casa» es la de remates totales del equipo cuya probabilidad implícita (1/cuota ÷ 1.06) queda más cerca de 50 %. Se elige <b>una línea por equipo y partido</b>. Solo cuenta la fila PRUEBA REAL de la regla principal; sin el filtro «local favorito» el efecto no aparece (local en general ≈ 0 %).</p>
+        <div id="lf-out"></div>
+      </div>
+    </div>
+    <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">Candidatas M2 · M3 — reglas fijadas el 2026-11-23 para probarlas solo con partidos nuevos</div>
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
+        <div class="card-title">REMATES totales (T1, T2) y A PUERTA (P1, P2): ¿elegir con M2 y M3 en vez de con el engine?</div>
+        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">Cada regla elige <b>una línea por equipo y partido</b> y se compara con lo que realmente registra la regla vigente (R1 / S1) y con apostar a todas las líneas. Se escribieron <b>antes</b> de ver partidos nuevos: no se cambian umbrales ni coeficientes. La fila «muestra en la que se pensó» (#001–#073) sale optimista —T1 además usa coeficientes ajustados con esas mismas líneas—; la única prueba es la fila <b>PRUEBA REAL</b>. «Línea central» = cuota 1.40–3.00. «Cuota sin margen» = (1/cuota) dividido por 1.045 (margen medio de la casa en el d2). T1: EV de la mezcla cuota + M2 + M3 + engine &gt; +6 %. T2 y P2: (M2+M3)/2 − cuota sin margen ≥ 0.06. P1: M2 y M3 con EV &gt; +5 % a la vez.</p>
+        <div id="m2c-out"></div>
+      </div>
+    </div>
+    <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">Candidata A puerta local — línea +1 sobre la casa y S1 solo local (fijada el 2026-11-26)</div>
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
+        <div class="card-title">Remates a puerta del local: A (una línea por encima de la casa) y B (S1 restringido al local), con la visita de control</div>
+        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">Solo medición: no se apuesta nada. En a puerta la casa parece subestimar al local y sobrevalorar al visitante; con 53 partidos la línea +1 del local dio +21.3 % ±32 (no concluyente, depende de 5 aciertos de cuota ~3). Se elige <b>una línea por equipo y partido</b>. Solo cuenta la fila PRUEBA REAL.</p>
+        <div id="lp-out"></div>
+      </div>
+    </div>
+    </details>
+    <details class="rem-grupo" id="rem-g3" data-ind="3 · Calibración">
+      <summary style="font-size:15px;font-weight:700;cursor:pointer;margin:26px 0 6px;padding:9px 12px;background:var(--surface2);border-radius:8px;color:var(--text)">3 · Calibración y diagnóstico <span style="font-weight:400;font-size:12px;color:var(--text3)">· ¿dónde le gana el modelo a la cuota? y por qué rinden o no los Over</span></summary>
     <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">Elegir la línea — calibración por posición y candidatas</div>
     <div class="grid2" style="margin-bottom:16px">
       <div class="card card-full">
@@ -403,6 +444,24 @@
         <div id="rem-cand"></div>
       </div>
     </div>
+    <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">Diagnóstico de la selección — ¿por qué rinden o no los Over de remates? (en observación)</div>
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
+        <div class="card-title">Posición frente a la línea promedio, EV contra ROI y equipos de ataque débil</div>
+        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">Todo se calcula con las líneas Over de remates por equipo que ya están en el watchlist (se apuesten o no), 1 unidad por línea. <b>Línea promedio</b>: con media X,Y es Over (X−1),5 («X o más»). Son cortes hechos mirando los mismos datos: <b>orientan, no prueban</b>. Solo se usan los partidos de este dashboard.</p>
+        <div id="rem-diag"></div>
+      </div>
+    </div>
+    <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">Validación — ¿qué predice mejor: la cuota, el modelo o una mezcla con las demás variables?</div>
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
+        <div class="card-title">Confianza del modelo y prueba de si las λ, el rol, el lado y la posición mejoran la predicción (se actualiza sola)</div>
+        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">Primero, para cada tramo de probabilidad que dio el modelo, cuántas veces ocurrió de verdad. Después, qué predictor tiene menor log-loss: la cuota sola, el modelo solo, o una mezcla (con más variables) entrenada con validación cruzada por partido, de modo que cada línea se predice con un modelo que no la vio. Si ninguna mezcla baja de la cuota sola, las variables adicionales no aportan nada que la cuota no tenga ya. Con pocos partidos las mezclas con muchas variables salen peor por aprender ruido; hay que mirarlo cuando haya cientos de partidos.</p>
+        <div id="val-out"></div>
+      </div>
+    </div>    </details>
+    <details class="rem-grupo" id="rem-g4" data-ind="4 · Herramientas">
+      <summary style="font-size:15px;font-weight:700;cursor:pointer;margin:26px 0 6px;padding:9px 12px;background:var(--surface2);border-radius:8px;color:var(--text)">4 · Herramientas de exploración <span style="font-weight:400;font-size:12px;color:var(--text3)">· simulador y selección con retroalimentación (sobreajustan fácil)</span></summary>
     <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">Simulador — ¿qué habría pasado eligiendo así una línea por equipo?</div>
     <div class="grid2" style="margin-bottom:16px">
       <div class="card card-full">
@@ -417,6 +476,23 @@
         <div id="sim-s"></div>
       </div>
     </div>
+    <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">Selección con retroalimentación — aprende del acierto de los partidos anteriores</div>
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
+        <div class="card-title">R1 · remates totales: elegir la línea del grupo que mejor rindió hasta ese partido</div>
+        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">Recorre los partidos en orden. Para cada equipo y partido elige <b>una línea</b>: la del grupo (posición frente a la línea promedio × banda de cuota) que tuvo mejor ROI en los partidos <b>anteriores</b>, si el grupo tiene el mínimo de líneas y su ROI pasado supera el umbral. Recién después de apostar aprende del resultado. Aprende de todas las líneas cotizadas, no solo de las que elige. Con pocos partidos casi ningún grupo llega al mínimo y lo que aprende es ruido; <b>este cuadro se actualiza solo y irá cobrando sentido a medida que se acumulen partidos</b>.</p>
+        <div id="fb-r"></div>
+      </div>
+    </div>
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
+        <div class="card-title">S1 · remates a puerta: elegir la línea del grupo que mejor rindió hasta ese partido</div>
+        <div id="fb-s"></div>
+      </div>
+    </div>
+    </details>
+    <details class="rem-grupo" id="rem-g5" data-ind="5 · Detalle histórico">
+      <summary style="font-size:15px;font-weight:700;cursor:pointer;margin:26px 0 6px;padding:9px 12px;background:var(--surface2);border-radius:8px;color:var(--text)">5 · Detalle histórico <span style="font-weight:400;font-size:12px;color:var(--text3)">· rendimiento por cuota y por línea, y reglas de elección de todo el histórico</span></summary>
     <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">Rendimiento por cuota y por línea</div>
     <div class="card card-full" style="margin-bottom:16px">
       <div class="card-title">REMATE — lado × rango de cuota — WR% y ROI% (remates totales de un equipo)</div>
@@ -513,60 +589,8 @@
         <div id="seg-equipo-lambda"></div>
       </div>
     </div>
-    <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">Candidatas M2 · M3 — reglas fijadas el 2026-11-23 para probarlas solo con partidos nuevos</div>
-    <div class="grid2" style="margin-bottom:16px">
-      <div class="card card-full">
-        <div class="card-title">REMATES totales (T1, T2) y A PUERTA (P1, P2): ¿elegir con M2 y M3 en vez de con el engine?</div>
-        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">Cada regla elige <b>una línea por equipo y partido</b> y se compara con lo que realmente registra la regla vigente (R1 / S1) y con apostar a todas las líneas. Se escribieron <b>antes</b> de ver partidos nuevos: no se cambian umbrales ni coeficientes. La fila «muestra en la que se pensó» (#001–#073) sale optimista —T1 además usa coeficientes ajustados con esas mismas líneas—; la única prueba es la fila <b>PRUEBA REAL</b>. «Línea central» = cuota 1.40–3.00. «Cuota sin margen» = (1/cuota) dividido por 1.045 (margen medio de la casa en el d2). T1: EV de la mezcla cuota + M2 + M3 + engine &gt; +6 %. T2 y P2: (M2+M3)/2 − cuota sin margen ≥ 0.06. P1: M2 y M3 con EV &gt; +5 % a la vez.</p>
-        <div id="m2c-out"></div>
-      </div>
-    </div>
-    <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">Candidata L-fav — remates del local favorito bajo la línea de la casa (fijada el 2026-11-26)</div>
-    <div class="grid2" style="margin-bottom:16px">
-      <div class="card card-full">
-        <div class="card-title">Local favorito: una línea 1 a 3 por debajo de la que fija la casa, con variantes y controles</div>
-        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">Solo medición: no se apuesta nada. La «línea de la casa» es la de remates totales del equipo cuya probabilidad implícita (1/cuota ÷ 1.06) queda más cerca de 50 %. Se elige <b>una línea por equipo y partido</b>. Solo cuenta la fila PRUEBA REAL de la regla principal; sin el filtro «local favorito» el efecto no aparece (local en general ≈ 0 %).</p>
-        <div id="lf-out"></div>
-      </div>
-    </div>
-    <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">Candidata A puerta local — línea +1 sobre la casa y S1 solo local (fijada el 2026-11-26)</div>
-    <div class="grid2" style="margin-bottom:16px">
-      <div class="card card-full">
-        <div class="card-title">Remates a puerta del local: A (una línea por encima de la casa) y B (S1 restringido al local), con la visita de control</div>
-        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">Solo medición: no se apuesta nada. En a puerta la casa parece subestimar al local y sobrevalorar al visitante; con 53 partidos la línea +1 del local dio +21.3 % ±32 (no concluyente, depende de 5 aciertos de cuota ~3). Se elige <b>una línea por equipo y partido</b>. Solo cuenta la fila PRUEBA REAL.</p>
-        <div id="lp-out"></div>
-      </div>
-    </div>
-    <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">Candidata R-alta — remates totales con la línea al menos 2 sobre la media (fijada el 2026-11-28)</div>
-    <div class="grid2" style="margin-bottom:16px">
-      <div class="card card-full">
-        <div class="card-title">R1 sin su tope: una línea por equipo y partido con línea − media esperada ≥ +2, comparada con el REMATE R1 apostado</div>
-        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">Solo medición: no se apuesta nada. Las líneas altas (que R1 nunca elige) acertaron más de lo que decía el modelo en #001–#079 (+10.5 % ±35 con el criterio de R1, 77 líneas), pero depende de pocas jugadas largas. La regla está fijada y solo cuenta la fila PRUEBA REAL.</p>
-        <div id="ra-out"></div>
-      </div>
-    </div>
-    <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">Selección con retroalimentación — aprende del acierto de los partidos anteriores</div>
-    <div class="grid2" style="margin-bottom:16px">
-      <div class="card card-full">
-        <div class="card-title">R1 · remates totales: elegir la línea del grupo que mejor rindió hasta ese partido</div>
-        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">Recorre los partidos en orden. Para cada equipo y partido elige <b>una línea</b>: la del grupo (posición frente a la línea promedio × banda de cuota) que tuvo mejor ROI en los partidos <b>anteriores</b>, si el grupo tiene el mínimo de líneas y su ROI pasado supera el umbral. Recién después de apostar aprende del resultado. Aprende de todas las líneas cotizadas, no solo de las que elige. Con pocos partidos casi ningún grupo llega al mínimo y lo que aprende es ruido; <b>este cuadro se actualiza solo y irá cobrando sentido a medida que se acumulen partidos</b>.</p>
-        <div id="fb-r"></div>
-      </div>
-    </div>
-    <div class="grid2" style="margin-bottom:16px">
-      <div class="card card-full">
-        <div class="card-title">S1 · remates a puerta: elegir la línea del grupo que mejor rindió hasta ese partido</div>
-        <div id="fb-s"></div>
-      </div>
-    </div>
-    <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">Validación — ¿qué predice mejor: la cuota, el modelo o una mezcla con las demás variables?</div>
-    <div class="grid2" style="margin-bottom:16px">
-      <div class="card card-full">
-        <div class="card-title">Confianza del modelo y prueba de si las λ, el rol, el lado y la posición mejoran la predicción (se actualiza sola)</div>
-        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">Primero, para cada tramo de probabilidad que dio el modelo, cuántas veces ocurrió de verdad. Después, qué predictor tiene menor log-loss: la cuota sola, el modelo solo, o una mezcla (con más variables) entrenada con validación cruzada por partido, de modo que cada línea se predice con un modelo que no la vio. Si ninguna mezcla baja de la cuota sola, las variables adicionales no aportan nada que la cuota no tenga ya. Con pocos partidos las mezclas con muchas variables salen peor por aprender ruido; hay que mirarlo cuando haya cientos de partidos.</p>
-        <div id="val-out"></div>
-      </div>
-    </div>
+    </details>
+
   </div>
 
   <!-- Ligas -->
@@ -6054,6 +6078,56 @@ function _remRenderRA(){
     +'<b>A</b> se sostiene si en su fila PRUEBA REAL ROI − ±90% &gt; 0 y u/partido − ±90% &gt; 0; se descarta si ROI + ±90% &lt; 0. Con cuota media ≈ 4 y 30 % de acierto el ±90% es muy ancho (≈ ±35 % con 100 líneas): solo un efecto grande se confirma. Las referencias muestran si depende del criterio de elección; no se elige otra después. La muestra en la que se pensó sale optimista y no cuenta.</p>'
     +_hipTabla('Línea ≥ +'+RA_D+' sobre la media esperada (remates totales)',f1);
 }
+// ── Resumen de decisión del tab Remates (solo d2, 2026-11-28, a pedido) ─────────────────────────────────────────────────────
+// Todas las reglas que eligen una línea de remates (R1, S1 y sus candidatas), lado a lado y con la misma medida (una línea por equipo y partido, 1u por
+// apuesta). Es solo una vista: cada regla sigue definida en su tarjeta. Ignora los filtros de EV y de Equipo del tab. «Prueba real» = líneas posteriores a
+// la fijación de cada regla. Las filas con fecha de fijación salieron de mirar los primeros partidos: su ROI sale optimista y solo cuenta la prueba real.
+function _remRenderResumen(){
+  const el=document.getElementById('rem-resumen'); if(!el) return;
+  const R=_remLineas('remates'), S=_remLineas('remates_puerta'), B=_hipBets(), ev=x=>x.ev*x.prob;
+  const P=R.filter(x=>x.ev>0), Q=S.filter(x=>x.ev>0&&x.cuota>=1.60), Rm=_m2cLineas('remates'), Sm=_m2cLineas('remates_puerta');
+  const cen=x=>x.cuota>=1.4&&x.cuota<3.0, dif=x=>(x.p2+x.p3)/2-x.q/M2C_MARGEN, evm=x=>_m2cMezcla(x)*x.cuota-1, ev2=x=>x.p2*x.cuota-1, ev3=x=>x.p3*x.cuota-1;
+  const lf=_lfEscaleras().filter(e=>e.lado==='local'&&e.fav).map(e=>_lfElige(e,'c145')).filter(Boolean);
+  const lp=_lfEscaleras('remates_puerta').filter(e=>e.lado==='local').map(e=>_lfElige(e,'p1')).filter(Boolean);
+  const s1loc=[]; _DATA.forEach(p=>(p.apuestas||[]).forEach(a=>{ if(a.tipo==='PUERTA'&&(a.estado==='GANADA'||a.estado==='PERDIDA')&&a.mercado.startsWith('local')) s1loc.push({id:+p.id,cuota:+a.cuota,win:a.estado==='GANADA'}); }));
+  const Lm=_m2Lineas(_m2Entradas()), RA=_m2cUna(R.filter(x=>x.d>=RA_D),x=>true,ev);
+  const f=l=>l.map(x=>({id:x.id,cuota:x.cuota,win:x.win}));
+  const r1=[
+    ['REMATE R1 vigente (lo realmente apostado)','vigente',f(B.rem),null],
+    ['R-alta · línea ≥ +'+RA_D+' sobre la media, mayor EV×P','fijada 28-nov',f(RA),RA_CORTE_ID],
+    ['L-fav · local favorito, línea 1 a 3 bajo la casa (cuota ≈ 1.45)','fijada 26-nov',f(lf),LF_CORTE_ID],
+    ['T1 · mezcla cuota + M2 + M3 + engine, EV &gt; +6 %','fijada 23-nov',f(_m2cUna(Rm,x=>cen(x)&&evm(x)>0.06,evm)),M2C_CORTE_ID],
+    ['T2 · (M2+M3)/2 − cuota sin margen ≥ 0.06','fijada 23-nov',f(_m2cUna(Rm,x=>cen(x)&&dif(x)>=0.06,dif)),M2C_CORTE_ID],
+    ['R1 con la probabilidad de M2 (misma regla)','sombra M2',f(_m2Elegir(Lm,'remates','m','pos')),null],
+    ['R1 con la probabilidad de M3 (misma regla)','sombra M3',f(_m2Elegir(Lm,'remates','3','pos')),null],
+    ['Mayor probabilidad entre las líneas con EV &gt; 0','explorada 8-nov',f(_remUna(P,x=>true,x=>x.prob)),REM_CAND_CORTE_ID],
+    ['Mejor EV×P sin filtro de posición','explorada 8-nov',f(_remUna(P,x=>true,ev)),REM_CAND_CORTE_ID],
+    ['Solo la línea promedio exacta','explorada 8-nov',f(_remUna(P,x=>x.k===0,ev)),REM_CAND_CORTE_ID]];
+  const s1=[
+    ['REMATE A PUERTA S1 vigente (lo realmente apostado)','vigente',f(B.puerta),null],
+    ['P1 · M2 y M3 con EV &gt; +5 % a la vez','fijada 23-nov',f(_m2cUna(Sm,x=>ev2(x)>0.05&&ev3(x)>0.05,x=>(ev2(x)+ev3(x))/2)),M2C_CORTE_ID],
+    ['P2 · (M2+M3)/2 − cuota sin margen ≥ 0.06','fijada 23-nov',f(_m2cUna(Sm,x=>cen(x)&&dif(x)>=0.06,dif)),M2C_CORTE_ID],
+    ['A puerta LOCAL · línea +1 sobre la casa','fijada 26-nov',f(lp),LP_CORTE_ID],
+    ['S1 solo local (lo registrado)','referencia',f(s1loc),null],
+    ['S1 con la probabilidad de M2 (misma regla)','sombra M2',f(_m2Elegir(Lm,'remates_puerta','m','pos')),null],
+    ['S1 con la probabilidad de M3 (misma regla)','sombra M3',f(_m2Elegir(Lm,'remates_puerta','3','pos')),null],
+    ['S1 con cuota ≤ 2.20','explorada 8-nov',f(_remUna(Q,x=>x.cuota<=2.2,ev)),REM_CAND_CORTE_ID],
+    ['S1 solo del equipo favorito','explorada 8-nov',f(_remUna(Q,x=>x.fav,ev)),REM_CAND_CORTE_ID],
+    ['S1 en la línea promedio o por debajo','explorada 8-nov',f(_remUna(Q,x=>x.k<=0,ev)),REM_CAND_CORTE_ID]];
+  const tabla=(tit,filas)=>{
+    const it=filas.map(r=>({r,s:_mejSt(r[2])})), vig=it[0], resto=it.slice(1).sort((a,b)=>(b.s?b.s.pu:-99)-(a.s?a.s.pu:-99));
+    const fila=(o,b)=>{ const real=o.r[3]==null?null:_mejSt(o.r[2].filter(x=>x.id>o.r[3]));
+      return '<tr style="'+(b?'background:var(--surface2);font-weight:600':'')+'"><td style="text-align:left">'+o.r[0]+'</td><td style="text-align:left;color:var(--text3);font-size:11px">'+o.r[1]+'</td>'+_hipCel(o.s)
+        +'<td class="num">'+(o.r[3]==null?'<span style="color:var(--text3)">—</span>':(real?real.n+' · '+_mejRoi(real):'<span style="color:var(--text3)">0 líneas</span>'))+'</td></tr>'; };
+    return '<div style="font-size:12px;color:var(--text3);margin:16px 0 6px;font-weight:600">'+tit+'</div><div class="table-wrap table-wrap-scroll"><table class="hm-table"><thead><tr><th style="text-align:left">Regla</th><th style="text-align:left">Origen</th>'
+      +'<th class="num">Líneas</th><th class="num">Acierto</th><th class="num">Cuota</th><th class="num">ROI ±90%</th><th class="num">P&amp;L</th><th class="num" title="Unidades por partido (un dato por partido) y su ±90%; entre paréntesis, partidos">u / partido (±90%)</th>'
+      +'<th class="num" title="Líneas posteriores a la fijación de la regla y su ROI. — = ya es lo apostado o se mide desde el partido #1">Prueba real</th></tr></thead><tbody>'
+      +fila(vig,true)+resto.map(o=>fila(o,false)).join('')+'</tbody></table></div>'; };
+  el.innerHTML='<p style="font-size:12px;margin:0 0 6px">Cada fila es una forma de elegir la línea, con una línea por equipo y partido. Orden: la vigente primero y después de mayor a menor u/partido. '
+    +'<b>Ninguna tiene todavía prueba real suficiente</b>: las reglas «fijadas» salieron de mirar los primeros partidos (su ROI es optimista) y las «exploradas» son variantes sin prueba. '
+    +'Miralo con el ±90%: casi todos los intervalos incluyen el cero. Cada regla está detallada en su tarjeta, más abajo.</p>'
+    +tabla('REMATES totales (R1)',r1)+tabla('REMATES A PUERTA (S1)',s1);
+}
 // ── Candidata U-λ: Under cuando las λ están parejas (solo d2, 2026-11-26, a pedido) ────────────────────────────────────────
 // Regla escrita ANTES de ver partidos nuevos: no se cambian umbrales. Salió de mirar los partidos #001–#074 del d2 (la muestra en la que se
 // pensó: su ROI sale optimista); la prueba real son los partidos con id > UEQ_CORTE_ID. Mecanismo: con |λ local − λ visita| < 0.4 salen menos
@@ -6595,7 +6669,7 @@ function renderM2(){
 }
 function renderRemates(){
   renderRemateMercados();      // REMATE y A PUERTA por cuota y por línea
-  _remRenderDiag(); _remRenderCand(); _remRenderM2C(); _remRenderLF(); _remRenderLP(); _remRenderRA(); _remSimRender('r'); _remSimRender('s'); _remFbRender('r'); _remFbRender('s'); _remValRender();
+  _remRenderDiag(); _remRenderCand(); _remRenderM2C(); _remRenderResumen(); _remRenderLF(); _remRenderLP(); _remRenderRA(); _remSimRender('r'); _remSimRender('s'); _remFbRender('r'); _remFbRender('s'); _remValRender();
   renderMejoras();             // reglas de elección de línea y mercados por equipo (viven en este tab desde 2026-11-08)
   if(ES_D2) renderHipotesis(); // R1 y S1 (en el d2)
 }
@@ -6640,13 +6714,13 @@ document.querySelectorAll('.tab').forEach(tab=>{
 (function(){
   ['hipotesis','mejoras','remates'].forEach(id=>{
     const p=document.getElementById('tab-'+id); if(!p) return;
-    const rot=[...p.children].filter(e=>e.tagName==='DIV' && !e.className && /font-size:14px;font-weight:700/.test(e.getAttribute('style')||'') && e.textContent.trim());
+    const rot=(id==='remates'&&p.querySelector(':scope > [data-ind]'))?[...p.children].filter(e=>e.hasAttribute('data-ind')):[...p.children].filter(e=>e.tagName==='DIV' && !e.className && /font-size:14px;font-weight:700/.test(e.getAttribute('style')||'') && e.textContent.trim());
     if(rot.length<3) return;
     rot.forEach((e,i)=>{ e.id='sec-'+id+'-'+i; });
     const nav=document.createElement('div');
     nav.style.cssText='display:flex;flex-wrap:wrap;gap:6px;margin:0 0 14px;font-size:12px;align-items:center';
-    nav.innerHTML='<span style="color:var(--text3)">Ir a:</span>'+rot.map((e,i)=>'<a href="#sec-'+id+'-'+i+'" style="padding:2px 9px;border:1px solid var(--border);border-radius:12px;color:var(--text2);text-decoration:none;background:var(--surface)">'+e.textContent.trim().replace(/&/g,'&amp;').replace(/</g,'&lt;')+'</a>').join('');
-    nav.addEventListener('click',ev=>{ const a=ev.target.closest('a'); if(!a) return; ev.preventDefault(); document.getElementById(a.getAttribute('href').slice(1)).scrollIntoView({behavior:'smooth',block:'start'}); });
+    nav.innerHTML='<span style="color:var(--text3)">Ir a:</span>'+rot.map((e,i)=>'<a href="#sec-'+id+'-'+i+'" style="padding:2px 9px;border:1px solid var(--border);border-radius:12px;color:var(--text2);text-decoration:none;background:var(--surface)">'+(e.dataset.ind||e.textContent).trim().replace(/&/g,'&amp;').replace(/</g,'&lt;')+'</a>').join('');
+    nav.addEventListener('click',ev=>{ const a=ev.target.closest('a'); if(!a) return; ev.preventDefault(); const tg=document.getElementById(a.getAttribute('href').slice(1)); if(tg.tagName==='DETAILS') tg.open=true; tg.scrollIntoView({behavior:'smooth',block:'start'}); });
     p.insertBefore(nav,p.firstChild);
   });
 })();
