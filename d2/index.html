@@ -537,6 +537,14 @@
         <div id="lp-out"></div>
       </div>
     </div>
+    <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">Candidata R-alta — remates totales con la línea al menos 2 sobre la media (fijada el 2026-11-28)</div>
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
+        <div class="card-title">R1 sin su tope: una línea por equipo y partido con línea − media esperada ≥ +2, comparada con el REMATE R1 apostado</div>
+        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">Solo medición: no se apuesta nada. Las líneas altas (que R1 nunca elige) acertaron más de lo que decía el modelo en #001–#079 (+10.5 % ±35 con el criterio de R1, 77 líneas), pero depende de pocas jugadas largas. La regla está fijada y solo cuenta la fila PRUEBA REAL.</p>
+        <div id="ra-out"></div>
+      </div>
+    </div>
     <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">Selección con retroalimentación — aprende del acierto de los partidos anteriores</div>
     <div class="grid2" style="margin-bottom:16px">
       <div class="card card-full">
@@ -6009,6 +6017,43 @@ function _remRenderLP(){
     +'<div style="font-size:12px;color:var(--text3);margin:16px 0 6px;font-weight:600">Controles: la visita con las mismas reglas</div>'
     +_hipTabla('Grupo de control',f2);
 }
+// ── Candidata R-alta: remates totales con la línea al menos 2 sobre la media esperada (solo d2, 2026-11-28, a pedido) ────────────
+// Regla escrita ANTES de ver partidos nuevos: no se cambian umbrales ni criterio. Salió de mirar #001–#079 (muestra en la que se pensó: optimista); la
+// prueba real son los partidos con id > RA_CORTE_ID. Hallazgo: las líneas de remates totales a +2 o más de la media esperada (que R1 nunca elige: pide línea ≤
+// línea promedio y EV > 0) acertaron 31 % con cuota media 4.2 cuando el modelo daba 23 %: +20.4 % ±40 sobre 123 líneas; elegida una por equipo y partido con el
+// criterio de R1 (mayor EV×P, sin exigir EV > 0) fueron 77 líneas, +10.5 % (IC90 −26 a +47). Sin las 5 mayores ganancias (cuotas de 5 a 7.5) queda ≈ 0: puede ser azar.
+//   A (principal) · línea − media esperada ≥ +2, UNA línea por equipo y partido, la de mayor EV×P (cualquier EV).
+//   Referencias descriptivas (no se elige otra después): mayor probabilidad · mayor cuota · solo EV > 0 (lo que exigiría R1) · A solo local · A solo visita · A con UNA línea por partido ·
+//   cuota ≥ 3 · cuota ≥ 3 con línea a menos de +2 (para saber si manda la cuota o la distancia a la media; casi 80 % de las líneas ≥ +2 tienen cuota ≥ 3).
+//   Comparación: REMATE R1 realmente apostado. Ignora el filtro de EV y de Equipo del tab (la regla es fija).
+const RA_FECHA='2026-11-28', RA_CORTE_ID=79, RA_N=100, RA_D=2;
+function _remRenderRA(){
+  const el=document.getElementById('ra-out'); if(!el) return;
+  const L0=_remLineas('remates'), L=L0.filter(x=>x.d>=RA_D), B=_hipBets();
+  const cn=String(RA_CORTE_ID).padStart(3,'0'), cn1=String(RA_CORTE_ID+1).padStart(3,'0');
+  const ev=x=>x.ev*x.prob, una=(f,sc)=>_m2cUna(L,f,sc);
+  const A=una(x=>true,ev), Ap=una(x=>true,x=>x.prob), Ac=una(x=>true,x=>x.cuota), Ae=una(x=>x.ev>0,ev);
+  const g1=new Map(); A.forEach(x=>{ const a=g1.get(x.id); if(!a||x.prob>a.prob) g1.set(x.id,x); }); const Ap1=[...g1.values()];   // una por PARTIDO: la de mayor probabilidad entre las dos de A
+  const C3=_m2cUna(L0,x=>x.cuota>=3,ev), C3c=_m2cUna(L0,x=>x.cuota>=3&&x.d<RA_D,ev);                                      // cuota ≥ 3 con y sin la distancia a la media
+  const R1=B.rem.map(x=>({id:x.id,cuota:x.cuota,win:x.win}));
+  const pre=l=>l.filter(x=>x.id<=RA_CORTE_ID), nue=l=>l.filter(x=>x.id>RA_CORTE_ID);
+  const par2=(n,l,b)=>_hipFila(n+' <span style="color:var(--text3);font-size:11px">· muestra en la que se pensó (#001–#'+cn+')</span>',pre(l),{sub:1})
+    +_hipFila((b?'<b>':'')+n+(b?'</b>':'')+' <span style="color:var(--text3);font-size:11px">· PRUEBA REAL (#'+cn1+' en adelante)</span>',nue(l),b?{b:1}:{sub:1});
+  const f1=par2('A · línea ≥ +'+RA_D+' sobre la media, una por equipo y partido, mayor EV×P (principal)',A,true)
+    +par2('Referencia · la de mayor probabilidad',Ap,false)+par2('Referencia · la de mayor cuota',Ac,false)
+    +par2('Referencia · solo con EV &gt; 0 (lo que exigiría R1)',Ae,false)
+    +par2('Referencia · A solo local',A.filter(x=>x.lado==='local'),false)+par2('Referencia · A solo visita',A.filter(x=>x.lado==='visit'),false)
+    +par2('Referencia · A con UNA línea por partido (la de mayor probabilidad entre las dos)',Ap1,false)
+    +par2('Referencia · cuota ≥ 3 (cualquier distancia), una por equipo y partido, mayor EV×P',C3,false)
+    +par2('Referencia · cuota ≥ 3 pero línea a menos de +'+RA_D+' de la media (¿manda la cuota o la distancia?)',C3c,false)
+    +par2('Comparación · REMATE R1 realmente apostado',R1,false);
+  const elegibles=new Set(nue(A).map(x=>x.id)).size, nuevos=_DATA.filter(p=>p.resultado_partido&&+p.id>RA_CORTE_ID).length, pct=Math.min(100,elegibles/RA_N*100);
+  el.innerHTML='<div style="display:flex;align-items:center;gap:10px;font-size:12px;margin:0 0 10px"><div style="flex:0 0 200px;height:8px;border-radius:4px;background:var(--surface2);overflow:hidden"><div style="width:'+pct+'%;height:100%;background:var(--accent,#378add)"></div></div>'
+    +'<span><b>'+elegibles+'</b> de '+RA_N+' partidos con línea elegible desde la fijación ('+RA_FECHA+', partido #'+cn1+' en adelante); '+nuevos+' partidos cerrados en total</span></div>'
+    +'<p style="font-size:12px;margin:0 0 10px">'+(elegibles<RA_N?'Faltan <b>'+(RA_N-elegibles)+'</b> partidos para decidir. ':'')
+    +'<b>A</b> se sostiene si en su fila PRUEBA REAL ROI − ±90% &gt; 0 y u/partido − ±90% &gt; 0; se descarta si ROI + ±90% &lt; 0. Con cuota media ≈ 4 y 30 % de acierto el ±90% es muy ancho (≈ ±35 % con 100 líneas): solo un efecto grande se confirma. Las referencias muestran si depende del criterio de elección; no se elige otra después. La muestra en la que se pensó sale optimista y no cuenta.</p>'
+    +_hipTabla('Línea ≥ +'+RA_D+' sobre la media esperada (remates totales)',f1);
+}
 // ── Candidata U-λ: Under cuando las λ están parejas (solo d2, 2026-11-26, a pedido) ────────────────────────────────────────
 // Regla escrita ANTES de ver partidos nuevos: no se cambian umbrales. Salió de mirar los partidos #001–#074 del d2 (la muestra en la que se
 // pensó: su ROI sale optimista); la prueba real son los partidos con id > UEQ_CORTE_ID. Mecanismo: con |λ local − λ visita| < 0.4 salen menos
@@ -6550,7 +6595,7 @@ function renderM2(){
 }
 function renderRemates(){
   renderRemateMercados();      // REMATE y A PUERTA por cuota y por línea
-  _remRenderDiag(); _remRenderCand(); _remRenderM2C(); _remRenderLF(); _remRenderLP(); _remSimRender('r'); _remSimRender('s'); _remFbRender('r'); _remFbRender('s'); _remValRender();
+  _remRenderDiag(); _remRenderCand(); _remRenderM2C(); _remRenderLF(); _remRenderLP(); _remRenderRA(); _remSimRender('r'); _remSimRender('s'); _remFbRender('r'); _remFbRender('s'); _remValRender();
   renderMejoras();             // reglas de elección de línea y mercados por equipo (viven en este tab desde 2026-11-08)
   if(ES_D2) renderHipotesis(); // R1 y S1 (en el d2)
 }
