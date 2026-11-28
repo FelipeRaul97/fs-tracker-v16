@@ -370,7 +370,7 @@
     <div class="grid2" style="margin-bottom:16px">
       <div class="card card-full">
         <div class="card-title">¿Acierta R1 al quedarse con la zona de hasta 4 por debajo de la media, sin pasar la línea promedio?</div>
-        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:12px;margin:0 0 10px"><label><b>Líneas analizadas en R1 (remates totales)</b> <select id="rem-ev-r" onchange="renderRemates()" style="font-size:12px"><option value="pos">Solo EV &gt; 0 (como las elige la regla)</option><option value="todas">Todas las líneas, sin filtro de EV</option><option value="neg">Solo EV ≤ 0 (contraste)</option></select></label><span style="color:var(--text3)">Cambia las tablas de R1, del diagnóstico y de las candidatas de remates totales. No cambia lo realmente apostado. Con «Todas» o «EV ≤ 0», «mejor EV×P» elige la línea con el EV×P menos malo.</span></div>
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:12px;margin:0 0 10px"><label><b>Líneas analizadas en R1 (remates totales)</b> <select id="rem-ev-r" onchange="renderRemates()" style="font-size:12px"><option value="pos">Solo EV &gt; 0 (como las elige la regla)</option><option value="todas">Todas las líneas, sin filtro de EV</option><option value="neg">Solo EV ≤ 0 (contraste)</option></select></label><label><b>Equipo</b> <select id="rem-lado-r" onchange="renderRemates()" style="font-size:12px"><option value="todos">Local y visitante</option><option value="local">Solo LOCAL</option><option value="visit">Solo VISITANTE</option></select></label><span style="color:var(--text3)">Cambia las tablas de R1, del diagnóstico y de las candidatas de remates totales. No cambia lo realmente apostado. Con «Todas» o «EV ≤ 0», «mejor EV×P» elige la línea con el EV×P menos malo.</span></div>
         <div id="hip-remate"></div>
       </div>
     </div>
@@ -378,7 +378,7 @@
     <div class="grid2" style="margin-bottom:16px">
       <div class="card card-full">
         <div class="card-title">¿Qué bandas de cuota y de distancia a la media rinden en remates a puerta por equipo?</div>
-        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:12px;margin:0 0 10px"><label><b>Líneas analizadas en S1 (a puerta)</b> <select id="rem-ev-s" onchange="renderRemates()" style="font-size:12px"><option value="pos">Solo EV &gt; 0 (como las elige la regla)</option><option value="todas">Todas las líneas, sin filtro de EV</option><option value="neg">Solo EV ≤ 0 (contraste)</option></select></label><span style="color:var(--text3)">Cambia las tablas de S1, del diagnóstico y de las candidatas de A PUERTA. No cambia lo realmente apostado. Las tablas de calibración ① y ② del diagnóstico usan siempre todas las líneas.</span></div>
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:12px;margin:0 0 10px"><label><b>Líneas analizadas en S1 (a puerta)</b> <select id="rem-ev-s" onchange="renderRemates()" style="font-size:12px"><option value="pos">Solo EV &gt; 0 (como las elige la regla)</option><option value="todas">Todas las líneas, sin filtro de EV</option><option value="neg">Solo EV ≤ 0 (contraste)</option></select></label><label><b>Equipo</b> <select id="rem-lado-s" onchange="renderRemates()" style="font-size:12px"><option value="todos">Local y visitante</option><option value="local">Solo LOCAL</option><option value="visit">Solo VISITANTE</option></select></label><span style="color:var(--text3)">Cambia las tablas de S1, del diagnóstico y de las candidatas de A PUERTA. No cambia lo realmente apostado. Las tablas de calibración ① y ② del diagnóstico usan siempre todas las líneas.</span></div>
         <div id="hip-puerta"></div>
       </div>
     </div>
@@ -5516,12 +5516,13 @@ function _hipRenderResumen(B){
 }
 function _hipRenderRemate(B){
   const el=document.getElementById('hip-remate'); if(!el) return;
-  const Lall=[];
+  let Lall=[];
   _DATA.filter(p=>p.resultado_partido&&p.mu_equipo).forEach(p=>(p.watchlist||[]).forEach(w=>{
     if(w.tipo!=='POR_EQUIPO'||!(w.mercado==='local_remates'||w.mercado==='visit_remates')||w.acerto==null||!w.cuota||w.linea==null) return;
     const mu=((p.mu_equipo[w.mercado==='local_remates'?'local':'visit'])||{}).remates; if(mu==null) return;
-    Lall.push({id:+p.id,cuota:+w.cuota,win:!!w.acerto,d:w.linea-mu,k:w.linea-(Math.floor(mu)-0.5),ev:+w.ev_pct||0});
+    Lall.push({id:+p.id,cuota:+w.cuota,win:!!w.acerto,d:w.linea-mu,k:w.linea-(Math.floor(mu)-0.5),ev:+w.ev_pct||0,lado:w.mercado==='local_remates'?'local':'visit'});
   }));
+  Lall=Lall.filter(x=>_remLadoOk(x.lado,'r'));
   const L=Lall.filter(x=>_remEvOk(x.ev,'r'));
   const bandas=[['< −4 (el modelo las sobreestima)',x=>x.d<-4],['−4 a −2 · zona R1',x=>x.d>=-4&&x.d<-2,1],['−2 a 0 · zona R1',x=>x.d>=-2&&x.d<0,1],['0 a +2 (solo entran si siguen en la línea promedio)',x=>x.d>=0&&x.d<2],['+2 o más (nunca se apuestan)',x=>x.d>=2]];
   const f1=bandas.map(([l,f,z])=>_hipFila(l,L.filter(f),{b:z})).join('')+_hipFila('Todas las líneas con '+_remEvTxt('r'),L,{sub:1});
@@ -5536,7 +5537,7 @@ function _hipRenderRemate(B){
     _DATA.filter(p=>p.resultado_partido&&p.mu_equipo).forEach(p=>{
       const por={};
       (p.watchlist||[]).forEach(w=>{
-        if(w.tipo!=='POR_EQUIPO'||!(w.mercado==='local_remates'||w.mercado==='visit_remates')||w.acerto==null||!w.cuota||w.linea==null||!_remEvOk(+w.ev_pct||0,'r')) return;
+        if(w.tipo!=='POR_EQUIPO'||!(w.mercado==='local_remates'||w.mercado==='visit_remates')||w.acerto==null||!w.cuota||w.linea==null||!_remEvOk(+w.ev_pct||0,'r')||!_remLadoOk(w.mercado==='local_remates'?'local':'visit','r')) return;
         const lado=w.mercado==='local_remates'?'local':'visit', mu=((p.mu_equipo[lado])||{}).remates; if(mu==null) return;
         const g=w.linea-mu, k=w.linea-(Math.floor(mu)-0.5);
         if(!regla(g,k)) return;
@@ -5590,12 +5591,13 @@ function _hipRenderAcum(B){
 }
 function _hipRenderPuerta(B){
   const el=document.getElementById('hip-puerta'); if(!el) return;
-  const L=[];
+  let L=[];
   _DATA.filter(p=>p.resultado_partido&&p.mu_equipo).forEach(p=>(p.watchlist||[]).forEach(w=>{
     if(w.tipo!=='POR_EQUIPO'||!(w.mercado==='local_remates_puerta'||w.mercado==='visit_remates_puerta')||w.acerto==null||!w.cuota||w.linea==null) return;
     const lado=w.mercado.startsWith('local')?'local':'visit', mu=((p.mu_equipo[lado])||{}).remates_puerta; if(mu==null) return;
-    L.push({id:+p.id,cuota:+w.cuota,win:!!w.acerto,d:w.linea-mu,k:w.linea-(Math.floor(mu)-0.5),ev:+w.ev_pct||0,S1:!!w.es_puerta});
+    L.push({id:+p.id,cuota:+w.cuota,win:!!w.acerto,d:w.linea-mu,k:w.linea-(Math.floor(mu)-0.5),ev:+w.ev_pct||0,S1:!!w.es_puerta,lado});
   }));
+  L=L.filter(x=>_remLadoOk(x.lado,'s'));
   const pos=L.filter(x=>_remEvOk(x.ev,'s')), neg=L.filter(x=>x.ev<=0);
   const cu=[['cuota &lt; 1.30 · no se apuesta',x=>x.cuota<1.30,0],['1.30 – 1.60 · no se apuesta',x=>x.cuota>=1.30&&x.cuota<1.60,0],['1.60 – 2.20 · zona S1',x=>x.cuota>=1.60&&x.cuota<2.20,1],['2.20 – 3.50 · zona S1',x=>x.cuota>=2.20&&x.cuota<3.50,1],['cuota ≥ 3.50 · zona S1',x=>x.cuota>=3.50,1]];
   const f1=cu.map(([l,f,z])=>_hipFila(l,pos.filter(f),{b:z})).join('')
@@ -5724,7 +5726,9 @@ function renderTabsDif(){
 // Líneas Over de remates por equipo YA CERRADAS del watchlist. sufijo: 'remates' (totales) | 'remates_puerta' (a puerta).
 // Filtro de EV del tab Remates (selectores #rem-ev-r para R1/remates totales y #rem-ev-s para S1/a puerta, solo d2): 'pos' = EV > 0 (como elige la regla), 'todas' = sin filtro, 'neg' = EV <= 0 (contraste).
 function _remEvOk(ev,t){ const m=(document.getElementById('rem-ev-'+t)||{}).value||'pos'; return m==='todas'||(m==='neg'?ev<=0:ev>0); }
-function _remEvTxt(t){ const m=(document.getElementById('rem-ev-'+t)||{}).value||'pos'; return m==='todas'?'cualquier EV':(m==='neg'?'EV ≤ 0':'EV &gt; 0'); }
+function _remLadoSel(t){ return (document.getElementById('rem-lado-'+t)||{}).value||'todos'; }
+function _remLadoOk(lado,t){ const m=_remLadoSel(t); return m==='todos'||m===lado; }
+function _remEvTxt(t){ const m=(document.getElementById('rem-ev-'+t)||{}).value||'pos', l=_remLadoSel(t); return (m==='todas'?'cualquier EV':(m==='neg'?'EV ≤ 0':'EV &gt; 0'))+(l==='local'?' de LOCAL':l==='visit'?' de VISITANTE':''); }
 function _remLineas(sufijo){
   const L=[];
   // Solo del dashboard 2 (el diagnóstico existe únicamente allí): no se mezcla con datos del d1.
@@ -5740,7 +5744,7 @@ function _remLineas(sufijo){
 }
 function _remRenderDiag(){
   const el=document.getElementById('rem-diag'); if(!el) return;
-  const R=_remLineas('remates'), S=_remLineas('remates_puerta');
+  const R=_remLineas('remates').filter(x=>_remLadoOk(x.lado,'r')), S=_remLineas('remates_puerta').filter(x=>_remLadoOk(x.lado,'s'));
   if(!R.length&&!S.length){ el.innerHTML='<p class="empty">Sin líneas de remates cerradas todavía.</p>'; return; }
   const tt=(t,x)=>'<div style="font-size:12px;color:var(--text3);margin:16px 0 6px;font-weight:600">'+t+'</div>'+x;
   const mp=l=>l.length?' <span style="color:var(--text3);font-size:11px">· el modelo daba '+Math.round(l.reduce((t,x)=>t+x.prob,0)/l.length)+'%</span>':'';
@@ -5830,7 +5834,7 @@ function _remCandTabla(cands,soloNuevos,t){
 }
 function _remRenderCand(){
   const el=document.getElementById('rem-cand'); if(!el) return;
-  const R=_remLineas('remates'), S=_remLineas('remates_puerta');
+  const R=_remLineas('remates').filter(x=>_remLadoOk(x.lado,'r')), S=_remLineas('remates_puerta').filter(x=>_remLadoOk(x.lado,'s'));
   const tt=(t,x)=>'<div style="font-size:12px;color:var(--text3);margin:16px 0 6px;font-weight:600">'+t+'</div>'+x;
   const nuevos=_DATA.filter(p=>p.resultado_partido&&+p.id>REM_CAND_CORTE_ID).length, pct=Math.min(100,nuevos/REM_CAND_N*100);
   const prog='<div style="display:flex;align-items:center;gap:10px;font-size:12px;margin:0 0 10px"><div style="flex:0 0 200px;height:8px;border-radius:4px;background:var(--surface2);overflow:hidden"><div style="width:'+pct+'%;height:100%;background:var(--accent,#378add)"></div></div>'
@@ -5869,7 +5873,7 @@ function _m2cLineas(sufijo){
   _DATA.filter(p=>p.resultado_partido).forEach(p=>(p.watchlist||[]).forEach(w=>{
     if(w.tipo!=='POR_EQUIPO'||!(w.mercado==='local_'+sufijo||w.mercado==='visit_'+sufijo)||w.acerto==null||!w.cuota||w.prob==null||w.prob_ml==null||w.prob_m3==null) return;
     const lado=w.mercado.startsWith('local')?'local':'visit';
-    L.push({id:+p.id,cuota:+w.cuota,win:!!w.acerto,p:w.prob/100,p2:w.prob_ml/100,p3:w.prob_m3/100,q:1/+w.cuota,eq:lado+'|'+p.id,nom:p.partido});
+    L.push({id:+p.id,cuota:+w.cuota,win:!!w.acerto,p:w.prob/100,p2:w.prob_ml/100,p3:w.prob_m3/100,q:1/+w.cuota,eq:lado+'|'+p.id,nom:p.partido,lado});
   }));
   return L;
 }
@@ -5885,7 +5889,7 @@ function _m2cUna(L,f,sc){        // una línea por equipo y partido: la de mayor
 }
 function _remRenderM2C(){
   const el=document.getElementById('m2c-out'); if(!el) return;
-  const R=_m2cLineas('remates'), S=_m2cLineas('remates_puerta'), B=_hipBets();
+  const R=_m2cLineas('remates').filter(x=>_remLadoOk(x.lado,'r')), S=_m2cLineas('remates_puerta').filter(x=>_remLadoOk(x.lado,'s')), B=_hipBets();
   const cen=x=>x.cuota>=1.4&&x.cuota<3.0, dif=x=>(x.p2+x.p3)/2-x.q/M2C_MARGEN;
   const evm=x=>_m2cMezcla(x)*x.cuota-1, ev2=x=>x.p2*x.cuota-1, ev3=x=>x.p3*x.cuota-1;
   const rT=[['T1 · línea central (cuota 1.40–3.00) con EV de la mezcla cuota + M2 + M3 + engine &gt; +6 %',_m2cUna(R,x=>cen(x)&&evm(x)>0.06,evm)],
@@ -6225,7 +6229,7 @@ function _remFbRender(t){
   if(!document.getElementById(pref+'out')){ cont.innerHTML=_remFbUI(t); Object.keys(_FB_DEF[t]).forEach(k=>{ const e=document.getElementById(pref+k); if(e) e.value=_FB_DEF[t][k]; }); }
   const num=id=>{ const v=document.getElementById(pref+id).value; return v===''?null:+v; };
   const minN=num('min')||1, roiMin=num('roi')==null?0:num('roi'), cuMin=num('cu'), grp=document.getElementById(pref+'grp').value;
-  const Lall=_remLineas(t==='r'?'remates':'remates_puerta'), L=Lall.filter(x=>cuMin==null||x.cuota>=cuMin);
+  const Lall=_remLineas(t==='r'?'remates':'remates_puerta').filter(x=>_remLadoOk(x.lado,t)), L=Lall.filter(x=>cuMin==null||x.cuota>=cuMin);
   const kb=k=>Math.max(-2,Math.min(2,k)), kl=k=>k<=-2?'2 o más por debajo':(k===-1?'1 por debajo':(k===0?'línea promedio':(k===1?'1 por encima':'2 o más por encima')));
   const cb=c=>c<1.6?0:(c<2.2?1:(c<3.5?2:3)), cl=['cuota &lt; 1.60','1.60–2.20','2.20–3.50','3.50 o más'];
   const lab=new Map();
@@ -6332,7 +6336,7 @@ function _remValRender(){
   const nP=_DATA.filter(p=>p.resultado_partido).length;
   let h='<p style="font-size:12px;color:var(--text3);margin:0 0 8px">Con <b>'+nP+'</b> partidos cerrados. Se recalcula sola con cada partido que se cierre. Cuota implícita = 1/cuota quitando un margen supuesto del 6 %.</p>';
   [['remates','REMATES totales (R1)'],['remates_puerta','REMATES A PUERTA (S1)']].forEach(([suf,nom])=>{
-    const L=_remLineas(suf); if(L.length<40){ h+='<p class="empty">'+nom+': todavía pocas líneas.</p>'; return; }
+    const L=_remLineas(suf).filter(x=>_remLadoOk(x.lado,suf==='remates'?'r':'s')); if(L.length<40){ h+='<p class="empty">'+nom+': todavía pocas líneas.</p>'; return; }
     h+='<div style="font-size:12px;color:var(--text3);margin:16px 0 6px;font-weight:600">'+nom+' · ¿es honesta la probabilidad del modelo? (acierto real frente a lo que decía, por tramo)</div>'+_remValTabla(L);
     const res=_remValCV(L);
     h+='<div style="font-size:12px;color:var(--text3);margin:14px 0 6px;font-weight:600">'+nom+' · ¿qué predice mejor? log-loss con validación cruzada por partido (menor es mejor)</div>'
@@ -6350,6 +6354,7 @@ function _remValRender(){
 // el engine y lo que habrían dado M2 y M3. Solo datos del d2, desde el partido #1 (una sola muestra, a pedido).
 const M2_N=100, M2_MARGEN=0.06;
 let _m2Partido=null;   // partido elegido en ⑦
+let _m2Lado='todos';   // filtro de EQUIPO (local / visitante) de todo el tab M2 · M3
 let _m2Tipo='todos';   // filtro de TIPO de ⑤ y ⑥ (REMATE / A PUERTA / CÓRNERS)
 const M2_MERC=[['remates','Remates'],['remates_puerta','A puerta'],['corners_equipo','Córners']];
 const M2_MODS=[['e','Engine'],['m','M2'],['3','M3']];   // sufijos de campo: pe/pm/p3, eve/evm/ev3, mue/mum/mu3
@@ -6400,11 +6405,15 @@ function _m2Elegir(L,merc,s,modo){
 }
 function renderM2(){
   const el=document.getElementById('m2-out'); if(!el) return;
-  const E=_m2Entradas(), L=_m2Lineas(E), n=E.length, sinM=_DATA.filter(p=>!p.mu_ml||!p.mu_m3).length;
+  const E=_m2Entradas(), L=_m2Lineas(E).filter(x=>_m2Lado==='todos'||x.lado===_m2Lado), n=E.length, sinM=_DATA.filter(p=>!p.mu_ml||!p.mu_m3).length;
   const cob=document.getElementById('m2-cob');
   if(cob) cob.innerHTML='<div style="display:flex;align-items:center;gap:10px;font-size:12px;flex-wrap:wrap"><div style="flex:0 0 200px;height:8px;border-radius:4px;background:var(--surface2);overflow:hidden">'
     +'<div style="width:'+Math.min(100,n/M2_N*100)+'%;height:100%;background:var(--accent,#378add)"></div></div>'
-    +'<span><b>'+n+'</b> de '+M2_N+' partidos cerrados con M2 y M3'+(sinM?' · '+sinM+' entradas sin M2/M3':'')+'</span></div>';
+    +'<span><b>'+n+'</b> de '+M2_N+' partidos cerrados con M2 y M3'+(sinM?' · '+sinM+' entradas sin M2/M3':'')+'</span>'
+    +'<label style="margin-left:10px"><b>Equipo</b> <select class="m2-lado" style="font-size:12px">'
+    +[['todos','Local y visitante'],['local','Solo LOCAL'],['visit','Solo VISITANTE']].map(([v,tt])=>'<option value="'+v+'"'+(v===_m2Lado?' selected':'')+'>'+tt+'</option>').join('')
+    +'</select></label><span style="color:var(--text3)">filtra todos los puntos ① a ⑦ (R1, S1 y K1)</span></div>';
+  document.querySelectorAll('select.m2-lado').forEach(s=>{ s.onchange=()=>{ _m2Lado=s.value; const y=window.scrollY; renderM2(); window.scrollTo(0,y); }; });
   if(!L.length){ el.innerHTML='<p class="empty">Sin líneas por equipo cerradas con M2 y M3 todavía.</p>'; return; }
   const sec=(t,x,nota)=>'<div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">'+t+'</div>'+(nota?'<p style="font-size:12px;color:var(--text3);margin:0 0 8px">'+nota+'</p>':'')+x;
   const f2=v=>v==null?'—':v.toFixed(2), sg=v=>(v>=0?'+':'')+v.toFixed(2), y=x=>x.win?1:0;
