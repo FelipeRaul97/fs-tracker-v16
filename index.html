@@ -5922,27 +5922,61 @@ function _remRenderResumen(){
     ['CÓRNERS K1 con la probabilidad del engine (hipotética, no se apuesta)','hipótesis 10-nov',f(_remUna(Kq,x=>true,ev)),null],
     ['K1 con la probabilidad de M2 (misma regla)','sombra M2',f(_m2Elegir(Lm,'corners_equipo','m','pos')),null],
     ['K1 con la probabilidad de M3 (misma regla)','sombra M3',f(_m2Elegir(Lm,'corners_equipo','3','pos')),null],
+    ['K1 · solo VISITANTE (candidata)','fijada 28-nov',f(_remUna(Kq,x=>x.lado==='visit',ev)),K1_CORTE_ID],
     ['K1 con cuota ≤ 2.50','fijada 28-nov',f(_remUna(Kq,x=>x.cuota<=2.5,ev)),K1_CORTE_ID],
     ['K1 solo del equipo favorito','fijada 28-nov',f(_remUna(Kq,x=>x.fav,ev)),K1_CORTE_ID],
     ['K1 en la línea promedio o por debajo','fijada 28-nov',f(_remUna(Kq,x=>x.k<=0,ev)),K1_CORTE_ID],
     ['K1 sin piso de cuota (EV &gt; 0 y cualquier cuota)','referencia',f(_remUna(K.filter(x=>x.ev>0),x=>true,ev)),null],
     ['Contraste · engine con EV ≤ 0 y cuota ≥ 1.60','referencia',f(_remUna(K.filter(x=>x.ev<=0&&x.cuota>=1.60),x=>true,ev)),null]];
-  const tabla=(tit,filas,lado)=>{
-    if(lado) filas=filas.map(r=>[r[0],r[1],r[2].filter(x=>x.lado===lado),r[3]]);
+  const tabla=(tit,filas)=>{
     const it=filas.map(r=>({r,s:_mejSt(r[2])})), vig=it[0], resto=it.slice(1).sort((a,b)=>(b.s?b.s.pu:-99)-(a.s?a.s.pu:-99));
-    const fila=(o,b)=>{ const real=o.r[3]==null?null:_mejSt(o.r[2].filter(x=>x.id>o.r[3]));
-      return '<tr style="'+(b?'background:var(--surface2);font-weight:600':'')+'"><td style="text-align:left">'+o.r[0]+'</td><td style="text-align:left;color:var(--text3);font-size:11px">'+o.r[1]+'</td>'+_hipCel(o.s)
-        +'<td class="num">'+(o.r[3]==null?'<span style="color:var(--text3)">—</span>':(real?real.n+' · '+_mejRoi(real)+' · '+_mejU(real.u):'<span style="color:var(--text3)">0 líneas</span>'))+'</td></tr>'; };
+    const real=(lst,corte)=>corte==null?'<span style="color:var(--text3)">—</span>':((rr=>rr?rr.n+' · '+_mejRoi(rr)+' · '+_mejU(rr.u):'<span style="color:var(--text3)">0 líneas</span>')(_mejSt(lst.filter(x=>x.id>corte))));
+    const fila=(o,b)=>{
+      let h='<tr style="'+(b?'background:var(--surface2);font-weight:600':'border-top:1px solid var(--border)')+'"><td style="text-align:left">'+o.r[0]+'</td><td style="text-align:left;color:var(--text3);font-size:11px">'+o.r[1]+'</td>'+_hipCel(o.s)
+        +'<td class="num">'+real(o.r[2],o.r[3])+'</td></tr>';
+      [['local','Local'],['visit','Visitante']].forEach(([lado,nom])=>{
+        const l=o.r[2].filter(x=>x.lado===lado);
+        h+='<tr style="opacity:.92"><td style="text-align:left;padding-left:26px;font-size:12px;color:var(--text3)">↳ '+nom+'</td><td></td>'+_hipCel(_mejSt(l))+'<td class="num">'+real(l,o.r[3])+'</td></tr>'; });
+      return h; };
     return '<div style="font-size:12px;color:var(--text3);margin:16px 0 6px;font-weight:600">'+tit+'</div><div class="table-wrap table-wrap-scroll"><table class="hm-table"><thead><tr><th style="text-align:left">Regla</th><th style="text-align:left">Origen</th>'
       +'<th class="num">Líneas</th><th class="num">Acierto</th><th class="num">Cuota</th><th class="num">ROI ±90%</th><th class="num">P&amp;L</th><th class="num" title="Unidades por partido (un dato por partido) y su ±90%; entre paréntesis, partidos">u / partido (±90%)</th>'
       +'<th class="num" title="Líneas posteriores a la fijación de la regla, su ROI y su P&amp;L en unidades. — = ya es lo apostado o se mide desde el partido #1">Prueba real</th></tr></thead><tbody>'
       +fila(vig,true)+resto.map(o=>fila(o,false)).join('')+'</tbody></table></div>'; };
-  el.innerHTML='<p style="font-size:12px;margin:0 0 6px">Cada fila es una forma de elegir la línea, con una línea por equipo y partido. Orden: la vigente primero y después de mayor a menor u/partido. '
+  el.innerHTML='<p style="font-size:12px;margin:0 0 6px">Cada regla ocupa tres filas: el <b>total</b> y debajo su parte de <b>local</b> y de <b>visitante</b> (el equipo sobre el que se apuesta). Se elige una línea por equipo y partido. Orden: la vigente primero y después de mayor a menor u/partido total. '
     +'<b>Ninguna tiene todavía prueba real suficiente</b>: las reglas «fijadas» salieron de mirar los primeros partidos (su ROI es optimista) y las «exploradas» son variantes sin prueba. '
-    +'Miralo con el ±90%: casi todos los intervalos incluyen el cero. Cada regla está detallada en su tarjeta, más abajo. Cada tabla se repite separada por <b>local</b> y <b>visitante</b> (el equipo sobre el que se apuesta); las reglas que solo miran al local salen vacías en la de visitante.</p>'
-    +tabla('REMATES totales (R1) · LOCAL + VISITANTE',r1)+tabla('REMATES totales (R1) · solo LOCAL',r1,'local')+tabla('REMATES totales (R1) · solo VISITANTE',r1,'visit')
-    +tabla('REMATES A PUERTA (S1) · LOCAL + VISITANTE',s1)+tabla('REMATES A PUERTA (S1) · solo LOCAL',s1,'local')+tabla('REMATES A PUERTA (S1) · solo VISITANTE',s1,'visit')
-    +tabla('CÓRNERS por equipo (K1) · LOCAL + VISITANTE',k1)+tabla('CÓRNERS por equipo (K1) · solo LOCAL',k1,'local')+tabla('CÓRNERS por equipo (K1) · solo VISITANTE',k1,'visit');
+    +'Miralo con el ±90%: casi todos los intervalos incluyen el cero. Las reglas que solo miran al local (L-fav, A puerta LOCAL, S1 solo local) dejan vacía la fila de visitante. Cada regla está detallada en su tarjeta, más abajo.</p>'
+    +tabla('REMATES totales (R1)',r1)+tabla('REMATES A PUERTA (S1)',s1)+tabla('CÓRNERS por equipo (K1)',k1);
+}
+// ── Candidata K1-visita: córners por equipo del VISITANTE con la regla de S1 (solo d2, 2026-11-28, a pedido) ────────────────────
+// Regla escrita ANTES de ver partidos nuevos: no se cambian umbrales ni criterio. Salió de mirar #001–#079 (muestra en la que se pensó: optimista); la prueba real
+// son los partidos con id > K1_CORTE_ID. Hallazgo: K1 (EV > 0, cuota ≥ 1.60, mayor EV×P) rinde distinto por lado: visitante +34.9 % ±56 (30 líneas, +10.5u) y local −10.8 % ±37
+// (53 líneas, −5.7u); y las líneas de visitante con EV ≤ 0 pierden −34.0 % (56 líneas): el EV ordena solo en el visitante. Con M2 el visitante da +42.4 % ±51 (36 líneas).
+//   A (principal) · K1 solo VISITANTE con la probabilidad del engine: EV > 0, cuota ≥ 1.60, UNA línea por equipo y partido, la de mayor EV×P.
+//   Referencias descriptivas: A con la probabilidad de M2 y con la de M3 · A con cuota ≤ 2.50 · contraste: líneas de visitante con EV ≤ 0 y cuota ≥ 1.60.
+//   CONTROLES: K1 solo LOCAL con engine, M2 y M3 (se espera que no ganen).
+const K1_N=40;
+function _remRenderK1(){
+  const el=document.getElementById('k1-out'); if(!el) return;
+  const K=_remLineas('corners_equipo'), Kq=K.filter(x=>x.ev>0&&x.cuota>=1.60), Lm=_m2Lineas(_m2Entradas()), ev=x=>x.ev*x.prob;
+  const lado=(l,s)=>l.filter(x=>x.lado===s), mm=(s,m)=>lado(_m2Elegir(Lm,'corners_equipo',m,'pos'),s);
+  const A=_remUna(Kq.filter(x=>x.lado==='visit'),x=>true,ev), Al=_remUna(Kq.filter(x=>x.lado==='local'),x=>true,ev);
+  const cn=String(K1_CORTE_ID).padStart(3,'0'), cn1=String(K1_CORTE_ID+1).padStart(3,'0');
+  const pre=l=>l.filter(x=>x.id<=K1_CORTE_ID), nue=l=>l.filter(x=>x.id>K1_CORTE_ID);
+  const par2=(n,l,b)=>_hipFila(n+' <span style="color:var(--text3);font-size:11px">· muestra en la que se pensó (#001–#'+cn+')</span>',pre(l),{sub:1})
+    +_hipFila((b?'<b>':'')+n+(b?'</b>':'')+' <span style="color:var(--text3);font-size:11px">· PRUEBA REAL (#'+cn1+' en adelante)</span>',nue(l),b?{b:1}:{sub:1});
+  const f1=par2('A · K1 solo VISITANTE, probabilidad del engine (principal)',A,true)
+    +par2('Referencia · A con la probabilidad de M2',mm('visit','m'),false)+par2('Referencia · A con la probabilidad de M3',mm('visit','3'),false)
+    +par2('Referencia · A con cuota ≤ 2.50',_remUna(Kq.filter(x=>x.lado==='visit'&&x.cuota<=2.5),x=>true,ev),false)
+    +par2('Contraste · visitante con EV ≤ 0 y cuota ≥ 1.60',_remUna(K.filter(x=>x.lado==='visit'&&x.ev<=0&&x.cuota>=1.60),x=>true,ev),false);
+  const f2=par2('Control · K1 solo LOCAL, probabilidad del engine',Al,false)+par2('Control · K1 solo LOCAL con M2',mm('local','m'),false)+par2('Control · K1 solo LOCAL con M3',mm('local','3'),false);
+  const elegibles=new Set(nue(A).map(x=>x.id)).size, nuevos=_DATA.filter(p=>p.resultado_partido&&+p.id>K1_CORTE_ID).length, pct=Math.min(100,elegibles/K1_N*100);
+  el.innerHTML='<div style="display:flex;align-items:center;gap:10px;font-size:12px;margin:0 0 10px"><div style="flex:0 0 200px;height:8px;border-radius:4px;background:var(--surface2);overflow:hidden"><div style="width:'+pct+'%;height:100%;background:var(--accent,#378add)"></div></div>'
+    +'<span><b>'+elegibles+'</b> de '+K1_N+' partidos con línea de visitante elegible desde la fijación ('+K1_FECHA+', partido #'+cn1+' en adelante); '+nuevos+' partidos cerrados en total</span></div>'
+    +'<p style="font-size:12px;margin:0 0 10px">'+(elegibles<K1_N?'Faltan <b>'+(K1_N-elegibles)+'</b> partidos para decidir. ':'')
+    +'<b>A</b> se sostiene si en su fila PRUEBA REAL ROI − ±90% &gt; 0 y u/partido − ±90% &gt; 0, <b>y</b> los controles de local no ganan; se descarta si ROI + ±90% &lt; 0. Las referencias muestran si depende del modelo o de la cuota; no se elige otra después. La muestra en la que se pensó sale optimista (el lado se eligió mirando esos mismos datos).</p>'
+    +_hipTabla('Visitante: una línea por equipo y partido',f1)
+    +'<div style="font-size:12px;color:var(--text3);margin:16px 0 6px;font-weight:600">Controles: el local con las mismas reglas</div>'
+    +_hipTabla('Grupo de control',f2);
 }
 // ── Candidata U-λ: Under cuando las λ están parejas (solo d2, 2026-11-26, a pedido) ────────────────────────────────────────
 // Regla escrita ANTES de ver partidos nuevos: no se cambian umbrales. Salió de mirar los partidos #001–#074 del d2 (la muestra en la que se
@@ -6485,7 +6519,7 @@ function renderM2(){
 }
 function renderRemates(){
   renderRemateMercados();      // REMATE y A PUERTA por cuota y por línea
-  _remRenderDiag(); _remRenderCand(); _remRenderM2C(); _remRenderResumen(); _remRenderLF(); _remRenderLP(); _remRenderRA(); _remSimRender('r'); _remSimRender('s'); _remFbRender('r'); _remFbRender('s'); _remValRender();
+  _remRenderDiag(); _remRenderCand(); _remRenderM2C(); _remRenderResumen(); _remRenderLF(); _remRenderLP(); _remRenderRA(); _remRenderK1(); _remSimRender('r'); _remSimRender('s'); _remFbRender('r'); _remFbRender('s'); _remValRender();
   renderMejoras();             // reglas de elección de línea y mercados por equipo (viven en este tab desde 2026-11-08)
   if(ES_D2) renderHipotesis(); // R1 y S1 (en el d2)
 }
