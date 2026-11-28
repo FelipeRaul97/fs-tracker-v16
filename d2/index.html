@@ -5978,7 +5978,7 @@ function _lfEscaleras(suf){
   return out;
 }
 function _lfElige(e,key){
-  const g=off=>e.lad.get(e.ref+off), mk=x=>x?{id:e.id,cuota:x.cuota,win:x.win}:null;
+  const g=off=>e.lad.get(e.ref+off), mk=x=>x?{id:e.id,cuota:x.cuota,win:x.win,lado:e.lado}:null;
   const OFF={f3:-3,f2:-2,f1:-1,f0:0,p1:1,p2:2};
   if(key in OFF) return mk(g(OFF[key]));
   const c={c130:1.30,c145:1.45,c160:1.60}[key]; let b=null;
@@ -6089,9 +6089,9 @@ function _remRenderResumen(){
   const cen=x=>x.cuota>=1.4&&x.cuota<3.0, dif=x=>(x.p2+x.p3)/2-x.q/M2C_MARGEN, evm=x=>_m2cMezcla(x)*x.cuota-1, ev2=x=>x.p2*x.cuota-1, ev3=x=>x.p3*x.cuota-1;
   const lf=_lfEscaleras().filter(e=>e.lado==='local'&&e.fav).map(e=>_lfElige(e,'c145')).filter(Boolean);
   const lp=_lfEscaleras('remates_puerta').filter(e=>e.lado==='local').map(e=>_lfElige(e,'p1')).filter(Boolean);
-  const s1loc=[]; _DATA.forEach(p=>(p.apuestas||[]).forEach(a=>{ if(a.tipo==='PUERTA'&&(a.estado==='GANADA'||a.estado==='PERDIDA')&&a.mercado.startsWith('local')) s1loc.push({id:+p.id,cuota:+a.cuota,win:a.estado==='GANADA'}); }));
+  const s1loc=[]; _DATA.forEach(p=>(p.apuestas||[]).forEach(a=>{ if(a.tipo==='PUERTA'&&(a.estado==='GANADA'||a.estado==='PERDIDA')&&a.mercado.startsWith('local')) s1loc.push({id:+p.id,cuota:+a.cuota,win:a.estado==='GANADA',lado:'local'}); }));
   const Lm=_m2Lineas(_m2Entradas()), RA=_m2cUna(R.filter(x=>x.d>=RA_D),x=>true,ev);
-  const f=l=>l.map(x=>({id:x.id,cuota:x.cuota,win:x.win}));
+  const f=l=>l.map(x=>({id:x.id,cuota:x.cuota,win:x.win,lado:x.lado||(x.a&&x.a.mercado?(x.a.mercado.startsWith('local')?'local':'visit'):null)}));
   const r1=[
     ['REMATE R1 vigente (lo realmente apostado)','vigente',f(B.rem),null],
     ['R-alta · línea ≥ +'+RA_D+' sobre la media, mayor EV×P','fijada 28-nov',f(RA),RA_CORTE_ID],
@@ -6114,7 +6114,8 @@ function _remRenderResumen(){
     ['S1 con cuota ≤ 2.20','explorada 8-nov',f(_remUna(Q,x=>x.cuota<=2.2,ev)),REM_CAND_CORTE_ID],
     ['S1 solo del equipo favorito','explorada 8-nov',f(_remUna(Q,x=>x.fav,ev)),REM_CAND_CORTE_ID],
     ['S1 en la línea promedio o por debajo','explorada 8-nov',f(_remUna(Q,x=>x.k<=0,ev)),REM_CAND_CORTE_ID]];
-  const tabla=(tit,filas)=>{
+  const tabla=(tit,filas,lado)=>{
+    if(lado) filas=filas.map(r=>[r[0],r[1],r[2].filter(x=>x.lado===lado),r[3]]);
     const it=filas.map(r=>({r,s:_mejSt(r[2])})), vig=it[0], resto=it.slice(1).sort((a,b)=>(b.s?b.s.pu:-99)-(a.s?a.s.pu:-99));
     const fila=(o,b)=>{ const real=o.r[3]==null?null:_mejSt(o.r[2].filter(x=>x.id>o.r[3]));
       return '<tr style="'+(b?'background:var(--surface2);font-weight:600':'')+'"><td style="text-align:left">'+o.r[0]+'</td><td style="text-align:left;color:var(--text3);font-size:11px">'+o.r[1]+'</td>'+_hipCel(o.s)
@@ -6125,8 +6126,9 @@ function _remRenderResumen(){
       +fila(vig,true)+resto.map(o=>fila(o,false)).join('')+'</tbody></table></div>'; };
   el.innerHTML='<p style="font-size:12px;margin:0 0 6px">Cada fila es una forma de elegir la línea, con una línea por equipo y partido. Orden: la vigente primero y después de mayor a menor u/partido. '
     +'<b>Ninguna tiene todavía prueba real suficiente</b>: las reglas «fijadas» salieron de mirar los primeros partidos (su ROI es optimista) y las «exploradas» son variantes sin prueba. '
-    +'Miralo con el ±90%: casi todos los intervalos incluyen el cero. Cada regla está detallada en su tarjeta, más abajo.</p>'
-    +tabla('REMATES totales (R1)',r1)+tabla('REMATES A PUERTA (S1)',s1);
+    +'Miralo con el ±90%: casi todos los intervalos incluyen el cero. Cada regla está detallada en su tarjeta, más abajo. Cada tabla se repite separada por <b>local</b> y <b>visitante</b> (el equipo sobre el que se apuesta); las reglas que solo miran al local salen vacías en la de visitante.</p>'
+    +tabla('REMATES totales (R1) · LOCAL + VISITANTE',r1)+tabla('REMATES totales (R1) · solo LOCAL',r1,'local')+tabla('REMATES totales (R1) · solo VISITANTE',r1,'visit')
+    +tabla('REMATES A PUERTA (S1) · LOCAL + VISITANTE',s1)+tabla('REMATES A PUERTA (S1) · solo LOCAL',s1,'local')+tabla('REMATES A PUERTA (S1) · solo VISITANTE',s1,'visit');
 }
 // ── Candidata U-λ: Under cuando las λ están parejas (solo d2, 2026-11-26, a pedido) ────────────────────────────────────────
 // Regla escrita ANTES de ver partidos nuevos: no se cambian umbrales. Salió de mirar los partidos #001–#074 del d2 (la muestra en la que se
