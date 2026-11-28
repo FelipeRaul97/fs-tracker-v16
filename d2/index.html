@@ -6082,10 +6082,13 @@ function _remRenderRA(){
 // Todas las reglas que eligen una línea de remates (R1, S1 y sus candidatas), lado a lado y con la misma medida (una línea por equipo y partido, 1u por
 // apuesta). Es solo una vista: cada regla sigue definida en su tarjeta. Ignora los filtros de EV y de Equipo del tab. «Prueba real» = líneas posteriores a
 // la fijación de cada regla. Las filas con fecha de fijación salieron de mirar los primeros partidos: su ROI sale optimista y solo cuenta la prueba real.
+// K1 (córners por equipo, hipotética, no se apuesta) en el resumen: misma regla que S1 (EV > 0, cuota ≥ 1.60, mayor EV×P por equipo y partido). Las variantes se fijaron
+// el 2026-11-28 mirando los partidos #001–#079 (muestra en la que se pensó: optimista); la prueba real son los partidos con id > K1_CORTE_ID. No cambiar tras ver partidos nuevos.
+const K1_FECHA='2026-11-28', K1_CORTE_ID=79;
 function _remRenderResumen(){
   const el=document.getElementById('rem-resumen'); if(!el) return;
   const R=_remLineas('remates'), S=_remLineas('remates_puerta'), B=_hipBets(), ev=x=>x.ev*x.prob;
-  const P=R.filter(x=>x.ev>0), Q=S.filter(x=>x.ev>0&&x.cuota>=1.60), Rm=_m2cLineas('remates'), Sm=_m2cLineas('remates_puerta');
+  const K=_remLineas('corners_equipo'), Kq=K.filter(x=>x.ev>0&&x.cuota>=1.60), P=R.filter(x=>x.ev>0), Q=S.filter(x=>x.ev>0&&x.cuota>=1.60), Rm=_m2cLineas('remates'), Sm=_m2cLineas('remates_puerta');
   const cen=x=>x.cuota>=1.4&&x.cuota<3.0, dif=x=>(x.p2+x.p3)/2-x.q/M2C_MARGEN, evm=x=>_m2cMezcla(x)*x.cuota-1, ev2=x=>x.p2*x.cuota-1, ev3=x=>x.p3*x.cuota-1;
   const lf=_lfEscaleras().filter(e=>e.lado==='local'&&e.fav).map(e=>_lfElige(e,'c145')).filter(Boolean);
   const lp=_lfEscaleras('remates_puerta').filter(e=>e.lado==='local').map(e=>_lfElige(e,'p1')).filter(Boolean);
@@ -6114,6 +6117,15 @@ function _remRenderResumen(){
     ['S1 con cuota ≤ 2.20','explorada 8-nov',f(_remUna(Q,x=>x.cuota<=2.2,ev)),REM_CAND_CORTE_ID],
     ['S1 solo del equipo favorito','explorada 8-nov',f(_remUna(Q,x=>x.fav,ev)),REM_CAND_CORTE_ID],
     ['S1 en la línea promedio o por debajo','explorada 8-nov',f(_remUna(Q,x=>x.k<=0,ev)),REM_CAND_CORTE_ID]];
+  const k1=[
+    ['CÓRNERS K1 con la probabilidad del engine (hipotética, no se apuesta)','hipótesis 10-nov',f(_remUna(Kq,x=>true,ev)),null],
+    ['K1 con la probabilidad de M2 (misma regla)','sombra M2',f(_m2Elegir(Lm,'corners_equipo','m','pos')),null],
+    ['K1 con la probabilidad de M3 (misma regla)','sombra M3',f(_m2Elegir(Lm,'corners_equipo','3','pos')),null],
+    ['K1 con cuota ≤ 2.50','fijada 28-nov',f(_remUna(Kq,x=>x.cuota<=2.5,ev)),K1_CORTE_ID],
+    ['K1 solo del equipo favorito','fijada 28-nov',f(_remUna(Kq,x=>x.fav,ev)),K1_CORTE_ID],
+    ['K1 en la línea promedio o por debajo','fijada 28-nov',f(_remUna(Kq,x=>x.k<=0,ev)),K1_CORTE_ID],
+    ['K1 sin piso de cuota (EV &gt; 0 y cualquier cuota)','referencia',f(_remUna(K.filter(x=>x.ev>0),x=>true,ev)),null],
+    ['Contraste · engine con EV ≤ 0 y cuota ≥ 1.60','referencia',f(_remUna(K.filter(x=>x.ev<=0&&x.cuota>=1.60),x=>true,ev)),null]];
   const tabla=(tit,filas,lado)=>{
     if(lado) filas=filas.map(r=>[r[0],r[1],r[2].filter(x=>x.lado===lado),r[3]]);
     const it=filas.map(r=>({r,s:_mejSt(r[2])})), vig=it[0], resto=it.slice(1).sort((a,b)=>(b.s?b.s.pu:-99)-(a.s?a.s.pu:-99));
@@ -6128,7 +6140,8 @@ function _remRenderResumen(){
     +'<b>Ninguna tiene todavía prueba real suficiente</b>: las reglas «fijadas» salieron de mirar los primeros partidos (su ROI es optimista) y las «exploradas» son variantes sin prueba. '
     +'Miralo con el ±90%: casi todos los intervalos incluyen el cero. Cada regla está detallada en su tarjeta, más abajo. Cada tabla se repite separada por <b>local</b> y <b>visitante</b> (el equipo sobre el que se apuesta); las reglas que solo miran al local salen vacías en la de visitante.</p>'
     +tabla('REMATES totales (R1) · LOCAL + VISITANTE',r1)+tabla('REMATES totales (R1) · solo LOCAL',r1,'local')+tabla('REMATES totales (R1) · solo VISITANTE',r1,'visit')
-    +tabla('REMATES A PUERTA (S1) · LOCAL + VISITANTE',s1)+tabla('REMATES A PUERTA (S1) · solo LOCAL',s1,'local')+tabla('REMATES A PUERTA (S1) · solo VISITANTE',s1,'visit');
+    +tabla('REMATES A PUERTA (S1) · LOCAL + VISITANTE',s1)+tabla('REMATES A PUERTA (S1) · solo LOCAL',s1,'local')+tabla('REMATES A PUERTA (S1) · solo VISITANTE',s1,'visit')
+    +tabla('CÓRNERS por equipo (K1) · LOCAL + VISITANTE',k1)+tabla('CÓRNERS por equipo (K1) · solo LOCAL',k1,'local')+tabla('CÓRNERS por equipo (K1) · solo VISITANTE',k1,'visit');
 }
 // ── Candidata U-λ: Under cuando las λ están parejas (solo d2, 2026-11-26, a pedido) ────────────────────────────────────────
 // Regla escrita ANTES de ver partidos nuevos: no se cambian umbrales. Salió de mirar los partidos #001–#074 del d2 (la muestra en la que se
