@@ -5919,10 +5919,10 @@ function _remRenderResumen(){
     const it=filas.map(r=>({r,s:_mejSt(r[2])})), vig=it[0], resto=it.slice(1).sort((a,b)=>(b.s?b.s.pu:-99)-(a.s?a.s.pu:-99));
     const fila=(o,b)=>{ const real=o.r[3]==null?null:_mejSt(o.r[2].filter(x=>x.id>o.r[3]));
       return '<tr style="'+(b?'background:var(--surface2);font-weight:600':'')+'"><td style="text-align:left">'+o.r[0]+'</td><td style="text-align:left;color:var(--text3);font-size:11px">'+o.r[1]+'</td>'+_hipCel(o.s)
-        +'<td class="num">'+(o.r[3]==null?'<span style="color:var(--text3)">—</span>':(real?real.n+' · '+_mejRoi(real):'<span style="color:var(--text3)">0 líneas</span>'))+'</td></tr>'; };
+        +'<td class="num">'+(o.r[3]==null?'<span style="color:var(--text3)">—</span>':(real?real.n+' · '+_mejRoi(real)+' · '+_mejU(real.u):'<span style="color:var(--text3)">0 líneas</span>'))+'</td></tr>'; };
     return '<div style="font-size:12px;color:var(--text3);margin:16px 0 6px;font-weight:600">'+tit+'</div><div class="table-wrap table-wrap-scroll"><table class="hm-table"><thead><tr><th style="text-align:left">Regla</th><th style="text-align:left">Origen</th>'
       +'<th class="num">Líneas</th><th class="num">Acierto</th><th class="num">Cuota</th><th class="num">ROI ±90%</th><th class="num">P&amp;L</th><th class="num" title="Unidades por partido (un dato por partido) y su ±90%; entre paréntesis, partidos">u / partido (±90%)</th>'
-      +'<th class="num" title="Líneas posteriores a la fijación de la regla y su ROI. — = ya es lo apostado o se mide desde el partido #1">Prueba real</th></tr></thead><tbody>'
+      +'<th class="num" title="Líneas posteriores a la fijación de la regla, su ROI y su P&amp;L en unidades. — = ya es lo apostado o se mide desde el partido #1">Prueba real</th></tr></thead><tbody>'
       +fila(vig,true)+resto.map(o=>fila(o,false)).join('')+'</tbody></table></div>'; };
   el.innerHTML='<p style="font-size:12px;margin:0 0 6px">Cada fila es una forma de elegir la línea, con una línea por equipo y partido. Orden: la vigente primero y después de mayor a menor u/partido. '
     +'<b>Ninguna tiene todavía prueba real suficiente</b>: las reglas «fijadas» salieron de mirar los primeros partidos (su ROI es optimista) y las «exploradas» son variantes sin prueba. '
