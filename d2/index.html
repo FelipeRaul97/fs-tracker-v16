@@ -878,6 +878,14 @@
         <div id="hip-ueq"></div>
       </div>
     </div>
+    <div style="font-size:14px;font-weight:700;margin:22px 0 4px;color:var(--text)">Candidatas de elección del COMBO A–D (fijadas el 2026-11-27)</div>
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card card-full">
+        <div class="card-title">Una combinada por partido: vigente (A) frente a B, C y D (probabilidad corregida, en sombra)</div>
+        <p style="font-size:12px;color:var(--text3);margin:0 0 10px">Solo medición: no se apuesta nada. Las reglas, los 8 pares de C y los coeficientes de D se escribieron antes de ver partidos nuevos y solo cuenta la fila PRUEBA REAL.</p>
+        <div id="hip-cmb"></div>
+      </div>
+    </div>
   </div>
 
   <!-- Confianza -->
@@ -5611,7 +5619,7 @@ function renderHipotesis(){
   if(!document.getElementById('hip-resumen')) return;
   const B=_hipBets(), D=_mejDatos();
   _mejRenderHipotesis(D); _mejRenderD2Combo();      // tarjetas que viven en este tab; la de hipotesis fija _hipBajas
-  _hipRenderResumen(B); _hipRenderRemate(B); _hipRenderPuerta(B); _hipRenderCuota(B); _hipRenderAcum(B); _hipRenderUnderEq();
+  _hipRenderResumen(B); _hipRenderRemate(B); _hipRenderPuerta(B); _hipRenderCuota(B); _hipRenderAcum(B); _hipRenderUnderEq(); _hipRenderComboCand();
 }
 // Por que NO se apostó cada selección de goles del watchlist (lo contrario de una hipótesis). ROI < 0 = el descarte acertó.
 function _hipRazon(p,w){
@@ -6042,6 +6050,91 @@ function _hipRenderUnderEq(){
     +'<p style="font-size:12px;margin:0 0 10px">'+(elegibles<UEQ_N?'Faltan <b>'+(UEQ_N-elegibles)+'</b> partidos elegibles para decidir. ':'')
     +'Se sostiene solo si, en la fila PRUEBA REAL de A (y de B), ROI − ±90% &gt; 0 y u/partido − ±90% &gt; 0, <b>y además</b> C pierde y D no rinde lo mismo que A. Los umbrales (0.4, Under 2.5/3.5/4.5) salieron de mirar #001–#'+cn+': esa fila es optimista.</p>'
     +_hipTabla('Regla (todas las líneas cotizadas de goles simples)',filas);
+}
+// ── Candidatas de elección del COMBO A–D (solo d2, 2026-11-27, a pedido) ────────────────────────────────────────────────────
+// Qué se mide: no un par suelto en todos los partidos, sino la REGLA que elige UNA combinada por partido. Se escriben ahora, antes de ver
+// partidos nuevos, y no se cambian pares, coeficientes, exclusiones ni pool. Muestra en la que se pensó = #001–#CMB_CORTE_ID (optimista);
+// la prueba real son los partidos con id > CMB_CORTE_ID. Se compara cada regla con el COMBO realmente apostado (A) POR PARTIDO (diferencia
+// pareada, 0 donde una regla no apuesta) y se decide con CMB_N partidos nuevos cerrados.
+//   A · vigente: el COMBO realmente apostado (cruza su cuota justa, mayor P%, sin las excluidas C1–C4 y sin reemplazo).
+//   B · mayor P% del modelo entre las combinadas VALIDADAS con cuota, sin las excluidas C1–C4, SIN exigir cruzar la cuota justa.
+//   C · mayor P% del modelo dentro de 8 pares fijos (cualquier origen con cuota; sin exclusiones).
+//   D · (sombra) como B pero ordenando por probabilidad corregida: logit(P_corr)=a+b·logit(P)+c·ln(cuota), coeficientes congelados.
+// Verificación de D: log-loss de P_engine frente a P_corr en los partidos nuevos (diferencia pareada por partido). No se apuesta nada.
+const CMB_FECHA='2026-11-27', CMB_CORTE_ID=79, CMB_N=100;
+const CMB_COEF={a:0.9211,b:0.3990,c:-1.8260};
+const CMB_PARES=['do1x+local_remates_puerta_over2.5','do1x+under45','btts+over25','visit_corners_equipo_over3.5+visit_remates_puerta_over3.5',
+  'local_remates_over10.5+local_remates_puerta_over2.5','do1x+over05_local','hcp2_local+over05_local','over05_local+over15'].map(k=>k.split('+').sort().join('+'));
+function _cmbTipo(p){ return p.startsWith('over05_')?'O05':p.indexOf('remates_puerta')>=0?'ST':p.indexOf('remates')>=0?'R':p.indexOf('corners')>=0?'C':'x'; }
+function _cmbExcl(m,lt){                         // mismas exclusiones C1–C4 que add_bet.py (_par_excluido_d2 y barrera de hándicap)
+  const L=String(m).split('+'), t=L.map(_cmbTipo).sort().join(',');
+  if(t==='R,ST'||t==='C,R'||t==='O05,ST') return true;
+  return lt>=3.0&&L.some(x=>x.startsWith('hcp'));
+}
+function _cmbCands(p){
+  const lt=(p.lambda_final_l!=null&&p.lambda_final_v!=null)?(+p.lambda_final_l+ +p.lambda_final_v):0, mapa=new Map();
+  const add=(m,cuota,prob,win,val,apost)=>{
+    if(!cuota||prob==null||win==null) return;
+    const key=String(m).split('+').sort().join('+'), ex=mapa.get(key);
+    if(ex){ if(apost) ex.apost=true; ex.val=ex.val||val; return; }
+    const pr=prob/100, z=CMB_COEF.a+CMB_COEF.b*Math.log(pr/(1-pr))+CMB_COEF.c*Math.log(+cuota);
+    mapa.set(key,{id:+p.id,key,cuota:+cuota,p:pr,ph:1/(1+Math.exp(-z)),win:!!win,val:!!val,apost:!!apost,excl:_cmbExcl(m,lt)});
+  };
+  (p.apuestas||[]).forEach(a=>{ if(a.tipo==='COMBO'&&(a.estado==='GANADA'||a.estado==='PERDIDA')) add(a.mercado,a.cuota,a.prob,a.estado==='GANADA',true,true); });
+  (p.watchlist||[]).forEach(w=>{ if(w.tipo==='COMBINADA'&&w.acerto!=null) add(w.mercado,w.cuota,w.prob,w.acerto,true,false); });
+  (p.combinadas_extra||[]).forEach(x=>{ if(x.acerto!=null) add(x.mercado,x.cuota,x.prob,x.acerto,!!x.validada,false); });
+  return [...mapa.values()];
+}
+const _cmbMax=(l,f)=>l.reduce((b,x)=>(!b||x[f]>b[f])?x:b,null);
+function _cmbReglas(){
+  const R={A:[],B:[],C:[],D:[]}, ids=[], LL=[];
+  _DATA.filter(p=>p.resultado_partido).forEach(p=>{
+    const c=_cmbCands(p), id=+p.id; ids.push(id);
+    const ap=c.find(x=>x.apost); if(ap) R.A.push(ap);
+    const pool=c.filter(x=>x.val&&!x.excl), b=_cmbMax(pool,'p'), d=_cmbMax(pool,'ph'), cc=_cmbMax(c.filter(x=>CMB_PARES.includes(x.key)),'p');
+    if(b) R.B.push(b); if(cc) R.C.push(cc); if(d) R.D.push(d);
+    if(c.length){ let s=0; c.forEach(x=>{ const y=x.win?1:0; s+=-(y*Math.log(x.p)+(1-y)*Math.log(1-x.p))+(y*Math.log(x.ph)+(1-y)*Math.log(1-x.ph)); }); LL.push({id,v:s/c.length}); }
+  });
+  return {R,ids,LL};
+}
+function _cmbStat(v){
+  const n=v.length; if(!n) return {n:0,m:0,moe:null};
+  const m=v.reduce((a,b)=>a+b,0)/n, sd=n>1?Math.sqrt(v.reduce((a,b)=>a+(b-m)*(b-m),0)/(n-1)):0;
+  return {n,m,moe:n>1?1.645*sd/Math.sqrt(n):null};
+}
+function _hipRenderComboCand(){
+  const el=document.getElementById('hip-cmb'); if(!el) return;
+  const {R,ids,LL}=_cmbReglas(), pad=n=>String(n).padStart(3,'0'), cn=pad(CMB_CORTE_ID), cn1=pad(CMB_CORTE_ID+1);
+  const pre=l=>l.filter(x=>x.id<=CMB_CORTE_ID), nue=l=>l.filter(x=>x.id>CMB_CORTE_ID);
+  const NOM={A:'A · vigente: el COMBO realmente apostado',B:'B · mayor P% entre las validadas con cuota, sin exclusiones C1–C4 y sin exigir cruzar la justa',
+    C:'C · mayor P% dentro de 8 pares fijos',D:'D · (sombra) como B, ordenado por la probabilidad corregida'};
+  const u=l=>{ const m={}; l.forEach(x=>{ m[x.id]=x.win?x.cuota-1:-1; }); return m; }, uA=u(R.A);
+  const dif=(X,f)=>{ const uX=u(X); return _cmbStat(ids.filter(f).map(i=>(uX[i]||0)-(uA[i]||0))); };
+  const nuevos=ids.filter(i=>i>CMB_CORTE_ID).length, pct=Math.min(100,nuevos/CMB_N*100), listo=nuevos>=CMB_N;
+  const llNue=_cmbStat(LL.filter(x=>x.id>CMB_CORTE_ID).map(x=>x.v)), llPre=_cmbStat(LL.filter(x=>x.id<=CMB_CORTE_ID).map(x=>x.v));
+  const ver=(k)=>{
+    if(k==='A') return '<span style="color:var(--text3)">referencia</span>';
+    const s=_mejSt(nue(R[k])), d=dif(R[k],i=>i>CMB_CORTE_ID);
+    if(!listo||!s) return '<span style="color:var(--text3)">sin concluir (faltan '+Math.max(0,CMB_N-nuevos)+')</span>';
+    const gana=s.pu-(s.pmoe||0)>0&&d.m-(d.moe||0)>0&&(k!=='D'||llNue.m-(llNue.moe||0)>0), pierde=s.pu+(s.pmoe||0)<0||(k==='D'&&llNue.moe!=null&&llNue.m+llNue.moe<0);
+    return gana?'<b class="pl-pos">Confirmada</b>':pierde?'<b class="pl-neg">Descartada</b>':'<span style="color:var(--text3)">sin concluir</span>';
+  };
+  const f1=['A','B','C','D'].map(k=>_hipFila(NOM[k]+' <span style="color:var(--text3);font-size:11px">· muestra en la que se pensó (#001–#'+cn+')</span>',pre(R[k]),{sub:1})
+    +_hipFila('<b>'+NOM[k]+'</b> <span style="color:var(--text3);font-size:11px">· PRUEBA REAL (#'+cn1+' en adelante)</span>',nue(R[k]),{b:1})).join('');
+  const celdaDif=d=>d.n?'<span class="'+_mejCl(d.m)+'"><b>'+_mejSg(d.m,3)+'</b></span> <span style="color:var(--text3);font-size:11px">'+(d.moe!=null?'±'+d.moe.toFixed(3):'')+' ('+d.n+')</span>':'<span style="color:var(--text3)">—</span>';
+  const f2=['B','C','D'].map(k=>'<tr><td style="text-align:left">'+NOM[k]+'</td><td class="num">'+celdaDif(dif(R[k],i=>i<=CMB_CORTE_ID))+'</td><td class="num"><b>'+celdaDif(dif(R[k],i=>i>CMB_CORTE_ID))+'</b></td><td class="num">'+ver(k)+'</td></tr>').join('');
+  const celdaLL=d=>d.n?'<span class="'+_mejCl(d.m)+'"><b>'+_mejSg(d.m*100,2)+'</b></span> <span style="color:var(--text3);font-size:11px">'+(d.moe!=null?'±'+(d.moe*100).toFixed(2):'')+' ('+d.n+')</span>':'<span style="color:var(--text3)">—</span>';
+  el.innerHTML='<div style="display:flex;align-items:center;gap:10px;font-size:12px;margin:0 0 10px"><div style="flex:0 0 200px;height:8px;border-radius:4px;background:var(--surface2);overflow:hidden"><div style="width:'+pct+'%;height:100%;background:var(--accent,#378add)"></div></div>'
+    +'<span><b>'+nuevos+'</b> de '+CMB_N+' partidos cerrados desde la fijación ('+CMB_FECHA+', partido #'+cn1+' en adelante)</span></div>'
+    +'<p style="font-size:12px;margin:0 0 10px">Cada regla elige <b>una</b> combinada por partido y se mide con la fila PRUEBA REAL. <b>Confirmada</b> = u/partido propio − ±90% &gt; 0 <b>y</b> diferencia contra A − ±90% &gt; 0 (D además exige que P corregida gane en log-loss); <b>Descartada</b> = u/partido propio + ±90% &lt; 0 (D también si P corregida pierde en log-loss). '
+    +'Pares de C, coeficientes de D (a='+CMB_COEF.a+', b='+CMB_COEF.b+', c='+CMB_COEF.c+') y exclusiones se fijaron mirando #001–#'+cn+': esa fila es optimista y no cuenta. No se cambian tras ver partidos nuevos.</p>'
+    +_hipTabla('Regla (una combinada por partido)',f1)
+    +'<div style="font-size:12px;color:var(--text3);margin:16px 0 6px;font-weight:600">Diferencia por partido contra A (u/partido; 0 donde una regla no apuesta)</div>'
+    +'<div class="table-wrap table-wrap-scroll"><table class="hm-table"><thead><tr><th style="text-align:left">Regla</th><th class="num">Muestra en la que se pensó</th><th class="num">PRUEBA REAL</th><th class="num">Veredicto</th></tr></thead><tbody>'+f2+'</tbody></table></div>'
+    +'<div style="font-size:12px;color:var(--text3);margin:16px 0 6px;font-weight:600">Calibración de D: log-loss de P del engine − log-loss de P corregida, por combinada y partido (×100; positivo = P corregida mejor)</div>'
+    +'<div class="table-wrap table-wrap-scroll"><table class="hm-table"><thead><tr><th style="text-align:left">Muestra</th><th class="num">Diferencia (±90%, partidos)</th></tr></thead><tbody>'
+    +'<tr><td style="text-align:left">Muestra en la que se pensó (#001–#'+cn+'; los coeficientes se ajustaron con ella: optimista)</td><td class="num">'+celdaLL(llPre)+'</td></tr>'
+    +'<tr style="background:var(--surface2);font-weight:600"><td style="text-align:left">PRUEBA REAL (#'+cn1+' en adelante)</td><td class="num">'+celdaLL(llNue)+'</td></tr></tbody></table></div>';
 }
 // ── Simulador de selección (solo d2, 2026-11-09, a pedido) ─────────────────────────────────────────────────────────────
 // «¿Qué habría pasado con los partidos jugados si se hubiera elegido así?» Una línea por equipo y partido, con filtros que se pueden mover:
